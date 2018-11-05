@@ -9,7 +9,11 @@
     [NumberOfQuestions]       INT             NOT NULL,
     [NumberOfOpenQuestions]   INT             NOT NULL,
     [NumberOfClosedQuestions] INT             NOT NULL,
+    [Points]                  INT             NOT NULL,
+    [IsAvaibleAsEntry]        BIT             NOT NULL,
     CONSTRAINT [PK_Tests] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Tests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id])
 );
+
+
 

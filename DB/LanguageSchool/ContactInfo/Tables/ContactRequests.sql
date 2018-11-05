@@ -7,6 +7,11 @@
     [Comment]          NVARCHAR (1000) NULL,
     [Result]           NVARCHAR (1000) NULL,
     [IsAwaiting]       BIT             NOT NULL,
-    CONSTRAINT [PK_ContactRequests] PRIMARY KEY CLUSTERED ([Id] ASC)
+    [EntryTestId]      INT             NULL,
+    [Points]           INT             NULL,
+    CONSTRAINT [PK_ContactRequests] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_ContactRequests_Tests] FOREIGN KEY ([EntryTestId]) REFERENCES [Courses].[Tests] ([Id])
 );
+
+
 

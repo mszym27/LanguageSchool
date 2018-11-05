@@ -82,6 +82,7 @@
     <Build Include="Security\Users.sql" />
     <Build Include="Security\Courses.sql" />
     <Build Include="Security\ContactInfo.sql" />
+    <Build Include="Users\Tables\UserOpenAnswers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
