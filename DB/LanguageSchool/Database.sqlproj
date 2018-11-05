@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{fbc867ae-f3de-44d4-b385-999ff968b707}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -65,6 +65,7 @@
     <Folder Include="ContactInfo\" />
     <Folder Include="ContactInfo\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Tables\Roles.sql" />
@@ -83,8 +84,10 @@
     <Build Include="Security\Courses.sql" />
     <Build Include="Security\ContactInfo.sql" />
     <Build Include="Users\Tables\UserOpenAnswers.sql" />
+    <PostDeploy Include="Scripts\Roles_techAdmin.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
+    <None Include="LanguageSchool.publish.xml" />
   </ItemGroup>
 </Project>
