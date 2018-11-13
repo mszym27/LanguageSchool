@@ -10,8 +10,10 @@
     [EntryTestId]      INT             NULL,
     [Points]           INT             NULL,
     CONSTRAINT [PK_ContactRequests] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_ContactRequests_Tests] FOREIGN KEY ([EntryTestId]) REFERENCES [Courses].[Tests] ([Id])
+    CONSTRAINT [FK_ContactRequests_EntryTests] FOREIGN KEY ([EntryTestId]) REFERENCES [Tests].[EntryTests] ([Id])
 );
+
+
 
 
 

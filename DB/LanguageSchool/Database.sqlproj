@@ -66,17 +66,16 @@
     <Folder Include="ContactInfo\Tables\" />
     <Folder Include="Security\" />
     <Folder Include="Scripts" />
+    <Folder Include="Tests\" />
+    <Folder Include="Tests\Tables\" />
+    <Folder Include="Materials\" />
+    <Folder Include="Materials\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Tables\Roles.sql" />
     <Build Include="Users\Tables\Users.sql" />
     <Build Include="Users\Tables\UsersTests.sql" />
     <Build Include="Users\Tables\UsersCourses.sql" />
-    <Build Include="Courses\Tables\Materials.sql" />
-    <Build Include="Courses\Tables\OpenQuestions.sql" />
-    <Build Include="Courses\Tables\Answers.sql" />
-    <Build Include="Courses\Tables\ClosedQuestions.sql" />
-    <Build Include="Courses\Tables\Tests.sql" />
     <Build Include="Courses\Tables\Courses.sql" />
     <Build Include="ContactInfo\Tables\UserData.sql" />
     <Build Include="ContactInfo\Tables\ContactRequests.sql" />
@@ -85,6 +84,15 @@
     <Build Include="Security\ContactInfo.sql" />
     <Build Include="Users\Tables\UserOpenAnswers.sql" />
     <PostDeploy Include="Scripts\Roles_techAdmin.sql" />
+    <Build Include="Courses\Tables\LessonSubjects.sql" />
+    <Build Include="Tests\Tables\EntryTests.sql" />
+    <Build Include="Materials\Tables\Materials.sql" />
+    <Build Include="Security\Tests.sql" />
+    <Build Include="Security\Materials.sql" />
+    <Build Include="Tests\Tables\Answers.sql" />
+    <Build Include="Tests\Tables\ClosedQuestions.sql" />
+    <Build Include="Tests\Tables\OpenQuestions.sql" />
+    <Build Include="Tests\Tables\Tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
