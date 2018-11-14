@@ -85,7 +85,6 @@
     <Build Include="Users\Tables\UserOpenAnswers.sql" />
     <PostDeploy Include="Scripts\Roles_techAdmin.sql" />
     <Build Include="Courses\Tables\LessonSubjects.sql" />
-    <Build Include="Tests\Tables\EntryTests.sql" />
     <Build Include="Materials\Tables\Materials.sql" />
     <Build Include="Security\Tests.sql" />
     <Build Include="Security\Materials.sql" />
@@ -93,6 +92,8 @@
     <Build Include="Tests\Tables\ClosedQuestions.sql" />
     <Build Include="Tests\Tables\OpenQuestions.sql" />
     <Build Include="Tests\Tables\Tests.sql" />
+    <Build Include="Tests\Tables\TestsLessonSubjects.sql" />
+    <Build Include="Courses\Tables\EntryTests.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
