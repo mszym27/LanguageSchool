@@ -8,12 +8,18 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : Controller
     {
-        private System.Data.Entity.DbSet<LanguageSchool.Models.Course> Courses; // { get; set; }
+        private LanguageSchoolEntities dbContext;
+        //private LanguageSchool.Courses Courses; // { get; set; }
 
         // GET: Course
         public ActionResult Index()
         {
+            dbContext = new LanguageSchoolEntities();
 
+            var Courses = from c in dbContext.Courses
+                      orderby c.CreationDate
+                      where (c.IsActive == true && c.IsDeleted == false)
+                      select c;       
 
             return View(Courses);
         }
