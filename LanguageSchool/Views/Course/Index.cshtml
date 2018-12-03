@@ -23,16 +23,17 @@
             </th>
         </tr>
     
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @item.CreationDate.ToString("yyyy/MM/dd")
             </td>
             <td>
                 @Html.ActionLink(item.Name, "Details", new { id = item.Id })
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @item.Description.Substring(0, item.Description.IndexOf('.'))
             </td>
         </tr>
     }
