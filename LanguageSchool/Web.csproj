@@ -205,8 +205,71 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Answer.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClosedQuestion.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ContactRequest.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntryTest.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LanguageSchool.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageSchool.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LanguageSchool.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LanguageSchool.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageSchool.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LessonSubject.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Material.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OpenQuestion.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Test.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestsLessonSubject.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserData.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserOpenAnswer.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersCourses.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersTests.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -217,12 +280,29 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\LanguageSchool.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LanguageSchool.edmx</DependentUpon>
+      <LastGenOutput>LanguageSchool.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LanguageSchool.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LanguageSchool.edmx</DependentUpon>
+      <LastGenOutput>LanguageSchool.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\LanguageSchool.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LanguageSchool.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\LanguageSchool.edmx.diagram">
+      <DependentUpon>LanguageSchool.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

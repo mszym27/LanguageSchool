@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cea6ea76446a40929247fcc664d940bc" Name="Diagram1">
+        <EntityTypeShape EntityType="LanguageSchoolModel.ContactRequest" Width="1.5" PointX="8.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UserData" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Course" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.EntryTest" Width="1.5" PointX="10.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.LessonSubject" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Material" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Answer" Width="1.5" PointX="7.5" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.ClosedQuestion" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.OpenQuestion" Width="1.5" PointX="5.25" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Test" Width="1.5" PointX="3" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.TestsLessonSubject" Width="1.5" PointX="5.25" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Role" Width="1.5" PointX="1.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UserOpenAnswer" Width="1.5" PointX="7.5" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.User" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UsersCourses" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UsersTests" Width="1.5" PointX="5.25" PointY="32.25" IsExpanded="true" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_ContactRequests_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_ContactRequests_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UserData_UserLoginData" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_EntryTests_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_LessonSubjects_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Tests_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersCourses_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_EntryTests_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_ClosedQuestions_LessonSubjects" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Materials_LessonSubjects" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_OpenQuestions_LessonSubjects" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestsLessonSubjects_LessonSubjects" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Answers_ClosedQuestions" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_OpenQuestions" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestsLessonSubjects_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UserOpenAnswers_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersCourses_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

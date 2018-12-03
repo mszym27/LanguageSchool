@@ -1,0 +1,1432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LanguageSchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ContactRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="ModificationDate" Type="datetime" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Result" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsAwaiting" Type="bit" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="EntryTestId" Type="int" />
+          <Property Name="Points" Type="int" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="150" />
+          <Property Name="Street" Type="nvarchar" MaxLength="150" />
+          <Property Name="HouseNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="HomeNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PublicPhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="PrivatePhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryTests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LessonSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="LessonSubjectId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="File" Type="varbinary" MaxLength="4000" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="ClosedQuestionId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClosedQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="LessonSubjectId" Type="int" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumberOfPossibleAnswers" Type="int" Nullable="false" />
+          <Property Name="IsMultichoice" Type="bit" Nullable="false" />
+          <Property Name="Points" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OpenQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="LessonSubjectId" Type="int" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Points" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
+          <Property Name="NumberOfOpenQuestions" Type="int" Nullable="false" />
+          <Property Name="NumberOfClosedQuestions" Type="int" Nullable="false" />
+          <Property Name="Points" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestsLessonSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="LessonSubjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserOpenAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="OpenQuestionId" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Points" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersCourses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersTests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="Points" Type="int" />
+          <Property Name="IsMarked" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answers_ClosedQuestions">
+          <End Role="ClosedQuestions" Type="Self.ClosedQuestions" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClosedQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="ClosedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClosedQuestions_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
+          <End Role="ClosedQuestions" Type="Self.ClosedQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClosedQuestions">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactRequests_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="ContactRequests" Type="Self.ContactRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactRequests_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="0..1" />
+          <End Role="ContactRequests" Type="Self.ContactRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="EntryTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTests_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="EntryTests" Type="Self.EntryTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntryTests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTests_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="EntryTests" Type="Self.EntryTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntryTests">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LessonSubjects_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonSubjects">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materials_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
+          <End Role="Materials" Type="Self.Materials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpenQuestions_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
+          <End Role="OpenQuestions" Type="Self.OpenQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OpenQuestions">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsLessonSubjects_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
+          <End Role="TestsLessonSubjects" Type="Self.TestsLessonSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestsLessonSubjects">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsLessonSubjects_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="TestsLessonSubjects" Type="Self.TestsLessonSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestsLessonSubjects">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserData_UserLoginData">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserData" Type="Self.UserData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserData">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswers_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCourses_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="UsersCourses" Type="Self.UsersCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCourses">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCourses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersCourses" Type="Self.UsersCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCourses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersOpenAnswers_OpenQuestions">
+          <End Role="OpenQuestions" Type="Self.OpenQuestions" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="OpenQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersOpenAnswers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersTests_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersTests_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LanguageSchoolModelStoreContainer">
+          <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" Schema="ContactInfo" store:Type="Tables" />
+          <EntitySet Name="UserData" EntityType="Self.UserData" Schema="ContactInfo" store:Type="Tables" />
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="EntryTests" EntityType="Self.EntryTests" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubjects" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="Materials" store:Type="Tables" />
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="ClosedQuestions" EntityType="Self.ClosedQuestions" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestions" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="Tests" EntityType="Self.Tests" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubjects" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswers" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="UsersCourses" EntityType="Self.UsersCourses" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="UsersTests" EntityType="Self.UsersTests" Schema="Users" store:Type="Tables" />
+          <AssociationSet Name="FK_Answers_ClosedQuestions" Association="Self.FK_Answers_ClosedQuestions">
+            <End Role="ClosedQuestions" EntitySet="ClosedQuestions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClosedQuestions_LessonSubjects" Association="Self.FK_ClosedQuestions_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="ClosedQuestions" EntitySet="ClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactRequests_Courses" Association="Self.FK_ContactRequests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactRequests_Tests" Association="Self.FK_ContactRequests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="EntryTests" EntitySet="EntryTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTests_Tests" Association="Self.FK_EntryTests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="EntryTests" EntitySet="EntryTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materials_LessonSubjects" Association="Self.FK_Materials_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpenQuestions_LessonSubjects" Association="Self.FK_OpenQuestions_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_Courses" Association="Self.FK_Tests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsLessonSubjects_LessonSubjects" Association="Self.FK_TestsLessonSubjects_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsLessonSubjects_Tests" Association="Self.FK_TestsLessonSubjects_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserData_UserLoginData" Association="Self.FK_UserData_UserLoginData">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserData" EntitySet="UserData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswers_Tests" Association="Self.FK_UserOpenAnswers_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCourses_Courses" Association="Self.FK_UsersCourses_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="UsersCourses" EntitySet="UsersCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCourses_Users" Association="Self.FK_UsersCourses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCourses" EntitySet="UsersCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersOpenAnswers_OpenQuestions" Association="Self.FK_UsersOpenAnswers_OpenQuestions">
+            <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersOpenAnswers_Users" Association="Self.FK_UsersOpenAnswers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Tests" Association="Self.FK_UsersTests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="UsersTests" EntitySet="UsersTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Users" Association="Self.FK_UsersTests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersTests" EntitySet="UsersTests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LanguageSchoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ContactRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsAwaiting" Type="Boolean" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="EntryTestId" Type="Int32" />
+          <Property Name="Points" Type="Int32" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="HouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HomeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PublicPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PrivatePhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserData_UserLoginData" FromRole="UserData" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_Courses" FromRole="Courses" ToRole="ContactRequests" />
+          <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Courses" FromRole="Courses" ToRole="EntryTests" />
+          <NavigationProperty Name="LessonSubjects" Relationship="Self.FK_LessonSubjects_Courses" FromRole="Courses" ToRole="LessonSubjects" />
+          <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Courses" FromRole="Courses" ToRole="Tests" />
+          <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Courses" FromRole="Courses" ToRole="UsersCourses" />
+        </EntityType>
+        <EntityType Name="EntryTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_EntryTests_Courses" FromRole="EntryTests" ToRole="Courses" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_EntryTests_Tests" FromRole="EntryTests" ToRole="Tests" />
+        </EntityType>
+        <EntityType Name="LessonSubject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_LessonSubjects_Courses" FromRole="LessonSubjects" ToRole="Courses" />
+          <NavigationProperty Name="ClosedQuestions" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="ClosedQuestions" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_Materials_LessonSubjects" FromRole="LessonSubjects" ToRole="Materials" />
+          <NavigationProperty Name="OpenQuestions" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="OpenQuestions" />
+          <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_LessonSubjects" FromRole="LessonSubjects" ToRole="TestsLessonSubjects" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="File" Type="Binary" MaxLength="4000" FixedLength="false" />
+          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="LessonSubject" Relationship="Self.FK_Materials_LessonSubjects" FromRole="Materials" ToRole="LessonSubjects" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="ClosedQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Answer1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ClosedQuestion" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="Answers" ToRole="ClosedQuestions" />
+        </EntityType>
+        <EntityType Name="ClosedQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Contents" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberOfPossibleAnswers" Type="Int32" Nullable="false" />
+          <Property Name="IsMultichoice" Type="Boolean" Nullable="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LessonSubject" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="ClosedQuestions" ToRole="LessonSubjects" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="ClosedQuestions" ToRole="Answers" />
+        </EntityType>
+        <EntityType Name="OpenQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Contents" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LessonSubject" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="OpenQuestions" ToRole="LessonSubjects" />
+          <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UsersOpenAnswers_OpenQuestions" FromRole="OpenQuestions" ToRole="UserOpenAnswers" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfOpenQuestions" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfClosedQuestions" Type="Int32" Nullable="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_Tests" FromRole="Tests" ToRole="ContactRequests" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_Tests_Courses" FromRole="Tests" ToRole="Courses" />
+          <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Tests" FromRole="Tests" ToRole="EntryTests" />
+          <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_Tests" FromRole="Tests" ToRole="TestsLessonSubjects" />
+          <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="Tests" ToRole="UserOpenAnswers" />
+          <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Tests" FromRole="Tests" ToRole="UsersTests" />
+        </EntityType>
+        <EntityType Name="TestsLessonSubject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LessonSubject" Relationship="Self.FK_TestsLessonSubjects_LessonSubjects" FromRole="TestsLessonSubjects" ToRole="LessonSubjects" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_TestsLessonSubjects_Tests" FromRole="TestsLessonSubjects" ToRole="Tests" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserOpenAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="OpenQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Points" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OpenQuestion" Relationship="Self.FK_UsersOpenAnswers_OpenQuestions" FromRole="UserOpenAnswers" ToRole="OpenQuestions" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="UserOpenAnswers" ToRole="Tests" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersOpenAnswers_Users" FromRole="UserOpenAnswers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserDatas" Relationship="Self.FK_UserData_UserLoginData" FromRole="Users" ToRole="UserData" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UsersOpenAnswers_Users" FromRole="Users" ToRole="UserOpenAnswers" />
+          <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Users" FromRole="Users" ToRole="UsersCourses" />
+          <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Users" FromRole="Users" ToRole="UsersTests" />
+        </EntityType>
+        <EntityType Name="UsersCourses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_UsersCourses_Courses" FromRole="UsersCourses" ToRole="Courses" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersCourses_Users" FromRole="UsersCourses" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UsersTests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="Points" Type="Int32" />
+          <Property Name="IsMarked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_UsersTests_Tests" FromRole="UsersTests" ToRole="Tests" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersTests_Users" FromRole="UsersTests" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_ContactRequests_Courses">
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="0..1" />
+          <End Role="ContactRequests" Type="Self.ContactRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactRequests_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="ContactRequests" Type="Self.ContactRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="EntryTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserData_UserLoginData">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserData" Type="Self.UserData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserData">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTests_Courses">
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
+          <End Role="EntryTests" Type="Self.EntryTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntryTests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LessonSubjects_Courses">
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonSubjects">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_Courses">
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
+          <End Role="Tests" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCourses_Courses">
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
+          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCourses">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTests_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+          <End Role="EntryTests" Type="Self.EntryTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntryTests">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClosedQuestions_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="1" />
+          <End Role="ClosedQuestions" Type="Self.ClosedQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClosedQuestions">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materials_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="1" />
+          <End Role="Materials" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpenQuestions_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="1" />
+          <End Role="OpenQuestions" Type="Self.OpenQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OpenQuestions">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsLessonSubjects_LessonSubjects">
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="1" />
+          <End Role="TestsLessonSubjects" Type="Self.TestsLessonSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestsLessonSubjects">
+              <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_ClosedQuestions">
+          <End Role="ClosedQuestions" Type="Self.ClosedQuestion" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClosedQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="ClosedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersOpenAnswers_OpenQuestions">
+          <End Role="OpenQuestions" Type="Self.OpenQuestion" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="OpenQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestsLessonSubjects_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestsLessonSubjects" Type="Self.TestsLessonSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestsLessonSubjects">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswers_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersTests_Tests">
+          <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersOpenAnswers_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOpenAnswers" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOpenAnswers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCourses_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCourses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersTests_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LanguageSchoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ContactRequests" EntityType="Self.ContactRequest" />
+          <EntitySet Name="UserDatas" EntityType="Self.UserData" />
+          <EntitySet Name="Courses" EntityType="LanguageSchoolModel.Course" />
+          <EntitySet Name="EntryTests" EntityType="Self.EntryTest" />
+          <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubject" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="ClosedQuestions" EntityType="Self.ClosedQuestion" />
+          <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestion" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubject" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswer" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersCourses" EntityType="LanguageSchoolModel.UsersCourses" />
+          <EntitySet Name="UsersTests1" EntityType="LanguageSchoolModel.UsersTests" />
+          <AssociationSet Name="FK_ContactRequests_Courses" Association="Self.FK_ContactRequests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactRequests_Tests" Association="Self.FK_ContactRequests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserData_UserLoginData" Association="Self.FK_UserData_UserLoginData">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserData" EntitySet="UserDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="EntryTests" EntitySet="EntryTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_Courses" Association="Self.FK_Tests_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCourses_Courses" Association="Self.FK_UsersCourses_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="UsersCourses" EntitySet="UsersCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTests_Tests" Association="Self.FK_EntryTests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="EntryTests" EntitySet="EntryTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClosedQuestions_LessonSubjects" Association="Self.FK_ClosedQuestions_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="ClosedQuestions" EntitySet="ClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materials_LessonSubjects" Association="Self.FK_Materials_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpenQuestions_LessonSubjects" Association="Self.FK_OpenQuestions_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsLessonSubjects_LessonSubjects" Association="Self.FK_TestsLessonSubjects_LessonSubjects">
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+            <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_ClosedQuestions" Association="Self.FK_Answers_ClosedQuestions">
+            <End Role="ClosedQuestions" EntitySet="ClosedQuestions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersOpenAnswers_OpenQuestions" Association="Self.FK_UsersOpenAnswers_OpenQuestions">
+            <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestsLessonSubjects_Tests" Association="Self.FK_TestsLessonSubjects_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswers_Tests" Association="Self.FK_UserOpenAnswers_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Tests" Association="Self.FK_UsersTests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="UsersTests" EntitySet="UsersTests1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersOpenAnswers_Users" Association="Self.FK_UsersOpenAnswers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCourses_Users" Association="Self.FK_UsersCourses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCourses" EntitySet="UsersCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Users" Association="Self.FK_UsersTests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersTests" EntitySet="UsersTests1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LanguageSchoolModelStoreContainer" CdmEntityContainer="LanguageSchoolEntities">
+          <EntitySetMapping Name="ContactRequests">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.ContactRequest">
+              <MappingFragment StoreEntitySet="ContactRequests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="IsAwaiting" ColumnName="IsAwaiting" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="EntryTestId" ColumnName="EntryTestId" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDatas">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserData">
+              <MappingFragment StoreEntitySet="UserData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="HomeNumber" ColumnName="HomeNumber" />
+                <ScalarProperty Name="PublicPhoneNumber" ColumnName="PublicPhoneNumber" />
+                <ScalarProperty Name="PrivatePhoneNumber" ColumnName="PrivatePhoneNumber" />
+                <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Course">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntryTests">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.EntryTest">
+              <MappingFragment StoreEntitySet="EntryTests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LessonSubjects">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.LessonSubject">
+              <MappingFragment StoreEntitySet="LessonSubjects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Material">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="LessonSubjectId" ColumnName="LessonSubjectId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="File" ColumnName="File" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Answer">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="ClosedQuestionId" ColumnName="ClosedQuestionId" />
+                <ScalarProperty Name="Answer1" ColumnName="Answer" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClosedQuestions">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.ClosedQuestion">
+              <MappingFragment StoreEntitySet="ClosedQuestions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="LessonSubjectId" ColumnName="LessonSubjectId" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="NumberOfPossibleAnswers" ColumnName="NumberOfPossibleAnswers" />
+                <ScalarProperty Name="IsMultichoice" ColumnName="IsMultichoice" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OpenQuestions">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.OpenQuestion">
+              <MappingFragment StoreEntitySet="OpenQuestions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="LessonSubjectId" ColumnName="LessonSubjectId" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
+                <ScalarProperty Name="NumberOfOpenQuestions" ColumnName="NumberOfOpenQuestions" />
+                <ScalarProperty Name="NumberOfClosedQuestions" ColumnName="NumberOfClosedQuestions" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestsLessonSubjects">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.TestsLessonSubject">
+              <MappingFragment StoreEntitySet="TestsLessonSubjects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="LessonSubjectId" ColumnName="LessonSubjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOpenAnswers">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserOpenAnswer">
+              <MappingFragment StoreEntitySet="UserOpenAnswers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="OpenQuestionId" ColumnName="OpenQuestionId" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersCourses">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersCourses">
+              <MappingFragment StoreEntitySet="UsersCourses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersTests1">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTests">
+              <MappingFragment StoreEntitySet="UsersTests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="IsMarked" ColumnName="IsMarked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
