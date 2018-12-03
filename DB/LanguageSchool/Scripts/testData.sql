@@ -431,9 +431,9 @@ VALUES
     ,N'Past tenses - sample test.'
     ,NULL
     ,2
-    ,1
-    ,1
-    ,5
+    ,0
+    ,2
+    ,2
     ,1)
 	
 SET @TestId = SCOPE_IDENTITY()
@@ -643,18 +643,3 @@ VALUES
     ,@QuestionId
     ,N'She is watching by Piotr'
     ,0)
-
-INSERT INTO [Tests].[OpenQuestions]
-    ([IsDeleted]
-    ,[CreationDate]
-    ,[DeletionDate]
-    ,[LessonSubjectId]
-    ,[Contents]
-    ,[Points])
-VALUES
-    (0
-    ,GETDATE()
-    ,NULL
-     ,@LessonSubjectId2
-    ,N'Translate ''Ona była obsługiwana przez Pawła'' to english'
-    ,4)
