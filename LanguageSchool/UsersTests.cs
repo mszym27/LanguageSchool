@@ -12,7 +12,7 @@ namespace LanguageSchool
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersTest
+    public partial class UsersTests
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }

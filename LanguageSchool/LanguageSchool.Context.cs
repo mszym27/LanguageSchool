@@ -27,20 +27,19 @@ namespace LanguageSchool
     
         public virtual DbSet<ContactRequest> ContactRequests { get; set; }
         public virtual DbSet<UserData> UserDatas { get; set; }
-        public virtual DbSet<Cours> Courses { get; set; }
+        public virtual DbSet<Courses> Courses { get; set; }
         public virtual DbSet<EntryTest> EntryTests { get; set; }
         public virtual DbSet<LessonSubject> LessonSubjects { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<ClosedQuestion> ClosedQuestions { get; set; }
-        public virtual DbSet<EntryTests1> EntryTests1 { get; set; }
         public virtual DbSet<OpenQuestion> OpenQuestions { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<TestsLessonSubject> TestsLessonSubjects { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UsersCours> UsersCourses { get; set; }
-        public virtual DbSet<UsersTest> UsersTests { get; set; }
+        public virtual DbSet<UsersCourses> UsersCourses { get; set; }
+        public virtual DbSet<UsersTests> UsersTests1 { get; set; }
     }
 }

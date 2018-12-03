@@ -209,13 +209,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Cours.cs">
+    <Compile Include="Courses.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="EntryTest.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntryTests1.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -268,10 +265,10 @@
     <Compile Include="UserOpenAnswer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="UsersCours.cs">
+    <Compile Include="UsersCourses.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="UsersTest.cs">
+    <Compile Include="UsersTests.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
   </ItemGroup>

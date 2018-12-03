@@ -19,8 +19,8 @@ namespace LanguageSchool
         {
             this.UserDatas = new HashSet<UserData>();
             this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
-            this.UsersCourses = new HashSet<UsersCours>();
-            this.UsersTests = new HashSet<UsersTest>();
+            this.UsersCourses = new HashSet<UsersCourses>();
+            this.UsersTests = new HashSet<UsersTests>();
         }
     
         public int Id { get; set; }
@@ -37,8 +37,8 @@ namespace LanguageSchool
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersCours> UsersCourses { get; set; }
+        public virtual ICollection<UsersCourses> UsersCourses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersTest> UsersTests { get; set; }
+        public virtual ICollection<UsersTests> UsersTests { get; set; }
     }
 }

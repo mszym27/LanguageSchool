@@ -117,21 +117,6 @@
           <Property Name="IsMultichoice" Type="bit" Nullable="false" />
           <Property Name="Points" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="EntryTests1">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="DeletionDate" Type="datetime" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
-          <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
-          <Property Name="Points" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="OpenQuestions">
           <Key>
             <PropertyRef Name="Id" />
@@ -271,18 +256,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="EntryTests">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EntryTests_Courses1">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="EntryTests1" Type="Self.EntryTests1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EntryTests1">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
@@ -488,7 +461,6 @@
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="Materials" store:Type="Tables" />
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="ClosedQuestions" EntityType="Self.ClosedQuestions" Schema="Tests" store:Type="Tables" />
-          <EntitySet Name="EntryTests1" EntityType="Self.EntryTests1" Schema="Tests" Table="EntryTests" store:Type="Tables" />
           <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestions" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubjects" Schema="Tests" store:Type="Tables" />
@@ -512,10 +484,6 @@
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="EntryTests" EntitySet="EntryTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EntryTests_Courses1" Association="Self.FK_EntryTests_Courses1">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="EntryTests1" EntitySet="EntryTests1" />
           </AssociationSet>
           <AssociationSet Name="FK_EntryTests_Tests" Association="Self.FK_EntryTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
@@ -624,7 +592,7 @@
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserData_UserLoginData" FromRole="UserData" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Cours">
+        <EntityType Name="Courses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -636,7 +604,6 @@
           <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Courses" FromRole="Courses" ToRole="EntryTests" />
-          <NavigationProperty Name="EntryTests1" Relationship="Self.FK_EntryTests_Courses1" FromRole="Courses" ToRole="EntryTests1" />
           <NavigationProperty Name="LessonSubjects" Relationship="Self.FK_LessonSubjects_Courses" FromRole="Courses" ToRole="LessonSubjects" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Courses" FromRole="Courses" ToRole="Tests" />
           <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Courses" FromRole="Courses" ToRole="UsersCourses" />
@@ -716,22 +683,6 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LessonSubject" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="ClosedQuestions" ToRole="LessonSubjects" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="ClosedQuestions" ToRole="Answers" />
-        </EntityType>
-        <EntityType Name="EntryTests1">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
-          <Property Name="Points" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_EntryTests_Courses1" FromRole="EntryTests1" ToRole="Courses" />
         </EntityType>
         <EntityType Name="OpenQuestion">
           <Key>
@@ -823,7 +774,7 @@
           <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Users" FromRole="Users" ToRole="UsersCourses" />
           <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Users" FromRole="Users" ToRole="UsersTests" />
         </EntityType>
-        <EntityType Name="UsersCours">
+        <EntityType Name="UsersCourses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -833,10 +784,10 @@
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_UsersCourses_Courses" FromRole="UsersCourses" ToRole="Courses" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_UsersCourses_Courses" FromRole="UsersCourses" ToRole="Courses" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersCourses_Users" FromRole="UsersCourses" ToRole="Users" />
         </EntityType>
-        <EntityType Name="UsersTest">
+        <EntityType Name="UsersTests">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -876,7 +827,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EntryTests_Courses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="Courses" Type="LanguageSchoolModel.Courses" Multiplicity="1" />
           <End Role="EntryTests" Type="Self.EntryTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
@@ -887,20 +838,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EntryTests_Courses1">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
-          <End Role="EntryTests1" Type="Self.EntryTests1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EntryTests1">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LessonSubjects_Courses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="Courses" Type="LanguageSchoolModel.Courses" Multiplicity="1" />
           <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
@@ -912,7 +851,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tests_Courses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="Courses" Type="LanguageSchoolModel.Courses" Multiplicity="1" />
           <End Role="Tests" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
@@ -924,8 +863,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UsersCourses_Courses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
-          <End Role="UsersCourses" Type="Self.UsersCours" Multiplicity="*" />
+          <End Role="Courses" Type="LanguageSchoolModel.Courses" Multiplicity="1" />
+          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
@@ -1045,7 +984,7 @@
         </Association>
         <Association Name="FK_UsersTests_Tests">
           <End Role="Tests" Type="Self.Test" Multiplicity="1" />
-          <End Role="UsersTests" Type="Self.UsersTest" Multiplicity="*" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tests">
               <PropertyRef Name="Id" />
@@ -1081,7 +1020,7 @@
         </Association>
         <Association Name="FK_UsersCourses_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UsersCourses" Type="Self.UsersCours" Multiplicity="*" />
+          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -1093,7 +1032,7 @@
         </Association>
         <Association Name="FK_UsersTests_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UsersTests" Type="Self.UsersTest" Multiplicity="*" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -1106,21 +1045,20 @@
         <EntityContainer Name="LanguageSchoolEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ContactRequests" EntityType="Self.ContactRequest" />
           <EntitySet Name="UserDatas" EntityType="Self.UserData" />
-          <EntitySet Name="Courses" EntityType="Self.Cours" />
+          <EntitySet Name="Courses" EntityType="LanguageSchoolModel.Courses" />
           <EntitySet Name="EntryTests" EntityType="Self.EntryTest" />
           <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubject" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
           <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="ClosedQuestions" EntityType="Self.ClosedQuestion" />
-          <EntitySet Name="EntryTests1" EntityType="Self.EntryTests1" />
           <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestion" />
           <EntitySet Name="Tests" EntityType="Self.Test" />
           <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubject" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswer" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="UsersCourses" EntityType="Self.UsersCours" />
-          <EntitySet Name="UsersTests" EntityType="Self.UsersTest" />
+          <EntitySet Name="UsersCourses" EntityType="LanguageSchoolModel.UsersCourses" />
+          <EntitySet Name="UsersTests1" EntityType="LanguageSchoolModel.UsersTests" />
           <AssociationSet Name="FK_ContactRequests_Tests" Association="Self.FK_ContactRequests_Tests">
             <End Role="Tests" EntitySet="Tests" />
             <End Role="ContactRequests" EntitySet="ContactRequests" />
@@ -1132,10 +1070,6 @@
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="EntryTests" EntitySet="EntryTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EntryTests_Courses1" Association="Self.FK_EntryTests_Courses1">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="EntryTests1" EntitySet="EntryTests1" />
           </AssociationSet>
           <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -1187,7 +1121,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Tests" Association="Self.FK_UsersTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
-            <End Role="UsersTests" EntitySet="UsersTests" />
+            <End Role="UsersTests" EntitySet="UsersTests1" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
@@ -1203,7 +1137,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Users" Association="Self.FK_UsersTests_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UsersTests" EntitySet="UsersTests" />
+            <End Role="UsersTests" EntitySet="UsersTests1" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1250,7 +1184,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.Cours">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Courses">
               <MappingFragment StoreEntitySet="Courses">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -1332,22 +1266,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EntryTests1">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.EntryTests1">
-              <MappingFragment StoreEntitySet="EntryTests1">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
-                <ScalarProperty Name="Points" ColumnName="Points" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OpenQuestions">
             <EntityTypeMapping TypeName="LanguageSchoolModel.OpenQuestion">
               <MappingFragment StoreEntitySet="OpenQuestions">
@@ -1426,7 +1344,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UsersCourses">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersCours">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersCourses">
               <MappingFragment StoreEntitySet="UsersCourses">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -1437,8 +1355,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsersTests">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTest">
+          <EntitySetMapping Name="UsersTests1">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTests">
               <MappingFragment StoreEntitySet="UsersTests">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

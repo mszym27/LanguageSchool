@@ -30,6 +30,6 @@ namespace LanguageSchool.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<LanguageSchool.Models.Course> Course { get; set; }
+        public System.Data.Entity.DbSet<LanguageSchool.Courses> Course { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace LanguageSchool
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersCours
+    public partial class UsersCourses
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
@@ -21,7 +21,7 @@ namespace LanguageSchool
         public int UserId { get; set; }
         public int CourseId { get; set; }
     
-        public virtual Cours Cours { get; set; }
+        public virtual Courses Course { get; set; }
         public virtual User User { get; set; }
     }
 }

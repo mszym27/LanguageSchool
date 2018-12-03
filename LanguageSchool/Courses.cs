@@ -12,16 +12,15 @@ namespace LanguageSchool
     using System;
     using System.Collections.Generic;
     
-    public partial class Cours
+    public partial class Courses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cours()
+        public Courses()
         {
             this.EntryTests = new HashSet<EntryTest>();
-            this.EntryTests1 = new HashSet<EntryTests1>();
             this.LessonSubjects = new HashSet<LessonSubject>();
             this.Tests = new HashSet<Test>();
-            this.UsersCourses = new HashSet<UsersCours>();
+            this.UsersCourses = new HashSet<UsersCourses>();
         }
     
         public int Id { get; set; }
@@ -35,12 +34,10 @@ namespace LanguageSchool
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EntryTest> EntryTests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EntryTests1> EntryTests1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LessonSubject> LessonSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersCours> UsersCourses { get; set; }
+        public virtual ICollection<UsersCourses> UsersCourses { get; set; }
     }
 }
