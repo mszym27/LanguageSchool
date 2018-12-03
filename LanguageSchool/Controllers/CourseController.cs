@@ -9,15 +9,12 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : Controller
     {
-        private LanguageSchoolEntities dbContext;
-        //private LanguageSchool.Courses Courses; // { get; set; }
+        private LanguageSchoolEntities db = new LanguageSchoolEntities();
 
         // GET: Course
         public ActionResult Index()
         {
-            dbContext = new LanguageSchoolEntities();
-
-            var Courses = from c in dbContext.Courses
+            var Courses = from c in db.Courses
                       orderby c.CreationDate
                       where (c.IsActive == true && c.IsDeleted == false)
                       select c;       
@@ -25,10 +22,12 @@ namespace LanguageSchool.Controllers
             return View(Courses);
         }
 
-        // GET: Course/Details/5
+        [Route("Course/{id}")]
         public ActionResult Details(int id)
         {
-            return View();
+            Course c = db.Courses.Find(id);
+
+            return View(c);
         }
 
         // GET: Course/Create
