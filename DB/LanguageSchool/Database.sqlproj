@@ -98,5 +98,6 @@
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
     <None Include="LanguageSchool.publish.xml" />
+    <None Include="Scripts\TestData.sql" />
   </ItemGroup>
 </Project>
