@@ -29,5 +29,7 @@ namespace LanguageSchool.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<LanguageSchool.Models.Course> Course { get; set; }
     }
 }
