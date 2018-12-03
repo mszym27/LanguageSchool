@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<LanguageSchool.Models.Course>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -12,9 +12,6 @@
     <title>View</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
         <tr>
             <th>
