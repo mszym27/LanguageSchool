@@ -192,86 +192,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answer.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="ClosedQuestion.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ContactRequest.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Courses.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntryTest.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageSchool.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageSchool.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageSchool.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageSchool.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageSchool.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="LessonSubject.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Material.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="OpenQuestion.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Test.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TestsLessonSubject.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserData.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserOpenAnswer.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersCourses.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersTests.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -280,29 +217,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="LanguageSchool.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LanguageSchool.edmx</DependentUpon>
-      <LastGenOutput>LanguageSchool.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="LanguageSchool.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LanguageSchool.edmx</DependentUpon>
-      <LastGenOutput>LanguageSchool.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="LanguageSchool.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LanguageSchool.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="LanguageSchool.edmx.diagram">
-      <DependentUpon>LanguageSchool.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
