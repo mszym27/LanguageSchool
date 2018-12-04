@@ -22,7 +22,7 @@ namespace LanguageSchool.Models
         public int TestId { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual Course Cours { get; set; }
+        public virtual Course Course { get; set; }
         public virtual Test Test { get; set; }
     }
 }
