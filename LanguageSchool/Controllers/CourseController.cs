@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 using System.Net;
 
 namespace LanguageSchool.Controllers
@@ -22,14 +23,14 @@ namespace LanguageSchool.Controllers
 
             List<Course> Courses = query.ToList();
 
-            if(Courses != null)
+            var CoursesViewModels = new List<CourseViewModel>();
+
+            foreach (Course c in Courses)
             {
-                return View(Courses);
+                CoursesViewModels.Add(new CourseViewModel(c));
             }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
+            return View(CoursesViewModels);
         }
 
         [Route("Course/{id}")]

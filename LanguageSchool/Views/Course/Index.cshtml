@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LanguageSchool.Models.Course>
+﻿@model IEnumerable<LanguageSchool.Models.ViewModels.CourseViewModel>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,7 +33,7 @@
                 @Html.ActionLink(item.Name, "Details", new { id = item.Id })
             </td>
             <td>
-                @item.Description.Substring(0, item.Description.IndexOf('.') + 1)
+                @item.ShortDescription
             </td>
         </tr>
     }
