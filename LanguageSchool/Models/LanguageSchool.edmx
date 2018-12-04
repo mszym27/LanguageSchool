@@ -17,7 +17,7 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="Result" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsAwaiting" Type="bit" Nullable="false" />
-          <Property Name="CourseId" Type="int" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="EntryTestId" Type="int" />
           <Property Name="Points" Type="int" />
         </EntityType>
@@ -238,7 +238,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContactRequests_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
           <End Role="ContactRequests" Type="Self.ContactRequests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
@@ -583,10 +583,10 @@
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Result" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsAwaiting" Type="Boolean" Nullable="false" />
-          <Property Name="CourseId" Type="Int32" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="EntryTestId" Type="Int32" />
           <Property Name="Points" Type="Int32" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
           <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
         </EntityType>
         <EntityType Name="UserData">
@@ -822,7 +822,7 @@
           <NavigationProperty Name="User" Relationship="Self.FK_UsersTests_Users" FromRole="UsersTests" ToRole="Users" />
         </EntityType>
         <Association Name="FK_ContactRequests_Courses">
-          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="0..1" />
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
           <End Role="ContactRequests" Type="Self.ContactRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">

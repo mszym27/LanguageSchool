@@ -9,7 +9,6 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; }
         public string CreationDate { get; }
-
         public string Name { get; }
         public string ShortDescription { get; }
 

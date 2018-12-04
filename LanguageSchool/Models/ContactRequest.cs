@@ -22,11 +22,11 @@ namespace LanguageSchool.Models
         public string Comment { get; set; }
         public string Result { get; set; }
         public bool IsAwaiting { get; set; }
-        public Nullable<int> CourseId { get; set; }
+        public int CourseId { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }
     
-        public virtual Course Cours { get; set; }
+        public virtual Course Course { get; set; }
         public virtual Test Test { get; set; }
     }
 }
