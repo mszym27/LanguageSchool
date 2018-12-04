@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
+using System.Net;
 
 namespace LanguageSchool.Controllers
 {
@@ -14,18 +15,32 @@ namespace LanguageSchool.Controllers
         // GET: Course
         public ActionResult Index()
         {
-            var Courses = from c in db.Courses
+            var query = from c in db.Courses
                       orderby c.CreationDate
                       where (c.IsActive == true && c.IsDeleted == false)
-                      select c;       
+                      select c;
 
-            return View(Courses);
+            List<Course> Courses = query.ToList();
+
+            if(Courses != null)
+            {
+                return View(Courses);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("Course/{id}")]
         public ActionResult Details(int id)
         {
             Course c = db.Courses.Find(id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
 
             return View(c);
         }
