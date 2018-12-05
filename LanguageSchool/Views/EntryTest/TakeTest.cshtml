@@ -15,11 +15,17 @@
 <hr />
 
 <table class="table">
-    @{
-        foreach (var question in Model.Questions)
+    @foreach (var question in Model.Questions)
+    {
         <tr>
             <td>
                 @question.Contents
+                @foreach (var answer in question.Answers)
+                {
+                    @answer.Answer
+
+                    @answer.IsMarked
+                }
             </td>
         </tr>
     }

@@ -12,8 +12,6 @@ namespace LanguageSchool.Models.ViewModels
         public string Answer { get; }
         public bool IsCorrect { get; }
 
-        public List<Answer> Answers { get; set; }
-
         public bool IsMarked { get; set; }
 
         public AnswerViewModel (Answer a)

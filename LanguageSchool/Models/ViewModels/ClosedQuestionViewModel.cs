@@ -23,6 +23,8 @@ namespace LanguageSchool.Models.ViewModels
             NumberOfPossibleAnswers = cq.NumberOfPossibleAnswers;
             IsMultichoice = cq.IsMultichoice;
             Points = cq.Points;
+
+            Answers = new List<AnswerViewModel>();
         }
     }
 }

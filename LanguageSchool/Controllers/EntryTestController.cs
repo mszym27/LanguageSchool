@@ -11,6 +11,7 @@ namespace LanguageSchool.Controllers
     public class EntryTestController : Controller
     {
         private LanguageSchoolEntities db = new LanguageSchoolEntities();
+        private Random random = new Random();
 
         [Route("EntryTest/{id}")]
         public ActionResult Index(int id)
@@ -50,7 +51,7 @@ namespace LanguageSchool.Controllers
 
             for (int i = 1; i <= LessonSubjectsCount; i++)
             {
-                int LessonSubjectId = t.TestsLessonSubjects.ElementAt(i).LessonSubjectId;
+                int LessonSubjectId = t.TestsLessonSubjects.ElementAt(i - 1).LessonSubjectId;
 
                 var cqquery = from cq in db.ClosedQuestions
                         where cq.LessonSubjectId == LessonSubjectId
@@ -58,6 +59,29 @@ namespace LanguageSchool.Controllers
                         select cq;
 
                 var LessonSubjectQuestions = cqquery.ToList();
+
+                int HowMany = QuestionPartitioned[i - 1];
+
+                var ChosenForTheSubject = LessonSubjectQuestions.OrderBy(x => random.Next()).Take(HowMany);
+
+                foreach(var chosen in ChosenForTheSubject)
+                {
+                    var paquery = from a in db.Answers
+                                 where a.ClosedQuestionId == chosen.Id
+                                     && a.IsDeleted == false
+                                     && a.IsCorrect == true
+                                  select a;
+
+                    var ProperAnswer = paquery.First();
+
+                    var chosenvm = new ClosedQuestionViewModel(chosen);
+
+                    var ProperAnswerVM = new AnswerViewModel(ProperAnswer);
+
+                    chosenvm.Answers.Add(ProperAnswerVM);
+
+                    ChosenQuestions.Add(chosenvm);
+                }
 
                 //NumberOfQuestions
             }
@@ -78,7 +102,6 @@ namespace LanguageSchool.Controllers
 
             if (remainder != 0)
             {
-                Random random = new Random();
                 int rPlace = random.Next(1, LessonSubjectsCount);
 
                 list[rPlace] = remainder;
