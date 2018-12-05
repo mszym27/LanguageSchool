@@ -20,11 +20,19 @@
         <tr>
             <td>
                 @question.Contents
+
                 @foreach (var answer in question.Answers)
                 {
-                    @answer.Answer
-
-                    @answer.IsMarked
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            @answer.Answer
+                        </div>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(a => answer.IsMarked)
+                                </div>
+                            </div>
+                        </div>
                 }
             </td>
         </tr>
