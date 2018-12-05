@@ -74,11 +74,28 @@ namespace LanguageSchool.Controllers
 
                     var ProperAnswer = paquery.First();
 
+                    var waquery = from a in db.Answers
+                                  where a.ClosedQuestionId == chosen.Id
+                                      && a.IsDeleted == false
+                                      && a.IsCorrect == false
+                                  select a;
+
+                    var WrongAnswers = waquery.ToList().OrderBy(x => random.Next()).Take(chosen.NumberOfPossibleAnswers - 1);
+
                     var chosenvm = new ClosedQuestionViewModel(chosen);
+
+                    foreach (var wronganswer in WrongAnswers)
+                    {
+                        var WrongAnswerVM = new AnswerViewModel(wronganswer);
+
+                        chosenvm.Answers.Add(WrongAnswerVM);
+                    }
 
                     var ProperAnswerVM = new AnswerViewModel(ProperAnswer);
 
                     chosenvm.Answers.Add(ProperAnswerVM);
+
+                    chosenvm.Answers = chosenvm.Answers.OrderBy(x => random.Next()).ToList();
 
                     ChosenQuestions.Add(chosenvm);
                 }
