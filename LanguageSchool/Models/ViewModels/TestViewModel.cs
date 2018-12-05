@@ -14,6 +14,8 @@ namespace LanguageSchool.Models.ViewModels
         public int NumberOfQuestions { get; }
         public int Points { get; }
 
+        public List<ClosedQuestionViewModel> Answers { get; set; }
+
         public TestViewModel(Test t)
         {
             Id = t.Id;

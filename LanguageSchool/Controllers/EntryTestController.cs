@@ -34,5 +34,15 @@ namespace LanguageSchool.Controllers
 
             return View(TestViewModels);
         }
+
+        [Route("TakeTest/{id}")]
+        public ActionResult TakeTest(int id)
+        {
+            Test t = db.Tests.Find(id);
+
+            TestViewModel tvm = new TestViewModel(t);
+
+            return View(tvm);
+        }
     }
 }
