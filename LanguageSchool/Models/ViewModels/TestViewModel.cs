@@ -8,8 +8,8 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class TestViewModel
     {
-        [Key]
         public int Id { get; }
+        public int CourseId { get; }
         public string CreationDate { get; }
         public string Name { get; }
         public string Comment { get; }
@@ -21,6 +21,7 @@ namespace LanguageSchool.Models.ViewModels
         public TestViewModel(Test t)
         {
             Id = t.Id;
+            CourseId = t.CourseId;
             CreationDate = t.CreationDate.ToString("yyyy-MM-dd");
             Name = t.Name;
             Comment = t.Comment == null? "-": t.Comment;
