@@ -19,7 +19,7 @@ namespace LanguageSchool.Models
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int ClosedQuestionId { get; set; }
-        public string Answer1 { get; set; }
+        public string AnswerContent { get; set; }
         public bool IsCorrect { get; set; }
     
         public virtual ClosedQuestion ClosedQuestion { get; set; }

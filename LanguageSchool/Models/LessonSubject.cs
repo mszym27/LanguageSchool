@@ -32,7 +32,7 @@ namespace LanguageSchool.Models
         public string Description { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual Course Cours { get; set; }
+        public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClosedQuestion> ClosedQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

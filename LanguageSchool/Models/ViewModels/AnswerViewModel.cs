@@ -19,7 +19,7 @@ namespace LanguageSchool.Models.ViewModels
         public AnswerViewModel (Answer a)
         {
             Id = a.Id;
-            Answer = a.Answer1;
+            Answer = a.AnswerContent;
             IsCorrect = a.IsCorrect;
         }
     }

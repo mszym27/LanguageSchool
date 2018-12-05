@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace LanguageSchool.Models.ViewModels
 {
     public class TestViewModel
     {
+        [Key]
         public int Id { get; }
         public string CreationDate { get; }
         public string Name { get; }

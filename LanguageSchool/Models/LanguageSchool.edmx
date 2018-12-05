@@ -653,7 +653,7 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_LessonSubjects_Courses" FromRole="LessonSubjects" ToRole="Courses" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_LessonSubjects_Courses" FromRole="LessonSubjects" ToRole="Courses" />
           <NavigationProperty Name="ClosedQuestions" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="ClosedQuestions" />
           <NavigationProperty Name="Materials" Relationship="Self.FK_Materials_LessonSubjects" FromRole="LessonSubjects" ToRole="Materials" />
           <NavigationProperty Name="OpenQuestions" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="OpenQuestions" />
@@ -683,7 +683,7 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="ClosedQuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Answer1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnswerContent" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ClosedQuestion" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="Answers" ToRole="ClosedQuestions" />
         </EntityType>
@@ -734,7 +734,7 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_Tests" FromRole="Tests" ToRole="ContactRequests" />
-          <NavigationProperty Name="Cours" Relationship="Self.FK_Tests_Courses" FromRole="Tests" ToRole="Courses" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Tests_Courses" FromRole="Tests" ToRole="Courses" />
           <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Tests" FromRole="Tests" ToRole="EntryTests" />
           <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_Tests" FromRole="Tests" ToRole="TestsLessonSubjects" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="Tests" ToRole="UserOpenAnswers" />
@@ -1282,7 +1282,7 @@
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
                 <ScalarProperty Name="ClosedQuestionId" ColumnName="ClosedQuestionId" />
-                <ScalarProperty Name="Answer1" ColumnName="Answer" />
+                <ScalarProperty Name="AnswerContent" ColumnName="Answer" />
                 <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
               </MappingFragment>
             </EntityTypeMapping>
