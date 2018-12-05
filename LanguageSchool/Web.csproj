@@ -364,6 +364,7 @@
     <Content Include="Views\ContactRequest\Create.cshtml" />
     <Content Include="Views\EntryTest\Index.cshtml" />
     <Content Include="Views\Shared\_BackToCourses.cshtml" />
+    <Content Include="Views\EntryTest\TakeTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

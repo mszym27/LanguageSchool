@@ -1,0 +1,41 @@
+﻿@model LanguageSchool.Models.ViewModels.TestViewModel
+
+@{
+    ViewBag.Title = "TakeTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="display-3">@Model.Name</h1>
+
+@if (Model.Comment != "-")
+{
+    <p>@Model.Comment</p>
+}
+
+<hr />
+
+<table class="table">
+    @{
+        foreach (var question in Model.Questions)
+        <tr>
+            <td>
+                @question.Contents
+            </td>
+        </tr>
+    }
+</table>
+
+<hr width="95%">
+
+<div class="container w-100 h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-md-3">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Course")'">Lista testów</button>
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "EntryTest", new { id = @Model.Id })'">Oceń</button>
+        </div>
+    </div>
+</div>
