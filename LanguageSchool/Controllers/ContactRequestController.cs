@@ -13,9 +13,13 @@ namespace LanguageSchool.Controllers
         private LanguageSchoolEntities db = new LanguageSchoolEntities();
 
         // GET: ContactRequest/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            ContactRequestViewModel crvm = new ContactRequestViewModel();
+
+            crvm.CourseId = id;
+
+            return View(crvm);
         }
 
         // POST: ContactRequest/Create

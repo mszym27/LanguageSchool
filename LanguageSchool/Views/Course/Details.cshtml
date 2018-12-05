@@ -43,7 +43,7 @@
             <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Course")'">Lista kursów</button>
         </div>
         <div class="col-md-6">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest")'">Zostaw prośbę o kontakt</button>
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.Id })'">Zostaw prośbę o kontakt</button>
         </div>
         <div class="col-md-3">
             <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Course")'">Przykładowe testy</button>
