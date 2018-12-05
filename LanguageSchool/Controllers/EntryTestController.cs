@@ -19,7 +19,8 @@ namespace LanguageSchool.Controllers
                         join et in db.EntryTests
                             on t.Id equals et.TestId
                         orderby et.CreationDate
-                        where (et.IsActive == true && et.IsDeleted == false)
+                        where et.CourseId == id
+                            && (et.IsActive == true && et.IsDeleted == false)
                         select t;
 
             List<Test> Tests = query.ToList();
