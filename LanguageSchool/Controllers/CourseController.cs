@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
-using System.Net;
 
 namespace LanguageSchool.Controllers
 {
