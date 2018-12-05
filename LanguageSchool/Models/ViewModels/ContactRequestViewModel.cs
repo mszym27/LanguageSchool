@@ -9,10 +9,10 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class ContactRequestViewModel
     {
-        //[DataType(DataType.PhoneNumber)]
-        //[Required(ErrorMessage = "Phone Number Required!")]
-        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
-        //           ErrorMessage = "Entered phone format is not valid.")]
+        [DataType(DataType.PhoneNumber)]
+        [Required(ErrorMessage = "Numer telefonu wymagany")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
+                   ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string PhoneNumber { get; set; }
         public string EmailAdress { get; set; }
         public string Comment { get; set; }

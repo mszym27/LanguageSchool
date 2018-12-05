@@ -428,7 +428,7 @@ VALUES
     ,GETDATE()
     ,NULL
     ,@CourseId
-    ,N'Past tenses - sample test.'
+    ,N'Past tenses - sample test'
     ,NULL
     ,2
     ,0
