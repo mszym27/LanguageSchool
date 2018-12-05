@@ -33,7 +33,7 @@ namespace LanguageSchool.Controllers
                 cr.PhoneNumber = crvm.PhoneNumber;
                 cr.EmailAdress = crvm.EmailAdress;
                 cr.Comment = crvm.Comment;
-                cr.CourseId = crvm.CourseId == 0 ? 7 : crvm.CourseId;
+                cr.CourseId = crvm.CourseId;
                 cr.EntryTestId = crvm.EntryTestId;
                 cr.Points = crvm.Points;
 
