@@ -25,13 +25,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Kursy", "Index", "Course")</li>
-@*
-    // TODO: populate according to user role
-    <li>@Html.ActionLink("Materiały", "Index", "Home")</li>
-    <li>@Html.ActionLink("Testy", "Index", "Home")</li>
-    <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home")</li>
-*@
+                    <li>@Html.ActionLink("Kursy", "Index", "Course", new {@style="color:white" })</li>
+                    <li>@Html.ActionLink("Materiały", "Index", "Home", new { @style = "color:white" })</li>
+                    <li>@Html.ActionLink("Testy", "Index", "Home", new { @style = "color:white" })</li>
+                    <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home", new { @style = "color:white" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,9 +36,6 @@
     </div>
     <div class="container body-content" style="padding-top: 70px; padding-bottom: 70px;">
         @RenderBody()
-    </div>
-
-    <div class="navbar navbar-fixed-bottom " style="background-color: darkorange" width = "100%" >
     </div>
 
     @Scripts.Render("~/bundles/jquery")
