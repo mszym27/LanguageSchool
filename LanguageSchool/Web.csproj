@@ -287,6 +287,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\Logo.png" />
     <Content Include="Models\LanguageSchool.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LanguageSchool.edmx</DependentUpon>
