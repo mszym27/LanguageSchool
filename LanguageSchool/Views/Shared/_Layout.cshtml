@@ -3,13 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Szkoła językowa Lorem Ipsum</title>
+    <title>Szkoła językowa BeLang</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top " style="background-color: #2C5197">
+
+        <div class="navbar-header pull-left">
+            <div class="navbar-header pull-left">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/images/Logo.png" alt="Site Logo" style="height:25%; width: 25%" />
+                </a>
+            </div>
+        </div>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,7 +25,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Szkoła językowa Lorem Ipsum", "Index", "Course", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -35,10 +42,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Marcin Szymkowski (187821)</p>
-        </footer>
+    </div>
+
+    <div class="navbar navbar-fixed-bottom " style="background-color: #2C5197" width = "100%" >
     </div>
 
     @Scripts.Render("~/bundles/jquery")
