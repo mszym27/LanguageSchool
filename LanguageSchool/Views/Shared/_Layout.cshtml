@@ -3,21 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Szkoła językowa BeLang</title>
+    <title>Szkoła językowa BeLingua</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-fixed-top " style="background-color: #2C5197">
-
-        <div class="navbar-header pull-left">
-            <div class="navbar-header pull-left">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                    <img src="~/images/Logo.png" alt="Site Logo" style="height:25%; width: 25%" />
-                </a>
-            </div>
+    <div class="navbar navbar-fixed-top " style="background-color: darkorange">
+        <div class="col-md-1">
         </div>
+        <a class="navbar-brand" padding="15px" href="@Url.Action("Index", "Home")">
+            <img src="~/images/Logo.png" alt="Site Logo" style="height:25%; width: 25%" />
+        </a>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,9 +25,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Kursy", "Index", "Course")</li>
 @*
     // TODO: populate according to user role
-    <li>@Html.ActionLink("Kursy", "Index", "Course")</li>
     <li>@Html.ActionLink("Materiały", "Index", "Home")</li>
     <li>@Html.ActionLink("Testy", "Index", "Home")</li>
     <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home")</li>
@@ -40,11 +37,11 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top: 70px; padding-bottom: 70px;">
         @RenderBody()
     </div>
 
-    <div class="navbar navbar-fixed-bottom " style="background-color: #2C5197" width = "100%" >
+    <div class="navbar navbar-fixed-bottom " style="background-color: darkorange" width = "100%" >
     </div>
 
     @Scripts.Render("~/bundles/jquery")
