@@ -292,7 +292,7 @@
     <Content Include="images\Background_home.jpg" />
     <Content Include="images\Background_course_details.jpg" />
     <Content Include="images\Background_test.jpg" />
-    <Content Include="images\Backgroud_contact.jpg" />
+    <Content Include="images\Background_contact.jpg" />
     <Content Include="images\Background_test_faded.jpg" />
     <Content Include="images\Logo.png" />
     <Content Include="Models\LanguageSchool.Context.tt">

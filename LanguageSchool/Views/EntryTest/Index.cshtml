@@ -5,47 +5,49 @@
 }
 
 <body background="~/images/Background_test.jpg">
-    <table class="table">
-        <tr>
-            <th>
-                Data utworzenia
-            </th>
-            <th>
-                Nazwa
-            </th>
-            <th>
-                Komentarz
-            </th>
-            <th>
-                Liczba pytań
-            </th>
-            <th>
-                Punkty
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <div class="jumbotron">
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    @Html.ActionLink(item.Name, "TakeTest", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfQuestions)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Points)
-                </td>
+                <th>
+                    Data utworzenia
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Komentarz
+                </th>
+                <th>
+                    Liczba pytań
+                </th>
+                <th>
+                    Punkty
+                </th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Name, "TakeTest", new { id = item.Id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfQuestions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Points)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
 
     @Html.Partial("_BackToCourses")
 </body>

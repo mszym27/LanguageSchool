@@ -12,32 +12,34 @@
     <title>View</title>
 </head>
 <body background="~/images/Background_courses.jpg">
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>
-                Kurs
-            </th>
-            <th>
-                Opis
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <div class="jumbotron">
+        <table class="table">
             <tr>
-                <td>
-                    @item.CreationDate
-                </td>
-                <td>
-                    @Html.ActionLink(item.Name, "Details", new { id = item.Id })
-                </td>
-                <td>
-                    @item.ShortDescription
-                </td>
+                <th></th>
+                <th>
+                    Kurs
+                </th>
+                <th>
+                    Opis
+                </th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.CreationDate
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                    </td>
+                    <td>
+                        @item.ShortDescription
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
 </body>
 </html>
