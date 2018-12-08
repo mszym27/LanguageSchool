@@ -24,15 +24,14 @@
                     @question.Contents
 
                     @foreach (var answer in question.Answers)
-                {
+                    {
                         <div class="form-group">
                             <div class="col-md-2">
-                                @answer.Answer
+                                @answer.Answer - @answer.Id ( @question.Id )
                             </div>
                             <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(a => answer.IsMarked)
-                                </div>
+                                @Html.RadioButton(question.Id.ToString(), answer.IsMarked)
+                                
                             </div>
                         </div>
                     }
