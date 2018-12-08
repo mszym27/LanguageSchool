@@ -4,45 +4,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            Data utworzenia
-        </th>
-        <th>
-            Nazwa
-        </th>
-        <th>
-            Komentarz
-        </th>
-        <th>
-            Liczba pytań
-        </th>
-        <th>
-            Punkty
-        </th>
-    </tr>
+<body background="~/images/Background_test.jpg">
+    <table class="table">
+        <tr>
+            <th>
+                Data utworzenia
+            </th>
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Komentarz
+            </th>
+            <th>
+                Liczba pytań
+            </th>
+            <th>
+                Punkty
+            </th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.ActionLink(item.Name, "TakeTest", new { id = item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfQuestions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Points)
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "TakeTest", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfQuestions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Points)
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
 
-@Html.Partial("_BackToCourses")
+    @Html.Partial("_BackToCourses")
+</body>

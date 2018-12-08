@@ -5,51 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="display-3">@Model.Name</h1>
+<body background="~/images/Background_test_faded.jpg">
 
-@if (Model.Comment != "-")
-{
-    <p>@Model.Comment</p>
-}
+    <h1 class="display-3">@Model.Name</h1>
 
-<hr />
-
-<table class="table">
-    @foreach (var question in Model.Questions)
+    @if (Model.Comment != "-")
     {
-        <tr>
-            <td>
-                @question.Contents
+        <p>@Model.Comment</p>
+    }
 
-                @foreach (var answer in question.Answers)
+    <hr />
+
+    <table class="table">
+        @foreach (var question in Model.Questions)
+        {
+            <tr>
+                <td>
+                    @question.Contents
+
+                    @foreach (var answer in question.Answers)
                 {
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @answer.Answer
-                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @answer.Answer
+                            </div>
                             <div class="col-md-10">
                                 <div class="checkbox">
                                     @Html.EditorFor(a => answer.IsMarked)
                                 </div>
                             </div>
                         </div>
-                }
-            </td>
-        </tr>
-    }
-</table>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 
-<hr width="95%">
+    <hr width="95%">
 
-<div class="container w-100 h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-md-3">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "EntryTest", new { id = @Model.CourseId })'">Lista testów</button>
+    <div class="container w-100 h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "EntryTest", new { id = @Model.CourseId })'">Lista testów</button>
+            </div>
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.CourseId })'">Oceń</button>
+            </div>
         </div>
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.CourseId })'">Oceń</button>
-        </div>
-    </div>
-</div>
+    </div>    
+</body>

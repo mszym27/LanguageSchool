@@ -5,46 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <dl class="jumbotron">
+<body background="~/images/Background_course_details.jpg">
+    <div>
+        <dl class="jumbotron">
 
-        <dt>
-            Data
-        </dt>
+            <dt>
+                Data
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CreationDate)
+            </dd>
 
-        <dt>
-            Nazwa
-        </dt>
+            <dt>
+                Nazwa
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dt>
-            Opis
-        </dt>
+            <dt>
+                Opis
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-    </dl>
-</div>
+        </dl>
+    </div>
 
-<div class="container w-100 h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-md-3">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Course")'">Lista kursów</button>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.Id })'">Zostaw prośbę o kontakt</button>
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "EntryTest", new { id = @Model.Id })'">Przykładowe testy</button>
+    <div class="container w-100 h-100">
+        <div class="row align-items-center h-100">
+            <div class="col-md-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Course")'">Lista kursów</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.Id })'">Zostaw prośbę o kontakt</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "EntryTest", new { id = @Model.Id })'">Przykładowe testy</button>
+            </div>
         </div>
     </div>
-</div>
+</body>
