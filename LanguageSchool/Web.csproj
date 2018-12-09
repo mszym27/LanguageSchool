@@ -291,6 +291,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\Background_contact_faded.jpg" />
     <Content Include="images\Background_courses.jpg" />
     <Content Include="images\Background_home.jpg" />
     <Content Include="images\Background_course_details.jpg" />
