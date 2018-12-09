@@ -1,4 +1,16 @@
-﻿<li>@Html.ActionLink("Kursy", "Index", "Course", new { @style = "color:white" })</li>
-<li>@Html.ActionLink("Materiały", "Index", "Home", new { @style = "color:white" })</li>
-<li>@Html.ActionLink("Testy", "Index", "Home", new { @style = "color:white" })</li>
-<li>@Html.ActionLink("Dane kontaktowe", "Index", "Home", new { @style = "color:white" })</li>
+﻿@using LanguageSchool.Models.ViewModels
+
+@if (Session["Menus"] != null)
+{
+    var menus = (List<MenuViewModel>)Session["Menus"];
+
+    foreach (MenuViewModel m in menus)
+    {
+        <li>@Html.ActionLink(m.ShownName, m.ActionName, m.ControllerName, new { @style = "color:white" })</li>
+    }
+}
+
+<li>@Html.ActionLink("Kursy", "Index", "Course", new { @style = "color:white" })</li>
+@*<li>@Html.ActionLink("Materiały", "Index", "Home", new { @style = "color:white" })</li>
+    <li>@Html.ActionLink("Testy", "Index", "Home", new { @style = "color:white" })</li>
+    <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home", new { @style = "color:white" })</li>*@
