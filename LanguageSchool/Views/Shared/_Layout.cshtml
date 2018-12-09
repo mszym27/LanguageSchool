@@ -26,10 +26,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Kursy", "Index", "Course", new {@style="color:white" })</li>
-                    <li>@Html.ActionLink("Materiały", "Index", "Home", new { @style = "color:white" })</li>
-                    <li>@Html.ActionLink("Testy", "Index", "Home", new { @style = "color:white" })</li>
-                    <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home", new { @style = "color:white" })</li>
+                    @Html.Partial("_MenuItems")
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -197,6 +197,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactRequestController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageSchoolController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -278,6 +280,7 @@
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\TestViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -377,9 +380,11 @@
     <Content Include="Views\EntryTest\Index.cshtml" />
     <Content Include="Views\Shared\_BackToCourses.cshtml" />
     <Content Include="Views\EntryTest\TakeTest.cshtml" />
+    <Content Include="Views\Shared\_MenuItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -16,6 +16,7 @@ namespace LanguageSchool.DAL
 
         private Repository<Course> courseRepository;
         private Repository<ContactRequest> contactRequestRepository;
+        private Repository<User> userRepository;
 
         public Repository<Course> CourseRepository
         {
@@ -30,6 +31,14 @@ namespace LanguageSchool.DAL
             get
             {
                 return this.contactRequestRepository ?? new Repository<ContactRequest>(entities);
+            }
+        }
+
+        public Repository<User> UserRepository
+        {
+            get
+            {
+                return this.userRepository ?? new Repository<User>(entities);
             }
         }
 
