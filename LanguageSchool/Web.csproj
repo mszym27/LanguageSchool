@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\EntryTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageSchoolController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
