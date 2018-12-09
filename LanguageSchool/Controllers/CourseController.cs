@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using LanguageSchool.DAL;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
-    public class CourseController : Controller
+    public class CourseController : LanguageSchoolController
     {
-        private LanguageSchoolEntities db = new LanguageSchoolEntities();
+        //private LanguageSchoolEntities db = new LanguageSchoolEntities();
 
         // GET: Course
         public ActionResult Index()
         {
             var query = from c in db.Courses
-                      orderby c.CreationDate
-                      where (c.IsActive == true && c.IsDeleted == false)
-                      select c;
+                        orderby c.CreationDate
+                        where (c.IsActive == true && c.IsDeleted == false)
+                        select c;
 
             List<Course> Courses = query.ToList();
 
@@ -35,7 +37,7 @@ namespace LanguageSchool.Controllers
         [Route("Course/{id}")]
         public ActionResult Details(int id)
         {
-            Course c = db.Courses.Find(id);
+            Course c = unitOfWork.CourseRepository.GetById(id);
 
             if (c == null)
             {
