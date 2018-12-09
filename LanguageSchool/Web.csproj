@@ -381,10 +381,10 @@
     <Content Include="Views\Shared\_BackToCourses.cshtml" />
     <Content Include="Views\EntryTest\TakeTest.cshtml" />
     <Content Include="Views\Shared\_MenuItems.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

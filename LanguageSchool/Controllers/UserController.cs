@@ -12,6 +12,11 @@ namespace LanguageSchool.Controllers
 {
     public class UserController : LanguageSchoolController
     {
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(User user)
         {
@@ -21,7 +26,7 @@ namespace LanguageSchool.Controllers
                     .Where(u => u.Login == user.Login)
                     .Where(u => u.Password == user.Password)
                     .Where(c => !c.IsDeleted)
-                    .First().RoleId;
+                    .FirstOrDefault().RoleId;
 
                 if (userRoleId != null)
                 {
