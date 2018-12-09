@@ -15,11 +15,6 @@ namespace LanguageSchool.Controllers
         // GET: Course
         public ActionResult Index()
         {
-            //var query = from c in db.Courses
-            //            orderby c.CreationDate
-            //            where (c.IsActive == true && c.IsDeleted == false)
-            //            select c;
-
             var query = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted).OrderBy(c => c.CreationDate);
 
             List<Course> Courses = query.ToList();

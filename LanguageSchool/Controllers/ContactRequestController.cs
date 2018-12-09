@@ -8,10 +8,8 @@ using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
-    public class ContactRequestController : Controller
+    public class ContactRequestController : LanguageSchoolController
     {
-        private LanguageSchoolEntities db = new LanguageSchoolEntities();
-
         // GET: ContactRequest/Create
         public ActionResult Create(int id)
         {
@@ -40,8 +38,8 @@ namespace LanguageSchool.Controllers
                 cr.IsAwaiting = true;
                 cr.CreationDate = DateTime.Now;
 
-                db.ContactRequests.Add(cr);
-                db.SaveChanges();
+                unitOfWork.ContactRequestRepository.Insert(cr);
+                unitOfWork.Save();
 
                 return RedirectToAction("Index", "Course");
             }

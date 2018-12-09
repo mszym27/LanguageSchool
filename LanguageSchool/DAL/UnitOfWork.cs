@@ -15,12 +15,21 @@ namespace LanguageSchool.DAL
         private LanguageSchoolEntities entities = new LanguageSchoolEntities();
 
         private Repository<Course> courseRepository;
+        private Repository<ContactRequest> contactRequestRepository;
 
         public Repository<Course> CourseRepository
         {
             get
             {
                 return this.courseRepository ?? new Repository<Course>(entities);
+            }
+        }
+
+        public Repository<ContactRequest> ContactRequestRepository
+        {
+            get
+            {
+                return this.contactRequestRepository ?? new Repository<ContactRequest>(entities);
             }
         }
 
