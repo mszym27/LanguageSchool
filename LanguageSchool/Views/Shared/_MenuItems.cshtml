@@ -4,10 +4,10 @@
 {
     var menus = (List<MenuViewModel>)Session["Menus"];
 
-    <ul class="nav navbar-nav">  @*style="background-color: red;"*@
+    <ul class="nav navbar-nav">
         @foreach (MenuViewModel m in menus)
         {
-            <li>@Html.ActionLink(m.ShownName, m.ActionName, m.ControllerName, htmlAttributes: new { style = "color:white" })</li>
+            <li>@Html.ActionLink(m.ShownName, m.ActionName, m.ControllerName, routeValues: null, htmlAttributes: new { style = "color:white" })</li>
         }
     </ul>
 }
