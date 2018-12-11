@@ -14,6 +14,7 @@ namespace LanguageSchool.Models.ViewModels
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
                    ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string PhoneNumber { get; set; }
+        [EmailAddress]
         public string EmailAdress { get; set; }
         public string Comment { get; set; }
         public int CourseId { get; set; }
