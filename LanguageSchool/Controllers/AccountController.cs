@@ -17,26 +17,12 @@ namespace LanguageSchool.Controllers
 {
     public class AccountController : Controller
     {
-        #region Private Properties    
-        /// <summary>  
-        /// Database Store property.    
-        /// </summary>  
         private LanguageSchoolEntities databaseManager = new LanguageSchoolEntities();
-        #endregion
-        #region Default Constructor    
-        /// <summary>  
-        /// Initializes a new instance of the <see cref="AccountController" /> class.    
-        /// </summary>  
+
         public AccountController()
         {
         }
-        #endregion
-        #region Login methods    
-        /// <summary>  
-        /// GET: /Account/Login    
-        /// </summary>  
-        /// <param name="returnUrl">Return URL parameter</param>  
-        /// <returns>Return login view</returns>  
+         
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -57,12 +43,7 @@ namespace LanguageSchool.Controllers
             // Info.    
             return this.View();
         }
-        /// <summary>  
-        /// POST: /Account/Login    
-        /// </summary>  
-        /// <param name="model">Model parameter</param>  
-        /// <param name="returnUrl">Return URL parameter</param>  
-        /// <returns>Return login view</returns>  
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -117,7 +98,7 @@ namespace LanguageSchool.Controllers
             // If we got this far, something failed, redisplay form    
             return this.View(loggingUser);
         }
-        #endregion
+
         #region Log Out method.    
         /// <summary>  
         /// POST: /Account/LogOff    

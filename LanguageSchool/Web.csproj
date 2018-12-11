@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ContactRequestController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\EntryTestController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageSchoolController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
