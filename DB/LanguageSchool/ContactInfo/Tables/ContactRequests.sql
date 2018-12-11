@@ -2,7 +2,7 @@
     [Id]               INT             IDENTITY (1, 1) NOT NULL,
     [CreationDate]     DATETIME        NOT NULL,
     [ModificationDate] DATETIME        NULL,
-    [PhoneNumber]      VARCHAR (15)    NULL,
+    [PhoneNumber]      VARCHAR (15)    NOT NULL,
     [EmailAdress]      VARCHAR (255)   NULL,
     [Comment]          NVARCHAR (1000) NULL,
     [Result]           NVARCHAR (1000) NULL,
@@ -14,6 +14,8 @@
     CONSTRAINT [FK_ContactRequests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id]),
     CONSTRAINT [FK_ContactRequests_Tests] FOREIGN KEY ([EntryTestId]) REFERENCES [Tests].[Tests] ([Id])
 );
+
+
 
 
 

@@ -12,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="ModificationDate" Type="datetime" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="Result" Type="nvarchar" MaxLength="1000" />
@@ -52,6 +52,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="4000" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="NumberOfHours" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="EntryTests">
           <Key>
@@ -578,7 +580,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModificationDate" Type="DateTime" Precision="3" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Result" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -626,6 +628,8 @@
           <NavigationProperty Name="LessonSubjects" Relationship="Self.FK_LessonSubjects_Courses" FromRole="Courses" ToRole="LessonSubjects" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Courses" FromRole="Courses" ToRole="Tests" />
           <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Courses" FromRole="Courses" ToRole="UsersCourses" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumberOfHours" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EntryTest">
           <Key>
@@ -1222,6 +1226,8 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Course">
               <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="NumberOfHours" ColumnName="NumberOfHours" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

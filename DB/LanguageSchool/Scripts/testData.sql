@@ -9,6 +9,8 @@ INSERT INTO [Courses].[Courses]
     ,[DeletionDate]
     ,[Name]
     ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
     ,[IsActive])
 VALUES
     (0
@@ -16,7 +18,9 @@ VALUES
     ,NULL
     ,N'Kurs angielskiego dla małoletnich'
     ,N'Skierowany do dzieci w wieku 6 - 10 lat, oferuje możliwość nauki przez zabawę. Jego celem wspieranie efektów i uzupełnianie szkolnych lekcji pobieranych w cyklu normalnej edukacji. W jego ramach udostępniany jest szereg atrakcyjnych pomocy naukowych oraz możliwość tzw. ,,nauki w ruchu"'
-    ,1)
+    ,DATEADD(DAY, 7,GETDATE())
+	,'Dwa spotkania w godziach południowych, w co drugi weekend'
+	,1)
 
 SET @CourseId = SCOPE_IDENTITY()
 
@@ -346,7 +350,9 @@ VALUES
     ,NULL
     ,N'Intensywny kurs angielskiego'
     ,N'Stworzony z myślą o osobach ze słabą praktyczną znajomością języka. Zorientowany jest na szybkie uzupełnienie ich zdolności poprzez bezpośrednie konwersacje.'
-    ,0)
+    ,DATEADD(DAY, 7, GETDATE())
+	,N'Dwa ośmiogodzinne spotkania w sobotę i niedzielę'
+	,0)
 
 GO
 
@@ -369,7 +375,9 @@ VALUES
     ,NULL
     ,N'Advanced english (B1)'
     ,N'Aimed at working professionals, offers an opportunity to deepen their knowledge and practice english in conversations. Structured in weekly meetings organized on a flexible schedule, offering opportunity to easily combine work and learning process.'
-    ,1)
+     ,DATEADD(DAY, 7, GETDATE())
+	,N'Every wednesday evening'
+	,1)
 
 SET @CourseId = SCOPE_IDENTITY()
 
