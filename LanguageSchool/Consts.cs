@@ -23,7 +23,7 @@ namespace LanguageSchool
                 new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "Index", RoleName = "Administrator" },
                 new MenuViewModel { ShownName = "Dane kontaktowe", ControllerName = "Users", ActionName = "Index", RoleName = "Administrator" },
                 new MenuViewModel { ShownName = "Komunikaty", ControllerName = "UserData", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "Index", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "Index", RoleName = "Administrator" },
 
                 //Sekretariat
                 new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "Index", RoleName = "Secretary" },

@@ -1,73 +1,132 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-
 using LanguageSchool.Models;
-using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
     public class UserController : LanguageSchoolController
     {
-        //public ActionResult Login()
-        //{
-        //    return View();
-        //}
+        private LanguageSchoolEntities db = new LanguageSchoolEntities();
 
-        //[HttpPost]
-        //public ActionResult Login(User user)
-        //{
-        //    if (ModelState.IsValid) //validating the user inputs  
-        //    {
-        //        User loggedUser = unitOfWork.UserRepository.Get()
-        //            .Where(u => u.Login == user.Login)
-        //            .Where(u => u.Password == user.Password)
-        //            .Where(c => !c.IsDeleted)
-        //            .FirstOrDefault();
+        // GET: User
+        public ActionResult Index()
+        {
+            var users = db.Users.Include(u => u.Role);
+            return View(users.ToList());
+        }
 
-        //        if (loggedUser != null)
-        //        {
-        //            //LoginModels _loginCredentials = _entity.tblLogins.Where(x => x.UserName.Trim().ToLower() == _login.UserName.Trim().ToLower()).Select(x => new LoginModels
-        //            //{
-        //            //    UserName = x.UserName,
-        //            //    RoleName = x.tblRole.Roles,
-        //            //    UserRoleId = x.RoleId,
-        //            //    UserId = x.Id
-        //            //}).FirstOrDefault();  // Get the login user details and bind it to LoginModels class
+        // GET: User/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
 
-        //            List<MenuViewModel> menus = Consts.menus.Where(m => m.RoleId == loggedUser.RoleId).ToList();
-                        
-        //            //    _entity.tblSubMenus.Where(x => x.RoleId == _loginCredentials.UserRoleId).Select(x => new MenuModels
-        //            //{
-        //            //    MainMenuId = x.tblMainMenu.Id,
-        //            //    MainMenuName = x.tblMainMenu.MainMenu,
-        //            //    SubMenuId = x.Id,
-        //            //    SubMenuName = x.SubMenu,
-        //            //    ControllerName = x.Controller,
-        //            //    ActionName = x.Action,
-        //            //    RoleId = x.RoleId,
-        //            //    RoleName = x.tblRole.Roles
-        //            //}).ToList(); //Get the Menu details from entity and bind it in MenuModels list.  
+        // GET: User/Create
+        public ActionResult Create()
+        {
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
+            return View();
+        }
 
-        //            FormsAuthentication.SetAuthCookie(user.Login, false); // set the formauthentication cookie
+        // POST: User/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,Login,Password,RoleId")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-        //            Session["User"] = user;
-        //            Session["Menus"] = menus;
-        //            Session["Login"] = user.Login;
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", user.RoleId);
+            return View(user);
+        }
 
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //        {
-        //            ViewBag.ErrorMsg = "Please enter the valid credentials!...";
-        //            return View();
-        //        }
-        //    }
+        // GET: User/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", user.RoleId);
+            return View(user);
+        }
 
-        //    return View();
-        //}
+        // POST: User/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,Login,Password,RoleId")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", user.RoleId);
+            return View(user);
+        }
+
+        // GET: User/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: User/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

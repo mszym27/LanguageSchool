@@ -15,14 +15,8 @@ using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : LanguageSchoolController
     {
-        private LanguageSchoolEntities databaseManager = new LanguageSchoolEntities();
-
-        public AccountController()
-        {
-        }
-         
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -55,7 +49,7 @@ namespace LanguageSchool.Controllers
                 if (ModelState.IsValid)
                 {
                     // Initialization.    
-                    var loginUser = this.databaseManager.Users.Where(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).First();
+                    var loginUser = unitOfWork.UserRepository.Get().Where(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).FirstOrDefault();
                     // Verification.    
                     if (loginUser != null)
                     {
