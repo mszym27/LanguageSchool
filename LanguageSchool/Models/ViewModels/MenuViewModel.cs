@@ -10,6 +10,6 @@ namespace LanguageSchool.Models.ViewModels
         public string ShownName { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
-        public int RoleId { get; set; }
+        public string RoleName { get; set; }
     }
 }

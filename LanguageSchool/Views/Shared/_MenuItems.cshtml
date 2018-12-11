@@ -1,8 +1,16 @@
-﻿@using LanguageSchool.Models.ViewModels
+﻿@using System.Security.Claims;
 
-@if (Session["Menus"] != null)
+@using LanguageSchool.Models.ViewModels
+
+@{
+    var role = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).FirstOrDefault();
+}
+
+@if (role != null)
 {
-    var menus = (List<MenuViewModel>)Session["Menus"];
+    List<MenuViewModel> menus = Consts.menus.Where(m => m.RoleName == role).ToList();
 
     <ul class="nav navbar-nav">
         @foreach (MenuViewModel m in menus)
@@ -12,7 +20,3 @@
     </ul>
 }
 
-@*<li>@Html.ActionLink("Kursy", "Index", "Course", new { @style = "color:white" })</li>
-    <li>@Html.ActionLink("Materiały", "Index", "Home", new { @style = "color:white" })</li>
-    <li>@Html.ActionLink("Testy", "Index", "Home", new { @style = "color:white" })</li>
-    <li>@Html.ActionLink("Dane kontaktowe", "Index", "Home", new { @style = "color:white" })</li>*@

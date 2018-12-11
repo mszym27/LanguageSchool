@@ -47,7 +47,7 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel loggingUser, string returnUrl)
+        public ActionResult Login(LoginViewModel loginInfo, string returnUrl)
         {
             try
             {
@@ -55,31 +55,12 @@ namespace LanguageSchool.Controllers
                 if (ModelState.IsValid)
                 {
                     // Initialization.    
-                    var loginInfo = this.databaseManager.Users.Where(u => (u.Login == loggingUser.Login && u.Password == loggingUser.Password)).ToList();
+                    var loginUser = this.databaseManager.Users.Where(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).First();
                     // Verification.    
-                    if (loginInfo != null && loginInfo.Count() > 0)
+                    if (loginUser != null)
                     {
-                        // Initialization.    
-                        var logindetails = loginInfo.First();
-
-                        List<MenuViewModel> menus = Consts.menus.Where(m => m.RoleId == logindetails.RoleId).ToList();
-
-                        //    _entity.tblSubMenus.Where(x => x.RoleId == _loginCredentials.UserRoleId).Select(x => new MenuModels
-                        //{
-                        //    MainMenuId = x.tblMainMenu.Id,
-                        //    MainMenuName = x.tblMainMenu.MainMenu,
-                        //    SubMenuId = x.Id,
-                        //    SubMenuName = x.SubMenu,
-                        //    ControllerName = x.Controller,
-                        //    ActionName = x.Action,
-                        //    RoleId = x.RoleId,
-                        //    RoleName = x.tblRole.Roles
-                        //}).ToList(); //Get the Menu details from entity and bind it in MenuModels list.  
-
-                        Session["Menus"] = menus;
-
                         // Login In.    
-                        this.SignInUser(loggingUser.Login, false);
+                        this.SignInUser(loginUser, false);
                         // Info.    
                         return this.RedirectToLocal(returnUrl);
                     }
@@ -96,7 +77,7 @@ namespace LanguageSchool.Controllers
                 Console.Write(ex);
             }
             // If we got this far, something failed, redisplay form    
-            return this.View(loggingUser);
+            return this.View(loginInfo);
         }
 
         #region Log Out method.    
@@ -133,14 +114,15 @@ namespace LanguageSchool.Controllers
         /// </summary>  
         /// <param name="username">Username parameter.</param>  
         /// <param name="isPersistent">Is persistent parameter.</param>  
-        private void SignInUser(string username, bool isPersistent)
+        private void SignInUser(User user, bool isPersistent)
         {
             // Initialization.    
             var claims = new List<Claim>();
             try
             {
                 // Setting    
-                claims.Add(new Claim(ClaimTypes.Name, username));
+                claims.Add(new Claim(ClaimTypes.Name, user.Login));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
