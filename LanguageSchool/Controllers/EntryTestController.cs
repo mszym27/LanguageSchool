@@ -108,7 +108,7 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
-        public ActionResult TakeTest(TestViewModel takenTest)
+        public ActionResult TakeTest(int id, TestViewModel takenTest)
         {
             //try
             //{
@@ -147,7 +147,7 @@ namespace LanguageSchool.Controllers
                 AlertColor = "cornflowerblue"
             };
 
-            return RedirectToAction("Index", "Course");
+            return RedirectToAction("Create", "ContactRequest", new { id = id });
             //}
             //catch
             //{
