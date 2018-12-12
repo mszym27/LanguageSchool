@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using LanguageSchool.Models.ViewModels
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -31,6 +33,16 @@
         </div>
     </div>
     <div class="container body-content" style="padding-top: 70px; padding-bottom: 70px;">
+        
+        @if (TempData["Alert"] != null)
+        {
+            var alert = (AlertViewModel) TempData["Alert"];
+
+            <div class="alert" style="background-color: @alert.AlertColor; color: white; text-align: center;">
+                <strong>@alert.Title</strong>: @alert.Message
+            </div>
+        }
+
         @RenderBody()
     </div>
 

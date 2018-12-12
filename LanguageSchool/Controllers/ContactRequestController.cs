@@ -41,6 +41,12 @@ namespace LanguageSchool.Controllers
                 unitOfWork.ContactRequestRepository.Insert(cr);
                 unitOfWork.Save();
 
+                TempData["Alert"] = new AlertViewModel() {
+                    Title = "Wysłano pomyślnie",
+                    Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
+                    AlertColor = "cornflowerblue"
+                };
+
                 return RedirectToAction("Index", "Course");
             }
             catch
