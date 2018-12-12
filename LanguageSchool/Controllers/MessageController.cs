@@ -14,8 +14,6 @@ namespace LanguageSchool.Controllers
     {
         private LanguageSchoolEntities db = new LanguageSchoolEntities();
 
-        // GET: Message
-        [Authorize(Roles = "Secretary, Administrator")]
         public ActionResult Index()
         {
             return View(db.Messages.ToList());
@@ -36,12 +34,16 @@ namespace LanguageSchool.Controllers
             return View(message);
         }
 
+        // GET: Message
+        [Authorize(Roles = "Secretary, Administrator")]
         // GET: Message/Create
         public ActionResult Create()
         {
             return View();
         }
 
+        // GET: Message
+        [Authorize(Roles = "Secretary, Administrator")]
         // POST: Message/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

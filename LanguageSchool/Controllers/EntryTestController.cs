@@ -8,7 +8,7 @@ using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
-    public class EntryTestController : Controller
+    public class EntryTestController : Controller // toDO
     {
         private LanguageSchoolEntities db = new LanguageSchoolEntities();
         private Random random = new Random();
@@ -106,6 +106,55 @@ namespace LanguageSchool.Controllers
             tvm.Questions = ChosenQuestions;
 
             return View(tvm);
+        }
+
+        [Route("TakeTest/{id}")]
+        [HttpPost]
+        public ActionResult TakeTest(int id, TestViewModel tvm)
+        {
+            //try
+            //{
+            //    ContactRequest cr = new ContactRequest();
+
+            //    cr.PhoneNumber = crvm.PhoneNumber;
+            //    cr.EmailAdress = crvm.EmailAdress;
+            //    cr.Comment = crvm.Comment;
+            //    cr.CourseId = crvm.CourseId;
+            //    cr.EntryTestId = crvm.EntryTestId;
+            //    cr.Points = crvm.Points;
+
+            //    cr.IsAwaiting = true;
+            //    cr.CreationDate = DateTime.Now;
+
+            //    unitOfWork.ContactRequestRepository.Insert(cr);
+            //    unitOfWork.Save();
+
+            //userAnswers = userQuestions.ToList();
+            //var carToFind = cars.FirstOrDefault(car => car.Parts.Any(part => part.Id == idToFind));
+            //tvm.Questions
+
+            var userCorrectAnswers = new List<AnswerViewModel>();
+            int userPoints = 0;
+
+            foreach (ClosedQuestionViewModel cqvm in tvm.Questions)
+            {
+                if(cqvm.Answers.Where(a => (a.IsCorrect == true) && (a.IsMarked == true)).Any())
+                    userPoints += cqvm.Points;
+            }
+
+            TempData["Alert"] = new AlertViewModel()
+            {
+                Title = "Ukończono test",
+                Message = "wynik który otrzymałeś to " + userPoints + " na " + tvm.Points + " możliwych",
+                AlertColor = "cornflowerblue"
+            };
+
+            return RedirectToAction("Index", "Course");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         private List<int> RandomList(int Points, int LessonSubjectsCount)

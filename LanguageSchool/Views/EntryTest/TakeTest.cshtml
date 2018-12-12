@@ -6,10 +6,11 @@
 }
 
 <body background="~/images/Background_test_faded.jpg">
-
+@using (Html.BeginForm("TakeTest", "EntryTest", FormMethod.Post))
+{
     <h1 class="display-3">@Model.Name</h1>
 
-    @if (Model.Comment != "-")
+    if (Model.Comment != "-")
     {
         <p>@Model.Comment</p>
     }
@@ -50,8 +51,9 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-3">
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "ContactRequest", new { id = @Model.CourseId })'">Oceń</button>
+                <input type="submit" value="Oceń" class="btn btn-default" />
             </div>
         </div>
-    </div>    
+    </div>
+    } 
 </body>

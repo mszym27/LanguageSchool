@@ -18,6 +18,8 @@ namespace LanguageSchool.Models.ViewModels
 
         public List<ClosedQuestionViewModel> Questions { get; set; }
 
+        public TestViewModel() { }
+
         public TestViewModel(Test t)
         {
             Id = t.Id;
