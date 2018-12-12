@@ -42,6 +42,10 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersCourses_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Message" Width="1.5" PointX="3.75" PointY="7.625" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UsersMessage" Width="1.5" PointX="6" PointY="11" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Messages" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

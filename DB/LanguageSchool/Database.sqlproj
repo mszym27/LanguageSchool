@@ -94,6 +94,8 @@
     <Build Include="Tests\Tables\Tests.sql" />
     <Build Include="Tests\Tables\TestsLessonSubjects.sql" />
     <Build Include="Courses\Tables\EntryTests.sql" />
+    <Build Include="Users\Tables\UsersMessages.sql" />
+    <Build Include="Users\Tables\Messages.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

@@ -246,6 +246,9 @@
     <Compile Include="Models\Material.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpenQuestion.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
@@ -268,6 +271,9 @@
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersCourses.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersMessage.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersTests.cs">
