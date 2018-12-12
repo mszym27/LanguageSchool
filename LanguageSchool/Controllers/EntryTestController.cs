@@ -36,7 +36,6 @@ namespace LanguageSchool.Controllers
             return View(TestViewModels);
         }
 
-        [Route("TakeTest/{id}")]
         public ActionResult TakeTest(int id)
         {
             Test t = db.Tests.Find(id);
@@ -108,9 +107,8 @@ namespace LanguageSchool.Controllers
             return View(tvm);
         }
 
-        [Route("TakeTest/{id}")]
         [HttpPost]
-        public ActionResult TakeTest(int id, TestViewModel tvm)
+        public ActionResult TakeTest(TestViewModel takenTest)
         {
             //try
             //{
@@ -136,7 +134,7 @@ namespace LanguageSchool.Controllers
             var userCorrectAnswers = new List<AnswerViewModel>();
             int userPoints = 0;
 
-            foreach (ClosedQuestionViewModel cqvm in tvm.Questions)
+            foreach (ClosedQuestionViewModel cqvm in takenTest.Questions)
             {
                 if(cqvm.Answers.Where(a => (a.IsCorrect == true) && (a.IsMarked == true)).Any())
                     userPoints += cqvm.Points;
@@ -145,7 +143,7 @@ namespace LanguageSchool.Controllers
             TempData["Alert"] = new AlertViewModel()
             {
                 Title = "Ukończono test",
-                Message = "wynik który otrzymałeś to " + userPoints + " na " + tvm.Points + " możliwych",
+                Message = "wynik który otrzymałeś to " + userPoints + " na " + takenTest.Points + " możliwych",
                 AlertColor = "cornflowerblue"
             };
 
