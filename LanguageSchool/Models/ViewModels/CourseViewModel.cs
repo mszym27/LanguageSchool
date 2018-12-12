@@ -8,15 +8,17 @@ namespace LanguageSchool.Models.ViewModels
     public class CourseViewModel
     {
         public int Id { get; }
-        public string CreationDate { get; }
+        public string StartDate { get; }
         public string Name { get; }
         public string ShortDescription { get; }
+        public string NumberOfHours { get; }
 
         public CourseViewModel (Course c)
         {
             Id = c.Id;
-            CreationDate = c.CreationDate.ToString("yyyy-MM-dd");
+            StartDate = c.StartDate.ToString("yyyy-MM-dd");
             Name = c.Name;
+            NumberOfHours = c.NumberOfHours;
 
             int index = c.Description.IndexOf('.') + 1;
 

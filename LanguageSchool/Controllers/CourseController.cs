@@ -12,11 +12,39 @@ namespace LanguageSchool.Controllers
     public class CourseController : LanguageSchoolController
     {
         // GET: Course
-        public ActionResult Index()
+        public ActionResult Index(string sortColumn = "startDate", string sortDirection = "desc", int page = 1)
         {
-            var query = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted).OrderBy(c => c.CreationDate);
+            var courses = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted);
 
-            List<Course> Courses = query.ToList();
+            switch (sortColumn)
+            {
+                case "startDate":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.StartDate);
+                    else
+                        courses = courses.OrderByDescending(c => c.StartDate);
+                break;
+                case "name":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.Name);
+                    else
+                        courses = courses.OrderByDescending(c => c.Name);
+                break;
+                case "numberOfHours":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.NumberOfHours);
+                    else
+                        courses = courses.OrderByDescending(c => c.NumberOfHours);
+                    break;
+            }
+
+            sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+
+            ViewBag.sortColumn = sortColumn;
+            ViewBag.sortDirection = sortDirection;
+            ViewBag.page = page;
+
+            List<Course> Courses = courses.ToList();
 
             var CoursesViewModels = new List<CourseViewModel>();
 
