@@ -1,4 +1,6 @@
-﻿@model LanguageSchool.Models.ViewModels.TestViewModel
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.ViewModels.TestViewModel
 
 @{
     ViewBag.Title = "TakeTest";
@@ -8,6 +10,9 @@
 <body background="~/images/Background_test_faded.jpg">
 @using (Html.BeginForm("TakeTest", "EntryTest", FormMethod.Post))
 {
+    @Html.HiddenFor(model => model.Points)
+    @Html.HiddenFor(model => model.Questions)
+    
     <h1 class="display-3">@Model.Name</h1>
 
     if (Model.Comment != "-")
@@ -20,6 +25,8 @@
     <table class="table">
         @foreach (var question in Model.Questions)
         {
+            @Html.HiddenFor(q => question.Points)
+
             <tr>
                 <td>
                     @question.Contents
@@ -32,7 +39,8 @@
                             </div>
                             <div class="col-md-10">
                                 @Html.RadioButton(question.Id.ToString(), answer.IsMarked)
-                                
+
+                                @Html.HiddenFor(a => answer.IsCorrect)
                             </div>
                         </div>
                     }
