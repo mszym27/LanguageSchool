@@ -144,7 +144,7 @@ namespace LanguageSchool.Controllers
             {
                 Title = "Ukończono test",
                 Message = "wynik który otrzymałeś to " + userPoints + " na " + takenTest.Points + " możliwych",
-                AlertColor = "cornflowerblue"
+                AlertColor = "green"
             };
 
             return RedirectToAction("Create", "ContactRequest", new { id = id });

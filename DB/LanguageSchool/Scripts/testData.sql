@@ -343,7 +343,9 @@ INSERT INTO [Courses].[Courses]
     ,[DeletionDate]
     ,[Name]
     ,[Description]
-    ,[IsActive])
+    ,StartDate
+	,NumberOfHours
+	,[IsActive])
 VALUES
     (0
     ,GETDATE()
@@ -368,6 +370,8 @@ INSERT INTO [Courses].[Courses]
     ,[DeletionDate]
     ,[Name]
     ,[Description]
+    ,StartDate
+	,NumberOfHours
     ,[IsActive])
 VALUES
     (0

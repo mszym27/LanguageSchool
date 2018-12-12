@@ -45,7 +45,7 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel() {
                     Title = "Wysłano pomyślnie",
                     Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
-                    AlertColor = "cornflowerblue"
+                    AlertColor = "green"
                 };
 
                 return RedirectToAction("Index", "Course");
