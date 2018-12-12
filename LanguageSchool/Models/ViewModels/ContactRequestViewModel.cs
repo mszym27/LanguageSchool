@@ -16,6 +16,7 @@ namespace LanguageSchool.Models.ViewModels
         public string PhoneNumber { get; set; }
         [EmailAddress]
         public string EmailAdress { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
         public string PreferredHours { get; set; }
         public int CourseId { get; set; }
