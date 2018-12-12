@@ -20,6 +20,7 @@
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="EntryTestId" Type="int" />
           <Property Name="Points" Type="int" />
+          <Property Name="PreferredHours" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -646,6 +647,7 @@
           <Property Name="Points" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
           <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
+          <Property Name="PreferredHours" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -1304,6 +1306,7 @@
           <EntitySetMapping Name="ContactRequests">
             <EntityTypeMapping TypeName="LanguageSchoolModel.ContactRequest">
               <MappingFragment StoreEntitySet="ContactRequests">
+                <ScalarProperty Name="PreferredHours" ColumnName="PreferredHours" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />

@@ -31,6 +31,7 @@ namespace LanguageSchool.Controllers
                 cr.PhoneNumber = crvm.PhoneNumber;
                 cr.EmailAdress = crvm.EmailAdress;
                 cr.Comment = crvm.Comment;
+                cr.PreferredHours = crvm.PreferredHours;
                 cr.CourseId = crvm.CourseId;
                 cr.EntryTestId = crvm.EntryTestId;
                 cr.Points = crvm.Points;

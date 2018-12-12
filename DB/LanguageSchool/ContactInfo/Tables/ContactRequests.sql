@@ -10,10 +10,13 @@
     [CourseId]         INT             NOT NULL,
     [EntryTestId]      INT             NULL,
     [Points]           INT             NULL,
+    [PreferredHours]   NVARCHAR (200)  NULL,
     CONSTRAINT [PK_ContactRequests] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ContactRequests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id]),
     CONSTRAINT [FK_ContactRequests_Tests] FOREIGN KEY ([EntryTestId]) REFERENCES [Tests].[Tests] ([Id])
 );
+
+
 
 
 
