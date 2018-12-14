@@ -83,7 +83,7 @@
     <Build Include="Security\Courses.sql" />
     <Build Include="Security\ContactInfo.sql" />
     <Build Include="Users\Tables\UserOpenAnswers.sql" />
-    <PostDeploy Include="Scripts\Roles_techAdmin.sql" />
+    <PostDeploy Include="Scripts\init_data.sql" />
     <Build Include="Courses\Tables\LessonSubjects.sql" />
     <Build Include="Materials\Tables\Materials.sql" />
     <Build Include="Security\Tests.sql" />
@@ -96,6 +96,7 @@
     <Build Include="Courses\Tables\EntryTests.sql" />
     <Build Include="Users\Tables\UsersMessages.sql" />
     <Build Include="Users\Tables\Messages.sql" />
+    <Build Include="Courses\Tables\LanguageProficencies.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
