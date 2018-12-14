@@ -55,6 +55,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="NumberOfHours" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LanguageProficencyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EntryTests">
           <Key>
@@ -67,6 +68,15 @@
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageProficencies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="PLDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ENDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="LessonSubjects">
           <Key>
@@ -283,6 +293,18 @@
             </Principal>
             <Dependent Role="ContactRequests">
               <PropertyRef Name="EntryTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Courses_LanguageProficencies">
+          <End Role="LanguageProficencies" Type="Self.LanguageProficencies" Multiplicity="1" />
+          <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LanguageProficencies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Courses">
+              <PropertyRef Name="LanguageProficencyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -519,6 +541,7 @@
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="ContactInfo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="EntryTests" EntityType="Self.EntryTests" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="LanguageProficencies" EntityType="Self.LanguageProficencies" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubjects" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="Materials" store:Type="Tables" />
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
@@ -548,6 +571,10 @@
           <AssociationSet Name="FK_ContactRequests_Tests" Association="Self.FK_ContactRequests_Tests">
             <End Role="Tests" EntitySet="Tests" />
             <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Courses_LanguageProficencies" Association="Self.FK_Courses_LanguageProficencies">
+            <End Role="LanguageProficencies" EntitySet="LanguageProficencies" />
+            <End Role="Courses" EntitySet="Courses" />
           </AssociationSet>
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -688,6 +715,8 @@
           <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Courses" FromRole="Courses" ToRole="UsersCourses" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="NumberOfHours" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageProficencyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LanguageProficency" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="Course" ToRole="LanguageProficency" />
         </EntityType>
         <EntityType Name="EntryTest">
           <Key>
@@ -1247,6 +1276,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UsersMessage" EntitySet="UsersMessages" />
           </AssociationSet>
+          <EntitySet Name="LanguageProficencies" EntityType="LanguageSchoolModel.LanguageProficency" />
+          <AssociationSet Name="FK_Courses_LanguageProficencies" Association="LanguageSchoolModel.FK_Courses_LanguageProficencies">
+            <End Role="LanguageProficency" EntitySet="LanguageProficencies" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Message">
           <Key>
@@ -1294,6 +1328,28 @@
             </Principal>
             <Dependent Role="UsersMessage">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LanguageProficency">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PLDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ENDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="LanguageProficency" ToRole="Course" />
+        </EntityType>
+        <Association Name="FK_Courses_LanguageProficencies">
+          <End Type="LanguageSchoolModel.LanguageProficency" Role="LanguageProficency" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LanguageProficency">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LanguageProficencyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1345,6 +1401,7 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Course">
               <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="LanguageProficencyId" ColumnName="LanguageProficencyId" />
                 <ScalarProperty Name="NumberOfHours" ColumnName="NumberOfHours" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1550,6 +1607,16 @@
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanguageProficencies">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.LanguageProficency">
+              <MappingFragment StoreEntitySet="LanguageProficencies">
+                <ScalarProperty Name="ENDescription" ColumnName="ENDescription" />
+                <ScalarProperty Name="PLDescription" ColumnName="PLDescription" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -33,6 +33,7 @@ namespace LanguageSchool.Models
         public bool IsActive { get; set; }
         public System.DateTime StartDate { get; set; }
         public string NumberOfHours { get; set; }
+        public int LanguageProficencyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContactRequest> ContactRequests { get; set; }
@@ -44,5 +45,6 @@ namespace LanguageSchool.Models
         public virtual ICollection<Test> Tests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersCourses> UsersCourses { get; set; }
+        public virtual LanguageProficency LanguageProficency { get; set; }
     }
 }

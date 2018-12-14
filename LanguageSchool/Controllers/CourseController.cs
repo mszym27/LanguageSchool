@@ -17,6 +17,8 @@ namespace LanguageSchool.Controllers
         {
             var courses = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted);
 
+            sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+
             switch (sortColumn)
             {
                 case "startDate":
@@ -31,15 +33,19 @@ namespace LanguageSchool.Controllers
                     else
                         courses = courses.OrderByDescending(c => c.Name);
                 break;
+                case "proficencyLevel":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.LanguageProficency.Name);
+                    else
+                        courses = courses.OrderByDescending(c => c.LanguageProficency.Name);
+                    break;
                 case "numberOfHours":
                     if (sortDirection == "asc")
                         courses = courses.OrderBy(c => c.NumberOfHours);
                     else
                         courses = courses.OrderByDescending(c => c.NumberOfHours);
-                    break;
+                break;
             }
-
-            sortDirection = (sortDirection == "desc") ? "asc" : "desc";
 
             ViewBag.sortColumn = sortColumn;
             ViewBag.sortDirection = sortDirection;

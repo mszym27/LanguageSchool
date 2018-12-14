@@ -25,6 +25,10 @@
                          new { style = "text-decoration:none; color:black" })
                 </th>
                 <th>
+                    @Html.ActionLink("Poziom", "Index", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = ViewBag.page },
+                         new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
                     Opis
                 </th>
                 <th>
@@ -41,6 +45,9 @@
                     </td>
                     <td>
                         @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                    </td>
+                    <td>
+                        @item.LanguageProficency
                     </td>
                     <td>
                         @item.ShortDescription

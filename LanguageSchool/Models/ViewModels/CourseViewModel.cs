@@ -12,6 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public string Name { get; }
         public string ShortDescription { get; }
         public string NumberOfHours { get; }
+        public string LanguageProficency { get; }
 
         public CourseViewModel (Course c)
         {
@@ -19,6 +20,7 @@ namespace LanguageSchool.Models.ViewModels
             StartDate = c.StartDate.ToString("yyyy-MM-dd");
             Name = c.Name;
             NumberOfHours = c.NumberOfHours;
+            LanguageProficency = c.LanguageProficency.Name;
 
             int index = c.Description.IndexOf('.') + 1;
 

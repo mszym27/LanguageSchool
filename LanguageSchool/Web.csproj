@@ -234,6 +234,9 @@
     <Compile Include="Models\EntryTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LanguageProficency.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LanguageSchool.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

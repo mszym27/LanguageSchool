@@ -43,5 +43,6 @@ namespace LanguageSchool.Models
         public virtual DbSet<UsersTests> UsersTests1 { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UsersMessage> UsersMessages { get; set; }
+        public virtual DbSet<LanguageProficency> LanguageProficencies { get; set; }
     }
 }

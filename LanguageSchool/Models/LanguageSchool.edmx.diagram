@@ -46,6 +46,8 @@
         <EntityTypeShape EntityType="LanguageSchoolModel.UsersMessage" Width="1.5" PointX="6" PointY="11" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Messages" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Users" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.LanguageProficency" Width="1.5" PointX="0.75" PointY="20.75" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Courses_LanguageProficencies" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
