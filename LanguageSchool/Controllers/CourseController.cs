@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
@@ -53,7 +54,7 @@ namespace LanguageSchool.Controllers
                 CoursesViewModels.Add(new CourseViewModel(c));
             }
 
-            return View(CoursesViewModels);
+            return View(CoursesViewModels.ToPagedList(page, 5));
         }
 
         [Route("Course/{id}")]

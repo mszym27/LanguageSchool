@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LanguageSchool.Models.ViewModels.CourseViewModel>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<LanguageSchool.Models.ViewModels.CourseViewModel>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -50,7 +51,12 @@
                 </tr>
             }
 
-        </table>
+        </table>        
+        
+        Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) z @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page = ViewBag.page }))
     </div>
 </body>
 </html>
