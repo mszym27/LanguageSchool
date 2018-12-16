@@ -59,11 +59,15 @@
             }
 
         </table>        
-        
-        Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) z @Model.PageCount
+    </div>    
 
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
         @Html.PagedListPager(Model, page => Url.Action("Index",
             new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page = ViewBag.page }))
+    </div>
+    <div class="col-md-4">
     </div>
 </body>
 </html>
