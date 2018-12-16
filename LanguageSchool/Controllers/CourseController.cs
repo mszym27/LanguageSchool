@@ -60,7 +60,7 @@ namespace LanguageSchool.Controllers
                 CoursesViewModels.Add(new CourseViewModel(c));
             }
 
-            return View(CoursesViewModels.ToPagedList(page, 5));
+            return View(CoursesViewModels.ToPagedList(page, 3));
         }
 
         [Route("Course/{id}")]

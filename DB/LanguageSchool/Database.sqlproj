@@ -102,5 +102,6 @@
     <None Include="LanguageSchool.scmp" />
     <None Include="LanguageSchool.publish.xml" />
     <None Include="Scripts\TestData.sql" />
+    <None Include="Scripts\courses_add.sql" />
   </ItemGroup>
 </Project>
