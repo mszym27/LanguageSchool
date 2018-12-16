@@ -17,23 +17,22 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.ActionLink("Rozpoczęcie", "Index", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = ViewBag.page },
+                    @Html.ActionLink("Rozpoczęcie", "Index", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = 1 },
                          new { style = "text-decoration:none; color:black" } )
                 </th>
                 <th>
-                    @Html.ActionLink("Kurs", "Index", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = ViewBag.page },
+                    @Html.ActionLink("Kurs", "Index", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
                          new { style = "text-decoration:none; color:black" })
                 </th>
                 <th>
-                    @Html.ActionLink("Poziom", "Index", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = ViewBag.page },
+                    @Html.ActionLink("Poziom", "Index", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = 1 },
                          new { style = "text-decoration:none; color:black" })
                 </th>
                 <th>
                     Opis
                 </th>
                 <th>
-                    @Html.ActionLink("Liczba godzin", "Index", new { sortColumn = "numberOfHours", sortDirection = ViewBag.sortDirection, page = ViewBag.page },
-                         new { style = "text-decoration:none; color:black" })
+                    Liczba godzin
                 </th>
             </tr>
 

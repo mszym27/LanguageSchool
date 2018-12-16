@@ -98,7 +98,7 @@ VALUES
     ,NULL
     ,N'Intensywny kurs przygotowujący do matury'
     ,N'Skierowany do osób pragnących nabrać praktycznego doświadczenia w przechodzeniu testów maturalnych. Odbywa się pod okiem faktycznych egzaminatorów, celuje w jak najwierniejsze odwzorowanie warunków maturalnych.'
-    ,'2019-05-02'
-	,'Dwie godziny wieczorem w każdy weekend'
+    ,'2019-05-03'
+	,'Dwie godziny wieczorem w każdą niedzielę'
 	,4
 	,1)

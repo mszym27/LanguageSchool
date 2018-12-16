@@ -13,11 +13,14 @@ namespace LanguageSchool.Controllers
     public class CourseController : LanguageSchoolController
     {
         // GET: Course
-        public ActionResult Index(string sortColumn = "startDate", string sortDirection = "desc", int page = 1)
+        public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
             var courses = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted);
 
-            sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            if(page == 1)
+            {
+                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            }
 
             switch (sortColumn)
             {
@@ -39,12 +42,6 @@ namespace LanguageSchool.Controllers
                     else
                         courses = courses.OrderByDescending(c => c.LanguageProficency.Name);
                     break;
-                case "numberOfHours":
-                    if (sortDirection == "asc")
-                        courses = courses.OrderBy(c => c.NumberOfHours);
-                    else
-                        courses = courses.OrderByDescending(c => c.NumberOfHours);
-                break;
             }
 
             ViewBag.sortColumn = sortColumn;
