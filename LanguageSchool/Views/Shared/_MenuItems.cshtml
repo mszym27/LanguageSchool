@@ -3,7 +3,7 @@
 @using LanguageSchool.Models.ViewModels
 
 @{
-    var role = ((ClaimsIdentity)User.Identity).Claims
+    var role = ((ClaimsIdentity) User.Identity).Claims
                 .Where(c => c.Type == ClaimTypes.Role)
                 .Select(c => c.Value).FirstOrDefault();
 }
