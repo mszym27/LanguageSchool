@@ -241,3 +241,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /DB/LanguageSchool/Database.jfm
+
+*.scmp
+*.config
