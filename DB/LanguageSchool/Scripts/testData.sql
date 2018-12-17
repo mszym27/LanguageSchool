@@ -10,6 +10,7 @@ INSERT INTO [Courses].[Courses]
     ,[Name]
     ,[Description]
 	,[StartDate]
+	,[EndDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
     ,[IsActive])
@@ -19,8 +20,9 @@ VALUES
     ,NULL
     ,N'Kurs angielskiego dla małoletnich'
     ,N'Skierowany do dzieci w wieku 6 - 10 lat, oferuje możliwość nauki przez zabawę. Jego celem wspieranie efektów i uzupełnianie szkolnych lekcji pobieranych w cyklu normalnej edukacji. W jego ramach udostępniany jest szereg atrakcyjnych pomocy naukowych oraz możliwość tzw. ,,nauki w ruchu"'
-    ,DATEADD(DAY, 7,GETDATE())
-	,'Dwa spotkania w godziach południowych, w co drugi weekend'
+    ,'2019-01-06'
+	,'2019-03-03'
+	,'Dwa spotkania w godziach południowych, w weekend'
 	,1
 	,1)
 
@@ -346,6 +348,7 @@ INSERT INTO [Courses].[Courses]
     ,[Name]
     ,[Description]
     ,StartDate
+	,[EndDate]
 	,NumberOfHours
 	,[LanguageProficencyId]
 	,[IsActive])
@@ -355,7 +358,8 @@ VALUES
     ,NULL
     ,N'Intensywny kurs angielskiego'
     ,N'Stworzony z myślą o osobach ze słabą praktyczną znajomością języka. Zorientowany jest na szybkie uzupełnienie ich zdolności poprzez bezpośrednie konwersacje.'
-    ,DATEADD(DAY, 7, GETDATE())
+    ,'2019-01-05'
+	,'2019-01-27'
 	,N'Dwa ośmiogodzinne spotkania w sobotę i niedzielę'
 	,3
 	,0)
@@ -375,6 +379,7 @@ INSERT INTO [Courses].[Courses]
     ,[Name]
     ,[Description]
     ,StartDate
+    ,EndDate
 	,NumberOfHours
 	,[LanguageProficencyId]
     ,[IsActive])
@@ -384,7 +389,8 @@ VALUES
     ,NULL
     ,N'Advanced english (B1)'
     ,N'Aimed at working professionals, offers an opportunity to deepen their knowledge and practice english in conversations. Structured in weekly meetings organized on a flexible schedule, offering opportunity to easily combine work and learning process.'
-     ,DATEADD(DAY, 7, GETDATE())
+    ,'2019-01-02'
+    ,'2019-02-13'
 	,N'Every wednesday evening'
 	,5
 	,1)

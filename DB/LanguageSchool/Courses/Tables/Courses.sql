@@ -9,10 +9,12 @@
     [StartDate]            DATE            NOT NULL,
     [NumberOfHours]        NVARCHAR (200)  NOT NULL,
     [LanguageProficencyId] INT             NOT NULL,
-    [EndDate]              DATE            NULL,
+    [EndDate]              DATE            NOT NULL,
     CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Courses_LanguageProficencies] FOREIGN KEY ([LanguageProficencyId]) REFERENCES [Courses].[LanguageProficencies] ([Id])
 );
+
+
 
 
 
