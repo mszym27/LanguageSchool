@@ -49,7 +49,7 @@ namespace LanguageSchool.Controllers
                 if (ModelState.IsValid)
                 {
                     // Initialization.    
-                    var loginUser = unitOfWork.UserRepository.Get().Where(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).FirstOrDefault();
+                    var loginUser = unitOfWork.UserRepository.Get(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).FirstOrDefault();
                     // Verification.    
                     if (loginUser != null)
                     {

@@ -21,6 +21,13 @@ namespace LanguageSchool.DAL
             this.dbSet = entities.Set<TEntity>();
         }
 
+        //public virtual IEnumerable<TEntity> GetAllActive(
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null
+        //)
+        //{
+        //    return this.Get(filter => (((TEntity)filter).IsActive == 1 ), orderBy, null);
+        //}
+
         public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
