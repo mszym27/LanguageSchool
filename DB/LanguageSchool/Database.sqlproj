@@ -97,6 +97,7 @@
     <Build Include="Users\Tables\UsersMessages.sql" />
     <Build Include="Users\Tables\Messages.sql" />
     <Build Include="Courses\Tables\LanguageProficencies.sql" />
+    <Build Include="Courses\Tables\CourseTimes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

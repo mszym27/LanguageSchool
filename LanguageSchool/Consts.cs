@@ -6,6 +6,11 @@ namespace LanguageSchool
 {
     public class Consts
     {
+        // Alerts
+        public static readonly string Success = "green";
+
+        public static readonly string Error = "red";
+
         public enum Roles
         {
             Administrator = 1,

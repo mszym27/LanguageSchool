@@ -7,6 +7,7 @@
 	,[StartDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
+	,EndDate
     ,[IsActive])
 VALUES
     (0
@@ -17,6 +18,7 @@ VALUES
     ,'2019-01-06'
 	,'Six meetings - two hours every sunday evening'
 	,6
+	,'2019-01-10'
 	,1)
 
 INSERT INTO [Courses].[Courses]
@@ -28,6 +30,7 @@ INSERT INTO [Courses].[Courses]
 	,[StartDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
+	,EndDate
     ,[IsActive])
 VALUES
     (0
@@ -38,6 +41,7 @@ VALUES
     ,'2019-01-05'
 	,'8 - 12 w soboty'
 	,1
+	,'2019-02-16'
 	,1)
 
 INSERT INTO [Courses].[Courses]
@@ -49,6 +53,7 @@ INSERT INTO [Courses].[Courses]
 	,[StartDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
+	,EndDate
     ,[IsActive])
 VALUES
     (0
@@ -56,9 +61,10 @@ VALUES
     ,NULL
     ,N'Kurs przygotowujący do matury (II)'
     ,N'Kontynuacja wcześniejszego kursu. Osoby które zapisują się na ten bez przejścia poprzedniego będą musiały przejść test ze znajomości języka.'
-    ,'2019-01-05'
-	,'2019-02-26'
+	,'2019-02-23'
+	,'8 - 12 w soboty'
 	,2
+	,'2019-03-30'
 	,1)
 
 INSERT INTO [Courses].[Courses]
@@ -70,6 +76,7 @@ INSERT INTO [Courses].[Courses]
 	,[StartDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
+	,EndDate
     ,[IsActive])
 VALUES
     (0
@@ -77,9 +84,10 @@ VALUES
     ,NULL
     ,N'Kurs przygotowujący do matury (III)'
     ,N'Kulminacja linii kursów przygotowujących oferowanych przez naszą szkołę. W ostatnim ich części uczniowie koncentrują się na rozwiązywaniu arkuszy maturalnych i przeprowadzaniu testów języka. Osoby zapisujące się od razu na ten kurs będą musiały uzyskać odpowiednią ocenę na wejściowym sprawdzianie.'
-    ,'2019-05-02'
+    ,'2019-04-02'
 	,'10 - 14 w soboty'
 	,3
+	,'2019-05-04'
 	,1)
 
 INSERT INTO [Courses].[Courses]
@@ -91,6 +99,7 @@ INSERT INTO [Courses].[Courses]
 	,[StartDate]
 	,[NumberOfHours]
     ,[LanguageProficencyId]
+	,EndDate
     ,[IsActive])
 VALUES
     (0
@@ -98,7 +107,8 @@ VALUES
     ,NULL
     ,N'Intensywny kurs przygotowujący do matury'
     ,N'Skierowany do osób pragnących nabrać praktycznego doświadczenia w przechodzeniu testów maturalnych. Odbywa się pod okiem faktycznych egzaminatorów, celuje w jak najwierniejsze odwzorowanie warunków maturalnych.'
-    ,'2019-05-03'
-	,'Dwie godziny wieczorem w każdą niedzielę'
+    ,'2019-04-02'
+	,'Dwie godziny wieczorem w każdą sobotę i niedzielę'
 	,4
+	,'2019-05-04'
 	,1)
