@@ -21,9 +21,6 @@
 <table class="table table-striped">
     <tr>
         <th>
-            @*@Html.ActionLink("Aktywny", "List", new { sortColumn = "isActive", sortDirection = ViewBag.sortDirection, page = 1 },
-                new { style = "text-decoration:none; color:black" })*@
-
             <a href='@Url.Action("List", "Course", new { sortColumn = "isActive", sortDirection = ViewBag.sortDirection, page = 1 })'
                style = "text-decoration:none; color:black" >
                 <span class="glyphicon glyphicon-asterisk"></span>
@@ -59,20 +56,18 @@
 
 @foreach (var item in Model) {
 
-    var rowColor = "white";
     var fontColor = "black";
 
     if (!item.IsActive)
     {
-        rowColor = "silver";
-        fontColor = "white";
+        fontColor = "silver";
     }
 
-    <tr style="color: @fontColor; background: @rowColor;">
+    <tr style="color: @fontColor">
         <td>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
+            @item.CreationDate.ToString("yyyy/MM/dd")
         </td>
         <td>
             @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
@@ -84,10 +79,10 @@
             @Html.DisplayFor(modelItem => item.LanguageProficency.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
+            @item.StartDate.ToString("yyyy/MM/dd")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
+            @item.EndDate.ToString("yyyy/MM/dd")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NumberOfHours)
