@@ -20,8 +20,8 @@ namespace LanguageSchool.Controllers
             {
                 case ("Admin"): return RedirectToAction("FullList", "Course");
                 case ("Secretary"): return RedirectToAction("List", "Course");
-                case ("Teacher"): return RedirectToAction("Timetable", "Report");
-                case ("Student"): return RedirectToAction("Timetable", "Report");
+                //case ("Teacher"): return RedirectToAction("Timetable", "Report");
+                //case ("Student"): return RedirectToAction("Timetable", "Report");
                 default: return View();
             }
         }

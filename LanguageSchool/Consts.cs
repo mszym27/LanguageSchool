@@ -23,31 +23,31 @@ namespace LanguageSchool
             new List<MenuViewModel>()
             {
                 // Administrator
-                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Dane kontaktowe", ControllerName = "Users", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "Index", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Dane kontaktowe", ControllerName = "Users", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "FullList", RoleName = "Administrator" },
 
                 //Sekretariat
-                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "Index", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Dane użytkowników", ControllerName = "Users", ActionName = "Index", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "Index", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "List", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Dane użytkowników", ControllerName = "Users", ActionName = "List", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "List", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "List", RoleName = "Secretary" },
 
                 //Nauczyciel
-                new MenuViewModel { ShownName = "Moje kursy", ControllerName = "Course", ActionName = "Index", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Moje materiały", ControllerName = "Test", ActionName = "Index", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Moje testy", ControllerName = "Test", ActionName = "Index", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Moje komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Uczniowie", ControllerName = "Users", ActionName = "Index", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Uczniowie", ControllerName = "Users", ActionName = "List", RoleName = "Teacher" },
 
                 //Uczeń
-                new MenuViewModel { ShownName = "Moje kursy", ControllerName = "Course", ActionName = "Index", RoleName = "Student" },
-                new MenuViewModel { ShownName = "Moje materiały", ControllerName = "Test", ActionName = "Index", RoleName = "Student" },
-                new MenuViewModel { ShownName = "Moje testy", ControllerName = "Test", ActionName = "Index", RoleName = "Student" },
-                new MenuViewModel { ShownName = "Moje komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Student" },
+                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "Index", RoleName = "Student" },
+                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "Index", RoleName = "Student" },
+                new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "Index", RoleName = "Student" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Student" },
                 new MenuViewModel { ShownName = "Prowadzący", ControllerName = "Users", ActionName = "Index", RoleName = "Student" },
             }
         );

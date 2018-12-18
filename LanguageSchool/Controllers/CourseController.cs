@@ -43,7 +43,7 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult List(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
-            var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
+            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted);
 
             if (page == 1)
             {
@@ -66,9 +66,7 @@ namespace LanguageSchool.Controllers
             //    CoursesViewModels.Add(new CourseViewModel(c));
             //}
 
-            //return View(courses.ToPagedList(page, 20));
-
-            return View(courses);
+            return View(courses.ToPagedList(page, 20));
         }
 
         [Route("Course/{id}")]
@@ -154,11 +152,23 @@ namespace LanguageSchool.Controllers
         {
             switch (sortColumn)
             {
+                case "isActive":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.IsActive);
+                    else
+                        courses = courses.OrderByDescending(c => c.IsActive);
+                    break;
                 case "startDate":
                     if (sortDirection == "asc")
                         courses = courses.OrderBy(c => c.StartDate);
                     else
                         courses = courses.OrderByDescending(c => c.StartDate);
+                    break;
+                case "endDate":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.EndDate);
+                    else
+                        courses = courses.OrderByDescending(c => c.EndDate);
                     break;
                 case "name":
                     if (sortDirection == "asc")
