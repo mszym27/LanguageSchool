@@ -53,14 +53,16 @@
 
 @foreach (var item in Model) {
 
-    var rowBG = "white";
+    var rowColor = "white";
+    var fontColor = "black";
 
     if (!item.IsActive)
     {
-        rowBG = "pink";
+        rowColor = "silver";
+        fontColor = "white";
     }
 
-    <tr bgcolor=@rowBG>
+    <tr style="color: @fontColor; background: @rowColor;">
         <td>
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>
