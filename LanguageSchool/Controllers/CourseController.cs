@@ -12,37 +12,16 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : LanguageSchoolController
     {
-        // GET: Course
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
-            var courses = unitOfWork.CourseRepository.Get().Where(c => c.IsActive).Where(c => !c.IsDeleted);
+            var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
 
             if(page == 1)
             {
                 sortDirection = (sortDirection == "desc") ? "asc" : "desc";
             }
 
-            switch (sortColumn)
-            {
-                case "startDate":
-                    if (sortDirection == "asc")
-                        courses = courses.OrderBy(c => c.StartDate);
-                    else
-                        courses = courses.OrderByDescending(c => c.StartDate);
-                break;
-                case "name":
-                    if (sortDirection == "asc")
-                        courses = courses.OrderBy(c => c.Name);
-                    else
-                        courses = courses.OrderByDescending(c => c.Name);
-                break;
-                case "proficencyLevel":
-                    if (sortDirection == "asc")
-                        courses = courses.OrderBy(c => c.LanguageProficency.Name);
-                    else
-                        courses = courses.OrderByDescending(c => c.LanguageProficency.Name);
-                    break;
-            }
+            courses = this.Sort(courses, sortColumn, sortDirection);
 
             ViewBag.sortColumn = sortColumn;
             ViewBag.sortDirection = sortDirection;
@@ -58,6 +37,38 @@ namespace LanguageSchool.Controllers
             }
 
             return View(CoursesViewModels.ToPagedList(page, 3));
+        }
+
+        [Route("Course/List/")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult List(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
+        {
+            var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
+
+            if (page == 1)
+            {
+                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            }
+
+            courses = this.Sort(courses, sortColumn, sortDirection);
+
+            ViewBag.sortColumn = sortColumn;
+            ViewBag.sortDirection = sortDirection;
+            ViewBag.page = page;
+
+            // toDO
+            //List<Course> Courses = courses.ToList();
+
+            //var CoursesViewModels = new List<CourseViewModel>();
+
+            //foreach (Course c in Courses)
+            //{
+            //    CoursesViewModels.Add(new CourseViewModel(c));
+            //}
+
+            //return View(courses.ToPagedList(page, 20));
+
+            return View(courses);
         }
 
         [Route("Course/{id}")]
@@ -138,5 +149,33 @@ namespace LanguageSchool.Controllers
                 return View();
             }
         }
+
+        private IEnumerable<Course> Sort(IEnumerable<Course> courses, string sortColumn, string sortDirection)
+        {
+            switch (sortColumn)
+            {
+                case "startDate":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.StartDate);
+                    else
+                        courses = courses.OrderByDescending(c => c.StartDate);
+                    break;
+                case "name":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.Name);
+                    else
+                        courses = courses.OrderByDescending(c => c.Name);
+                    break;
+                case "proficencyLevel":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.LanguageProficency.Name);
+                    else
+                        courses = courses.OrderByDescending(c => c.LanguageProficency.Name);
+                    break;
+            }
+
+            return courses;
+        }
+
     }
 }

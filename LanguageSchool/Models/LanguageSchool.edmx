@@ -5,6 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LanguageSchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DaysOfWeek">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PLName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ENName" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Holidays">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageProficencies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="PLDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ENDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ContactRequests">
           <Key>
             <PropertyRef Name="Id" />
@@ -56,6 +85,21 @@
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="NumberOfHours" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="LanguageProficencyId" Type="int" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CourseTimes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="DayOfWeekId" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EntryTests">
           <Key>
@@ -68,15 +112,6 @@
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LanguageProficencies">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="2" Nullable="false" />
-          <Property Name="PLDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ENDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="LessonSubjects">
           <Key>
@@ -305,6 +340,30 @@
             </Principal>
             <Dependent Role="Courses">
               <PropertyRef Name="LanguageProficencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTimes_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="CourseTimes" Type="Self.CourseTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseTimes">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTimes_DaysOfWeek">
+          <End Role="DaysOfWeek" Type="Self.DaysOfWeek" Multiplicity="1" />
+          <End Role="CourseTimes" Type="Self.CourseTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseTimes">
+              <PropertyRef Name="DayOfWeekId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -537,11 +596,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LanguageSchoolModelStoreContainer">
+          <EntitySet Name="DaysOfWeek" EntityType="Self.DaysOfWeek" Schema="Administration" store:Type="Tables" />
+          <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="Administration" store:Type="Tables" />
+          <EntitySet Name="LanguageProficencies" EntityType="Self.LanguageProficencies" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" Schema="ContactInfo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="ContactInfo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="CourseTimes" EntityType="Self.CourseTimes" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="EntryTests" EntityType="Self.EntryTests" Schema="Courses" store:Type="Tables" />
-          <EntitySet Name="LanguageProficencies" EntityType="Self.LanguageProficencies" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubjects" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="Materials" store:Type="Tables" />
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
@@ -575,6 +637,14 @@
           <AssociationSet Name="FK_Courses_LanguageProficencies" Association="Self.FK_Courses_LanguageProficencies">
             <End Role="LanguageProficencies" EntitySet="LanguageProficencies" />
             <End Role="Courses" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTimes_Courses" Association="Self.FK_CourseTimes_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CourseTimes" EntitySet="CourseTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTimes_DaysOfWeek" Association="Self.FK_CourseTimes_DaysOfWeek">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeek" />
+            <End Role="CourseTimes" EntitySet="CourseTimes" />
           </AssociationSet>
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -716,7 +786,9 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="NumberOfHours" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LanguageProficencyId" Type="Int32" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="LanguageProficency" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="Course" ToRole="LanguageProficency" />
+          <NavigationProperty Name="CourseTimes" Relationship="LanguageSchoolModel.FK_CourseTimes_Courses" FromRole="Course" ToRole="CourseTime" />
         </EntityType>
         <EntityType Name="EntryTest">
           <Key>
@@ -1276,10 +1348,21 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UsersMessage" EntitySet="UsersMessages" />
           </AssociationSet>
+          <EntitySet Name="DaysOfWeeks" EntityType="LanguageSchoolModel.DaysOfWeek" />
+          <EntitySet Name="Holidays" EntityType="LanguageSchoolModel.Holiday" />
           <EntitySet Name="LanguageProficencies" EntityType="LanguageSchoolModel.LanguageProficency" />
+          <EntitySet Name="CourseTimes" EntityType="LanguageSchoolModel.CourseTime" />
+          <AssociationSet Name="FK_CourseTimes_DaysOfWeek" Association="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeeks" />
+            <End Role="CourseTime" EntitySet="CourseTimes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Courses_LanguageProficencies" Association="LanguageSchoolModel.FK_Courses_LanguageProficencies">
             <End Role="LanguageProficency" EntitySet="LanguageProficencies" />
             <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTimes_Courses" Association="LanguageSchoolModel.FK_CourseTimes_Courses">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="CourseTime" EntitySet="CourseTimes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Message">
@@ -1331,6 +1414,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DaysOfWeek">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PLName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ENName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CourseTimes" Relationship="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek" FromRole="DaysOfWeek" ToRole="CourseTime" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="LanguageProficency">
           <Key>
             <PropertyRef Name="Id" />
@@ -1341,6 +1445,34 @@
           <Property Name="ENDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Courses" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="LanguageProficency" ToRole="Course" />
         </EntityType>
+        <EntityType Name="CourseTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="DayOfWeekId" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DaysOfWeek" Relationship="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek" FromRole="CourseTime" ToRole="DaysOfWeek" />
+          <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_CourseTimes_Courses" FromRole="CourseTime" ToRole="Course" />
+        </EntityType>
+        <Association Name="FK_CourseTimes_DaysOfWeek">
+          <End Type="LanguageSchoolModel.DaysOfWeek" Role="DaysOfWeek" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.CourseTime" Role="CourseTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseTime">
+              <PropertyRef Name="DayOfWeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Courses_LanguageProficencies">
           <End Type="LanguageSchoolModel.LanguageProficency" Role="LanguageProficency" Multiplicity="1" />
           <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="*" />
@@ -1350,6 +1482,18 @@
             </Principal>
             <Dependent Role="Course">
               <PropertyRef Name="LanguageProficencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTimes_Courses">
+          <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.CourseTime" Role="CourseTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseTime">
+              <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1401,6 +1545,7 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Course">
               <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="LanguageProficencyId" ColumnName="LanguageProficencyId" />
                 <ScalarProperty Name="NumberOfHours" ColumnName="NumberOfHours" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -1611,12 +1756,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DaysOfWeeks">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.DaysOfWeek">
+              <MappingFragment StoreEntitySet="DaysOfWeek">
+                <ScalarProperty Name="ENName" ColumnName="ENName" />
+                <ScalarProperty Name="PLName" ColumnName="PLName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holidays">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Holiday">
+              <MappingFragment StoreEntitySet="Holidays">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LanguageProficencies">
             <EntityTypeMapping TypeName="LanguageSchoolModel.LanguageProficency">
               <MappingFragment StoreEntitySet="LanguageProficencies">
                 <ScalarProperty Name="ENDescription" ColumnName="ENDescription" />
                 <ScalarProperty Name="PLDescription" ColumnName="PLDescription" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseTimes">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.CourseTime">
+              <MappingFragment StoreEntitySet="CourseTimes">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfWeekId" ColumnName="DayOfWeekId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

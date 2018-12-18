@@ -231,7 +231,16 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseTime.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DaysOfWeek.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntryTest.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Holiday.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LanguageProficency.cs">
@@ -394,6 +403,7 @@
     <Content Include="Views\Message\Edit.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLogo.cshtml" />
+    <Content Include="Views\Course\List.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

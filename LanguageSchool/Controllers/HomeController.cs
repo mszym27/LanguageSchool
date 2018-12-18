@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Security.Claims;
 
 namespace LanguageSchool.Controllers
 {
@@ -11,12 +12,18 @@ namespace LanguageSchool.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            // w zaleznosci od tego czy uzytkownik jest zalogowany
-            // rozne strony domowe - zalogowany powinien otrzymac liste kursow
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Course");
+            var role = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).FirstOrDefault();
 
-            return View();
+            switch (role)
+            {
+                case ("Admin"): return RedirectToAction("FullList", "Course");
+                case ("Secretary"): return RedirectToAction("List", "Course");
+                case ("Teacher"): return RedirectToAction("Timetable", "Report");
+                case ("Student"): return RedirectToAction("Timetable", "Report");
+                default: return View();
+            }
         }
     }
 }
