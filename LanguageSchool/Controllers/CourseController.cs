@@ -158,6 +158,12 @@ namespace LanguageSchool.Controllers
                     else
                         courses = courses.OrderByDescending(c => c.IsActive);
                     break;
+                case "creationDate":
+                    if (sortDirection == "asc")
+                        courses = courses.OrderBy(c => c.CreationDate);
+                    else
+                        courses = courses.OrderByDescending(c => c.CreationDate);
+                    break;
                 case "startDate":
                     if (sortDirection == "asc")
                         courses = courses.OrderBy(c => c.StartDate);

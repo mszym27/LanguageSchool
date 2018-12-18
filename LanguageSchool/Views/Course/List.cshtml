@@ -18,14 +18,20 @@
     </div>
 </div>*@
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped">
     <tr>
         <th>
-            @Html.ActionLink("Aktywny", "List", new { sortColumn = "isActive", sortDirection = ViewBag.sortDirection, page = 1 },
-                new { style = "text-decoration:none; color:black" })
+            @*@Html.ActionLink("Aktywny", "List", new { sortColumn = "isActive", sortDirection = ViewBag.sortDirection, page = 1 },
+                new { style = "text-decoration:none; color:black" })*@
+
+            <a href='@Url.Action("List", "Course", new { sortColumn = "isActive", sortDirection = ViewBag.sortDirection, page = 1 })'
+               style = "text-decoration:none; color:black" >
+                <span class="glyphicon glyphicon-asterisk"></span>
+            </a>
         </th>
         <th>
-            Data utworzenia wpisu
+            @Html.ActionLink("Data utworzenia wpisu", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
+                new { style = "text-decoration:none; color:black" })
         </th>
         <th>
             @Html.ActionLink("Nazwa", "List", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
@@ -64,13 +70,12 @@
 
     <tr style="color: @fontColor; background: @rowColor;">
         <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -86,11 +91,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NumberOfHours)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Zdezaktywuj", "Deactivate", new { id = item.Id }) |
-            @Html.ActionLink("Usuń", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
