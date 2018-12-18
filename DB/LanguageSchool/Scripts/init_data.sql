@@ -12,8 +12,8 @@ IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 4)
 
 GO
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 1)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 1)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -24,8 +24,8 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 1)
 		,'początkujący'
 		,'beginner')
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 2)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 2)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -36,8 +36,8 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 2)
 		,'niższy średnio zaawansowany'
 		,'elementary/pre-intermediate')
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 3)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 3)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -48,8 +48,8 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 3)
 		,'średnio zaawansowany'
 		,'intermediate')
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 4)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 4)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -60,8 +60,8 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 4)
 		,'wyższy średnio zaawansowany'
 		,'upper/post-intermediate')
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 5)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 5)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -72,8 +72,8 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 5)
 		,'zaawansowany'
 		,'advanced')
 
-IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 6)
-	INSERT INTO [Courses].[LanguageProficencies]
+IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 6)
+	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
 		,[Name]
 		,[PLDescription]
@@ -83,6 +83,162 @@ IF NOT EXISTS(SELECT 1 FROM [Courses].[LanguageProficencies] WHERE Id = 6)
 		,'C2'
 		,'profesjonalny'
 		,'nearly native-speaker level')
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 1)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(1
+		,'Poniedziałek'
+		,'Monday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 2)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(2
+		,'Wtorek'
+		,'Tuesday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 3)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(3
+		,'Środa'
+		,'Wednesday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 4)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(4
+		,'Czwartek'
+		,'Thursday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 5)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(5
+		,'Piątek'
+		,'Friday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 6)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(6
+		,'Sobota'
+		,'Saturday')
+
+IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 7)
+	INSERT INTO Administration.DaysOfWeek 
+		(Id
+		,PLName
+		,ENName)
+	VALUES 
+		(7
+		,'Niedziela'
+		,'Sunday')
+
+GO
+
+DECLARE @Now DATETIME = GETDATE()
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-24')
+	INSERT INTO [Administration].[Holidays]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[Name]
+		,[Date]
+		,[IsActive])
+	VALUES
+		(0
+		,@Now
+		,NULL
+		,'Wigilia'
+		,'2018-12-24'
+		,1)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-25')
+	INSERT INTO [Administration].[Holidays]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[Name]
+		,[Date]
+		,[IsActive])
+	VALUES
+		(0
+		,@Now
+		,NULL
+		,'Pierwszy dzień świąt'
+		,'2018-12-25'
+		,1)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-26')
+	INSERT INTO [Administration].[Holidays]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[Name]
+		,[Date]
+		,[IsActive])
+	VALUES
+		(0
+		,@Now
+		,NULL
+		,'Drugi dzień świąt'
+		,'2018-12-26'
+		,1)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2019-01-01')
+	INSERT INTO [Administration].[Holidays]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[Name]
+		,[Date]
+		,[IsActive])
+	VALUES
+		(0
+		,@Now
+		,NULL
+		,'Nowy rok'
+		,'2019-01-01'
+		,1)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2019-01-06')
+	INSERT INTO [Administration].[Holidays]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[Name]
+		,[Date]
+		,[IsActive])
+	VALUES
+		(0
+		,@Now
+		,NULL
+		,'Trzech króli'
+		,'2019-01-06'
+		,1)
 
 GO
 

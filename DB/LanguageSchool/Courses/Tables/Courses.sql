@@ -11,8 +11,10 @@
     [LanguageProficencyId] INT             NOT NULL,
     [EndDate]              DATE            NOT NULL,
     CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Courses_LanguageProficencies] FOREIGN KEY ([LanguageProficencyId]) REFERENCES [Courses].[LanguageProficencies] ([Id])
+    CONSTRAINT [FK_Courses_LanguageProficencies] FOREIGN KEY ([LanguageProficencyId]) REFERENCES [Administration].[LanguageProficencies] ([Id])
 );
+
+
 
 
 

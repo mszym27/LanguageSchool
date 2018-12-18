@@ -70,6 +70,8 @@
     <Folder Include="Tests\Tables\" />
     <Folder Include="Materials\" />
     <Folder Include="Materials\Tables\" />
+    <Folder Include="Administration\" />
+    <Folder Include="Administration\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Tables\Roles.sql" />
@@ -96,8 +98,11 @@
     <Build Include="Courses\Tables\EntryTests.sql" />
     <Build Include="Users\Tables\UsersMessages.sql" />
     <Build Include="Users\Tables\Messages.sql" />
-    <Build Include="Courses\Tables\LanguageProficencies.sql" />
     <Build Include="Courses\Tables\CourseTimes.sql" />
+    <Build Include="Administration\Tables\Holidays.sql" />
+    <Build Include="Administration\Tables\LanguageProficencies.sql" />
+    <Build Include="Administration\Tables\DaysOfWeek.sql" />
+    <Build Include="Security\Administration.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

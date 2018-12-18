@@ -1,4 +1,4 @@
-﻿CREATE TABLE [Courses].[LanguageProficencies] (
+﻿CREATE TABLE [Administration].[LanguageProficencies] (
     [Id]            INT           NOT NULL,
     [Name]          VARCHAR (2)   NOT NULL,
     [PLDescription] NVARCHAR (50) NOT NULL,

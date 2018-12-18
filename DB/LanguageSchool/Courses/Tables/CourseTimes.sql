@@ -4,11 +4,14 @@
     [CreationDate] DATETIME NOT NULL,
     [DeletionDate] DATETIME NULL,
     [CourseId]     INT      NOT NULL,
-    [DayOfWeek]    INT      NOT NULL,
+    [DayOfWeekId]  INT      NOT NULL,
     [StartTime]    TIME (7) NOT NULL,
     [EndTime]      TIME (7) NULL,
     [IsActive]     BIT      NOT NULL,
     CONSTRAINT [PK_CourseTimes] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_CourseTimes_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id])
+    CONSTRAINT [FK_CourseTimes_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id]),
+    CONSTRAINT [FK_CourseTimes_DaysOfWeek] FOREIGN KEY ([DayOfWeekId]) REFERENCES [Administration].[DaysOfWeek] ([Id])
 );
+
+
 
