@@ -72,6 +72,7 @@
     <Folder Include="Materials\Tables\" />
     <Folder Include="Administration\" />
     <Folder Include="Administration\Tables\" />
+    <Folder Include="Users\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Tables\Roles.sql" />
@@ -103,6 +104,7 @@
     <Build Include="Administration\Tables\LanguageProficencies.sql" />
     <Build Include="Administration\Tables\DaysOfWeek.sql" />
     <Build Include="Security\Administration.sql" />
+    <Build Include="Users\Stored Procedures\GetUserTimetable.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

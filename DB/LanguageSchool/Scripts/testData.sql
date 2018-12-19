@@ -667,3 +667,102 @@ VALUES
     ,@QuestionId
     ,N'She is watching by Piotr'
     ,0)
+
+--
+
+INSERT INTO [Users].[UsersCourses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[UserId]
+    ,[CourseId])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,(SELECT TOP 1 Id FROM [Users].[Users] WHERE RoleId = 3)
+    ,26)
+
+INSERT INTO [Users].[UsersCourses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[UserId]
+    ,[CourseId])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,(SELECT TOP 1 Id FROM [Users].[Users] WHERE RoleId = 3)
+    ,27)
+
+INSERT INTO [Users].[UsersCourses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[UserId]
+    ,[CourseId])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,(SELECT TOP 1 Id FROM [Users].[Users] WHERE RoleId = 3)
+    ,28)
+
+INSERT INTO [Courses].[CourseTimes]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[CourseId]
+    ,[DayOfWeekId]
+    ,[StartTime]
+    ,[EndTime]
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,26
+    ,3
+    ,'12:00:00'
+    ,'14:00:00'
+    ,1)
+
+INSERT INTO [Courses].[CourseTimes]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[CourseId]
+    ,[DayOfWeekId]
+    ,[StartTime]
+    ,[EndTime]
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,27
+    ,3
+    ,'15:00:00'
+    ,'17:00:00'
+    ,1)
+
+INSERT INTO [Courses].[CourseTimes]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[CourseId]
+    ,[DayOfWeekId]
+    ,[StartTime]
+    ,[EndTime]
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,28
+    ,3
+    ,'17:00:00'
+    ,'20:00:00'
+    ,1)
+GO
