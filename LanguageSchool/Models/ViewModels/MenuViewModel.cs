@@ -11,5 +11,7 @@ namespace LanguageSchool.Models.ViewModels
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
         public string RoleName { get; set; }
-    }
+
+        public List<MenuViewModel> SubMenu { get; set; }
+}
 }

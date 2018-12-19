@@ -15,7 +15,22 @@
     <ul class="nav navbar-nav">
         @foreach (MenuViewModel m in menus)
         {
-            <li>@Html.ActionLink(m.ShownName, m.ActionName, m.ControllerName, routeValues: null, htmlAttributes: new { style = "color:white" })</li>
+            if (m.SubMenu == null)
+            {
+                <li>@Html.ActionLink(m.ShownName, m.ActionName, m.ControllerName, routeValues: null, htmlAttributes: new { style = "color:white" })</li>
+            }
+            else
+            {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style = "color:white">@m.ShownName</a>
+                    <ul class="dropdown-menu">
+                        @foreach (MenuViewModel sm in m.SubMenu)
+                        {
+                            <li>@Html.ActionLink(sm.ShownName, sm.ActionName, sm.ControllerName, routeValues: null, htmlAttributes: new { style = "color:black" })</li>
+                        }
+                    </ul>
+                </li>
+            }
         }
     </ul>
 }

@@ -23,7 +23,7 @@ namespace LanguageSchool
             new List<MenuViewModel>()
             {
                 // Administrator
-                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "FullList", RoleName = "Administrator" },
+                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "FullList", RoleName = "Administrator" },
                 new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
                 new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
                 new MenuViewModel { ShownName = "Dane kontaktowe", ControllerName = "Users", ActionName = "FullList", RoleName = "Administrator" },
@@ -31,7 +31,13 @@ namespace LanguageSchool
                 new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "FullList", RoleName = "Administrator" },
 
                 //Sekretariat
-                new MenuViewModel { ShownName = "Lista kursów", ControllerName = "Course", ActionName = "List", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", RoleName = "Secretary",
+                    SubMenu = new List<MenuViewModel>()
+                    {
+                        new MenuViewModel { ShownName = "Lista", ControllerName = "Course", ActionName = "List" },
+                        new MenuViewModel { ShownName = "Utwórz", ControllerName = "Course", ActionName = "Create" }
+                    }
+                },
                 new MenuViewModel { ShownName = "Dane użytkowników", ControllerName = "Users", ActionName = "List", RoleName = "Secretary" },
                 new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "List", RoleName = "Secretary" },
                 new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "List", RoleName = "Secretary" },

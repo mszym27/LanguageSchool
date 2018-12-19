@@ -32,7 +32,19 @@
             </div>
         </div>
     </div>
-    <div class="container body-content" style="padding-top: 70px; padding-bottom: 70px;">
+    
+    @{
+        var paddingTop = "70px";
+
+        if (User.Identity.IsAuthenticated)
+        {
+            paddingTop = "25px";
+        }
+    }
+
+    
+
+    <div class="container body-content" style="padding-top: @paddingTop; padding-bottom: 70px;">
         
         @if (TempData["Alert"] != null)
         {
