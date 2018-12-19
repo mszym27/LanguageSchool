@@ -404,6 +404,8 @@
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLogo.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

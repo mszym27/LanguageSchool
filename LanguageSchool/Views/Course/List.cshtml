@@ -6,18 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<div class="container w-100 h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-md-3">
-            <div>
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Course")'">Utwórz nowy</button>
-            </div>
-        </div>
-        <div class="col-md-9">
-        </div>
-    </div>
-</div>*@
-
 <table class="table table-striped">
     <tr>
         <th>
@@ -27,7 +15,7 @@
             </a>
         </th>
         <th>
-            @Html.ActionLink("Data utworzenia wpisu", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
+            @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
                 new { style = "text-decoration:none; color:black" })
         </th>
         <th>

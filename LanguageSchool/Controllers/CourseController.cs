@@ -72,17 +72,18 @@ namespace LanguageSchool.Controllers
         [Route("Course/{id}")]
         public ActionResult Details(int id)
         {
-            Course c = unitOfWork.CourseRepository.GetById(id);
+            Course course = unitOfWork.CourseRepository.GetById(id);
 
-            if (c == null)
+            if (course == null)
             {
                 return HttpNotFound();
             }
 
-            return View(c);
+            return View(course);
         }
 
-        // GET: Course/Create
+        [Route("Course/Create/")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create()
         {
             return View();
@@ -104,10 +105,18 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        // GET: Course/Edit/5
+        [Route("Course/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Edit(int id)
         {
-            return View();
+            var course = unitOfWork.CourseRepository.GetById(id);
+
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(course);
         }
 
         // POST: Course/Edit/5
