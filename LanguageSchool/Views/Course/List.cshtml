@@ -7,18 +7,18 @@
 }
 
 <div class="row col-md-12">
-    <div class="col-md-4">
-        @Html.Label("Szukana w tabeli fraza")
-        @Html.TextBox("SearchString")
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-5 ">
         @Html.Label("Kursy")
         <font color="gray">
             aktywne @Html.CheckBox("ShowActivated")
             nieaktywne @Html.CheckBox("ShowDeactivated")
         </font>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-4">
+        @Html.Label("Szukana w tabeli fraza")
+        @Html.TextBox("SearchString")
+    </div>
+    <div style="float:right;">
         <input type="submit" value="Szukaj"/>
     </div>
 </div>
@@ -31,7 +31,7 @@
         </div>*@
 
 <div class="col-md-12">
-    <table class="table table-striped table-bordered col-md-6">
+    <table class="table table-striped table-bordered">
         <tr>
             <th>
                 @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
@@ -99,6 +99,7 @@
     </table>
 </div>
 
+<div class="col-md-12">
     <div class="col-md-6">
     </div>
     <div class="col-md-2">
@@ -107,3 +108,4 @@
     </div>
     <div class="col-md-4">
     </div>
+</div>
