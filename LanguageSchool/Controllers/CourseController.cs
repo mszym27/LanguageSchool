@@ -12,6 +12,7 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : LanguageSchoolController
     {
+        [Route("Course")]
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
             var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));

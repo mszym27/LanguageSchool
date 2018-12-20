@@ -63,7 +63,7 @@
     <div class="col-md-5">
     </div>
     <div class="col-md-3">
-        @Html.PagedListPager(Model, page => Url.Action("List",
+        @Html.PagedListPager(Model, page => Url.Action("Index",
             new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page }))
     </div>
     <div class="col-md-4">
