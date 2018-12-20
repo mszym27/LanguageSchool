@@ -7,16 +7,16 @@
 }
 
 <div class="row col-md-12">
-    <div class="col-md-5 ">
+    <div class="col-md-4 ">
         @Html.Label("Kursy")
         <font color="gray">
             aktywne @Html.CheckBox("ShowActivated")
             nieaktywne @Html.CheckBox("ShowDeactivated")
         </font>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-7">
         @Html.Label("Szukana w tabeli fraza")
-        @Html.TextBox("SearchString")
+        @Html.TextBox("SearchString", null, new { @style = "width:500px" })
     </div>
     <div style="float:right;">
         <input type="submit" value="Szukaj"/>
