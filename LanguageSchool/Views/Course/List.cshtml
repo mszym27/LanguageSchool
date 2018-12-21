@@ -8,22 +8,27 @@
 
 @using (Html.BeginForm())
 {
-<div class="row col-md-12">
-    <div class="col-md-3">
-        @Html.Label("Kursy")
-        <font color="gray">
-            aktywne @Html.CheckBox("showActivated", true)
-            nieaktywne @Html.CheckBox("showDeactivated", false)
-        </font>
+    <div class="row col-md-12">
+        <div class="col-md-3">
+            @Html.Label("Kursy")
+            <font color="gray">
+                aktywne @Html.CheckBox("showActivated", true)
+                nieaktywne @Html.CheckBox("showDeactivated", false)
+            </font>
+        </div>
+        <div class="col-md-7">
+            @Html.Label("Szukana fraza")
+            @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:500px" })
+        </div>
+        <div class="col-md-1">
+            <button class="btn" type="button" 
+                onclick="location.href='@Url.Action("List", "Course", new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page = ViewBag.page } )'">
+            Wyczyść</button>
+        </div>
+        <div class="col-md-1" style="float:right;">
+            <button class="btn" type="submit">Szukaj</button>
+        </div>
     </div>
-    <div class="col-md-8">
-        @Html.Label("Szukana fraza")
-        @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:550px" })
-    </div>
-    <div style="float:right;">
-        <input type="submit" value="Szukaj"/>
-    </div>
-</div>
 }
 
 <p/>
