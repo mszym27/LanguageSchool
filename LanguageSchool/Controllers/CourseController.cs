@@ -43,13 +43,21 @@ namespace LanguageSchool.Controllers
         [Route("Course/List/")]
         [Authorize(Roles = "Secretary")]
         public ActionResult List(
-            string searchString = "sss", bool showActivated = true, bool showDeactivated = false,
+            string searchString, bool showActivated = true, bool showDeactivated = false,
             string sortColumn = "startDate", string sortDirection = "asc", int page = 1
         )
         {
             var courses = unitOfWork.CourseRepository.Get(c => (
                     !c.IsDeleted && (
                         (showActivated && c.IsActive) || (showDeactivated && !c.IsActive)
+                    ) && (
+                        searchString == null ||
+                        (
+                            c.Name.Contains(searchString) ||
+                            c.Description.Contains(searchString) ||
+                            c.NumberOfHours.Contains(searchString) ||
+                            c.LanguageProficency.Name.Contains(searchString)
+                        )
                     )
                 )
             );
