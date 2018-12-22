@@ -158,6 +158,40 @@ IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 7)
 
 GO
 
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 1)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(1
+		,N'Do konkretnego użytkownika')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 2)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(2
+		,N'Do członków grupy')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 3)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(3
+		,N'Do wszystkich uczestników kursu')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(4
+		,N'Do wszystkich')
+
+GO
+
 DECLARE @Now DATETIME = GETDATE()
 
 IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-24')
