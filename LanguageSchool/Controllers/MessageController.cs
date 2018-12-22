@@ -8,123 +8,117 @@ using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 
+using Microsoft.AspNet.Identity;
+
 namespace LanguageSchool.Controllers
 {
-    public class MessageController : Controller
+    public class MessageController : LanguageSchoolController
     {
-        private LanguageSchoolEntities db = new LanguageSchoolEntities();
-
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.Messages.ToList());
+            var userId = Int32.Parse(User.Identity.GetUserId());
+
+            return View(unitOfWork.MessageRepository.Get(m => (m.UsersMessages.Where(um => (um.UserId == userId)).Any())).ToList());
         }
 
-        // GET: Message/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                return HttpNotFound();
-            }
-            return View(message);
-        }
+        //// GET: Message/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Message message = db.Messages.Find(id);
+        //    if (message == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(message);
+        //}
 
-        // GET: Message
-        [Authorize(Roles = "Secretary, Administrator")]
-        // GET: Message/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: Message
+        //[Authorize(Roles = "Secretary, Administrator")]
+        //// GET: Message/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // GET: Message
-        [Authorize(Roles = "Secretary, Administrator")]
-        // POST: Message/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Header,Contents")] Message message)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Messages.Add(message);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// GET: Message
+        //[Authorize(Roles = "Secretary, Administrator")]
+        //// POST: Message/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,Header,Contents")] Message message)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Messages.Add(message);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(message);
-        }
+        //    return View(message);
+        //}
 
-        // GET: Message/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                return HttpNotFound();
-            }
-            return View(message);
-        }
+        //// GET: Message/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Message message = db.Messages.Find(id);
+        //    if (message == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(message);
+        //}
 
-        // POST: Message/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Header,Contents")] Message message)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(message).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(message);
-        }
+        //// POST: Message/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Header,Contents")] Message message)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(message).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(message);
+        //}
 
-        // GET: Message/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                return HttpNotFound();
-            }
-            return View(message);
-        }
+        //// GET: Message/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Message message = db.Messages.Find(id);
+        //    if (message == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(message);
+        //}
 
-        // POST: Message/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Message message = db.Messages.Find(id);
-            db.Messages.Remove(message);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //// POST: Message/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Message message = db.Messages.Find(id);
+        //    db.Messages.Remove(message);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
     }
 }
