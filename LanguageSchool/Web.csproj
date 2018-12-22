@@ -222,6 +222,9 @@
     <Compile Include="Models\Answer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classrom.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClosedQuestion.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
@@ -231,13 +234,16 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CourseTime.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DaysOfWeek.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntryTest.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupTime.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Holiday.cs">
@@ -270,6 +276,9 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageType.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpenQuestion.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
@@ -291,7 +300,7 @@
     <Compile Include="Models\UserOpenAnswer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UsersCourses.cs">
+    <Compile Include="Models\UsersGroup.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersMessage.cs">

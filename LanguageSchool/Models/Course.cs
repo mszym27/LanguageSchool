@@ -21,8 +21,7 @@ namespace LanguageSchool.Models
             this.EntryTests = new HashSet<EntryTest>();
             this.LessonSubjects = new HashSet<LessonSubject>();
             this.Tests = new HashSet<Test>();
-            this.UsersCourses = new HashSet<UsersCourses>();
-            this.CourseTimes = new HashSet<CourseTime>();
+            this.Groups = new HashSet<Group>();
         }
     
         public int Id { get; set; }
@@ -45,10 +44,8 @@ namespace LanguageSchool.Models
         public virtual ICollection<LessonSubject> LessonSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersCourses> UsersCourses { get; set; }
         public virtual LanguageProficency LanguageProficency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseTime> CourseTimes { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

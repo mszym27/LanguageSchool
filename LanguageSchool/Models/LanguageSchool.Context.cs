@@ -39,13 +39,16 @@ namespace LanguageSchool.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UsersCourses> UsersCourses { get; set; }
         public virtual DbSet<UsersTests> UsersTests1 { get; set; }
-        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UsersMessage> UsersMessages { get; set; }
         public virtual DbSet<DaysOfWeek> DaysOfWeeks { get; set; }
         public virtual DbSet<Holiday> Holidays { get; set; }
         public virtual DbSet<LanguageProficency> LanguageProficencies { get; set; }
-        public virtual DbSet<CourseTime> CourseTimes { get; set; }
+        public virtual DbSet<Classrom> Classroms { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<MessageType> MessageTypes { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<GroupTime> GroupTimes { get; set; }
+        public virtual DbSet<UsersGroup> UsersGroups { get; set; }
     }
 }

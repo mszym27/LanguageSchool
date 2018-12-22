@@ -23,7 +23,9 @@ namespace LanguageSchool.Models
         public int Id { get; set; }
         public string Header { get; set; }
         public string Contents { get; set; }
+        public int MessageTypeId { get; set; }
     
+        public virtual MessageType MessageType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersMessage> UsersMessages { get; set; }
     }

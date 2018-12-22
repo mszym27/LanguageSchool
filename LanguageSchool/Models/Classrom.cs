@@ -12,19 +12,10 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersMessage
+    public partial class Classrom
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int UserId { get; set; }
-        public int MessageId { get; set; }
-        public bool HasBeenReceived { get; set; }
-        public Nullable<System.DateTime> ReceivedDate { get; set; }
-        public bool IsCyclical { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual Message Message { get; set; }
+        public string Identificator { get; set; }
+        public int NumberOfSeats { get; set; }
     }
 }
