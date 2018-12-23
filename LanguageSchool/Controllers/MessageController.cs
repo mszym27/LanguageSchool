@@ -17,11 +17,22 @@ namespace LanguageSchool.Controllers
     public class MessageController : LanguageSchoolController
     {
         [Authorize]
-        public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "asc", int page = 1)
+        public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "desc", int page = 1)
         {
             var userId = Int32.Parse(User.Identity.GetUserId());
 
-            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId && !um.IsDeleted)).ToList();
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId && !um.IsDeleted));
+
+            if (page == 1)
+            {
+                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            }
+
+            userMessages = this.Sort(userMessages, sortColumn, sortDirection);
+
+            ViewBag.sortColumn = sortColumn;
+            ViewBag.sortDirection = sortDirection;
+            ViewBag.page = page;
 
             var userMessagesViewModels = new List<UserMessageViewModel>();
 
@@ -73,6 +84,33 @@ namespace LanguageSchool.Controllers
             unitOfWork.Save();
 
             return RedirectToAction("Index");
+        }
+
+        private IEnumerable<UserMessage> Sort(IEnumerable<UserMessage> userMessages, string sortColumn, string sortDirection)
+        {
+            switch (sortColumn)
+            {
+                case "SentDate":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.CreationDate);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.CreationDate);
+                    break;
+                case "ReceivedDate":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.ReceivedDate);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.ReceivedDate);
+                    break;
+                case "Topic":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.Message.Header);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.Message.Header);
+                    break;
+            }
+
+            return userMessages;
         }
 
         //// GET: Message
