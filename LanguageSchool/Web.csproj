@@ -297,13 +297,13 @@
     <Compile Include="Models\UserData.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserMessage.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserOpenAnswer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersGroup.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UsersMessage.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersTests.cs">
@@ -313,6 +313,7 @@
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\TestViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />

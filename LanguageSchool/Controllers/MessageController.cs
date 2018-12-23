@@ -6,20 +6,31 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using LanguageSchool.Models;
-
+using PagedList;
 using Microsoft.AspNet.Identity;
+
+using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
     public class MessageController : LanguageSchoolController
     {
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "asc", int page = 1)
         {
             var userId = Int32.Parse(User.Identity.GetUserId());
 
-            return View(unitOfWork.MessageRepository.Get(m => (m.UsersMessages.Where(um => (um.UserId == userId)).Any())).ToList());
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId)).ToList();
+
+            var userMessagesViewModels = new List<UserMessageViewModel>();
+
+            foreach (UserMessage um in userMessages)
+            {
+                userMessagesViewModels.Add(new UserMessageViewModel(um));
+            }
+
+            return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
         //// GET: Message/Details/5

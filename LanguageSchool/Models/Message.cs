@@ -17,7 +17,7 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Message()
         {
-            this.UsersMessages = new HashSet<UsersMessage>();
+            this.UsersMessages = new HashSet<UserMessage>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace LanguageSchool.Models
     
         public virtual MessageType MessageType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersMessage> UsersMessages { get; set; }
+        public virtual ICollection<UserMessage> UsersMessages { get; set; }
     }
 }

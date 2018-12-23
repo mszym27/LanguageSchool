@@ -46,7 +46,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contents" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="MessageTypeId" Type="int" Nullable="false" />
@@ -1354,10 +1354,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersTests" EntitySet="UsersTests1" />
           </AssociationSet>
-          <EntitySet Name="UsersMessages" EntityType="LanguageSchoolModel.UsersMessage" />
+          <EntitySet Name="UserMessages" EntityType="LanguageSchoolModel.UserMessage" />
           <AssociationSet Name="FK_UsersMessages_Users" Association="LanguageSchoolModel.FK_UsersMessages_Users">
             <End Role="User" EntitySet="Users" />
-            <End Role="UsersMessage" EntitySet="UsersMessages" />
+            <End Role="UsersMessage" EntitySet="UserMessages" />
           </AssociationSet>
           <EntitySet Name="DaysOfWeeks" EntityType="LanguageSchoolModel.DaysOfWeek" />
           <EntitySet Name="Holidays" EntityType="LanguageSchoolModel.Holiday" />
@@ -1382,7 +1382,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersMessages_Messages1" Association="LanguageSchoolModel.FK_UsersMessages_Messages1">
             <End Role="Message1" EntitySet="Messages" />
-            <End Role="UsersMessage" EntitySet="UsersMessages" />
+            <End Role="UsersMessage" EntitySet="UserMessages" />
           </AssociationSet>
           <AssociationSet Name="FK_Groups_Courses" Association="LanguageSchoolModel.FK_Groups_Courses">
             <End Role="Course" EntitySet="Courses" />
@@ -1401,7 +1401,7 @@
             <End Role="UsersGroup" EntitySet="UsersGroups" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="UsersMessage">
+        <EntityType Name="UserMessage">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1419,7 +1419,7 @@
         </EntityType>
         <Association Name="FK_UsersMessages_Users">
           <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersMessage" Role="UsersMessage" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserMessage" Role="UsersMessage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -1484,7 +1484,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Header" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Contents" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="MessageTypeId" Type="Int32" Nullable="false" />
@@ -1569,7 +1569,7 @@
         </Association>
         <Association Name="FK_UsersMessages_Messages1">
           <End Type="LanguageSchoolModel.Message" Role="Message1" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersMessage" Role="UsersMessage" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserMessage" Role="UsersMessage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Message1">
               <PropertyRef Name="Id" />
@@ -1850,8 +1850,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsersMessages">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersMessage">
+          <EntitySetMapping Name="UserMessages">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserMessage">
               <MappingFragment StoreEntitySet="UsersMessages">
                 <ScalarProperty Name="IsCyclical" ColumnName="IsCyclical" />
                 <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />

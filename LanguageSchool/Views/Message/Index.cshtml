@@ -1,40 +1,51 @@
-﻿@model IEnumerable<LanguageSchool.Models.Message>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<LanguageSchool.Models.ViewModels.UserMessageViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Header)
+            Data wysłania
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Contents)
+            Data odczytania
         </th>
-        <th></th>
+        <th>
+            Tytuł
+        </th>
+        <th>
+            Treść
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Header)
+            @Html.DisplayFor(modelItem => item.SentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceivedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Contents)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
+
+<div class="col-md-5">
+</div>
+<div class="col-md-3">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page }))
+</div>
+<div class="col-md-4">
+</div>

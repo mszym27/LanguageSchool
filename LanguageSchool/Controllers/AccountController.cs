@@ -55,9 +55,6 @@ namespace LanguageSchool.Controllers
                     {
                         this.LogUserIn(loginUser);
 
-                        if(loginUser.UsersMessages.Any())
-                            return this.RedirectToAction("Index", "Message");
-
                         return this.RedirectToAction("Index", "Home");
                     }
                     else
