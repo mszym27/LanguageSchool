@@ -21,7 +21,7 @@ namespace LanguageSchool.Controllers
         {
             var userId = Int32.Parse(User.Identity.GetUserId());
 
-            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId)).ToList();
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId && !um.IsDeleted)).ToList();
 
             var userMessagesViewModels = new List<UserMessageViewModel>();
 
@@ -33,20 +33,33 @@ namespace LanguageSchool.Controllers
             return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
-        //// GET: Message/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Message message = db.Messages.Find(id);
-        //    if (message == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(message);
-        //}
+        [Authorize]
+        [Route("Message/{userMessageId}")]
+        public ActionResult Details(int? userMessageId)
+        {
+            int userId = Int32.Parse(User.Identity.GetUserId());
+
+            var loggedUser = unitOfWork.UserRepository.GetById(userId);
+
+            var userMessage = loggedUser.UsersMessages.Where(um => um.Id == userMessageId).FirstOrDefault();
+
+            if (userMessage == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (!userMessage.HasBeenReceived)
+            {
+                userMessage.HasBeenReceived = true;
+                userMessage.ReceivedDate = DateTime.Today;
+                unitOfWork.UserMessageRepository.Update(userMessage);
+                unitOfWork.Save();
+            }
+
+            var userMessageViewModel = new UserMessageViewModel(userMessage);
+
+            return View(userMessageViewModel);
+        }
 
         //// GET: Message
         //[Authorize(Roles = "Secretary, Administrator")]

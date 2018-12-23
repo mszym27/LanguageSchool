@@ -12,6 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public string ReceivedDate { get; }
         public string Topic { get; }
         public string Contents { get; }
+        public string ShortenedContents { get; }
         public bool HasBeenReceived { get; }
         public bool IsCyclical { get; }
 
@@ -19,9 +20,10 @@ namespace LanguageSchool.Models.ViewModels
         {
             Id = um.Id;
             SentDate = um.CreationDate.ToString("yyyy-MM-dd");
-            ReceivedDate = um.ReceivedDate.HasValue ? um.ReceivedDate.Value.ToString() : "-";
+            ReceivedDate = um.ReceivedDate.HasValue ? um.ReceivedDate.Value.ToString("yyyy-MM-dd") : "-";
             Topic = um.Message.Header;
-            Contents = um.Message.Contents.Substring(0, 30) + "...";
+            Contents = um.Message.Contents;
+            ShortenedContents = um.Message.Contents.Substring(0, 70) + "...";
             HasBeenReceived = um.HasBeenReceived;
             IsCyclical = um.IsCyclical;
         }
