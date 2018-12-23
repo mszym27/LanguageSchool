@@ -14,9 +14,9 @@ using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
+    [Authorize]
     public class MessageController : LanguageSchoolController
     {
-        [Authorize]
         public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "desc", int page = 1)
         {
             var userId = Int32.Parse(User.Identity.GetUserId());
@@ -45,7 +45,6 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
         {
@@ -86,6 +85,64 @@ namespace LanguageSchool.Controllers
             return RedirectToAction("Index");
         }
 
+        //// GET: Message
+        ////[Authorize(Roles = "Secretary, Administrator")]
+        //// GET: Message/Create
+        //[Route("Message/Create/")]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        [Authorize(Roles = "Secretary")]
+        [HttpGet]
+        [Route("Message/Create")]
+        public ActionResult Create()
+        {
+            UserMessageViewModel userMessage = new UserMessageViewModel();
+
+            return View(userMessage);
+        }
+
+        [Authorize(Roles = "Secretary")]
+        [HttpPost]
+        [Route("Message/Create")]
+        public ActionResult Create(UserMessageViewModel userMessage)
+        {
+            //try
+            //{
+            //    ContactRequest cr = new ContactRequest();
+
+            //    cr.PhoneNumber = crvm.PhoneNumber;
+            //    cr.EmailAdress = crvm.EmailAdress;
+            //    cr.Comment = crvm.Comment;
+            //    cr.PreferredHours = crvm.PreferredHours;
+            //    cr.CourseId = crvm.CourseId;
+            //    cr.EntryTestId = crvm.EntryTestId;
+            //    cr.Points = crvm.Points;
+
+            //    cr.IsAwaiting = true;
+            //    cr.CreationDate = DateTime.Now;
+
+            //    unitOfWork.ContactRequestRepository.Insert(cr);
+            //    unitOfWork.Save();
+
+            //    TempData["Alert"] = new AlertViewModel()
+            //    {
+            //        Title = "Wysłano pomyślnie",
+            //        Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
+            //        AlertColor = "green"
+            //    };
+
+            //    return RedirectToAction("Index", "Course");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
+            return View();
+        }
+
         private IEnumerable<UserMessage> Sort(IEnumerable<UserMessage> userMessages, string sortColumn, string sortDirection)
         {
             switch (sortColumn)
@@ -112,14 +169,6 @@ namespace LanguageSchool.Controllers
 
             return userMessages;
         }
-
-        //// GET: Message
-        //[Authorize(Roles = "Secretary, Administrator")]
-        //// GET: Message/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
 
         //// GET: Message
         //[Authorize(Roles = "Secretary, Administrator")]

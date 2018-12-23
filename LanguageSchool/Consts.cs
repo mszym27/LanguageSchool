@@ -47,6 +47,13 @@ namespace LanguageSchool
                     }
                 },
                 new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "List", RoleName = "Secretary" },
+                //new MenuViewModel { ShownName = "Adninistracja", RoleName = "Secretary",
+                //    SubMenu = new List<MenuViewModel>()
+                //    {
+                //        new MenuViewModel { ShownName = "Dni świąteczne", ControllerName = "Message", ActionName = "Index" },
+                //        new MenuViewModel { ShownName = "Stwórz konto", ControllerName = "Message", ActionName = "Create" }
+                //    }
+                //},
 
                 //Nauczyciel
                 new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "List", RoleName = "Teacher" },
