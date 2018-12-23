@@ -39,7 +39,13 @@ namespace LanguageSchool
                     }
                 },
                 new MenuViewModel { ShownName = "Dane użytkowników", ControllerName = "Users", ActionName = "List", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "List", RoleName = "Secretary" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", RoleName = "Secretary",
+                    SubMenu = new List<MenuViewModel>()
+                    {
+                        new MenuViewModel { ShownName = "Moje komunikaty", ControllerName = "Message", ActionName = "Index" },
+                        new MenuViewModel { ShownName = "Wyślij komunikat", ControllerName = "Message", ActionName = "Create" }
+                    }
+                },
                 new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "List", RoleName = "Secretary" },
 
                 //Nauczyciel

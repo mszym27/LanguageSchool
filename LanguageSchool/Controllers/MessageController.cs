@@ -33,6 +33,7 @@ namespace LanguageSchool.Controllers
             return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
+        [HttpGet]
         [Authorize]
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
@@ -59,6 +60,19 @@ namespace LanguageSchool.Controllers
             var userMessageViewModel = new UserMessageViewModel(userMessage);
 
             return View(userMessageViewModel);
+        }
+
+        [HttpPost]
+        [Route("Message/{userMessageId}")]
+        public ActionResult Details(int userMessageId)
+        {
+            var userMessage = unitOfWork.UserMessageRepository.GetById(userMessageId);
+
+            userMessage.IsDeleted = true;
+            unitOfWork.UserMessageRepository.Update(userMessage);
+            unitOfWork.Save();
+
+            return RedirectToAction("Index");
         }
 
         //// GET: Message
@@ -132,17 +146,6 @@ namespace LanguageSchool.Controllers
         //        return HttpNotFound();
         //    }
         //    return View(message);
-        //}
-
-        //// POST: Message/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Message message = db.Messages.Find(id);
-        //    db.Messages.Remove(message);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
         //}
     }
 }
