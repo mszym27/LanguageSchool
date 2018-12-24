@@ -107,19 +107,13 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         [HttpPost]
         [Route("Message/Create")]
-        public ActionResult Create(UserMessageViewModel userMessage)
+        public ActionResult Create(UserMessageViewModel userMessageViewModel)
         {
             //try
             //{
-            //    ContactRequest cr = new ContactRequest();
+            //    Message message = new Message();
 
-            //    cr.PhoneNumber = crvm.PhoneNumber;
-            //    cr.EmailAdress = crvm.EmailAdress;
-            //    cr.Comment = crvm.Comment;
-            //    cr.PreferredHours = crvm.PreferredHours;
-            //    cr.CourseId = crvm.CourseId;
-            //    cr.EntryTestId = crvm.EntryTestId;
-            //    cr.Points = crvm.Points;
+            //    message
 
             //    cr.IsAwaiting = true;
             //    cr.CreationDate = DateTime.Now;

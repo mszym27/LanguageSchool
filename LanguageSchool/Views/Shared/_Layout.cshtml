@@ -50,7 +50,7 @@
         {
             var alert = (AlertViewModel) TempData["Alert"];
 
-            <div class="alert" style="background-color: @alert.AlertColor; color: white; text-align: center;">
+            <div class="alert" style="background-color: @alert.AlertType; color: white; text-align: center;">
                 <strong>@alert.Title</strong>: @alert.Message
             </div>
         }

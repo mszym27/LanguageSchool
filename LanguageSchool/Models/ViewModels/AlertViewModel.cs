@@ -8,7 +8,7 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class AlertViewModel
     {
-        public string AlertColor;
+        public string AlertType;
         public string Title;
         public string Message;
     }
