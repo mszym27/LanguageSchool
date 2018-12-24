@@ -180,7 +180,7 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 3)
 		,[Name])
 	VALUES
 		(3
-		,N'Do wszystkich uczestników kursu')
+		,N'Do uczestników kursu')
 
 IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
 	INSERT INTO [Administration].[MessageTypes]
@@ -188,6 +188,38 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
 		,[Name])
 	VALUES
 		(4
+		,N'Do wszystkich studentów')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 5)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(5
+		,N'Do wszystkich instruktorów')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 6)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(6
+		,N'Do wszystkich pracowników sekretariatu')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 7)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(7
+		,N'Do wszystkich administratorów systemowych')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 8)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(8
 		,N'Do wszystkich')
 
 GO

@@ -19,6 +19,7 @@ namespace LanguageSchool.DAL
         private Repository<User> userRepository;
         private Repository<Message> messageRepository;
         private Repository<UserMessage> userMessageRepository;
+        private Repository<MessageType> messageTypeRepository;
 
         public Repository<Course> CourseRepository
         {
@@ -41,6 +42,14 @@ namespace LanguageSchool.DAL
             get
             {
                 return this.userRepository ?? new Repository<User>(entities);
+            }
+        }
+
+        public Repository<MessageType> MessageTypeRepository
+        {
+            get
+            {
+                return this.messageTypeRepository ?? new Repository<MessageType>(entities);
             }
         }
 

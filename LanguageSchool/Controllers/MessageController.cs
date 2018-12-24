@@ -101,6 +101,10 @@ namespace LanguageSchool.Controllers
         {
             UserMessageViewModel userMessage = new UserMessageViewModel();
 
+            ViewData["MessageTypes"] = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+                                         "Id",
+                                         "Name");
+
             return View(userMessage);
         }
 
