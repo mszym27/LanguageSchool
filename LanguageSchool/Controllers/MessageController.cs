@@ -99,29 +99,29 @@ namespace LanguageSchool.Controllers
         [Route("Message/Create")]
         public ActionResult Create()
         {
-            UserMessageViewModel userMessage = new UserMessageViewModel();
+            UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
 
-            ViewData["MessageTypes"] = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+            userMessageViewModel.MessageTypes = new SelectList(unitOfWork.MessageTypeRepository.Get(),
                                          "Id",
                                          "Name");
 
-            ViewData["Users"] = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
+            userMessageViewModel.Users = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
                                          "Id",
                                          "Login");
 
-            ViewData["Groups"] = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
+            userMessageViewModel.Groups = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
                                          "Name");
 
-            ViewData["Courses"] = new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+            userMessageViewModel.Courses = new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
                                          "Id",
                                          "Name");
 
-            ViewData["Roles"] = new SelectList(unitOfWork.RoleRepository.Get(),
+            userMessageViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
                                          "Id",
                                          "PLName");
 
-            return View(userMessage);
+            return View(userMessageViewModel);
         }
 
         [Authorize(Roles = "Secretary")]
@@ -129,32 +129,33 @@ namespace LanguageSchool.Controllers
         [Route("Message/Create")]
         public ActionResult Create(UserMessageViewModel userMessageViewModel)
         {
-            //try
-            //{
-            //    Message message = new Message();
+            try
+            {
+                Message message = new Message();
 
-            //    message
+                message.Header = userMessageViewModel.Topic;
+                message.Contents = userMessageViewModel.Contents;
+                message.MessageType = unitOfWork.MessageTypeRepository.GetById(userMessageViewModel.MessageTypeId);
 
-            //    cr.IsAwaiting = true;
-            //    cr.CreationDate = DateTime.Now;
+                //message.MessageType = true;
+                //cr.CreationDate = DateTime.Now;
 
-            //    unitOfWork.ContactRequestRepository.Insert(cr);
-            //    unitOfWork.Save();
+                //unitOfWork.ContactRequestRepository.Insert(cr);
+                //unitOfWork.Save();
 
-            //    TempData["Alert"] = new AlertViewModel()
-            //    {
-            //        Title = "Wysłano pomyślnie",
-            //        Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
-            //        AlertColor = "green"
-            //    };
+                //TempData["Alert"] = new AlertViewModel()
+                //{
+                //    Title = "Wysłano pomyślnie",
+                //    Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
+                //    AlertColor = "green"
+                //};
 
-            //    return RedirectToAction("Index", "Course");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-            return View();
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         private IEnumerable<UserMessage> Sort(IEnumerable<UserMessage> userMessages, string sortColumn, string sortDirection)

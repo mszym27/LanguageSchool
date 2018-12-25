@@ -44,7 +44,7 @@
                 <strong>Typ wiadomości</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("MessageType", (IEnumerable<SelectListItem>)ViewData["MessageTypes"], new { @onchange = "MessageTypeChanged(this.value)" })
+                @Html.DropDownListFor(model => model.MessageTypeId, Model.MessageTypes, new { @onchange = "MessageTypeChanged(this.value)" })
             </div>
         </div>
         <div id="1" class="form-group" style="display: block">
@@ -52,7 +52,7 @@
                 <strong>Użytkownik</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("User", (IEnumerable<SelectListItem>)ViewData["Users"])
+                @Html.DropDownListFor(model => model.UserId, Model.Users)
             </div>
         </div>
         <div id="2" class="form-group" style="display: none">
@@ -60,7 +60,7 @@
                 <strong>Grupa</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Group", (IEnumerable<SelectListItem>)ViewData["Groups"])
+                @Html.DropDownListFor(model => model.GroupId, Model.Groups)
             </div>
         </div>
         <div id="3" class="form-group" style="display: none">
@@ -68,7 +68,7 @@
                 <strong>Kurs</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Course", (IEnumerable<SelectListItem>)ViewData["Courses"])
+                @Html.DropDownListFor(model => model.CourseId, Model.Courses)
             </div>
         </div>
         <div id="4" class="form-group" style="display: none">
@@ -76,7 +76,7 @@
                 <strong>Rola</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Role", (IEnumerable<SelectListItem>)ViewData["Roles"])
+                @Html.DropDownListFor(model => model.RoleId, Model.Roles)
             </div>
         </div>
         <script>
