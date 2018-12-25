@@ -58,6 +58,10 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_GroupTimes_Groups" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersGroups_Groups" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersGroups_Users" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Courses" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Groups" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Roles" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

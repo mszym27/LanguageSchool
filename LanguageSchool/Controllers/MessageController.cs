@@ -127,28 +127,85 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         [HttpPost]
         [Route("Message/Create")]
-        public ActionResult Create(UserMessageViewModel userMessageViewModel)
+        public ActionResult Create(UserMessageViewModel uMVM)
         {
             try
             {
                 Message message = new Message();
 
-                message.Header = userMessageViewModel.Topic;
-                message.Contents = userMessageViewModel.Contents;
-                message.MessageType = unitOfWork.MessageTypeRepository.GetById(userMessageViewModel.MessageTypeId);
+                message.Header = uMVM.Topic;
+                message.Contents = uMVM.Contents;
+                message.MessageType = unitOfWork.MessageTypeRepository.GetById(uMVM.MessageTypeId);
+                message.CreationDate = DateTime.Now;
+                message.IsSystem = uMVM.IsSystem;
+                message.UsersMessages = new List<UserMessage>();
 
-                //message.MessageType = true;
-                //cr.CreationDate = DateTime.Now;
+                UserMessage userMessage;
 
-                //unitOfWork.ContactRequestRepository.Insert(cr);
-                //unitOfWork.Save();
+                switch (uMVM.MessageTypeId)
+                {
+                    case (int)Consts.MessageTypes.ToUser:
+                        message.UserId = uMVM.UserId;
 
-                //TempData["Alert"] = new AlertViewModel()
-                //{
-                //    Title = "Wysłano pomyślnie",
-                //    Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
-                //    AlertColor = "green"
-                //};
+                        userMessage = new UserMessage() { UserId = uMVM.UserId };
+
+                        message.UsersMessages.Add(userMessage);
+
+                        break;
+                    case (int)Consts.MessageTypes.ToGroup:
+                        message.GroupId = uMVM.GroupId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == uMVM.GroupId).Any() && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToCourse:
+                        message.CourseId = uMVM.CourseId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == uMVM.CourseId).Any() && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToRole:
+                        message.RoleId = uMVM.RoleId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.RoleId == uMVM.RoleId && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToAll:
+
+                        foreach(User u in unitOfWork.UserRepository.Get(u => !u.IsDeleted))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                }
+
+                unitOfWork.MessageRepository.Insert(message);
+                unitOfWork.Save();
+
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Wiadomość wysłana pomyślnie",
+                    Message = "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów",
+                    AlertType = Consts.Success
+                };
 
                 return RedirectToAction("Index", "Home");
             }
@@ -164,9 +221,9 @@ namespace LanguageSchool.Controllers
             {
                 case "SentDate":
                     if (sortDirection == "asc")
-                        userMessages = userMessages.OrderBy(um => um.CreationDate);
+                        userMessages = userMessages.OrderBy(um => um.Message.CreationDate);
                     else
-                        userMessages = userMessages.OrderByDescending(um => um.CreationDate);
+                        userMessages = userMessages.OrderByDescending(um => um.Message.CreationDate);
                     break;
                 case "ReceivedDate":
                     if (sortDirection == "asc")

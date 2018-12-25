@@ -16,13 +16,11 @@ namespace LanguageSchool.Models
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int UserId { get; set; }
         public int MessageId { get; set; }
         public bool HasBeenReceived { get; set; }
         public Nullable<System.DateTime> ReceivedDate { get; set; }
-        public bool IsCyclical { get; set; }
     
         public virtual User User { get; set; }
         public virtual Message Message { get; set; }

@@ -47,9 +47,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contents" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="MessageTypeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="GroupId" Type="int" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="IsSystem" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MessageTypes">
           <Key>
@@ -291,13 +297,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="MessageId" Type="int" Nullable="false" />
           <Property Name="HasBeenReceived" Type="bit" Nullable="false" />
           <Property Name="ReceivedDate" Type="datetime" />
-          <Property Name="IsCyclical" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersTests">
           <Key>
@@ -456,6 +460,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Messages_MessageTypes">
           <End Role="MessageTypes" Type="Self.MessageTypes" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
@@ -465,6 +493,30 @@
             </Principal>
             <Dependent Role="Messages">
               <PropertyRef Name="MessageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -722,8 +774,24 @@
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
             <End Role="Materials" EntitySet="Materials" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_Courses" Association="Self.FK_Messages_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Groups" Association="Self.FK_Messages_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Messages_MessageTypes" Association="Self.FK_Messages_MessageTypes">
             <End Role="MessageTypes" EntitySet="MessageTypes" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Roles" Association="Self.FK_Messages_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_OpenQuestions_LessonSubjects" Association="Self.FK_OpenQuestions_LessonSubjects">
@@ -852,6 +920,7 @@
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="LanguageProficency" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="Course" ToRole="LanguageProficency" />
           <NavigationProperty Name="Groups" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Course" ToRole="Group" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Courses" FromRole="Course" ToRole="Message" />
         </EntityType>
         <EntityType Name="EntryTest">
           <Key>
@@ -984,6 +1053,7 @@
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
           <Property Name="ENName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PLName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Roles" FromRole="Role" ToRole="Message" />
         </EntityType>
         <EntityType Name="UserOpenAnswer">
           <Key>
@@ -1020,6 +1090,7 @@
           <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Users" FromRole="Users" ToRole="UsersTests" />
           <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Users" FromRole="User" ToRole="UsersMessage" />
           <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Users" FromRole="User" ToRole="UsersGroup" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Users" FromRole="User" ToRole="Message" />
         </EntityType>
         <EntityType Name="UsersTests">
           <Key>
@@ -1402,6 +1473,22 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UsersGroup" EntitySet="UsersGroups" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_Courses" Association="LanguageSchoolModel.FK_Messages_Courses">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Groups" Association="LanguageSchoolModel.FK_Messages_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Roles" Association="LanguageSchoolModel.FK_Messages_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Users" Association="LanguageSchoolModel.FK_Messages_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
           <Key>
@@ -1409,13 +1496,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="MessageId" Type="Int32" Nullable="false" />
           <Property Name="HasBeenReceived" Type="Boolean" Nullable="false" />
           <Property Name="ReceivedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsCyclical" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_UsersMessages_Users" FromRole="UsersMessage" ToRole="User" />
           <NavigationProperty Name="Message" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages1" FromRole="UsersMessage" ToRole="Message1" />
         </EntityType>
@@ -1492,6 +1577,16 @@
           <Property Name="MessageTypeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MessageType" Relationship="LanguageSchoolModel.FK_Messages_MessageTypes" FromRole="Message1" ToRole="MessageType" />
           <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages1" FromRole="Message1" ToRole="UsersMessage" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_Messages_Courses" FromRole="Message" ToRole="Course" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Message" ToRole="Group" />
+          <NavigationProperty Name="Role" Relationship="LanguageSchoolModel.FK_Messages_Roles" FromRole="Message" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_Messages_Users" FromRole="Message" ToRole="User" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsSystem" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MessageType">
           <Key>
@@ -1515,6 +1610,7 @@
           <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Group" ToRole="Course" />
           <NavigationProperty Name="GroupTimes" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="Group" ToRole="GroupTime" />
           <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Groups" FromRole="Group" ToRole="UsersGroup" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Group" ToRole="Message" />
         </EntityType>
         <EntityType Name="GroupTime">
           <Key>
@@ -1625,6 +1721,54 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UsersGroup">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Courses">
+          <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Groups">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Roles">
+          <End Type="LanguageSchoolModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Users">
+          <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1856,13 +2000,11 @@
           <EntitySetMapping Name="UserMessages">
             <EntityTypeMapping TypeName="LanguageSchoolModel.UserMessage">
               <MappingFragment StoreEntitySet="UsersMessages">
-                <ScalarProperty Name="IsCyclical" ColumnName="IsCyclical" />
                 <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
                 <ScalarProperty Name="HasBeenReceived" ColumnName="HasBeenReceived" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1912,6 +2054,12 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Message">
               <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="MessageTypeId" ColumnName="MessageTypeId" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="Header" ColumnName="Header" />

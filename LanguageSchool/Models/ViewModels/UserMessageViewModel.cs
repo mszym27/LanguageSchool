@@ -13,7 +13,7 @@ namespace LanguageSchool.Models.ViewModels
         [DataType(DataType.MultilineText)]
         public string Contents { get; set; }
         public bool HasBeenReceived { get; set; }
-        public bool IsCyclical { get; set; }
+        public bool IsSystem { get; set; }
 
         // na potrzeby tworzenia
 
@@ -37,13 +37,14 @@ namespace LanguageSchool.Models.ViewModels
         public UserMessageViewModel(UserMessage userMessage)
         {
             Id = userMessage.Id;
-            SentDate = userMessage.CreationDate.ToString("yyyy-MM-dd");
+            SentDate = userMessage.Message.CreationDate.ToString("yyyy-MM-dd");
             ReceivedDate = userMessage.ReceivedDate.HasValue ? userMessage.ReceivedDate.Value.ToString("yyyy-MM-dd") : "-";
             Topic = userMessage.Message.Header;
             Contents = userMessage.Message.Contents;
-            ShortenedContents = userMessage.Message.Contents.Substring(0, 70) + "...";
             HasBeenReceived = userMessage.HasBeenReceived;
-            IsCyclical = userMessage.IsCyclical;
+            IsSystem = userMessage.Message.IsSystem;
+
+            ShortenedContents = (Contents.Length > 100) ? Contents.Substring(0, 100) + "..." : Contents;
         }
     }
 }
