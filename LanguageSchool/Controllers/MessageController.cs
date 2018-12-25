@@ -105,9 +105,21 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
-            ViewData["MessageTypes"] = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+            ViewData["Users"] = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
+                                         "Id",
+                                         "Login");
+
+            ViewData["Groups"] = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
                                          "Name");
+
+            ViewData["Courses"] = new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+                                         "Id",
+                                         "Name");
+
+            ViewData["Roles"] = new SelectList(unitOfWork.RoleRepository.Get(),
+                                         "Id",
+                                         "PLName");
 
             return View(userMessage);
         }

@@ -52,7 +52,7 @@
                 <strong>Użytkownik</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("User", (IEnumerable<SelectListItem>)ViewData["MessageTypes"])
+                @Html.DropDownList("User", (IEnumerable<SelectListItem>)ViewData["Users"])
             </div>
         </div>
         <div id="2" class="form-group" style="display: none">
@@ -60,7 +60,7 @@
                 <strong>Grupa</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Course", (IEnumerable<SelectListItem>)ViewData["MessageTypes"])
+                @Html.DropDownList("Group", (IEnumerable<SelectListItem>)ViewData["Groups"])
             </div>
         </div>
         <div id="3" class="form-group" style="display: none">
@@ -68,7 +68,7 @@
                 <strong>Kurs</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Group", (IEnumerable<SelectListItem>)ViewData["MessageTypes"])
+                @Html.DropDownList("Course", (IEnumerable<SelectListItem>)ViewData["Courses"])
             </div>
         </div>
         <div id="4" class="form-group" style="display: none">
@@ -76,7 +76,7 @@
                 <strong>Rola</strong>
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("Role", (IEnumerable<SelectListItem>)ViewData["MessageTypes"])
+                @Html.DropDownList("Role", (IEnumerable<SelectListItem>)ViewData["Roles"])
             </div>
         </div>
         <script>
