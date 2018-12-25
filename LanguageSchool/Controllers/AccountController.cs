@@ -113,7 +113,7 @@ namespace LanguageSchool.Controllers
                 // Setting    
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.Login));
-                claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role.ENName));
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;

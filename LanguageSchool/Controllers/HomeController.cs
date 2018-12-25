@@ -28,10 +28,10 @@ namespace LanguageSchool.Controllers
                 if (loggedUser.UsersMessages.Where(um => (um.HasBeenReceived == false)).Any())
                     return this.RedirectToAction("Index", "Message");
 
-                switch (loggedUser.Role.Name)
+                switch (loggedUser.Role.Id)
                 {
-                    case ("Admin"): return RedirectToAction("FullList", "Course");
-                    case ("Secretary"): return RedirectToAction("List", "Course");
+                    case ((int) Consts.Roles.Admin): return RedirectToAction("FullList", "Course");
+                    case ((int) Consts.Roles.Secretary): return RedirectToAction("List", "Course");
                     //case ("Teacher"): return RedirectToAction("Timetable", "Report");
                     //case ("Student"): return RedirectToAction("Timetable", "Report");
                     default: return View();

@@ -13,10 +13,19 @@ namespace LanguageSchool
 
         public enum Roles
         {
-            Administrator = 1,
+            Admin = 1,
             Secretary = 2,
             Teacher = 3,
             Student = 4
+        }
+
+        public enum MessageTypes
+        {
+            ToUser = 1,
+            ToGroup = 2,
+            ToCourse = 3,
+            ToRole = 4,
+            ToAll = 5
         }
 
         public static List<MenuViewModel> menus = (

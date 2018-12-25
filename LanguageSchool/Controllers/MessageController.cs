@@ -105,6 +105,10 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
+            ViewData["MessageTypes"] = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+                                         "Id",
+                                         "Name");
+
             return View(userMessage);
         }
 

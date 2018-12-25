@@ -1,14 +1,14 @@
 ﻿IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 1)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (1 ,'Administrator')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (1,'Admin','Administrator')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 2)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (2 ,'Secretary')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (2,'Secretary','Sekretariat')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 3)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (3 ,'Teacher')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (3,'Teacher','Nauczyciel')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 4)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (4 ,'Student')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (4,'Student','Student')
 
 GO
 
@@ -188,7 +188,7 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
 		,[Name])
 	VALUES
 		(4
-		,N'Do wszystkich studentów')
+		,N'Do wszystkich użytkowników o roli')
 
 IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 5)
 	INSERT INTO [Administration].[MessageTypes]
@@ -196,30 +196,6 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 5)
 		,[Name])
 	VALUES
 		(5
-		,N'Do wszystkich instruktorów')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 6)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(6
-		,N'Do wszystkich pracowników sekretariatu')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 7)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(7
-		,N'Do wszystkich administratorów systemowych')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 8)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(8
 		,N'Do wszystkich')
 
 GO

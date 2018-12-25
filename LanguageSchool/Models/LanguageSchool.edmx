@@ -46,7 +46,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contents" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="MessageTypeId" Type="int" Nullable="false" />
@@ -244,7 +244,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ENName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PLName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserOpenAnswers">
           <Key>
@@ -980,8 +981,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+          <Property Name="ENName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserOpenAnswer">
           <Key>
@@ -1802,8 +1804,9 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Role">
               <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="PLName" ColumnName="PLName" />
+                <ScalarProperty Name="ENName" ColumnName="ENName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
