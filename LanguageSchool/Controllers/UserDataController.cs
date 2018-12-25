@@ -54,7 +54,8 @@ namespace LanguageSchool.Controllers
             {
                 db.UserDatas.Add(userData);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Details", "User", new { id = userData.UserId });
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Login", userData.UserId);
