@@ -47,28 +47,44 @@
                 @Html.DropDownList("MessageType", (IEnumerable<SelectListItem>)ViewData["MessageTypes"], new { @onchange = "MessageTypeChanged(this.value)" })
             </div>
         </div>
-        <div id="1" style="display: none">
-            Lista osób
-        </div>
-        <div id="2" style="display: none">
-            Lista kursów
-        </div>
-        <div id="3" style="display: none">
-            Lista grup
-        </div>
-        <div id="4" style="display: none">
-            Lista ról
+        <div id="conditional">
+            <div id="1" style="display: block">
+                Lista osób
+            </div>
+            <div id="2" style="display: none">
+                Lista kursów
+            </div>
+            <div id="3" style="display: none">
+                Lista grup
+            </div>
+            <div id="4" style="display: none">
+                Lista ról
+            </div>
         </div>
         <script>
             function MessageTypeChanged(Id)
             {
-                var x = document.getElementById(Id);
+                var conditionalDocuments = document.getElementById("conditional");
 
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
+                var allElements = conditionalDocuments.getElementsByTagName("*");
+
+                var i;
+
+                for (i = 0; i < allElements.length; i++) {
+                    allElements[i].style.display = "none";
                 }
+
+                var visibleElement = document.getElementById(Id);
+
+                visibleElement.style.display = "block";
+
+                //var x = document.getElementById(Id);
+
+                //if (x.style.display === "none") {
+                //    x.style.display = "block";
+                //} else {
+                //    x.style.display = "none";
+                //}
                 //switch (Id)
                 //{
                 //    case (1): window.location.href = "/Controller/Actionmethod?value=" + val;
