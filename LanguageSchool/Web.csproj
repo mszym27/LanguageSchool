@@ -213,6 +213,7 @@
     <Compile Include="Controllers\LanguageSchoolController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -415,6 +416,11 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\UserData\Create.cshtml" />
+    <Content Include="Views\UserData\Delete.cshtml" />
+    <Content Include="Views\UserData\Details.cshtml" />
+    <Content Include="Views\UserData\Edit.cshtml" />
+    <Content Include="Views\UserData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -47,8 +47,14 @@ namespace LanguageSchool
                         new MenuViewModel { ShownName = "Utwórz", ControllerName = "Course", ActionName = "Create" }
                     }
                 },
-                new MenuViewModel { ShownName = "Dane użytkowników", ControllerName = "Users", ActionName = "List", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", RoleName = "Secretary",
+                new MenuViewModel { ShownName = "Dane użytkowników", RoleName = "Secretary",
+                    SubMenu = new List<MenuViewModel>()
+                    {
+                        new MenuViewModel { ShownName = "Lista", ControllerName = "UserData", ActionName = "Index" },
+                        new MenuViewModel { ShownName = "Utwórz użytkownika", ControllerName = "UserData", ActionName = "Create" }
+                    }
+                },
+                new MenuViewModel { ShownName = "Komunikaty", RoleName = "Secretary",
                     SubMenu = new List<MenuViewModel>()
                     {
                         new MenuViewModel { ShownName = "Moje komunikaty", ControllerName = "Message", ActionName = "Index" },
@@ -68,7 +74,7 @@ namespace LanguageSchool
                 new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "List", RoleName = "Teacher" },
                 new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
                 new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Teacher" },
                 new MenuViewModel { ShownName = "Uczniowie", ControllerName = "Users", ActionName = "List", RoleName = "Teacher" },
 
                 //Uczeń
