@@ -166,6 +166,7 @@ EXECUTE sp_executesql @Query, @QueryParameters
 --	,temp.[EmailAdress]
 --	,temp.[Comment]
 --	,temp.IsContactRequest
+--	,COUNT(1) OVER() AS TotalRowCount
 --FROM (
 --	SELECT [UserData].[Id]
 --		,[UserData].[CreationDate]

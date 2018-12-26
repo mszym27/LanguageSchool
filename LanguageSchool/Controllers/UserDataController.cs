@@ -91,7 +91,7 @@ namespace LanguageSchool.Controllers
 
                 var randomInt = new Random().Next(0, 10000);
 
-                user.Login = user.Login + randomInt.ToString("00000");
+                user.Login = user.Login + "_" + randomInt.ToString("00000");
 
                 unitOfWork.Save();
 
