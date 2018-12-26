@@ -102,7 +102,7 @@ namespace LanguageSchool.Controllers
                     AlertType = Consts.Success
                 };
 
-                return RedirectToAction("Details", "User", new { id = userData.UserId });
+                return RedirectToAction("Details", "UserData", new { id = userData.UserId });
             }
             catch
             {
