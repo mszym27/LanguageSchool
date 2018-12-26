@@ -5,22 +5,62 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="col-xs-12">
+    <h4>@Model.Name @Model.Surname</h4>
+    <hr />
+    <div class="col-xs-4">
+        <label>
+            Login:
+        </label>
 
-<div>
-    <h4>UserData</h4>
+        @Html.DisplayFor(model => model.User.Login)
+    </div>
+
+    <div class="col-xs-4">
+        <div class="col-xs-6">
+            <label>
+                Hasło:
+            </label>
+        </div>
+
+        <div class="col-xs-6" id="placeholder" style="display: block">
+            ●●●●●●●●
+        </div>
+        <div class="col-xs-6" id="password" style="display: none">
+            @Html.DisplayFor(model => model.User.Password)
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <label>
+            Pokaż hasło:
+        </label>
+        <input type="checkbox" onclick="showPassword()">
+    </div>
+</div>
+
+<script>
+function showPassword() {
+    var placeholder = document.getElementById("placeholder");
+    var password = document.getElementById("password");
+
+    if (placeholder.style.display === "block") {
+        placeholder.style.display = "none";
+        password.style.display = "block";
+    } else {
+        placeholder.style.display = "block";
+        password.style.display = "none";
+    }
+}
+</script>
+
+<div class="col-xs-12">
+    <hr />
+    <h4>Dane użytkownika</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            Data utworzenia wpisu
         </dt>
 
         <dd>
@@ -28,15 +68,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeletionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Imię
         </dt>
 
         <dd>
@@ -44,7 +76,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Surname)
+            Nazwisko
         </dt>
 
         <dd>
@@ -52,7 +84,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            Miasto
         </dt>
 
         <dd>
@@ -60,7 +92,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Street)
+            Ulica
         </dt>
 
         <dd>
@@ -68,7 +100,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HouseNumber)
+            Numer domu
         </dt>
 
         <dd>
@@ -76,7 +108,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HomeNumber)
+            Numer mieszkania
         </dt>
 
         <dd>
@@ -84,7 +116,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PublicPhoneNumber)
+            Publiczny numer telefonu
         </dt>
 
         <dd>
@@ -92,7 +124,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PrivatePhoneNumber)
+            Prywatny numer telefonu
         </dt>
 
         <dd>
@@ -100,7 +132,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EmailAdress)
+            Adres email
         </dt>
 
         <dd>
@@ -108,24 +140,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Comment)
+            Komentarz
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Comment)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Login)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Login)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id })
 </p>

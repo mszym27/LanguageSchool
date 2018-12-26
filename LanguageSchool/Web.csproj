@@ -241,6 +241,9 @@
     <Compile Include="Models\EntryTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetContactInfoListItem.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Group.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
@@ -314,6 +317,7 @@
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserDataViewModel.cs" />
     <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\TestViewModel.cs" />

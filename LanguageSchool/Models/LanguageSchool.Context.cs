@@ -12,6 +12,8 @@ namespace LanguageSchool.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LanguageSchoolEntities : DbContext
     {
@@ -50,5 +52,62 @@ namespace LanguageSchool.Models
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupTime> GroupTimes { get; set; }
         public virtual DbSet<UsersGroup> UsersGroups { get; set; }
+    
+        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
+        {
+            var creationDateFromParameter = creationDateFrom.HasValue ?
+                new ObjectParameter("CreationDateFrom", creationDateFrom) :
+                new ObjectParameter("CreationDateFrom", typeof(System.DateTime));
+    
+            var creationDateToParameter = creationDateTo.HasValue ?
+                new ObjectParameter("CreationDateTo", creationDateTo) :
+                new ObjectParameter("CreationDateTo", typeof(System.DateTime));
+    
+            var fullNameParameter = fullName != null ?
+                new ObjectParameter("FullName", fullName) :
+                new ObjectParameter("FullName", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var streetParameter = street != null ?
+                new ObjectParameter("Street", street) :
+                new ObjectParameter("Street", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            var emailAdressParameter = emailAdress != null ?
+                new ObjectParameter("EmailAdress", emailAdress) :
+                new ObjectParameter("EmailAdress", typeof(string));
+    
+            var showUserDataParameter = showUserData.HasValue ?
+                new ObjectParameter("ShowUserData", showUserData) :
+                new ObjectParameter("ShowUserData", typeof(bool));
+    
+            var showContactRequestsParameter = showContactRequests.HasValue ?
+                new ObjectParameter("ShowContactRequests", showContactRequests) :
+                new ObjectParameter("ShowContactRequests", typeof(bool));
+    
+            var sortColumnParameter = sortColumn != null ?
+                new ObjectParameter("SortColumn", sortColumn) :
+                new ObjectParameter("SortColumn", typeof(string));
+    
+            var sortDirectionParameter = sortDirection != null ?
+                new ObjectParameter("SortDirection", sortDirection) :
+                new ObjectParameter("SortDirection", typeof(string));
+    
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
+        }
     }
 }

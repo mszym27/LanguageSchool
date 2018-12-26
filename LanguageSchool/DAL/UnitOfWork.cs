@@ -19,6 +19,7 @@ namespace LanguageSchool.DAL
         private Repository<ContactRequest> contactRequestRepository;
         private Repository<Role> roleRepository;
         private Repository<User> userRepository;
+        private Repository<UserData> userDataRepository;
         private Repository<Message> messageRepository;
         private Repository<UserMessage> userMessageRepository;
         private Repository<MessageType> messageTypeRepository;
@@ -60,6 +61,14 @@ namespace LanguageSchool.DAL
             get
             {
                 return this.userRepository ?? new Repository<User>(entities);
+            }
+        }
+
+        public Repository<UserData> UserDataRepository
+        {
+            get
+            {
+                return this.userDataRepository ?? new Repository<UserData>(entities);
             }
         }
 
