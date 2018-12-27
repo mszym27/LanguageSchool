@@ -60,14 +60,8 @@ BEGIN
 		,[UserData].[Comment]
 		,0 AS IsContactRequest
 	FROM [LanguageSchool].[ContactInfo].[UserData]
-	WHERE [UserData].[IsDeleted] = 0 '
-	
-	IF(@CreationDateFrom IS NOT NULL)
-		SET @Query += N'
-		AND [UserData].[CreationDate] >= @CreationDateFrom '
-	
-	IF(@CreationDateTo IS NOT NULL)
-		SET @Query += N'
+	WHERE [UserData].[IsDeleted] = 0
+		AND [UserData].[CreationDate] >= @CreationDateFrom
 		AND [UserData].[CreationDate] <= @CreationDateTo '
 	
 	IF(@City IS NOT NULL AND @City != '')
@@ -100,14 +94,8 @@ BEGIN
 		,[ContactRequests].[Comment]
 		,1 AS IsContactRequest
 	FROM [ContactInfo].[ContactRequests]
-	WHERE [ContactRequests].[IsAwaiting] = 1 '
-	
-	IF(@CreationDateFrom IS NOT NULL)
-		SET @Query += N'
-		AND [ContactRequests].[CreationDate] >= @CreationDateFrom '
-	
-	IF(@CreationDateTo IS NOT NULL)
-		SET @Query += N'
+	WHERE [ContactRequests].[IsAwaiting] = 1
+		AND [ContactRequests].[CreationDate] >= @CreationDateFrom
 		AND [ContactRequests].[CreationDate] <= @CreationDateTo '
 	
 	IF(@PhoneNumber IS NOT NULL AND @PhoneNumber != '')

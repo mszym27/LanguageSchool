@@ -40,6 +40,11 @@ namespace LanguageSchool.Controllers
                 int pageIndex = 1,
                 int pageSize = 20)
         {
+            var now = DateTime.Now;
+
+            creationDateFrom = (creationDateFrom == null) ? (new DateTime(now.Year, now.Month, 1)) : creationDateFrom;
+            creationDateTo = (creationDateTo == null) ? now : creationDateTo;
+
             var contactInfo = unitOfWork.GetContactInfoList(
                 creationDateFrom,
                 creationDateTo,
