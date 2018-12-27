@@ -20,8 +20,8 @@
                 </div>
                 <div class="col-xs-2">
                     <font color="gray">
-                        dane @Html.CheckBox("showUserData", true)
-                        prośby @Html.CheckBox("showContactRequests", false)
+                        dane @Html.CheckBox("showUserData", true, new { @id = "showUserData", @onchange = "disableButton()" })
+                        prośby @Html.CheckBox("showContactRequests", false, new { @id = "showContactRequests", @onchange = "disableButton()" })
                     </font>
                 </div>
                 <div class="col-xs-1">
@@ -84,7 +84,7 @@
             <button class="btn btn-default" type="reset">Przywróć</button>
         </div>
         <div class="col-xs-1">
-            <button class="btn btn-default" type="submit">Szukaj</button>
+            <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
         </div>
     </div>
 }
@@ -165,3 +165,16 @@
     <div class="col-xs-4">
     </div>
 </div>*@
+
+<script>
+function disableButton() {
+    var showUserData = document.getElementById("showUserData");
+    var showContactRequests = document.getElementById("showContactRequests");
+    var submit = document.getElementById("submit");
+
+    if (!showUserData.checked & !showContactRequests.checked)
+        submit.disabled = true;
+    else
+        submit.disabled = false;
+}
+</script>
