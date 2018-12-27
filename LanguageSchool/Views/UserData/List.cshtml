@@ -7,15 +7,7 @@
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*public Nullable<System.DateTime> creationDateFrom;
-public Nullable<System.DateTime> creationDateTo;
-public string fullName;
-public string city;
-public string street;
-public string phoneNumber;
-public string emailAdress;
-public Nullable<bool> showUserData;
-public Nullable<bool> showContactRequests;*@
+
 <div class="container-fluid">
     @using (Html.BeginForm())
     {
@@ -23,7 +15,7 @@ public Nullable<bool> showContactRequests;*@
 
         <div class="row thumbnail col-xs-12">
             <div class="row">
-                <div class="col-xs-1">
+                <div class="col-xs-2">
                     @Html.Label("Typ:", new { @style = "float:right" })
                 </div>
                 <div class="col-xs-2">
@@ -32,6 +24,15 @@ public Nullable<bool> showContactRequests;*@
                         prośby @Html.CheckBox("showContactRequests", false)
                     </font>
                 </div>
+                <div class="col-xs-1">
+                    @Html.Label("Użytkownik:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("fullName", null, new { @class = "textarea", @style = "width:300px" })
+                </div>
+            </div>
+            <p />
+            <div class="row">
                 <div class="col-xs-2">
                     @Html.Label("Utworzono od:", new { @style = "float:right" })
                 </div>
@@ -41,14 +42,18 @@ public Nullable<bool> showContactRequests;*@
                 <div class="col-xs-1">
                     @Html.Label("Miasto:", new { @style = "float:right" })
                 </div>
-                <div class="col-xs-2">
-                    @Html.TextBox("city", null, new { @class = "textarea", @style = "width:300px" })
+                <div class="col-xs-3">
+                    @Html.TextBox("city", null, new { @class = "textarea", @style = "width:200px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Email:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("emailAdress", null, new { @class = "textarea", @style = "width:200px" })
                 </div>
             </div>
             <p />
             <div class="row">
-                <div class="col-xs-3">
-                </div>
                 <div class="col-xs-2">
                     @Html.Label("Utworzono do:", new { @style = "float:right" })
                 </div>
@@ -58,23 +63,8 @@ public Nullable<bool> showContactRequests;*@
                 <div class="col-xs-1">
                     @Html.Label("Ulica:", new { @style = "float:right" })
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     @Html.TextBox("street", null, new { @class = "textarea", @style = "width:300px" })
-                </div>
-            </div>
-            <p />
-            <div class="row">
-                <div class="col-xs-1">
-                    @Html.Label("Email:", new { @style = "float:right" })
-                </div>
-                <div class="col-xs-3">
-                    @Html.TextBox("emailAdress", null, new { @class = "textarea", @style = "width:200px" })
-                </div>
-                <div class="col-xs-1">
-                    @Html.Label("Użytkownik:", new { @style = "float:right" })
-                </div>
-                <div class="col-xs-3">
-                    @Html.TextBox("fullName", null, new { @class = "textarea", @style = "width:200px" })
                 </div>
                 <div class="col-xs-1">
                     @Html.Label("Telefon:", new { @style = "float:right" })
