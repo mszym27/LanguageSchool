@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 
 using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.DAL
 {
@@ -94,6 +95,38 @@ namespace LanguageSchool.DAL
             {
                 return this.userMessageRepository ?? new Repository<UserMessage>(entities);
             }
+        }
+
+        public List<GetContactInfoListItem> GetContactInfoList(
+                Nullable<System.DateTime> creationDateFrom,
+                Nullable<System.DateTime> creationDateTo,
+                string fullName,
+                string city,
+                string street,
+                string phoneNumber,
+                string emailAdress,
+                bool showUserData,
+                bool showContactRequests,
+                string sortColumn,
+                string sortDirection,
+                int pageIndex,
+                int pageSize)
+        {
+            return entities.GetContactInfoList(
+                creationDateFrom,
+                creationDateTo,
+                fullName,
+                city,
+                street,
+                phoneNumber,
+                emailAdress,
+                showUserData,
+                showContactRequests,
+                sortColumn,
+                sortDirection,
+                pageIndex,
+                pageSize
+            ).ToList();
         }
 
         public void Save()

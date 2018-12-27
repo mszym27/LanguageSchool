@@ -22,10 +22,7 @@
                     @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:450px" })
                 </div>
                 <div class="col-xs-1">
-                    <button type="button"
-                            onclick="location.href='@Url.Action("List", "Course", new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page = ViewBag.page } )'">
-                        Wyczyść
-                    </button>
+                    <button type="reset">Przywróć</button>
                 </div>
                 <div class="col-xs-1" style="float:right;">
                     <button type="submit">Szukaj</button>

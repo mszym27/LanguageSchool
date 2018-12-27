@@ -1,0 +1,177 @@
+﻿@*@using PagedList.Mvc;*@
+@model List<LanguageSchool.Models.GetContactInfoListItem>
+
+@using LanguageSchool.Models.ViewModels;
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*public Nullable<System.DateTime> creationDateFrom;
+public Nullable<System.DateTime> creationDateTo;
+public string fullName;
+public string city;
+public string street;
+public string phoneNumber;
+public string emailAdress;
+public Nullable<bool> showUserData;
+public Nullable<bool> showContactRequests;*@
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        DateTime now = DateTime.Now;
+
+        <div class="row thumbnail col-xs-12">
+            <div class="row">
+                <div class="col-xs-1">
+                    @Html.Label("Typ:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    <font color="gray">
+                        dane @Html.CheckBox("showUserData", true)
+                        prośby @Html.CheckBox("showContactRequests", false)
+                    </font>
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Utworzono od:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @class = "textarea", @style = "width:80px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Miasto:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("city", null, new { @class = "textarea", @style = "width:300px" })
+                </div>
+            </div>
+            <p />
+            <div class="row">
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Utworzono do:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @class = "textarea", @style = "width:80px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Ulica:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBox("street", null, new { @class = "textarea", @style = "width:300px" })
+                </div>
+            </div>
+            <p />
+            <div class="row">
+                <div class="col-xs-1">
+                    @Html.Label("Email:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("emailAdress", null, new { @class = "textarea", @style = "width:200px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Użytkownik:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("fullName", null, new { @class = "textarea", @style = "width:200px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Telefon:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("phoneNumber", null, new { @class = "textarea", @style = "width:200px" })
+                </div>
+            </div>
+        </div>
+
+    <p />
+
+    <div class="row col-xs-12">
+        <div class="col-xs-10">
+        </div>
+        <div class="col-xs-1">
+            <button class="btn btn-default" type="reset">Przywróć</button>
+        </div>
+        <div class="col-xs-1">
+            <button class="btn btn-default" type="submit">Szukaj</button>
+        </div>
+    </div>
+}
+
+    <p />
+
+        <div class="row thumbnail col-xs-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    @*<th>
+                                            @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
+                        new { style = "text-decoration:none; color:black" })
+                                        </th>*@
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        Miasto
+                    </th>
+                    <th>
+                        Ulica
+                    </th>
+                    <th>
+                        Numer telefonu
+                    </th>
+                    <th>
+                        Adres email
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.CreationDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @if (item.IsContactRequest == 0)
+                            {
+                                @Html.ActionLink(item.FullName, "Details", new { id = item.Id })
+                            }
+                        </td>
+                        <td>
+                            @item.City
+                        </td>
+                        <td>
+                            @item.Street
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            @item.EmailAdress
+                        </td>
+
+                        <td>
+                            @if (item.Comment != null)
+                            {
+                                <label title=@item.Comment><span class="glyphicon glyphicon-comment"></span></label>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+@*<div class="col-xs-12">
+    <div class="col-xs-6">
+    </div>
+    <div class="col-xs-2">
+        @Html.PagedListPager(Model, page => Url.Action("List",
+        new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page }))
+    </div>
+    <div class="col-xs-4">
+    </div>
+</div>*@

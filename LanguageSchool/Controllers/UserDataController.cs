@@ -23,6 +23,40 @@ namespace LanguageSchool.Controllers
             return View(userDatas.ToList());
         }
 
+        [Route("UserData/List/")]
+        [Authorize(Roles = "Secretary, Administrator")]
+        public ActionResult List(
+                Nullable<System.DateTime> creationDateFrom,
+                Nullable<System.DateTime> creationDateTo,
+                string fullName,
+                string city,
+                string street,
+                string phoneNumber,
+                string emailAdress,
+                bool showUserData = true,
+                bool showContactRequests = false,
+                string sortColumn = "CreationDate",
+                string sortDirection = "desc", 
+                int pageIndex = 1,
+                int pageSize = 20)
+        {
+            var contactInfo = unitOfWork.GetContactInfoList(
+                creationDateFrom,
+                creationDateTo,
+                fullName,
+                city,
+                street,
+                phoneNumber,
+                emailAdress,
+                showUserData,
+                showContactRequests,
+                sortColumn,
+                sortDirection,
+                pageIndex,
+                pageSize);
+            return View(contactInfo);
+        }
+
         // GET: UserData/Details/5
         public ActionResult Details(int? id)
         {
