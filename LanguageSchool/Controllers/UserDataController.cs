@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using PagedList;
+
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
-using System.Web.Security;
 
 namespace LanguageSchool.Controllers
 {
@@ -37,7 +39,7 @@ namespace LanguageSchool.Controllers
                 bool showContactRequests = false,
                 string sortColumn = "CreationDate",
                 string sortDirection = "desc", 
-                int pageIndex = 1,
+                int page = 1,
                 int pageSize = 20)
         {
             var now = DateTime.Now;
@@ -57,9 +59,16 @@ namespace LanguageSchool.Controllers
                 showContactRequests,
                 sortColumn,
                 sortDirection,
-                pageIndex,
+                page,
                 pageSize);
-            return View(contactInfo);
+
+            var totalRowCount = (contactInfo.Count == 0) ? 0 : (int) contactInfo.FirstOrDefault().TotalRowCount;
+
+            //pageIndex = (totalRowCount / pageSize) + 1;
+
+            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, pageSize, totalRowCount);
+
+            return View(contactInfoPaged);
         }
 
         // GET: UserData/Details/5
