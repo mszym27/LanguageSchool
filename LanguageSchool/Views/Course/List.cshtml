@@ -17,16 +17,23 @@
                         nieaktywne @Html.CheckBox("showDeactivated", false)
                     </font>
                 </div>
-                <div class="col-xs-7">
+                <div class="col-xs-9">
                     @Html.Label("Szukana fraza:")
-                    @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:450px" })
+                    @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:700px" })
                 </div>
-                <div class="col-xs-1">
-                    <button type="reset">Przywróć</button>
-                </div>
-                <div class="col-xs-1" style="float:right;">
-                    <button type="submit">Szukaj</button>
-                </div>
+        </div>
+
+        <p />
+
+        <div class="row col-xs-12">
+            <div class="col-xs-10">
+            </div>
+            <div class="col-xs-1">
+                <button class="btn btn-default" type="reset">Przywróć</button>
+            </div>
+            <div class="col-xs-1">
+                <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+            </div>
         </div>
     }
 

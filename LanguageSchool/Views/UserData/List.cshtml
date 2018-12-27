@@ -15,6 +15,14 @@
 
         <div class="row thumbnail col-xs-12">
             <div class="row">
+                <div class="col-xs-4">
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Użytkownik:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("fullName", null, new { @class = "textarea", @style = "width:300px" })
+                </div>
                 <div class="col-xs-2">
                     @Html.Label("Typ:", new { @style = "float:right" })
                 </div>
@@ -23,12 +31,6 @@
                         dane @Html.CheckBox("showUserData", true, new { @id = "showUserData", @onchange = "disableButton()" })
                         prośby @Html.CheckBox("showContactRequests", false, new { @id = "showContactRequests", @onchange = "disableButton()" })
                     </font>
-                </div>
-                <div class="col-xs-1">
-                    @Html.Label("Użytkownik:", new { @style = "float:right" })
-                </div>
-                <div class="col-xs-3">
-                    @Html.TextBox("fullName", null, new { @class = "textarea", @style = "width:300px" })
                 </div>
             </div>
             <p />
@@ -40,16 +42,16 @@
                     @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @class = "textarea", @style = "width:80px" })
                 </div>
                 <div class="col-xs-1">
-                    @Html.Label("Miasto:", new { @style = "float:right" })
-                </div>
-                <div class="col-xs-3">
-                    @Html.TextBox("city", null, new { @class = "textarea", @style = "width:200px" })
-                </div>
-                <div class="col-xs-1">
                     @Html.Label("Email:", new { @style = "float:right" })
                 </div>
                 <div class="col-xs-3">
                     @Html.TextBox("emailAdress", null, new { @class = "textarea", @style = "width:200px" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Miasto:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("city", null, new { @class = "textarea", @style = "width:120px" })
                 </div>
             </div>
             <p />
@@ -66,11 +68,11 @@
                 <div class="col-xs-3">
                     @Html.TextBox("street", null, new { @class = "textarea", @style = "width:300px" })
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2">
                     @Html.Label("Telefon:", new { @style = "float:right" })
                 </div>
-                <div class="col-xs-3">
-                    @Html.TextBox("phoneNumber", null, new { @class = "textarea", @style = "width:200px" })
+                <div class="col-xs-2">
+                    @Html.TextBox("phoneNumber", null, new { @class = "textarea", @style = "width:120px" })
                 </div>
             </div>
         </div>
@@ -167,14 +169,16 @@
 </div>*@
 
 <script>
-function disableButton() {
-    var showUserData = document.getElementById("showUserData");
-    var showContactRequests = document.getElementById("showContactRequests");
-    var submit = document.getElementById("submit");
+    window.onload = disableButton();
 
-    if (!showUserData.checked & !showContactRequests.checked)
-        submit.disabled = true;
-    else
-        submit.disabled = false;
-}
+    function disableButton() {
+        var showUserData = document.getElementById("showUserData");
+        var showContactRequests = document.getElementById("showContactRequests");
+        var submit = document.getElementById("submit");
+
+        if (!showUserData.checked & !showContactRequests.checked)
+            submit.disabled = true;
+        else
+            submit.disabled = false;
+    }
 </script>
