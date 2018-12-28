@@ -428,6 +428,7 @@
     <Content Include="Views\UserData\Edit.cshtml" />
     <Content Include="Views\UserData\Index.cshtml" />
     <Content Include="Views\UserData\List.cshtml" />
+    <Content Include="Views\ContactRequest\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -18,7 +18,7 @@
             </div>
             <div class="col-xs-9">
                 @Html.Label("Szukana w tabeli fraza:")
-                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:650px" })
+                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:620px" })
             </div>
         </div>
 
@@ -27,20 +27,21 @@
         <div class="row col-xs-12">
             <div class="col-xs-10">
                 @Html.PagedListPager(Model, page => Url.Action("List",
-                    new {
-                        sortColumn = ViewBag.sortColumn,
-                        sortDirection = ViewBag.sortDirection,
-                        searchString = ViewBag.searchString,
-                        showActivated = ViewBag.showActivated,
-                        showDeactivated = ViewBag.showDeactivated,
-                        page
-                    }
-                ))
+                new
+                {
+                    sortColumn = ViewBag.sortColumn,
+                    sortDirection = ViewBag.sortDirection,
+                    searchString = ViewBag.searchString,
+                    showActivated = ViewBag.showActivated,
+                    showDeactivated = ViewBag.showDeactivated,
+                    page
+                }
+            ))
             </div>
             <div class="col-xs-1">
                 <button class="btn btn-default" type="reset">Przywróć</button>
             </div>
-            <div class="col-xs-1">
+            <div class="col-xs-1" style="float:right">
                 <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
             </div>
         </div>

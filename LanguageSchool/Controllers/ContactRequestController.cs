@@ -55,5 +55,18 @@ namespace LanguageSchool.Controllers
                 return View();
             }
         }
+
+        [Route("ContactRequest/{id}")]
+        public ActionResult Details(int id)
+        {
+            var contactRequest = unitOfWork.ContactRequestRepository.GetById(id);
+
+            if (contactRequest == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(contactRequest);
+        }
     }
 }
