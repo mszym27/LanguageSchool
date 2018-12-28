@@ -79,7 +79,8 @@
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="EntryTestId" Type="int" />
           <Property Name="Points" Type="int" />
-          <Property Name="PreferredHours" Type="nvarchar" MaxLength="200" />
+          <Property Name="PreferredHoursFrom" Type="int" Nullable="false" />
+          <Property Name="PreferredHoursTo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -703,6 +704,8 @@
         <Function Name="GetContactInfoList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ContactInfo">
           <Parameter Name="CreationDateFrom" Type="datetime" Mode="In" />
           <Parameter Name="CreationDateTo" Type="datetime" Mode="In" />
+          <Parameter Name="PrefferedHoursFrom" Type="int" Mode="In" />
+          <Parameter Name="PrefferedHoursTo" Type="int" Mode="In" />
           <Parameter Name="FullName" Type="nvarchar" Mode="In" />
           <Parameter Name="City" Type="nvarchar" Mode="In" />
           <Parameter Name="Street" Type="nvarchar" Mode="In" />
@@ -891,7 +894,8 @@
           <Property Name="Points" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
           <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
-          <Property Name="PreferredHours" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredHoursFrom" Type="Int32" Nullable="false" />
+          <Property Name="PreferredHoursTo" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -1507,6 +1511,8 @@
           <FunctionImport Name="GetContactInfoList" ReturnType="Collection(LanguageSchoolModel.GetContactInfoListItem)">
             <Parameter Name="CreationDateFrom" Mode="In" Type="DateTime" />
             <Parameter Name="CreationDateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="PrefferedHoursFrom" Mode="In" Type="Int32" />
+            <Parameter Name="PrefferedHoursTo" Mode="In" Type="Int32" />
             <Parameter Name="FullName" Mode="In" Type="String" />
             <Parameter Name="City" Mode="In" Type="String" />
             <Parameter Name="Street" Mode="In" Type="String" />
@@ -1824,7 +1830,8 @@
           <EntitySetMapping Name="ContactRequests">
             <EntityTypeMapping TypeName="LanguageSchoolModel.ContactRequest">
               <MappingFragment StoreEntitySet="ContactRequests">
-                <ScalarProperty Name="PreferredHours" ColumnName="PreferredHours" />
+                <ScalarProperty Name="PreferredHoursTo" ColumnName="PreferredHoursTo" />
+                <ScalarProperty Name="PreferredHoursFrom" ColumnName="PreferredHoursFrom" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />

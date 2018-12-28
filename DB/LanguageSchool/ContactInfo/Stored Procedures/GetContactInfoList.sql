@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [ContactInfo].[GetContactInfoList]
 	 @CreationDateFrom DATETIME
 	,@CreationDateTo DATETIME
+	,@PrefferedHoursFrom INT
+	,@PrefferedHoursTo INT
 	,@FullName NVARCHAR(80)
 	,@City NVARCHAR(150)
 	,@Street NVARCHAR(250)
@@ -96,7 +98,9 @@ BEGIN
 	FROM [ContactInfo].[ContactRequests]
 	WHERE [ContactRequests].[IsAwaiting] = 1
 		AND [ContactRequests].[CreationDate] >= @CreationDateFrom
-		AND [ContactRequests].[CreationDate] <= @CreationDateTo '
+		AND [ContactRequests].[CreationDate] <= @CreationDateTo
+		AND [ContactRequests].[PreferredHoursFrom] >= @PreferredHoursFrom
+		AND [ContactRequests].[PreferredHoursTo] <= @PreferredHoursTo '
 	
 	IF(@PhoneNumber IS NOT NULL AND @PhoneNumber != '')
 		SET @Query += N'

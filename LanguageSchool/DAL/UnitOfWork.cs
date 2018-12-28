@@ -100,6 +100,8 @@ namespace LanguageSchool.DAL
         public List<GetContactInfoListItem> GetContactInfoList(
                 Nullable<System.DateTime> creationDateFrom,
                 Nullable<System.DateTime> creationDateTo,
+                int prefferedHoursFrom,
+                int prefferedHoursTo,
                 string fullName,
                 string city,
                 string street,
@@ -115,6 +117,8 @@ namespace LanguageSchool.DAL
             return entities.GetContactInfoList(
                 creationDateFrom,
                 creationDateTo,
+                prefferedHoursFrom,
+                prefferedHoursTo,
                 fullName,
                 city,
                 street,

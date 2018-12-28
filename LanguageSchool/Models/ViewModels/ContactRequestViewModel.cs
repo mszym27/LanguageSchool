@@ -18,7 +18,8 @@ namespace LanguageSchool.Models.ViewModels
         public string EmailAdress { get; set; }
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
-        public string PreferredHours { get; set; }
+        public int PreferredHoursFrom { get; set; }
+        public int PreferredHoursTo { get; set; }
         public int CourseId { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }

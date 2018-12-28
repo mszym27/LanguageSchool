@@ -25,7 +25,8 @@ namespace LanguageSchool.Models
         public int CourseId { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }
-        public string PreferredHours { get; set; }
+        public int PreferredHoursFrom { get; set; }
+        public int PreferredHoursTo { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Test Test { get; set; }

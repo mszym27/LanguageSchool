@@ -30,6 +30,8 @@ namespace LanguageSchool.Controllers
         public ActionResult List(
                 Nullable<System.DateTime> creationDateFrom,
                 Nullable<System.DateTime> creationDateTo,
+                int? prefferedHoursFrom,
+                int? prefferedHoursTo,
                 string fullName,
                 string city,
                 string street,
@@ -47,9 +49,14 @@ namespace LanguageSchool.Controllers
             creationDateFrom = (creationDateFrom == null) ? (new DateTime(now.Year, now.Month, 1)) : creationDateFrom;
             creationDateTo = (creationDateTo == null) ? now : creationDateTo;
 
+            prefferedHoursFrom = (prefferedHoursFrom == null) ? 8 : prefferedHoursFrom;
+            prefferedHoursTo = (prefferedHoursTo == null) ? now.Hour : prefferedHoursTo;
+
             var contactInfo = unitOfWork.GetContactInfoList(
                 creationDateFrom,
                 creationDateTo,
+                (int)prefferedHoursFrom,
+                (int)prefferedHoursTo,
                 fullName,
                 city,
                 street,
@@ -67,6 +74,9 @@ namespace LanguageSchool.Controllers
             page = (contactInfo.Count + pageSize) < (page * pageSize) ? 1 : page;
 
             ViewBag.creationDateFrom = creationDateFrom;
+            ViewBag.creationDateTo = creationDateTo;
+            ViewBag.prefferedHoursFrom = prefferedHoursFrom;
+            ViewBag.prefferedHoursTo = prefferedHoursTo;
             ViewBag.fullName = fullName;
             ViewBag.city = city;
             ViewBag.street = street;

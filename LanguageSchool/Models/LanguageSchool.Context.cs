@@ -53,7 +53,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<GroupTime> GroupTimes { get; set; }
         public virtual DbSet<UsersGroup> UsersGroups { get; set; }
     
-        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
+        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> prefferedHoursFrom, Nullable<int> prefferedHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
         {
             var creationDateFromParameter = creationDateFrom.HasValue ?
                 new ObjectParameter("CreationDateFrom", creationDateFrom) :
@@ -62,6 +62,14 @@ namespace LanguageSchool.Models
             var creationDateToParameter = creationDateTo.HasValue ?
                 new ObjectParameter("CreationDateTo", creationDateTo) :
                 new ObjectParameter("CreationDateTo", typeof(System.DateTime));
+    
+            var prefferedHoursFromParameter = prefferedHoursFrom.HasValue ?
+                new ObjectParameter("PrefferedHoursFrom", prefferedHoursFrom) :
+                new ObjectParameter("PrefferedHoursFrom", typeof(int));
+    
+            var prefferedHoursToParameter = prefferedHoursTo.HasValue ?
+                new ObjectParameter("PrefferedHoursTo", prefferedHoursTo) :
+                new ObjectParameter("PrefferedHoursTo", typeof(int));
     
             var fullNameParameter = fullName != null ?
                 new ObjectParameter("FullName", fullName) :
@@ -107,7 +115,7 @@ namespace LanguageSchool.Models
                 new ObjectParameter("PageSize", pageSize) :
                 new ObjectParameter("PageSize", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, prefferedHoursFromParameter, prefferedHoursToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
         }
     }
 }
