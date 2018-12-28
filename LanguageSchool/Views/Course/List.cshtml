@@ -6,117 +6,115 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body style="background-color: seashell;">
-    <div class="container-fluid">
-        @using (Html.BeginForm())
-        {
-            <div class="row thumbnail col-xs-12">
-                <div class="col-xs-3">
-                    @Html.Label("Kursy:")
-                    <font color="gray">
-                        aktywne @Html.CheckBox("showActivated", true)
-                        nieaktywne @Html.CheckBox("showDeactivated", false)
-                    </font>
-                </div>
-                <div class="col-xs-9">
-                    @Html.Label("Szukana fraza:")
-                    @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:700px" })
-                </div>
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        <div class="row thumbnail col-xs-12">
+            <div class="col-xs-3">
+                @Html.Label("Kursy:")
+                <font color="gray">
+                    aktywne @Html.CheckBox("showActivated", true)
+                    nieaktywne @Html.CheckBox("showDeactivated", false)
+                </font>
             </div>
-
-            <p />
-
-            <div class="row col-xs-12">
-                <div class="col-xs-10">
-                </div>
-                <div class="col-xs-1">
-                    <button class="btn btn-default" type="reset">Przywróć</button>
-                </div>
-                <div class="col-xs-1">
-                    <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
-                </div>
+            <div class="col-xs-9">
+                @Html.Label("Szukana fraza:")
+                @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:700px" })
             </div>
-        }
+        </div>
 
         <p />
 
-        <div class="row thumbnail col-xs-12">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>
-                        @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
-            new { style = "text-decoration:none; color:black" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Nazwa", "List", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
-            new { style = "text-decoration:none; color:black" })
-                    </th>
-                    <th>
-                        Opis
-                    </th>
-                    <th>
-                        @Html.ActionLink("Poziom", "List", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = 1 },
-            new { style = "text-decoration:none; color:black" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Rozpoczęcie", "List", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = 1 },
-            new { style = "text-decoration:none; color:black" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Zakończenie", "List", new { sortColumn = "endDate", sortDirection = ViewBag.sortDirection, page = 1 },
-            new { style = "text-decoration:none; color:black" })
-                    </th>
-                    <th>
-                        Liczba godzin
-                    </th>
-                </tr>
+        <div class="row col-xs-12">
+            <div class="col-xs-10">
+            </div>
+            <div class="col-xs-1">
+                <button class="btn btn-default" type="reset">Przywróć</button>
+            </div>
+            <div class="col-xs-1">
+                <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+            </div>
+        </div>
+    }
 
-                @foreach (var item in Model)
+    <p />
+
+    <div class="row thumbnail col-xs-12">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
+        new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
+                    @Html.ActionLink("Nazwa", "List", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
+        new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    @Html.ActionLink("Poziom", "List", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = 1 },
+        new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
+                    @Html.ActionLink("Rozpoczęcie", "List", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = 1 },
+        new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
+                    @Html.ActionLink("Zakończenie", "List", new { sortColumn = "endDate", sortDirection = ViewBag.sortDirection, page = 1 },
+        new { style = "text-decoration:none; color:black" })
+                </th>
+                <th>
+                    Liczba godzin
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+        {
+
+            var fontColor = "black";
+
+            if (!item.IsActive)
             {
+                fontColor = "silver";
+            }
 
-                var fontColor = "black";
+            <tr style="color: @fontColor">
+                <td>
+                    @item.CreationDate.ToString("yyyy/MM/dd")
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LanguageProficency.Name)
+                </td>
+                <td>
+                    @item.StartDate.ToString("yyyy/MM/dd")
+                </td>
+                <td>
+                    @item.EndDate.ToString("yyyy/MM/dd")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfHours)
+                </td>
+            </tr>
+            }
 
-                if (!item.IsActive)
-                {
-                    fontColor = "silver";
-                }
-
-                <tr style="color: @fontColor">
-                    <td>
-                        @item.CreationDate.ToString("yyyy/MM/dd")
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LanguageProficency.Name)
-                    </td>
-                    <td>
-                        @item.StartDate.ToString("yyyy/MM/dd")
-                    </td>
-                    <td>
-                        @item.EndDate.ToString("yyyy/MM/dd")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfHours)
-                    </td>
-                </tr>
-                }
-
-            </table>
-        </div>
+        </table>
     </div>
-    <div class="col-xs-12">
-        <div class="col-xs-6">
-        </div>
-        <div class="col-xs-2">
-            @Html.PagedListPager(Model, page => Url.Action("List",
-        new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, searchString = ViewBag.searchString, showActivated = ViewBag.showActivated, showDeactivated = ViewBag.showDeactivated, page }))
-        </div>
-        <div class="col-xs-4">
-        </div>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-6">
     </div>
-</body>
+    <div class="col-xs-2">
+        @Html.PagedListPager(Model, page => Url.Action("List",
+    new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, searchString = ViewBag.searchString, showActivated = ViewBag.showActivated, showDeactivated = ViewBag.showDeactivated, page }))
+    </div>
+    <div class="col-xs-4">
+    </div>
+</div>
