@@ -62,9 +62,21 @@ namespace LanguageSchool.Controllers
                 page,
                 pageSize);
 
-            var totalRowCount = (contactInfo.Count == 0) ? 0 : (int) contactInfo.FirstOrDefault().TotalRowCount;
+            var totalRowCount = (contactInfo.Count == 0) ? 0 : (int)contactInfo.FirstOrDefault().TotalRowCount;
 
-            //pageIndex = (totalRowCount / pageSize) + 1;
+            page = (contactInfo.Count + pageSize) < (page * pageSize) ? 1 : page;
+
+            ViewBag.creationDateFrom = creationDateFrom;
+            ViewBag.fullName = fullName;
+            ViewBag.city = city;
+            ViewBag.street = street;
+            ViewBag.phoneNumber = phoneNumber;
+            ViewBag.emailAdress = emailAdress;
+            ViewBag.showUserData = showUserData;
+            ViewBag.showContactRequests = showContactRequests;
+            ViewBag.sortColumn = sortColumn;
+            ViewBag.sortDirection = sortDirection;
+            ViewBag.page = page;
 
             var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, pageSize, totalRowCount);
 

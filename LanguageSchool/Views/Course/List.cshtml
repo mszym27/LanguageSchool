@@ -5,7 +5,6 @@
     ViewBag.Title = "SecretaryIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="container-fluid">
     @using (Html.BeginForm())
     {
@@ -13,13 +12,13 @@
             <div class="col-xs-3">
                 @Html.Label("Kursy:")
                 <font color="gray">
-                    aktywne @Html.CheckBox("showActivated", true)
-                    nieaktywne @Html.CheckBox("showDeactivated", false)
+                    aktywne @Html.CheckBox("showActivated", (bool)ViewBag.showActivated)
+                    nieaktywne @Html.CheckBox("showDeactivated", (bool)ViewBag.showDeactivated)
                 </font>
             </div>
             <div class="col-xs-9">
-                @Html.Label("Szukana fraza:")
-                @Html.TextBox("searchString", null, new { @class = "widetextarea", @style = "width:700px" })
+                @Html.Label("Szukana w tabeli fraza:")
+                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:650px" })
             </div>
         </div>
 
@@ -43,27 +42,76 @@
         <table class="table table-striped table-bordered">
             <tr>
                 <th>
-                    @Html.ActionLink("Utworzono", "List", new { sortColumn = "creationDate", sortDirection = ViewBag.sortDirection, page = 1 },
-        new { style = "text-decoration:none; color:black" })
+                    @Html.ActionLink("Utworzono", "List",
+                        new {
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            searchString = ViewBag.searchString,
+                            sortColumn = "creationDate",
+                            sortDirection = ViewBag.sortDirection,
+                            page = 1
+                        },
+                        new { style = "text-decoration:none; color:black" }
+                    )
                 </th>
                 <th>
-                    @Html.ActionLink("Nazwa", "List", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
-        new { style = "text-decoration:none; color:black" })
+                    @Html.ActionLink("Nazwa", "List",
+                        new
+                        {
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            searchString = ViewBag.searchString,
+                            sortColumn = "name",
+                            sortDirection = ViewBag.sortDirection,
+                            page = 1
+                        },
+                        new { style = "text-decoration:none; color:black" }
+                    )
                 </th>
                 <th>
                     Opis
                 </th>
                 <th>
-                    @Html.ActionLink("Poziom", "List", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = 1 },
-        new { style = "text-decoration:none; color:black" })
+                    @Html.ActionLink("Poziom", "List",
+                        new
+                        {
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            searchString = ViewBag.searchString,
+                            sortColumn = "proficencyLevel",
+                            sortDirection = ViewBag.sortDirection,
+                            page = 1
+                        },
+                        new { style = "text-decoration:none; color:black" }
+                    )
                 </th>
                 <th>
-                    @Html.ActionLink("Rozpoczęcie", "List", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = 1 },
-        new { style = "text-decoration:none; color:black" })
+                    @Html.ActionLink("Rozpoczęcie", "List",
+                        new
+                        {
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            searchString = ViewBag.searchString,
+                            sortColumn = "startDate",
+                            sortDirection = ViewBag.sortDirection,
+                            page = 1
+                        },
+                        new { style = "text-decoration:none; color:black" }
+                    )
                 </th>
                 <th>
-                    @Html.ActionLink("Zakończenie", "List", new { sortColumn = "endDate", sortDirection = ViewBag.sortDirection, page = 1 },
-        new { style = "text-decoration:none; color:black" })
+                    @Html.ActionLink("Zakończenie", "List",
+                        new
+                        {
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            searchString = ViewBag.searchString,
+                            sortColumn = "endDate",
+                            sortDirection = ViewBag.sortDirection,
+                            page = 1
+                        },
+                        new { style = "text-decoration:none; color:black" }
+                    )
                 </th>
                 <th>
                     Liczba godzin
@@ -113,7 +161,15 @@
     </div>
     <div class="col-xs-2">
         @Html.PagedListPager(Model, page => Url.Action("List",
-    new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, searchString = ViewBag.searchString, showActivated = ViewBag.showActivated, showDeactivated = ViewBag.showDeactivated, page }))
+            new {
+                sortColumn = ViewBag.sortColumn,
+                sortDirection = ViewBag.sortDirection,
+                searchString = ViewBag.searchString,
+                showActivated = ViewBag.showActivated,
+                showDeactivated = ViewBag.showDeactivated,
+                page
+            }
+        ))
     </div>
     <div class="col-xs-4">
     </div>
