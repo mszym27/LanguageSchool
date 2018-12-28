@@ -64,9 +64,9 @@
                     @Html.Label("Godziny:", new { @style = "float:right" })
                 </div>
                 <div class="col-xs-2">
-                    @Html.TextBox("od", (int)ViewBag.prefferedHoursFrom, new { @id = "prefferedHoursFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                    @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
                     -
-                    @Html.TextBox("do", (int)ViewBag.prefferedHoursTo, new { @id = "prefferedHoursTo", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                    @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
                 </div>
                 <div class="col-xs-1">
                     @Html.Label("Ulica:", new { @style = "float:right" })
@@ -92,8 +92,8 @@
                 {
                     creationDateFrom = ViewBag.creationDateFrom,
                     creationDateTo = ViewBag.creationDateTo,
-                    prefferedHoursFrom = ViewBag.prefferedHoursFrom,
-                    prefferedHoursTo = ViewBag.prefferedHoursTo,
+                    PreferredHoursFrom = ViewBag.PreferredHoursFrom,
+                    PreferredHoursTo = ViewBag.PreferredHoursTo,
                     fullName = ViewBag.fullName,
                     city = ViewBag.city,
                     street = ViewBag.street,
@@ -191,12 +191,17 @@
     function disableButton() {
         var showUserData = document.getElementById("showUserData");
         var showContactRequests = document.getElementById("showContactRequests");
+        var preferredHoursFrom = document.getElementById("preferredHoursFrom");
+        var preferredHoursTo = document.getElementById("preferredHoursTo");
         var creationDateFrom = document.getElementById("creationDateFrom");
         var creationDateTo = document.getElementById("creationDateTo");
 
         var submit = document.getElementById("submit");
 
+        debugger;
+
         if ((!showUserData.checked & !showContactRequests.checked)
+            || !preferredHoursFrom.value || !preferredHoursTo.value
             || !creationDateFrom.value || !creationDateTo.value)
             submit.disabled = true;
         else

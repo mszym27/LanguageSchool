@@ -704,8 +704,8 @@
         <Function Name="GetContactInfoList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ContactInfo">
           <Parameter Name="CreationDateFrom" Type="datetime" Mode="In" />
           <Parameter Name="CreationDateTo" Type="datetime" Mode="In" />
-          <Parameter Name="PrefferedHoursFrom" Type="int" Mode="In" />
-          <Parameter Name="PrefferedHoursTo" Type="int" Mode="In" />
+          <Parameter Name="PreferredHoursFrom" Type="int" Mode="In" />
+          <Parameter Name="PreferredHoursTo" Type="int" Mode="In" />
           <Parameter Name="FullName" Type="nvarchar" Mode="In" />
           <Parameter Name="City" Type="nvarchar" Mode="In" />
           <Parameter Name="Street" Type="nvarchar" Mode="In" />
@@ -1511,8 +1511,8 @@
           <FunctionImport Name="GetContactInfoList" ReturnType="Collection(LanguageSchoolModel.GetContactInfoListItem)">
             <Parameter Name="CreationDateFrom" Mode="In" Type="DateTime" />
             <Parameter Name="CreationDateTo" Mode="In" Type="DateTime" />
-            <Parameter Name="PrefferedHoursFrom" Mode="In" Type="Int32" />
-            <Parameter Name="PrefferedHoursTo" Mode="In" Type="Int32" />
+            <Parameter Name="PreferredHoursFrom" Mode="In" Type="Int32" />
+            <Parameter Name="PreferredHoursTo" Mode="In" Type="Int32" />
             <Parameter Name="FullName" Mode="In" Type="String" />
             <Parameter Name="City" Mode="In" Type="String" />
             <Parameter Name="Street" Mode="In" Type="String" />

@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [ContactInfo].[GetContactInfoList]
 	 @CreationDateFrom DATETIME
 	,@CreationDateTo DATETIME
-	,@PrefferedHoursFrom INT
-	,@PrefferedHoursTo INT
+	,@PreferredHoursFrom INT
+	,@PreferredHoursTo INT
 	,@FullName NVARCHAR(80)
 	,@City NVARCHAR(150)
 	,@Street NVARCHAR(250)
