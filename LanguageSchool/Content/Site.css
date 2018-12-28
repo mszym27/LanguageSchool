@@ -31,3 +31,8 @@ textarea {
 .pagination {
     margin: 0px;
 }
+
+.thumbnail {
+    margin: 8px;
+    padding-top: 8px;
+}
