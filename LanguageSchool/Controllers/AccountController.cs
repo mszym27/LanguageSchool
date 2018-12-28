@@ -41,7 +41,7 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel loginInfo, string returnUrl)
+        public ActionResult Login(LoginViewModel loginInfo, string returnUrl, bool RememberMe)
         {
             try
             {
@@ -53,9 +53,17 @@ namespace LanguageSchool.Controllers
                     // Verification.    
                     if (loginUser != null)
                     {
-                        this.LogUserIn(loginUser);
+                        this.LogUserIn(loginUser, RememberMe);
 
-                        return this.RedirectToAction("Index", "Home");
+                        if (!string.IsNullOrEmpty(returnUrl))
+                        {
+                            var decodedUrl = Server.UrlDecode(returnUrl);
+                            return Redirect(decodedUrl);
+                        }
+                        else
+                        {
+                            return this.RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
@@ -104,7 +112,7 @@ namespace LanguageSchool.Controllers
         /// Sign In User method.    
         /// </summary>  
         /// <param name="username">Username parameter.</param>  
-        private void LogUserIn(User user)
+        private void LogUserIn(User user, bool rememberMe)
         {
             // Initialization.    
             var claims = new List<Claim>();
@@ -118,7 +126,7 @@ namespace LanguageSchool.Controllers
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
                 // Sign In.    
-                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, claimIdenties);
+                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, claimIdenties);
             }
             catch (Exception ex)
             {
