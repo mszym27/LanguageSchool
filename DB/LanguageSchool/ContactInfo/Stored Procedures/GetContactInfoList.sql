@@ -130,6 +130,8 @@ OFFSET (@PageIndex - 1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY '
 SET @QueryParameters = N'
 	 @CreationDateFrom DATETIME
 	,@CreationDateTo DATETIME
+	,@PreferredHoursFrom INT
+	,@PreferredHoursTo INT
 	,@FullName NVARCHAR(80)
 	,@City NVARCHAR(150)
 	,@Street NVARCHAR(250)
@@ -141,6 +143,8 @@ SET @QueryParameters = N'
 EXECUTE sp_executesql @Query, @QueryParameters
 	,@CreationDateFrom
 	,@CreationDateTo
+	,@PreferredHoursFrom
+	,@PreferredHoursTo
 	,@FullName
 	,@City
 	,@Street

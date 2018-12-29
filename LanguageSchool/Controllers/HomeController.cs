@@ -13,18 +13,14 @@ namespace LanguageSchool.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            int userId;
-                
-            Int32.TryParse(User.Identity.GetUserId(), out userId);
+            var loggedUser = GetLoggedUser();
 
-            if(userId == 0)
+            if (loggedUser == null)
             {
                 return View();
             }
             else
             {
-                var loggedUser = unitOfWork.UserRepository.GetById(userId);
-
                 if (loggedUser.UsersMessages.Where(um => (um.HasBeenReceived == false)).Any())
                     return this.RedirectToAction("Index", "Message");
 

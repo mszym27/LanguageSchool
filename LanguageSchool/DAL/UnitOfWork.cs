@@ -15,6 +15,8 @@ namespace LanguageSchool.DAL
     {
         private LanguageSchoolEntities entities = new LanguageSchoolEntities();
 
+        private Repository<LessonSubject> lessonSubjectRepository;
+        private Repository<Material> materialRepository;
         private Repository<Group> groupRepository;
         private Repository<Course> courseRepository;
         private Repository<ContactRequest> contactRequestRepository;
@@ -24,6 +26,22 @@ namespace LanguageSchool.DAL
         private Repository<Message> messageRepository;
         private Repository<UserMessage> userMessageRepository;
         private Repository<MessageType> messageTypeRepository;
+
+        public Repository<LessonSubject> LessonSubjectRepository
+        {
+            get
+            {
+                return this.lessonSubjectRepository ?? new Repository<LessonSubject>(entities);
+            }
+        }
+
+        public Repository<Material> MaterialRepository
+        {
+            get
+            {
+                return this.materialRepository ?? new Repository<Material>(entities);
+            }
+        }
 
         public Repository<Group> GroupRepository
         {

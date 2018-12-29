@@ -19,9 +19,9 @@ namespace LanguageSchool.Controllers
     {
         public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "desc", int page = 1)
         {
-            var userId = Int32.Parse(User.Identity.GetUserId());
+            var loggedUser = GetLoggedUser();
 
-            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == userId && !um.IsDeleted));
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted));
 
             if (page == 1)
             {
@@ -48,11 +48,7 @@ namespace LanguageSchool.Controllers
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
         {
-            int userId = Int32.Parse(User.Identity.GetUserId());
-
-            var loggedUser = unitOfWork.UserRepository.GetById(userId);
-
-            var userMessage = loggedUser.UsersMessages.Where(um => um.Id == userMessageId).FirstOrDefault();
+            var userMessage = GetLoggedUser().UsersMessages.Where(um => um.Id == userMessageId).FirstOrDefault();
 
             if (userMessage == null)
             {

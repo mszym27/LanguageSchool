@@ -12,6 +12,18 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : LanguageSchoolController
     {
+        [Route("Course/TempTeacher")]
+        public ActionResult TempTeacher()
+        {
+            var loggedUser = GetLoggedUser();
+
+            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted && c.Groups.Where(g => !g.IsDeleted && g.UsersGroups.Where(ug => ug.UserId == loggedUser.Id).Any()).Any());
+
+            List<Course> Courses = courses.ToList();
+
+            return View(Courses);
+        }
+
         [Route("Course")]
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
@@ -41,7 +53,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Course/List/")]
-        [Authorize(Roles = "Secretary")]
+        //[Authorize(Roles = "Secretary")] // do przywrocenia po nauczycielu
         public ActionResult List(
             string searchString, bool showActivated = true, bool showDeactivated = false,
             string sortColumn = "startDate", string sortDirection = "asc", int page = 1

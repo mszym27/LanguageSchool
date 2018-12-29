@@ -211,6 +211,7 @@
     <Compile Include="Controllers\EntryTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageSchoolController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserDataController.cs" />
@@ -429,6 +430,12 @@
     <Content Include="Views\UserData\Index.cshtml" />
     <Content Include="Views\UserData\List.cshtml" />
     <Content Include="Views\ContactRequest\Details.cshtml" />
+    <Content Include="Views\Material\Upload.cshtml" />
+    <Content Include="Views\Material\Delete.cshtml" />
+    <Content Include="Views\Material\Details.cshtml" />
+    <Content Include="Views\Material\Edit.cshtml" />
+    <Content Include="Views\Material\Index.cshtml" />
+    <Content Include="Views\Course\TempTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -71,11 +71,17 @@ namespace LanguageSchool
                 },
 
                 //Nauczyciel
-                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "List", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "ToDo", ControllerName = "Course", ActionName = "TempTeacher", RoleName = "Teacher" },// raczej Timetable
+                new MenuViewModel { ShownName = "Materiały", RoleName = "Teacher",
+                    SubMenu = new List<MenuViewModel>()
+                    {
+                        new MenuViewModel { ShownName = "Lista", ControllerName = "Material", ActionName = "List" },
+                        new MenuViewModel { ShownName = "Udostępnij", ControllerName = "Material", ActionName = "Upload" }
+                    }
+                },
                 new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
                 new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Teacher" },
-                new MenuViewModel { ShownName = "Uczniowie", ControllerName = "Users", ActionName = "Index", RoleName = "Teacher" },
+                new MenuViewModel { ShownName = "Uczniowie", ControllerName = "UserData", ActionName = "Index", RoleName = "Teacher" },
 
                 //Uczeń
                 new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "Index", RoleName = "Student" },
