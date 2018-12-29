@@ -27,7 +27,7 @@ namespace LanguageSchool.Controllers
         {
             var requestedMaterial = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.Id == id).FirstOrDefault();
 
-            return File(requestedMaterial.File, ".pdf", requestedMaterial.Name);
+            return File(requestedMaterial.File, ".pdf", requestedMaterial.Name + ".pdf");
         }
 
         [Route("Material/Upload/CourseId")]

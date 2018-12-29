@@ -179,7 +179,7 @@
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="LessonSubjectId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="File" Type="varbinary" MaxLength="4000" />
+          <Property Name="File" Type="varbinary(max)" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -983,7 +983,7 @@
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="File" Type="Binary" MaxLength="4000" FixedLength="false" />
+          <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="LessonSubject" Relationship="Self.FK_Materials_LessonSubjects" FromRole="Materials" ToRole="LessonSubjects" />
