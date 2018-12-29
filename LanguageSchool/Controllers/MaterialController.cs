@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -27,22 +28,35 @@ namespace LanguageSchool.Controllers
             return View();
         }
 
+        [Route("Material/Upload/CourseId")]
         // POST: Material/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Upload([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,LessonSubjectId,Name,File,Comment,IsActive")] Material material)
+        public ActionResult Upload([Bind(Include = "LessonSubjectId,Name,Comment,File")] MaterialViewModel materialViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                unitOfWork.MaterialRepository.Insert(material);
-                unitOfWork.Save();
-                return RedirectToAction("Index", "Home");
-            }
+            var material = new Material();
 
-            ViewBag.LessonSubjectId = new SelectList(unitOfWork.LessonSubjectRepository.Get(), "Id", "Name", material.LessonSubjectId);
-            return View(material);
+            material.CreationDate = DateTime.Now;
+            material.IsActive = true;
+
+            material.LessonSubjectId = materialViewModel.LessonSubjectId;
+            material.Name = materialViewModel.Name;
+            material.Comment = materialViewModel.Comment;
+
+            byte[] file = new byte[materialViewModel.File.ContentLength];
+            materialViewModel.File.InputStream.Read(file, 0, file.Length);
+
+            material.File = file;
+
+            unitOfWork.MaterialRepository.Insert(material);
+            unitOfWork.Save();
+            return RedirectToAction("Index", "Home");
+            //}
+
+            //ViewBag.LessonSubjectId = new SelectList(unitOfWork.LessonSubjectRepository.Get(), "Id", "Name", material.LessonSubjectId);
+            //return View(material);
         }
 
         /*
