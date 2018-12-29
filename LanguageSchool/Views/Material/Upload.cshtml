@@ -43,16 +43,9 @@
                 <strong>Plik</strong>
             </div>
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.File, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })*@
-                @*@Html.TextBoxFor(model => model.File, new { type = "file", id = "upload", accept = ".pdf, .doc, .txt" }) *@ 
-                @*, accept = ".jpg, .jpeg, .gif, .png"*@
-                @*<input type="file" id="Material" name="upload" accept=".pdf, .doc, .txt" />*@
-
-                @Html.TextBoxFor(model => model.File, null, new { type = "file", @class = "input-file", accept = ".pdf, .doc, .txt" })
-                @*<input type="file" id="Upload" name="File" />*@
-                </div>
+                @Html.TextBoxFor(model => model.File, null, new { type = "file", @class = "input-file", accept = ".pdf", id = "upload", onchange = "checkLength()" })
             </div>
+        </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
@@ -69,3 +62,14 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
+
+<script>
+function checkLength() {
+    var upload = document.getElementById("upload");
+
+    if (upload.files[0].size > 524288) {
+       alert("Wybrany plik ma nieodpowiedni rozmiar. Maksymalny rozmiar to 0,5 MB");
+       upload.value = "";
+    };
+};
+</script>

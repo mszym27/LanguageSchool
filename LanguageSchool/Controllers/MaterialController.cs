@@ -15,10 +15,19 @@ namespace LanguageSchool.Controllers
     public class MaterialController : LanguageSchoolController
     {
         // GET: Material
-        public ActionResult Index()
+        [Route("Material/Index/CourseId")]
+        public ActionResult Index(int CourseId)
         {
-            var materials = unitOfWork.MaterialRepository.Get();
+            var materials = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.LessonSubject.CourseId == CourseId);
             return View(materials.ToList());
+        }
+
+        [HttpGet]
+        public FileResult Download(int id)
+        {
+            var requestedMaterial = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.Id == id).FirstOrDefault();
+
+            return File(requestedMaterial.File, ".pdf", requestedMaterial.Name);
         }
 
         [Route("Material/Upload/CourseId")]
