@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.IO;
+using System.Text;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
@@ -17,6 +20,8 @@ namespace LanguageSchool.Controllers
 {
     public class AccountController : LanguageSchoolController
     {
+        private string EncryptionKey = "0ram@1234xxxxxxxxxxtttttuuuuuiiiiio";  //we can change the code converstion key as per our requirement
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -45,30 +50,27 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                // Verification.    
-                if (ModelState.IsValid)
-                {
-                    // Initialization.    
-                    var loginUser = unitOfWork.UserRepository.Get(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).FirstOrDefault();
-                    // Verification.    
-                    if (loginUser != null)
-                    {
-                        this.LogUserIn(loginUser, RememberMe);
+                var passwordEncrypted = Encrypt(loginInfo.Password);
 
-                        if (!string.IsNullOrEmpty(returnUrl))
-                        {
-                            var decodedUrl = Server.UrlDecode(returnUrl);
-                            return Redirect(decodedUrl);
-                        }
-                        else
-                        {
-                            return this.RedirectToAction("Index", "Home");
-                        }
+                var loginUser = unitOfWork.UserRepository.Get(u => !u.IsDeleted && (u.Login == loginInfo.Login && u.Password == passwordEncrypted)).FirstOrDefault();
+
+                if (loginUser != null)
+                {
+                    this.LogUserIn(loginUser, RememberMe);
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        var decodedUrl = Server.UrlDecode(returnUrl);
+                        return Redirect(decodedUrl);
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        return this.RedirectToAction("Index", "Home");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Niewłaściwe dane logowania");
                 }
             }
             catch (Exception ex)
@@ -78,6 +80,54 @@ namespace LanguageSchool.Controllers
             }
             // If we got this far, something failed, redisplay form    
             return this.View(loginInfo);
+        }
+
+        public string Encrypt(string password)
+        {
+
+            byte[] clearBytes = Encoding.Unicode.GetBytes(password);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
+                0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
+            });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    password = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return password;
+        }
+
+        private string Decrypt(string password)
+        {
+            byte[] cipherBytes = Convert.FromBase64String(password);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
+                        0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
+                }
+        );
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    password = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return password;
         }
 
         #region Log Out method.    
@@ -136,4 +186,4 @@ namespace LanguageSchool.Controllers
         }
         #endregion
     }
-} 
+}
