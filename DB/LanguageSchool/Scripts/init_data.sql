@@ -12,6 +12,13 @@ IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 4)
 
 GO
 
+UPDATE [Users].[Users] SET [Password] = N'uBmnT9Q+rFZkSOwOBRNFOQ==' WHERE [Login] = N'techAdmin'
+UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
+UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
+UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'BL\S_MS_0001'
+
+GO
+
 IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 1)
 	INSERT INTO [Administration].[LanguageProficencies]
 		([Id]
