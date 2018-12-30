@@ -36,8 +36,12 @@
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_ContactRequests_CreationDate_PreferredHours]
-    ON [ContactInfo].[ContactRequests]([CreationDate] DESC, [PreferredHoursFrom] ASC, [PreferredHoursTo] ASC, [IsAwaiting] DESC)
-    INCLUDE([Id], [PhoneNumber], [EmailAdress], [Comment]);
+    ON [ContactInfo].[ContactRequests]([CreationDate] DESC, [PreferredHoursFrom] ASC, [PreferredHoursTo] ASC)
+    INCLUDE([Id], [PhoneNumber], [EmailAdress], [Comment]) WHERE ([IsAwaiting]=(1));
+
+
 
