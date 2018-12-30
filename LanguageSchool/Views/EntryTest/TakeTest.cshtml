@@ -8,8 +8,9 @@
 }
 
 <body background="~/images/Background_test_faded.jpg">
-@using (Html.BeginForm("TakeTest", "EntryTest", FormMethod.Post))
+@using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.CourseId)
     @Html.HiddenFor(model => model.Points)
     @Html.HiddenFor(model => model.Questions)
     
@@ -63,5 +64,5 @@
             </div>
         </div>
     </div>
-    } 
+} 
 </body>

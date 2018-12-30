@@ -49,7 +49,7 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                var passwordEncrypted = Encrypt(loginInfo.Password);
+                var passwordEncrypted = Encryption.Encrypt(loginInfo.Password);
 
                 var loginUser = unitOfWork.UserRepository.Get(u => !u.IsDeleted && (u.Login == loginInfo.Login && u.Password == passwordEncrypted)).FirstOrDefault();
 

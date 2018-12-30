@@ -107,7 +107,7 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            userData.User.Password = Decrypt(userData.User.Password);
+            userData.User.Password = Encryption.Decrypt(userData.User.Password);
 
             return View(userData);
         }
@@ -157,7 +157,7 @@ namespace LanguageSchool.Controllers
                 user.Role = unitOfWork.RoleRepository.GetById(udvm.RoleId);
 
                 user.Login = "BL\\" + user.Role.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
-                user.Password = Encrypt(Membership.GeneratePassword(8, 3));
+                user.Password = Encryption.Encrypt(Membership.GeneratePassword(8, 3));
 
                 userData.User = user;
 

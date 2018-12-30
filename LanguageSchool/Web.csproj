@@ -204,6 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactRequestController.cs" />
@@ -338,6 +339,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\home_marketable.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Controllers\UserOpenAnswers.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
