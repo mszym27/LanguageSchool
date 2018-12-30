@@ -101,10 +101,14 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             UserData userData = unitOfWork.UserDataRepository.GetById(id);
+
             if (userData == null)
             {
                 return HttpNotFound();
             }
+
+            userData.User.Password = unitOfWork.Decrypt(userData.User.Password);
+
             return View(userData);
         }
 
@@ -153,7 +157,7 @@ namespace LanguageSchool.Controllers
                 user.Role = unitOfWork.RoleRepository.GetById(udvm.RoleId);
 
                 user.Login = "BL\\" + user.Role.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
-                user.Password = Membership.GeneratePassword(8, 3);
+                user.Password = unitOfWork.Encrypt(Membership.GeneratePassword(8, 3));
 
                 userData.User = user;
 
@@ -172,7 +176,7 @@ namespace LanguageSchool.Controllers
                     AlertType = Consts.Success
                 };
 
-                return RedirectToAction("Details", "UserData", new { id = userData.UserId });
+                return RedirectToAction("Details", "UserData", new { id = userData.Id });
             }
             catch
             {
