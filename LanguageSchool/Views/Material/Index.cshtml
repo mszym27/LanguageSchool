@@ -12,10 +12,13 @@
                 Data utworzenia
             </th>
             <th>
+                Temat
+            </th>
+            <th>
                 Nazwa
             </th>
             <th>
-                Temat
+                Komentarz
             </th>
             <th></th>
         </tr>
@@ -27,14 +30,17 @@
                     @Html.DisplayFor(modelItem => item.CreationDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.LessonSubject.Name)
                 </td>
                 <td>
-                    <a href="@Url.Action("Download", "Material", new { id = item.Id })" class="btn">
-                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a href="@Url.Action("Download", "Material", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                     </a>
                 </td>
             </tr>

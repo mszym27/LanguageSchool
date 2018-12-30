@@ -83,10 +83,15 @@
     }
 
 <script>
-function checkFile() {
-    var upload = document.getElementById("upload");
+function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+}
 
-    if (upload.files[0].size > 512000) {
+function checkFile() {
+    var file = document.getElementById("upload").files[0];
+
+    if (file.size > 512000 || getExtension(file.name) != "pdf") {
         $("#myModal").modal();
        upload.value = "";
     };
