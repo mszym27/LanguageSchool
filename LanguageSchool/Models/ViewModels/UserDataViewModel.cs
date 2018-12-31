@@ -33,16 +33,40 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Roles { get; set; }
         public int RoleId { get; set; }
 
-        public List<bool[]> UserWorkHours;
+        public List<bool> Monday { get; set; }
+        public List<bool> Tuesday { get; set; }
+        public List<bool> Wednesday { get; set; }
+        public List<bool> Thursday { get; set; }
+        public List<bool> Friday { get; set; }
+        public List<bool> Saturday { get; set; }
+        public List<bool> Sunday { get; set; }
+
+        public bool testcheck { get; set; }
 
         public UserDataViewModel()
         {
-            UserWorkHours = new List<bool[]>();
+            Monday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Monday.Add(false);
+            Tuesday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Tuesday.Add(false);
+            Wednesday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Wednesday.Add(false);
+            Thursday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Thursday.Add(false);
+            Friday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Friday.Add(false);
+            Saturday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Saturday.Add(false);
+            Sunday = new List<bool>(12);
+            for (int i = 0; i < 12; i++) Sunday.Add(false);
 
-            for(int day = 0; day < 12; day++)
-            {
-                UserWorkHours.Add(new bool[7]);
-            }
+            //Monday[0] = true;
+            //Tuesday[1] = true;
+            //Wednesday[2] = true;
+            //Thursday[3] = true;
+            //Friday[4] = true;
+            //Saturday[5] = true;
+            //Sunday[6] = true;
         }
 
         public UserDataViewModel(UserData userData)

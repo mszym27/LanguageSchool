@@ -107,8 +107,22 @@
                 <div class="col-md-4">
                     @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-                </div>
+                </div> 
             </div>
+            @*<div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Poniedziałek?</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Monday[2], new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="control-label col-md-2">
+                    <strong>testcheck?</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.testcheck, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>*@
         </div>
     </div>
     <div id="timetable" class="thumbnail" style="display: none">
@@ -133,63 +147,41 @@
                     Sobota
                 </th>
                 <th class="text-center">
-                    Niedziela
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.testcheck, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
                 </th>
             </tr>
 
-            @*@for (int i = 8; i < 20; i++)
-            {
-                var currentHour = i + ".15";
-                var nextHour = (i + 1) + ".15";
-
-                <tr>
-                    @for (int j = 1; j <= 7; j++)
-                    {
-                        <td>
-                            <button class="btn btn-default btn-block">@currentHour - @nextHour </button>
-                        </td>
-                    }
-                </tr>
-            }*@
             @for (int i = 0; i < 12; i++)
             {
-                var days = Model.UserWorkHours.ElementAt(i);
+                var currentHour = i + 8 + ".15";
+                var nextHour = (i + 8 + 1) + ".15";
                 <tr>
-                    @for (int j = 0; j < 7; j++)
-                    {
-                        var currentHour = i + 8 + ".15";
-                        var nextHour = (i + 8 + 1) + ".15";
-                        <td>
-                            @*<button class="btn btn-default btn-block">@currentHour - @nextHour </button>*@
-                            @days[j] @currentHour - @nextHour
-                        </td>
-                    }
+                    <td>
+                        @Html.EditorFor(model => model.Monday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Tuesday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Wednesday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Thursday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Friday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Saturday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Sunday[i], new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
                 </tr>
             }
-                @**
-            foreach (var item in Model)
-            {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CreationDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LessonSubject.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Comment)
-                            </td>
-                            <td>
-                                <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
-                                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    }*@
-</table>
+        /table>
     </div>
 
     <div class="form-group">
@@ -197,7 +189,7 @@
             <input type="submit" value="Utwórz" class="btn btn-default" />
         </div>
     </div>
-            }
+}
 
 <script>
     window.onload = RoleChanged();
