@@ -33,40 +33,23 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Roles { get; set; }
         public int RoleId { get; set; }
 
-        public List<bool> Monday { get; set; }
-        public List<bool> Tuesday { get; set; }
-        public List<bool> Wednesday { get; set; }
-        public List<bool> Thursday { get; set; }
-        public List<bool> Friday { get; set; }
-        public List<bool> Saturday { get; set; }
-        public List<bool> Sunday { get; set; }
+        //public List<List<bool>> UserWorkHours;
 
-        public bool testcheck { get; set; }
+        public List<List<bool>> UserWorkHours { get; set; }
 
         public UserDataViewModel()
         {
-            Monday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Monday.Add(false);
-            Tuesday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Tuesday.Add(false);
-            Wednesday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Wednesday.Add(false);
-            Thursday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Thursday.Add(false);
-            Friday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Friday.Add(false);
-            Saturday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Saturday.Add(false);
-            Sunday = new List<bool>(12);
-            for (int i = 0; i < 12; i++) Sunday.Add(false);
+            UserWorkHours = new List<List<bool>>();
 
-            //Monday[0] = true;
-            //Tuesday[1] = true;
-            //Wednesday[2] = true;
-            //Thursday[3] = true;
-            //Friday[4] = true;
-            //Saturday[5] = true;
-            //Sunday[6] = true;
+            for (int i = 0; i < 12; i++) // hours
+            {
+                UserWorkHours.Add(new List<bool>(7));
+
+                for (int j = 0; j < 7; j++) // days
+                {
+                    UserWorkHours[i].Add(false);
+                }
+            }
         }
 
         public UserDataViewModel(UserData userData)

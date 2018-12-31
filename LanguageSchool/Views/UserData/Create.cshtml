@@ -146,42 +146,28 @@
                 <th class="text-center">
                     Sobota
                 </th>
-                <th class="text-center">
-                    <div class="col-md-4">
-                        @Html.EditorFor(model => model.testcheck, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
+                <th class="text-center">                    
+                    Niedziela
                 </th>
             </tr>
 
             @for (int i = 0; i < 12; i++)
             {
-                var currentHour = i + 8 + ".15";
-                var nextHour = (i + 8 + 1) + ".15";
+                var days = Model.UserWorkHours.ElementAt(i);
                 <tr>
-                    <td>
-                        @Html.EditorFor(model => model.Monday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Tuesday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Wednesday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Thursday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Friday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Saturday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Sunday[i], new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
+                    @for (int j = 0; j < 7; j++)
+                    {
+                        var currentHour = i + 8 + ".15";
+                        var nextHour = (i + 8 + 1) + ".15";
+                        <td>
+                            @*<button class="btn btn-default btn-block">@currentHour - @nextHour </button>*@
+                            @Html.EditorFor(model => model.UserWorkHours[i][j], new { htmlAttributes = new { @class = "form-control" } })
+                            @currentHour - @nextHour
+                        </td>
+                    }
                 </tr>
             }
-        /table>
+        </table>
     </div>
 
     <div class="form-group">
