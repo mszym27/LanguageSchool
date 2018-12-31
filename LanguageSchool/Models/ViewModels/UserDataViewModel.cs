@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace LanguageSchool.Models.ViewModels
 {
@@ -32,9 +33,16 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Roles { get; set; }
         public int RoleId { get; set; }
 
+        public List<bool[]> UserWorkHours;
+
         public UserDataViewModel()
         {
+            UserWorkHours = new List<bool[]>();
 
+            for(int day = 0; day < 12; day++)
+            {
+                UserWorkHours.Add(new bool[7]);
+            }
         }
 
         public UserDataViewModel(UserData userData)
