@@ -112,30 +112,27 @@
         </div>
     </div>
     <div id="timetable" class="thumbnail" style="display: none">
-        <table class="table table-striped table-bordered">
+        <table class="table table-bordered">
             <tr>
-                <th>
-                    Godziny
-                </th>
-                <th>
+                <th class="text-center">
                     Poniedziałek
                 </th>
-                <th>
+                <th class="text-center">
                     Wtorek
                 </th>
-                <th>
+                <th class="text-center">
                     Środa
                 </th>
-                <th>
+                <th class="text-center">
                     Czwartek
                 </th>
-                <th>
+                <th class="text-center">
                     Piątek
                 </th>
-                <th>
+                <th class="text-center">
                     Sobota
                 </th>
-                <th>
+                <th class="text-center">
                     Niedziela
                 </th>
             </tr>
@@ -146,13 +143,10 @@
                 var nextHour = (i + 1) + ".15";
 
                 <tr>
-                    <td>
-                        <strong>@currentHour - @nextHour</strong>
-                    </td>
                     @for (int j = 1; j <= 7; j++)
                     {
                         <td>
-                            <button class="btn btn-default" />
+                            <button class="btn btn-default btn-block">@currentHour - @nextHour </button>
                         </td>
                     }
                 </tr>
