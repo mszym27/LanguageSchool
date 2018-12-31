@@ -7,115 +7,104 @@
 
 @using (Html.BeginForm())
 {
-    <div class="thumbnail">
+    <div class="container thumbnail">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Rola</strong>
                 </div>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @onchange = "RoleChanged(this.value)" })
+                    @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker", @onchange = "RoleChanged()" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Imię</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Nazwisko</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Miasto</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Ulica</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Numer domu</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.HouseNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.HouseNumber, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Numer mieszkania</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.HomeNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.HomeNumber, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Publiczny numer telefonu</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.PublicPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.PublicPhoneNumber, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Prywatny numer telefonu</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.PrivatePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.PrivatePhoneNumber, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Adres email</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.EmailAdress, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.EmailAdress, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Komentarz</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                 </div>
@@ -203,11 +192,15 @@
 }
 
 <script>
-    function RoleChanged(RoleId)
+    window.onload = RoleChanged();
+
+    function RoleChanged()
     {
         var TeacherRoleId = 3;
 
         timetable = document.getElementById("timetable");
+
+        RoleId = document.getElementById("rolePicker").value;
 
         if (RoleId == TeacherRoleId)
             timetable.style.display = "block";
