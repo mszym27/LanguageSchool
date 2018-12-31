@@ -8,13 +8,13 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class TestViewModel
     {
-        public int Id { get; }
-        public int CourseId { get; }
-        public string CreationDate { get; }
-        public string Name { get; }
-        public string Comment { get; }
-        public int NumberOfQuestions { get; }
-        public int Points { get; }
+        public int Id { get; set; }
+        public int CourseId { get; set; }
+        public string CreationDate { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public int NumberOfQuestions { get; set; }
+        public int Points { get; set; }
 
         public List<ClosedQuestionViewModel> Questions { get; set; }
 
