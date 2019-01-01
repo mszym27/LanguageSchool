@@ -161,8 +161,10 @@
                         var nextHour = (i + 8 + 1) + ".15";
                         <td>
                             @*<button class="btn btn-default btn-block">@currentHour - @nextHour </button>*@
-                            @Html.EditorFor(model => model.UserWorkHours[i][j], new { htmlAttributes = new { @class = "form-control" } })
-                            @currentHour - @nextHour
+                            <label class="btn btn-default btn-block">
+                                @Html.EditorFor(model => model.UserWorkHours[i][j], new { htmlAttributes = new { @style = "display: none" } })
+                                @currentHour - @nextHour
+                            </label>
                         </td>
                     }
                 </tr>
