@@ -71,10 +71,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="ModificationDate" Type="datetime" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Result" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsAwaiting" Type="bit" Nullable="false" />
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="EntryTestId" Type="int" />
@@ -711,6 +712,8 @@
           <Parameter Name="Street" Type="nvarchar" Mode="In" />
           <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
           <Parameter Name="EmailAdress" Type="varchar" Mode="In" />
+          <Parameter Name="CourseId" Type="int" Mode="In" />
+          <Parameter Name="RoleId" Type="int" Mode="In" />
           <Parameter Name="ShowUserData" Type="bit" Mode="In" />
           <Parameter Name="ShowContactRequests" Type="bit" Mode="In" />
           <Parameter Name="SortColumn" Type="varchar" Mode="In" />
@@ -887,7 +890,6 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Result" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsAwaiting" Type="Boolean" Nullable="false" />
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="EntryTestId" Type="Int32" />
@@ -896,6 +898,8 @@
           <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
           <Property Name="PreferredHoursFrom" Type="Int32" Nullable="false" />
           <Property Name="PreferredHoursTo" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -1518,6 +1522,8 @@
             <Parameter Name="Street" Mode="In" Type="String" />
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
             <Parameter Name="EmailAdress" Mode="In" Type="String" />
+            <Parameter Name="CourseId" Mode="In" Type="Int32" />
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
             <Parameter Name="ShowUserData" Mode="In" Type="Boolean" />
             <Parameter Name="ShowContactRequests" Mode="In" Type="Boolean" />
             <Parameter Name="SortColumn" Mode="In" Type="String" />
@@ -1643,7 +1649,7 @@
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Group" ToRole="Course" />
+          <NavigationProperty Name="Course" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Group" ToRole="Course" />
           <NavigationProperty Name="GroupTimes" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="Group" ToRole="GroupTime" />
           <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Groups" FromRole="Group" ToRole="UsersGroup" />
           <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Group" ToRole="Message" />
@@ -1830,6 +1836,8 @@
           <EntitySetMapping Name="ContactRequests">
             <EntityTypeMapping TypeName="LanguageSchoolModel.ContactRequest">
               <MappingFragment StoreEntitySet="ContactRequests">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PreferredHoursTo" ColumnName="PreferredHoursTo" />
                 <ScalarProperty Name="PreferredHoursFrom" ColumnName="PreferredHoursFrom" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1838,7 +1846,6 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="IsAwaiting" ColumnName="IsAwaiting" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="EntryTestId" ColumnName="EntryTestId" />

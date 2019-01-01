@@ -37,6 +37,8 @@ namespace LanguageSchool.Controllers
                 string street,
                 string phoneNumber,
                 string emailAdress,
+                int? courseId,
+                int? roleId,
                 bool showUserData = true,
                 bool showContactRequests = false,
                 string sortColumn = "CreationDate",
@@ -62,6 +64,8 @@ namespace LanguageSchool.Controllers
                 street,
                 phoneNumber,
                 emailAdress,
+                courseId,
+                roleId,
                 showUserData,
                 showContactRequests,
                 sortColumn,
@@ -73,6 +77,17 @@ namespace LanguageSchool.Controllers
 
             page = (contactInfo.Count + pageSize) < (page * pageSize) ? 1 : page;
 
+            //SelectList Courses
+            //SelectList Roles
+
+            ViewBag.Courses = new SelectList(unitOfWork.CourseRepository.Get(),
+                                         "Id",
+                                         "Name");
+
+            ViewBag.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
+                                         "Id",
+                                         "PLName");
+
             ViewBag.creationDateFrom = creationDateFrom;
             ViewBag.creationDateTo = creationDateTo;
             ViewBag.PreferredHoursFrom = PreferredHoursFrom;
@@ -82,6 +97,8 @@ namespace LanguageSchool.Controllers
             ViewBag.street = street;
             ViewBag.phoneNumber = phoneNumber;
             ViewBag.emailAdress = emailAdress;
+            ViewBag.courseId = courseId;
+            ViewBag.roleId = roleId;
             ViewBag.showUserData = showUserData;
             ViewBag.showContactRequests = showContactRequests;
             ViewBag.sortColumn = sortColumn;

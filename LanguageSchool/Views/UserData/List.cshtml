@@ -81,8 +81,22 @@
                     @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new { @class = "textarea", @style = "width:120px" })
                 </div>
             </div>
-        </div>
-
+            <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Kurs")
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("CourseId", (SelectList)ViewBag.Courses, "Wybierz kurs", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Rola")
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("RoleId", (SelectList)ViewBag.Roles, "Wybierz rolę", new { @class = "form-control" })
+                    </div>
+            </div>
+    </div>
+    
     <p />
 
     <div class="row col-xs-12">

@@ -25,7 +25,6 @@ namespace LanguageSchool.Models.ViewModels
         public int GroupId { get; set; }
         public SelectList Courses { get; set; }
         public int CourseId { get; set; }
-        public User Course { get; set; }
         public SelectList Roles { get; set; }
         public int RoleId { get; set; }
 

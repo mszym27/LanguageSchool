@@ -53,7 +53,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<GroupTime> GroupTimes { get; set; }
         public virtual DbSet<UsersGroup> UsersGroups { get; set; }
     
-        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
+        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
         {
             var creationDateFromParameter = creationDateFrom.HasValue ?
                 new ObjectParameter("CreationDateFrom", creationDateFrom) :
@@ -91,6 +91,14 @@ namespace LanguageSchool.Models
                 new ObjectParameter("EmailAdress", emailAdress) :
                 new ObjectParameter("EmailAdress", typeof(string));
     
+            var courseIdParameter = courseId.HasValue ?
+                new ObjectParameter("CourseId", courseId) :
+                new ObjectParameter("CourseId", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
             var showUserDataParameter = showUserData.HasValue ?
                 new ObjectParameter("ShowUserData", showUserData) :
                 new ObjectParameter("ShowUserData", typeof(bool));
@@ -115,7 +123,7 @@ namespace LanguageSchool.Models
                 new ObjectParameter("PageSize", pageSize) :
                 new ObjectParameter("PageSize", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, preferredHoursFromParameter, preferredHoursToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, preferredHoursFromParameter, preferredHoursToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, courseIdParameter, roleIdParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
         }
     }
 }

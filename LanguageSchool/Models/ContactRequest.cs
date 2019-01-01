@@ -20,13 +20,14 @@ namespace LanguageSchool.Models
         public string PhoneNumber { get; set; }
         public string EmailAdress { get; set; }
         public string Comment { get; set; }
-        public string Result { get; set; }
         public bool IsAwaiting { get; set; }
         public int CourseId { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }
         public int PreferredHoursFrom { get; set; }
         public int PreferredHoursTo { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Test Test { get; set; }
