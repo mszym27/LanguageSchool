@@ -2,10 +2,11 @@
     [Id]                 INT             IDENTITY (1, 1) NOT NULL,
     [CreationDate]       DATETIME        NOT NULL,
     [ModificationDate]   DATETIME        NULL,
+    [Name]               VARCHAR (25)    NOT NULL,
+    [Surname]            VARCHAR (50)    NOT NULL,
     [PhoneNumber]        VARCHAR (15)    NOT NULL,
     [EmailAdress]        VARCHAR (255)   NULL,
     [Comment]            NVARCHAR (1000) NULL,
-    [Result]             NVARCHAR (1000) NULL,
     [IsAwaiting]         BIT             NOT NULL,
     [CourseId]           INT             NOT NULL,
     [EntryTestId]        INT             NULL,
@@ -38,10 +39,10 @@
 
 
 
+
+
 GO
-CREATE NONCLUSTERED INDEX [IX_ContactRequests_CreationDate_PreferredHours]
-    ON [ContactInfo].[ContactRequests]([CreationDate] DESC, [PreferredHoursFrom] ASC, [PreferredHoursTo] ASC)
-    INCLUDE([Id], [PhoneNumber], [EmailAdress], [Comment]) WHERE ([IsAwaiting]=(1));
+
 
 
 

@@ -110,6 +110,7 @@
     <Build Include="Administration\Tables\Messages.sql" />
     <Build Include="Administration\Tables\Classroms.sql" />
     <Build Include="ContactInfo\Stored Procedures\GetContactInfoList.sql" />
+    <Build Include="Users\Tables\WorkTimes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
