@@ -26,7 +26,6 @@ SET @CreationDateTo += '23:59:59'
 SET @City = LTRIM(RTRIM(@City))
 SET @PhoneNumber = LTRIM(RTRIM(@PhoneNumber))
 SET @EmailAdress = LTRIM(RTRIM(@EmailAdress))
-SET @FullName = LTRIM(RTRIM(@FullName))
 SET @Street = LTRIM(RTRIM(@Street))
 
 SELECT @ShowContactRequests = 0
