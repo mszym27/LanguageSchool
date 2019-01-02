@@ -1,100 +1,92 @@
-﻿@model LanguageSchool.Models.ContactRequest
+﻿@model LanguageSchool.Models.ViewModels.ContactRequestViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="thumbnail">
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
+<div class="container-fluid">
+    <div class="row col-md-12 thumbnail">
+        <div class="col-md-offset-2 col-md-10">
+            <dl class="dl-horizontal">
+                <dt>
+                    Data wysłania prośby
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CreationDate)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationDate)
-        </dt>
+                <dt>
+                    Imię i nazwisko
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModificationDate)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Fullname)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
+                <dt>
+                    Kurs
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Course.Name)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailAdress)
-        </dt>
+                <dt>
+                    Numer telefonu
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EmailAdress)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
+                <dt>
+                    Adres email
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.EmailAdress)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Result)
-        </dt>
+                <dt>
+                    Komentarz
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Result)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Comment)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAwaiting)
-        </dt>
+                <dt>
+                    Test
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsAwaiting)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TakenTestName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Points)
-        </dt>
+                <dt>
+                    Zdobyte punkty
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Points)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TotalScore)
+                </dd>
+            </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PreferredHours)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PreferredHours)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Test.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Test.Name)
-        </dd>
-
-    </dl>
+            <div class="form-group">
+                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.Id })'">Edytuj dane</button>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("List", "UserData")'">Lista</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData", new { id = @Model.Id })'">Utwórz użytkownika</button>
+        </div>
+    </div>
 </div>
-@Html.ActionLink("Back to List", "Index")

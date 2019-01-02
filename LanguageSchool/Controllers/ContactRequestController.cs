@@ -28,6 +28,8 @@ namespace LanguageSchool.Controllers
             {
                 ContactRequest cr = new ContactRequest();
 
+                cr.Name = crvm.Name;
+                cr.Surname = crvm.Surname;
                 cr.PhoneNumber = crvm.PhoneNumber;
                 cr.EmailAdress = crvm.EmailAdress;
                 cr.Comment = crvm.Comment;
@@ -67,7 +69,9 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            return View(contactRequest);
+            var contactRequestViewModel = new ContactRequestViewModel(contactRequest);
+
+            return View(contactRequestViewModel);
         }
     }
 }
