@@ -47,7 +47,10 @@ namespace LanguageSchool.Models.ViewModels
 
                 for (int j = 0; j < 7; j++) // days
                 {
-                    UserWorkHours[i].Add(false);
+                    if (j < 5)
+                        UserWorkHours[i].Add(false);
+                    else
+                        UserWorkHours[i].Add(true); // wolne weekendy
                 }
             }
         }
