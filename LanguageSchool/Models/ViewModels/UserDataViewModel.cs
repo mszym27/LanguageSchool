@@ -30,8 +30,14 @@ namespace LanguageSchool.Models.ViewModels
 
         // na potrzeby tworzenia
 
+        public int? OriginContactRequestId { get; set; }
+        public Course Course { get; set; }
+
         public SelectList Roles { get; set; }
         public int RoleId { get; set; }
+
+        public SelectList Groups { get; set; }
+        public int GroupId { get; set; }
 
         //public List<List<bool>> UserWorkHours;
 
@@ -57,10 +63,13 @@ namespace LanguageSchool.Models.ViewModels
 
         public UserDataViewModel(ContactRequest contactRequest)
         {
+            OriginContactRequestId = contactRequest.Id;
+
             Name = contactRequest.Name;
             Surname = contactRequest.Surname;
             PrivatePhoneNumber = contactRequest.PhoneNumber;
             EmailAdress = contactRequest.EmailAdress;
+            Course = contactRequest.Course;
 
             //toDelete
 

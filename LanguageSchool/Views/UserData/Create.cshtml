@@ -1,5 +1,7 @@
 ﻿@model LanguageSchool.Models.ViewModels.UserDataViewModel
 
+@Html.HiddenFor(model => model.OriginContactRequestId)
+
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,14 +13,29 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <div class="row form-group">
-                <div class="control-label col-md-2">
-                    <strong>Rola</strong>
+
+            @if (@Model.OriginContactRequestId != null)
+            {
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Grupa</strong>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.GroupId, Model.Groups, new { @class = "form-control" })
+                    </div>
                 </div>
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker", @onchange = "RoleChanged()" })
+            }
+            else
+            {
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Rola</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker", @onchange = "RoleChanged()" })
+                    </div>
                 </div>
-            </div>
+            }
 
             <div class="row form-group">
                 <div class="control-label col-md-2">
@@ -157,7 +174,7 @@
                             }
                             else
                             {
-                                <td bgcolor="DarkSalmon">
+                                <td>
                                 </td>
                             }
                         }

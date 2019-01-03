@@ -138,9 +138,9 @@ namespace LanguageSchool.Controllers
 
             UserDataViewModel userDataViewModel = new UserDataViewModel(contactRequest);
 
-            userDataViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(r => r.Id == (int) Consts.Roles.Student),
+            userDataViewModel.Groups = new SelectList(unitOfWork.GroupRepository.Get(g => g.CourseId == contactRequest.CourseId),
                                          "Id",
-                                         "PLName");
+                                         "Name");
 
             return View(userDataViewModel);
         }
