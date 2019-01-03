@@ -17,7 +17,7 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DaysOfWeek()
         {
-            this.CourseTimes = new HashSet<CourseTime>();
+            this.GroupTimes = new HashSet<GroupTime>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace LanguageSchool.Models
         public string ENName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseTime> CourseTimes { get; set; }
+        public virtual ICollection<GroupTime> GroupTimes { get; set; }
     }
 }

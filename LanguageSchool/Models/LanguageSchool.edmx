@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LanguageSchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Classroms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Identificator" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DaysOfWeek">
           <Key>
             <PropertyRef Name="Id" />
@@ -34,6 +42,28 @@
           <Property Name="PLDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ENDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="MessageTypeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="GroupId" Type="int" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="IsSystem" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ContactRequests">
           <Key>
             <PropertyRef Name="Id" />
@@ -41,15 +71,17 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="ModificationDate" Type="datetime" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Result" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsAwaiting" Type="bit" Nullable="false" />
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="EntryTestId" Type="int" />
           <Property Name="Points" Type="int" />
-          <Property Name="PreferredHours" Type="nvarchar" MaxLength="200" />
+          <Property Name="PreferredHoursFrom" Type="int" Nullable="false" />
+          <Property Name="PreferredHoursTo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -87,20 +119,6 @@
           <Property Name="LanguageProficencyId" Type="int" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
         </EntityType>
-        <EntityType Name="CourseTimes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="DeletionDate" Type="datetime" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="DayOfWeekId" Type="int" Nullable="false" />
-          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
-          <Property Name="EndTime" Type="time" Precision="7" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="EntryTests">
           <Key>
             <PropertyRef Name="Id" />
@@ -111,6 +129,32 @@
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupTimes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletionDate" Type="datetime" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="DayOfWeekId" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LessonSubjects">
@@ -136,7 +180,7 @@
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="LessonSubjectId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="File" Type="varbinary" MaxLength="4000" />
+          <Property Name="File" Type="varbinary(max)" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -203,20 +247,13 @@
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="LessonSubjectId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Messages">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Header" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Contents" Type="nvarchar" MaxLength="4000" Nullable="false" />
-        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ENName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PLName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserOpenAnswers">
           <Key>
@@ -245,7 +282,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="UsersCourses">
+        <EntityType Name="UsersGroups">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -254,7 +291,7 @@
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersMessages">
           <Key>
@@ -262,13 +299,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="MessageId" Type="int" Nullable="false" />
           <Property Name="HasBeenReceived" Type="bit" Nullable="false" />
           <Property Name="ReceivedDate" Type="datetime" />
-          <Property Name="IsCyclical" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersTests">
           <Key>
@@ -343,30 +378,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseTimes_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="CourseTimes" Type="Self.CourseTimes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CourseTimes">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CourseTimes_DaysOfWeek">
-          <End Role="DaysOfWeek" Type="Self.DaysOfWeek" Multiplicity="1" />
-          <End Role="CourseTimes" Type="Self.CourseTimes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DaysOfWeek">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CourseTimes">
-              <PropertyRef Name="DayOfWeekId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EntryTests_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
           <End Role="EntryTests" Type="Self.EntryTests" Multiplicity="*" />
@@ -391,6 +402,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Groups_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupTimes_DaysOfWeek">
+          <End Role="DaysOfWeek" Type="Self.DaysOfWeek" Multiplicity="1" />
+          <End Role="GroupTimes" Type="Self.GroupTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupTimes">
+              <PropertyRef Name="DayOfWeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupTimes_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="GroupTimes" Type="Self.GroupTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupTimes">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LessonSubjects_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
           <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
@@ -412,6 +459,66 @@
             </Principal>
             <Dependent Role="Materials">
               <PropertyRef Name="LessonSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_MessageTypes">
+          <End Role="MessageTypes" Type="Self.MessageTypes" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="MessageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -499,26 +606,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersCourses_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="UsersCourses" Type="Self.UsersCourses" Multiplicity="*" />
+        <Association Name="FK_UsersGroups_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Courses">
+            <Principal Role="Groups">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UsersCourses">
-              <PropertyRef Name="CourseId" />
+            <Dependent Role="UsersGroups">
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersCourses_Users">
+        <Association Name="FK_UsersGroups_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UsersCourses" Type="Self.UsersCourses" Multiplicity="*" />
+          <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UsersCourses">
+            <Dependent Role="UsersGroups">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -595,15 +702,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetContactInfoList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ContactInfo">
+          <Parameter Name="CreationDateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="CreationDateTo" Type="datetime" Mode="In" />
+          <Parameter Name="PreferredHoursFrom" Type="int" Mode="In" />
+          <Parameter Name="PreferredHoursTo" Type="int" Mode="In" />
+          <Parameter Name="FullName" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="Street" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="EmailAdress" Type="varchar" Mode="In" />
+          <Parameter Name="CourseId" Type="int" Mode="In" />
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+          <Parameter Name="ShowUserData" Type="bit" Mode="In" />
+          <Parameter Name="ShowContactRequests" Type="bit" Mode="In" />
+          <Parameter Name="SortColumn" Type="varchar" Mode="In" />
+          <Parameter Name="SortDirection" Type="varchar" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="LanguageSchoolModelStoreContainer">
+          <EntitySet Name="Classroms" EntityType="Self.Classroms" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="DaysOfWeek" EntityType="Self.DaysOfWeek" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="LanguageProficencies" EntityType="Self.LanguageProficencies" Schema="Administration" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="Administration" store:Type="Tables" />
+          <EntitySet Name="MessageTypes" EntityType="Self.MessageTypes" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" Schema="ContactInfo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="ContactInfo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="Courses" store:Type="Tables" />
-          <EntitySet Name="CourseTimes" EntityType="Self.CourseTimes" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="EntryTests" EntityType="Self.EntryTests" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="Courses" store:Type="Tables" />
+          <EntitySet Name="GroupTimes" EntityType="Self.GroupTimes" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="LessonSubjects" EntityType="Self.LessonSubjects" Schema="Courses" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="Materials" store:Type="Tables" />
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
@@ -611,11 +741,10 @@
           <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestions" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubjects" Schema="Tests" store:Type="Tables" />
-          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="Users" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswers" Schema="Users" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="Users" store:Type="Tables" />
-          <EntitySet Name="UsersCourses" EntityType="Self.UsersCourses" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="UsersGroups" EntityType="Self.UsersGroups" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UsersMessages" EntityType="Self.UsersMessages" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UsersTests" EntityType="Self.UsersTests" Schema="Users" store:Type="Tables" />
           <AssociationSet Name="FK_Answers_ClosedQuestions" Association="Self.FK_Answers_ClosedQuestions">
@@ -638,14 +767,6 @@
             <End Role="LanguageProficencies" EntitySet="LanguageProficencies" />
             <End Role="Courses" EntitySet="Courses" />
           </AssociationSet>
-          <AssociationSet Name="FK_CourseTimes_Courses" Association="Self.FK_CourseTimes_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="CourseTimes" EntitySet="CourseTimes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseTimes_DaysOfWeek" Association="Self.FK_CourseTimes_DaysOfWeek">
-            <End Role="DaysOfWeek" EntitySet="DaysOfWeek" />
-            <End Role="CourseTimes" EntitySet="CourseTimes" />
-          </AssociationSet>
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="EntryTests" EntitySet="EntryTests" />
@@ -654,6 +775,18 @@
             <End Role="Tests" EntitySet="Tests" />
             <End Role="EntryTests" EntitySet="EntryTests" />
           </AssociationSet>
+          <AssociationSet Name="FK_Groups_Courses" Association="Self.FK_Groups_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupTimes_DaysOfWeek" Association="Self.FK_GroupTimes_DaysOfWeek">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeek" />
+            <End Role="GroupTimes" EntitySet="GroupTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupTimes_Groups" Association="Self.FK_GroupTimes_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="GroupTimes" EntitySet="GroupTimes" />
+          </AssociationSet>
           <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
@@ -661,6 +794,26 @@
           <AssociationSet Name="FK_Materials_LessonSubjects" Association="Self.FK_Materials_LessonSubjects">
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
             <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Courses" Association="Self.FK_Messages_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Groups" Association="Self.FK_Messages_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_MessageTypes" Association="Self.FK_Messages_MessageTypes">
+            <End Role="MessageTypes" EntitySet="MessageTypes" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Roles" Association="Self.FK_Messages_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_OpenQuestions_LessonSubjects" Association="Self.FK_OpenQuestions_LessonSubjects">
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
@@ -690,13 +843,13 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsersCourses_Courses" Association="Self.FK_UsersCourses_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="UsersCourses" EntitySet="UsersCourses" />
+          <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsersCourses_Users" Association="Self.FK_UsersCourses_Users">
+          <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UsersCourses" EntitySet="UsersCourses" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersMessages_Messages" Association="Self.FK_UsersMessages_Messages">
             <End Role="Messages" EntitySet="Messages" />
@@ -737,14 +890,16 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Result" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsAwaiting" Type="Boolean" Nullable="false" />
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="EntryTestId" Type="Int32" />
           <Property Name="Points" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="Self.FK_ContactRequests_Courses" FromRole="ContactRequests" ToRole="Courses" />
           <NavigationProperty Name="Test" Relationship="Self.FK_ContactRequests_Tests" FromRole="ContactRequests" ToRole="Tests" />
-          <Property Name="PreferredHours" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredHoursFrom" Type="Int32" Nullable="false" />
+          <Property Name="PreferredHoursTo" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -782,13 +937,13 @@
           <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Courses" FromRole="Courses" ToRole="EntryTests" />
           <NavigationProperty Name="LessonSubjects" Relationship="Self.FK_LessonSubjects_Courses" FromRole="Courses" ToRole="LessonSubjects" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Courses" FromRole="Courses" ToRole="Tests" />
-          <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Courses" FromRole="Courses" ToRole="UsersCourses" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="NumberOfHours" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LanguageProficencyId" Type="Int32" Nullable="false" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="LanguageProficency" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="Course" ToRole="LanguageProficency" />
-          <NavigationProperty Name="CourseTimes" Relationship="LanguageSchoolModel.FK_CourseTimes_Courses" FromRole="Course" ToRole="CourseTime" />
+          <NavigationProperty Name="Groups" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Course" ToRole="Group" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Courses" FromRole="Course" ToRole="Message" />
         </EntityType>
         <EntityType Name="EntryTest">
           <Key>
@@ -832,7 +987,7 @@
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="File" Type="Binary" MaxLength="4000" FixedLength="false" />
+          <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="LessonSubject" Relationship="Self.FK_Materials_LessonSubjects" FromRole="Materials" ToRole="LessonSubjects" />
@@ -918,8 +1073,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+          <Property Name="ENName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Roles" FromRole="Role" ToRole="Message" />
         </EntityType>
         <EntityType Name="UserOpenAnswer">
           <Key>
@@ -953,22 +1110,10 @@
           <NavigationProperty Name="UserDatas" Relationship="Self.FK_UserData_UserLoginData" FromRole="Users" ToRole="UserData" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UsersOpenAnswers_Users" FromRole="Users" ToRole="UserOpenAnswers" />
-          <NavigationProperty Name="UsersCourses" Relationship="Self.FK_UsersCourses_Users" FromRole="Users" ToRole="UsersCourses" />
           <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Users" FromRole="Users" ToRole="UsersTests" />
           <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Users" FromRole="User" ToRole="UsersMessage" />
-        </EntityType>
-        <EntityType Name="UsersCourses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Course" Relationship="Self.FK_UsersCourses_Courses" FromRole="UsersCourses" ToRole="Courses" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UsersCourses_Users" FromRole="UsersCourses" ToRole="Users" />
+          <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Users" FromRole="User" ToRole="UsersGroup" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Users" FromRole="User" ToRole="Message" />
         </EntityType>
         <EntityType Name="UsersTests">
           <Key>
@@ -1053,18 +1198,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tests">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsersCourses_Courses">
-          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
-          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsersCourses">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1213,18 +1346,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersCourses_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UsersCourses" Type="LanguageSchoolModel.UsersCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsersCourses">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersTests_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
@@ -1252,7 +1373,6 @@
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswer" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="UsersCourses" EntityType="LanguageSchoolModel.UsersCourses" />
           <EntitySet Name="UsersTests1" EntityType="LanguageSchoolModel.UsersTests" />
           <AssociationSet Name="FK_ContactRequests_Courses" Association="Self.FK_ContactRequests_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -1277,10 +1397,6 @@
           <AssociationSet Name="FK_Tests_Courses" Association="Self.FK_Tests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="Tests" EntitySet="Tests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsersCourses_Courses" Association="Self.FK_UsersCourses_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="UsersCourses" EntitySet="UsersCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_EntryTests_Tests" Association="Self.FK_EntryTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
@@ -1330,81 +1446,109 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsersCourses_Users" Association="Self.FK_UsersCourses_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UsersCourses" EntitySet="UsersCourses" />
-          </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Users" Association="Self.FK_UsersTests_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersTests" EntitySet="UsersTests1" />
           </AssociationSet>
-          <EntitySet Name="Messages" EntityType="LanguageSchoolModel.Message" />
-          <EntitySet Name="UsersMessages" EntityType="LanguageSchoolModel.UsersMessage" />
-          <AssociationSet Name="FK_UsersMessages_Messages" Association="LanguageSchoolModel.FK_UsersMessages_Messages">
-            <End Role="Message" EntitySet="Messages" />
-            <End Role="UsersMessage" EntitySet="UsersMessages" />
-          </AssociationSet>
+          <EntitySet Name="UserMessages" EntityType="LanguageSchoolModel.UserMessage" />
           <AssociationSet Name="FK_UsersMessages_Users" Association="LanguageSchoolModel.FK_UsersMessages_Users">
             <End Role="User" EntitySet="Users" />
-            <End Role="UsersMessage" EntitySet="UsersMessages" />
+            <End Role="UsersMessage" EntitySet="UserMessages" />
           </AssociationSet>
           <EntitySet Name="DaysOfWeeks" EntityType="LanguageSchoolModel.DaysOfWeek" />
           <EntitySet Name="Holidays" EntityType="LanguageSchoolModel.Holiday" />
           <EntitySet Name="LanguageProficencies" EntityType="LanguageSchoolModel.LanguageProficency" />
-          <EntitySet Name="CourseTimes" EntityType="LanguageSchoolModel.CourseTime" />
-          <AssociationSet Name="FK_CourseTimes_DaysOfWeek" Association="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek">
-            <End Role="DaysOfWeek" EntitySet="DaysOfWeeks" />
-            <End Role="CourseTime" EntitySet="CourseTimes" />
-          </AssociationSet>
           <AssociationSet Name="FK_Courses_LanguageProficencies" Association="LanguageSchoolModel.FK_Courses_LanguageProficencies">
             <End Role="LanguageProficency" EntitySet="LanguageProficencies" />
             <End Role="Course" EntitySet="Courses" />
           </AssociationSet>
-          <AssociationSet Name="FK_CourseTimes_Courses" Association="LanguageSchoolModel.FK_CourseTimes_Courses">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="CourseTime" EntitySet="CourseTimes" />
+          <EntitySet Name="Classroms" EntityType="LanguageSchoolModel.Classrom" />
+          <EntitySet Name="Messages" EntityType="LanguageSchoolModel.Message" />
+          <EntitySet Name="MessageTypes" EntityType="LanguageSchoolModel.MessageType" />
+          <EntitySet Name="Groups" EntityType="LanguageSchoolModel.Group" />
+          <EntitySet Name="GroupTimes" EntityType="LanguageSchoolModel.GroupTime" />
+          <EntitySet Name="UsersGroups" EntityType="LanguageSchoolModel.UsersGroup" />
+          <AssociationSet Name="FK_GroupTimes_DaysOfWeek" Association="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeeks" />
+            <End Role="GroupTime" EntitySet="GroupTimes" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_MessageTypes" Association="LanguageSchoolModel.FK_Messages_MessageTypes">
+            <End Role="MessageType" EntitySet="MessageTypes" />
+            <End Role="Message1" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMessages_Messages1" Association="LanguageSchoolModel.FK_UsersMessages_Messages1">
+            <End Role="Message1" EntitySet="Messages" />
+            <End Role="UsersMessage" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_Courses" Association="LanguageSchoolModel.FK_Groups_Courses">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupTimes_Groups" Association="LanguageSchoolModel.FK_GroupTimes_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupTime" EntitySet="GroupTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Groups" Association="LanguageSchoolModel.FK_UsersGroups_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UsersGroup" EntitySet="UsersGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Users" Association="LanguageSchoolModel.FK_UsersGroups_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UsersGroup" EntitySet="UsersGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Courses" Association="LanguageSchoolModel.FK_Messages_Courses">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Groups" Association="LanguageSchoolModel.FK_Messages_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Roles" Association="LanguageSchoolModel.FK_Messages_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Users" Association="LanguageSchoolModel.FK_Messages_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <FunctionImport Name="GetContactInfoList" ReturnType="Collection(LanguageSchoolModel.GetContactInfoListItem)">
+            <Parameter Name="CreationDateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="CreationDateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="PreferredHoursFrom" Mode="In" Type="Int32" />
+            <Parameter Name="PreferredHoursTo" Mode="In" Type="Int32" />
+            <Parameter Name="FullName" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Street" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="EmailAdress" Mode="In" Type="String" />
+            <Parameter Name="CourseId" Mode="In" Type="Int32" />
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+            <Parameter Name="ShowUserData" Mode="In" Type="Boolean" />
+            <Parameter Name="ShowContactRequests" Mode="In" Type="Boolean" />
+            <Parameter Name="SortColumn" Mode="In" Type="String" />
+            <Parameter Name="SortDirection" Mode="In" Type="String" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="Message">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Header" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contents" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages" FromRole="Message" ToRole="UsersMessage" />
-        </EntityType>
-        <EntityType Name="UsersMessage">
+        <EntityType Name="UserMessage">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="MessageId" Type="Int32" Nullable="false" />
           <Property Name="HasBeenReceived" Type="Boolean" Nullable="false" />
           <Property Name="ReceivedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsCyclical" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Message" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages" FromRole="UsersMessage" ToRole="Message" />
           <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_UsersMessages_Users" FromRole="UsersMessage" ToRole="User" />
+          <NavigationProperty Name="Message" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages1" FromRole="UsersMessage" ToRole="Message1" />
         </EntityType>
-        <Association Name="FK_UsersMessages_Messages">
-          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersMessage" Role="UsersMessage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Message">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsersMessage">
-              <PropertyRef Name="MessageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersMessages_Users">
           <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersMessage" Role="UsersMessage" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserMessage" Role="UsersMessage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -1421,7 +1565,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="PLName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="ENName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CourseTimes" Relationship="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek" FromRole="DaysOfWeek" ToRole="CourseTime" />
+          <NavigationProperty Name="GroupTimes" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="DaysOfWeek" ToRole="GroupTime" />
         </EntityType>
         <EntityType Name="Holiday">
           <Key>
@@ -1445,34 +1589,6 @@
           <Property Name="ENDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Courses" Relationship="LanguageSchoolModel.FK_Courses_LanguageProficencies" FromRole="LanguageProficency" ToRole="Course" />
         </EntityType>
-        <EntityType Name="CourseTime">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <Property Name="DayOfWeekId" Type="Int32" Nullable="false" />
-          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="DaysOfWeek" Relationship="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek" FromRole="CourseTime" ToRole="DaysOfWeek" />
-          <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_CourseTimes_Courses" FromRole="CourseTime" ToRole="Course" />
-        </EntityType>
-        <Association Name="FK_CourseTimes_DaysOfWeek">
-          <End Type="LanguageSchoolModel.DaysOfWeek" Role="DaysOfWeek" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.CourseTime" Role="CourseTime" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DaysOfWeek">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CourseTime">
-              <PropertyRef Name="DayOfWeekId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Courses_LanguageProficencies">
           <End Type="LanguageSchoolModel.LanguageProficency" Role="LanguageProficency" Multiplicity="1" />
           <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="*" />
@@ -1485,18 +1601,232 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseTimes_Courses">
+        <EntityType Name="Classrom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Identificator" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="MessageTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MessageType" Relationship="LanguageSchoolModel.FK_Messages_MessageTypes" FromRole="Message1" ToRole="MessageType" />
+          <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Messages1" FromRole="Message1" ToRole="UsersMessage" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Cours" Relationship="LanguageSchoolModel.FK_Messages_Courses" FromRole="Message" ToRole="Course" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Message" ToRole="Group" />
+          <NavigationProperty Name="Role" Relationship="LanguageSchoolModel.FK_Messages_Roles" FromRole="Message" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_Messages_Users" FromRole="Message" ToRole="User" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsSystem" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_MessageTypes" FromRole="MessageType" ToRole="Message1" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="LanguageSchoolModel.FK_Groups_Courses" FromRole="Group" ToRole="Course" />
+          <NavigationProperty Name="GroupTimes" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="Group" ToRole="GroupTime" />
+          <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Groups" FromRole="Group" ToRole="UsersGroup" />
+          <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Group" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="GroupTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="DayOfWeekId" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DaysOfWeek" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="GroupTime" ToRole="DaysOfWeek" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="GroupTime" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="UsersGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletionDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_UsersGroups_Groups" FromRole="UsersGroup" ToRole="Group" />
+          <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_UsersGroups_Users" FromRole="UsersGroup" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_GroupTimes_DaysOfWeek">
+          <End Type="LanguageSchoolModel.DaysOfWeek" Role="DaysOfWeek" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.GroupTime" Role="GroupTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupTime">
+              <PropertyRef Name="DayOfWeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_MessageTypes">
+          <End Type="LanguageSchoolModel.MessageType" Role="MessageType" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="MessageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMessages_Messages1">
+          <End Type="LanguageSchoolModel.Message" Role="Message1" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UserMessage" Role="UsersMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message1">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersMessage">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_Courses">
           <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.CourseTime" Role="CourseTime" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseTime">
+            <Dependent Role="Group">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GroupTimes_Groups">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.GroupTime" Role="GroupTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupTime">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Groups">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UsersGroup" Role="UsersGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersGroup">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Users">
+          <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UsersGroup" Role="UsersGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersGroup">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Courses">
+          <End Type="LanguageSchoolModel.Course" Role="Course" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Groups">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Roles">
+          <End Type="LanguageSchoolModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Users">
+          <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetContactInfoListItem">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="76" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Street" Nullable="false" MaxLength="253" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EmailAdress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Comment" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="IsContactRequest" Nullable="false" />
+          <Property Type="Int32" Name="TotalRowCount" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1506,14 +1836,16 @@
           <EntitySetMapping Name="ContactRequests">
             <EntityTypeMapping TypeName="LanguageSchoolModel.ContactRequest">
               <MappingFragment StoreEntitySet="ContactRequests">
-                <ScalarProperty Name="PreferredHours" ColumnName="PreferredHours" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PreferredHoursTo" ColumnName="PreferredHoursTo" />
+                <ScalarProperty Name="PreferredHoursFrom" ColumnName="PreferredHoursFrom" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="IsAwaiting" ColumnName="IsAwaiting" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="EntryTestId" ColumnName="EntryTestId" />
@@ -1672,8 +2004,9 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Role">
               <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="PLName" ColumnName="PLName" />
+                <ScalarProperty Name="ENName" ColumnName="ENName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1706,18 +2039,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsersCourses">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersCourses">
-              <MappingFragment StoreEntitySet="UsersCourses">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UsersTests1">
             <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTests">
               <MappingFragment StoreEntitySet="UsersTests">
@@ -1732,25 +2053,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.Message">
-              <MappingFragment StoreEntitySet="Messages">
-                <ScalarProperty Name="Contents" ColumnName="Contents" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsersMessages">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersMessage">
+          <EntitySetMapping Name="UserMessages">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserMessage">
               <MappingFragment StoreEntitySet="UsersMessages">
-                <ScalarProperty Name="IsCyclical" ColumnName="IsCyclical" />
                 <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
                 <ScalarProperty Name="HasBeenReceived" ColumnName="HasBeenReceived" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1788,13 +2098,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CourseTimes">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.CourseTime">
-              <MappingFragment StoreEntitySet="CourseTimes">
+          <EntitySetMapping Name="Classroms">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Classrom">
+              <MappingFragment StoreEntitySet="Classroms">
+                <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+                <ScalarProperty Name="Identificator" ColumnName="Identificator" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MessageTypeId" ColumnName="MessageTypeId" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageTypes">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.MessageType">
+              <MappingFragment StoreEntitySet="MessageTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="DayOfWeekId" ColumnName="DayOfWeekId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
@@ -1803,6 +2144,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GroupTimes">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.GroupTime">
+              <MappingFragment StoreEntitySet="GroupTimes">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfWeekId" ColumnName="DayOfWeekId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersGroups">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersGroup">
+              <MappingFragment StoreEntitySet="UsersGroups">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetContactInfoList" FunctionName="LanguageSchoolModel.Store.GetContactInfoList" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LanguageSchoolModel.GetContactInfoListItem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="IsContactRequest" ColumnName="IsContactRequest" />
+                <ScalarProperty Name="TotalRowCount" ColumnName="TotalRowCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

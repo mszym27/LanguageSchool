@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Szkoła językowa BeLingua</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
     @Styles.Render("~/Content/home_marketable.css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -50,7 +51,7 @@
         {
             var alert = (AlertViewModel) TempData["Alert"];
 
-            <div class="alert" style="background-color: @alert.AlertColor; color: white; text-align: center;">
+            <div class="alert" style="background-color: @alert.AlertType; color: white; text-align: center;">
                 <strong>@alert.Title</strong>: @alert.Message
             </div>
         }

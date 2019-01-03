@@ -28,10 +28,13 @@ namespace LanguageSchool.Controllers
             {
                 ContactRequest cr = new ContactRequest();
 
+                cr.Name = crvm.Name;
+                cr.Surname = crvm.Surname;
                 cr.PhoneNumber = crvm.PhoneNumber;
                 cr.EmailAdress = crvm.EmailAdress;
                 cr.Comment = crvm.Comment;
-                cr.PreferredHours = crvm.PreferredHours;
+                cr.PreferredHoursFrom = crvm.PreferredHoursFrom;
+                cr.PreferredHoursTo = crvm.PreferredHoursTo;
                 cr.CourseId = crvm.CourseId;
                 cr.EntryTestId = crvm.EntryTestId;
                 cr.Points = crvm.Points;
@@ -45,7 +48,7 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel() {
                     Title = "Wysłano pomyślnie",
                     Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
-                    AlertColor = "green"
+                    AlertType = Consts.Success
                 };
 
                 return RedirectToAction("Index", "Course");
@@ -54,6 +57,21 @@ namespace LanguageSchool.Controllers
             {
                 return View();
             }
+        }
+
+        [Route("ContactRequest/{id}")]
+        public ActionResult Details(int id)
+        {
+            var contactRequest = unitOfWork.ContactRequestRepository.GetById(id);
+
+            if (contactRequest == null)
+            {
+                return HttpNotFound();
+            }
+
+            var contactRequestViewModel = new ContactRequestViewModel(contactRequest);
+
+            return View(contactRequestViewModel);
         }
     }
 }

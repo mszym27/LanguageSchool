@@ -2,7 +2,7 @@
 <RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="LanguageSchoolDatabase">
   <ConnectionProperties>
     <Extension>SQL</Extension>
-    <ConnectString>Data Source=(local);Initial Catalog=LanguageSchool</ConnectString>
+    <ConnectString>Data Source=201402020H\MSSQLEXPRESS;Initial Catalog=LanguageSchool</ConnectString>
     <IntegratedSecurity>true</IntegratedSecurity>
   </ConnectionProperties>
   <DataSourceID>85d19a6a-a7c5-46c4-9e1e-590a6191204d</DataSourceID>

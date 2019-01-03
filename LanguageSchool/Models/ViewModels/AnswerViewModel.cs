@@ -8,9 +8,9 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class AnswerViewModel
     {
-        public int Id { get; }
-        public string Answer { get; }
-        public bool IsCorrect { get; }
+        public int Id { get; set; }
+        public string Answer { get; set; }
+        public bool IsCorrect { get; set; }
 
         public bool IsMarked { get; set; }
 

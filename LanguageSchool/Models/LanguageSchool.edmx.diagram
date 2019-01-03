@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cea6ea76446a40929247fcc664d940bc" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="cea6ea76446a40929247fcc664d940bc" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="LanguageSchoolModel.ContactRequest" Width="1.5" PointX="8.25" PointY="25.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LanguageSchoolModel.UserData" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LanguageSchoolModel.Course" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="LanguageSchoolModel.Role" Width="1.5" PointX="1.5" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LanguageSchoolModel.UserOpenAnswer" Width="1.5" PointX="7.5" PointY="30.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LanguageSchoolModel.User" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LanguageSchoolModel.UsersCourses" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LanguageSchoolModel.UsersTests" Width="1.5" PointX="5.25" PointY="32.25" IsExpanded="true" />
         <AssociationConnector Association="LanguageSchoolModel.FK_ContactRequests_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_ContactRequests_Tests" ManuallyRouted="false" />
@@ -27,7 +26,6 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_EntryTests_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_LessonSubjects_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Tests_Courses" ManuallyRouted="false" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_UsersCourses_Courses" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_EntryTests_Tests" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_ClosedQuestions_LessonSubjects" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Materials_LessonSubjects" ManuallyRouted="false" />
@@ -40,19 +38,30 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Tests" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Users_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_UsersCourses_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Users" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="LanguageSchoolModel.Message" Width="1.5" PointX="3.75" PointY="7.625" />
-        <EntityTypeShape EntityType="LanguageSchoolModel.UsersMessage" Width="1.5" PointX="6" PointY="11" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Messages" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UserMessage" Width="1.5" PointX="6" PointY="11" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Users" />
         <EntityTypeShape EntityType="LanguageSchoolModel.DaysOfWeek" Width="1.5" PointX="6.125" PointY="4.125" />
         <EntityTypeShape EntityType="LanguageSchoolModel.Holiday" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="LanguageSchoolModel.LanguageProficency" Width="1.5" PointX="1.125" PointY="21" />
-        <EntityTypeShape EntityType="LanguageSchoolModel.CourseTime" Width="1.5" PointX="8.375" PointY="16.375" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_CourseTimes_DaysOfWeek" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Courses_LanguageProficencies" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_CourseTimes_Courses" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Classrom" Width="1.5" PointX="5.375" PointY="0.875" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Message" Width="1.5" PointX="3.75" PointY="4.75" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.MessageType" Width="1.5" PointX="1.5" PointY="5" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Group" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.GroupTime" Width="1.5" PointX="8.375" PointY="1.875" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.UsersGroup" Width="1.5" PointX="6.25" PointY="7.375" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_MessageTypes" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Messages1" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Groups_Courses" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_GroupTimes_Groups" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersGroups_Groups" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersGroups_Users" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Courses" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Groups" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Roles" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

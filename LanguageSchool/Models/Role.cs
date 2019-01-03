@@ -18,12 +18,16 @@ namespace LanguageSchool.Models
         public Role()
         {
             this.Users = new HashSet<User>();
+            this.Messages = new HashSet<Message>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string ENName { get; set; }
+        public string PLName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

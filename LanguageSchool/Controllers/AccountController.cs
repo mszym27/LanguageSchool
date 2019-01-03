@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.IO;
+using System.Text;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
@@ -17,6 +20,7 @@ namespace LanguageSchool.Controllers
 {
     public class AccountController : LanguageSchoolController
     {
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -26,7 +30,7 @@ namespace LanguageSchool.Controllers
                 if (this.Request.IsAuthenticated)
                 {
                     // Info.    
-                    return this.RedirectToLocal(returnUrl);
+                    return this.RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception ex)
@@ -41,28 +45,31 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel loginInfo, string returnUrl)
+        public ActionResult Login(LoginViewModel loginInfo, string returnUrl, bool RememberMe)
         {
             try
             {
-                // Verification.    
-                if (ModelState.IsValid)
+                var passwordEncrypted = Encryption.Encrypt(loginInfo.Password);
+
+                var loginUser = unitOfWork.UserRepository.Get(u => !u.IsDeleted && (u.Login == loginInfo.Login && u.Password == passwordEncrypted)).FirstOrDefault();
+
+                if (loginUser != null)
                 {
-                    // Initialization.    
-                    var loginUser = unitOfWork.UserRepository.Get(u => (u.Login == loginInfo.Login && u.Password == loginInfo.Password)).FirstOrDefault();
-                    // Verification.    
-                    if (loginUser != null)
+                    this.LogUserIn(loginUser, RememberMe);
+
+                    if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        // Login In.    
-                        this.SignInUser(loginUser, false);
-                        // Info.    
-                        return this.RedirectToLocal(returnUrl);
+                        var decodedUrl = Server.UrlDecode(returnUrl);
+                        return Redirect(decodedUrl);
                     }
                     else
                     {
-                        // Setting.    
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        return this.RedirectToAction("Index", "Home");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Niewłaściwe dane logowania");
                 }
             }
             catch (Exception ex)
@@ -90,7 +97,7 @@ namespace LanguageSchool.Controllers
                 var authenticationManager = ctx.Authentication;
                 // Sign Out.    
                 authenticationManager.SignOut();
-                Session.Remove("Menus");
+                //Session.Remove("Menus");
             }
             catch (Exception ex)
             {
@@ -101,27 +108,26 @@ namespace LanguageSchool.Controllers
             return this.RedirectToAction("Login", "Account");
         }
         #endregion
-        #region Helpers    
         #region Sign In method.    
         /// <summary>  
         /// Sign In User method.    
         /// </summary>  
         /// <param name="username">Username parameter.</param>  
-        /// <param name="isPersistent">Is persistent parameter.</param>  
-        private void SignInUser(User user, bool isPersistent)
+        private void LogUserIn(User user, bool rememberMe)
         {
             // Initialization.    
             var claims = new List<Claim>();
             try
             {
                 // Setting    
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.Login));
-                claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role.ENName));
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
                 // Sign In.    
-                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
+                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, claimIdenties);
             }
             catch (Exception ex)
             {
@@ -129,33 +135,6 @@ namespace LanguageSchool.Controllers
                 throw ex;
             }
         }
-        #endregion
-        #region Redirect to local method.    
-        /// <summary>  
-        /// Redirect to local method.    
-        /// </summary>  
-        /// <param name="returnUrl">Return URL parameter.</param>  
-        /// <returns>Return redirection action</returns>  
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            try
-            {
-                // Verification.    
-                if (Url.IsLocalUrl(returnUrl))
-                {
-                    // Info.    
-                    return this.Redirect(returnUrl);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Info    
-                throw ex;
-            }
-            // Info.    
-            return this.RedirectToAction("Index", "Home");
-        }
-        #endregion
         #endregion
     }
-} 
+}

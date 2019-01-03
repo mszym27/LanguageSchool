@@ -12,19 +12,16 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CourseTime
+    public partial class UsersGroup
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int CourseId { get; set; }
-        public int DayOfWeekId { get; set; }
-        public System.TimeSpan StartTime { get; set; }
-        public Nullable<System.TimeSpan> EndTime { get; set; }
-        public bool IsActive { get; set; }
+        public int UserId { get; set; }
+        public int GroupId { get; set; }
     
-        public virtual DaysOfWeek DaysOfWeek { get; set; }
-        public virtual Course Cours { get; set; }
+        public virtual Group Group { get; set; }
+        public virtual User User { get; set; }
     }
 }

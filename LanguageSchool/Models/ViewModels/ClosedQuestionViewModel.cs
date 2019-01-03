@@ -8,11 +8,11 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class ClosedQuestionViewModel
     {
-        public int Id { get; }
-        public string Contents { get; }
-        public int NumberOfPossibleAnswers { get; }
-        public bool IsMultichoice { get; }
-        public int Points { get; }
+        public int Id { get; set; }
+        public string Contents { get; set; }
+        public int NumberOfPossibleAnswers { get; set; }
+        public bool IsMultichoice { get; set; }
+        public int Points { get; set; }
 
         public List<AnswerViewModel> Answers { get; set; }
 

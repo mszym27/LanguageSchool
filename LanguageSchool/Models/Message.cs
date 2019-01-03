@@ -17,14 +17,26 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Message()
         {
-            this.UsersMessages = new HashSet<UsersMessage>();
+            this.UsersMessages = new HashSet<UserMessage>();
         }
     
         public int Id { get; set; }
         public string Header { get; set; }
         public string Contents { get; set; }
+        public int MessageTypeId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> GroupId { get; set; }
+        public Nullable<int> CourseId { get; set; }
+        public Nullable<int> RoleId { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public bool IsSystem { get; set; }
     
+        public virtual MessageType MessageType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersMessage> UsersMessages { get; set; }
+        public virtual ICollection<UserMessage> UsersMessages { get; set; }
+        public virtual Course Cours { get; set; }
+        public virtual Group Group { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual User User { get; set; }
     }
 }

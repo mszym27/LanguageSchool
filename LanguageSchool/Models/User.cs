@@ -19,9 +19,10 @@ namespace LanguageSchool.Models
         {
             this.UserDatas = new HashSet<UserData>();
             this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
-            this.UsersCourses = new HashSet<UsersCourses>();
             this.UsersTests = new HashSet<UsersTests>();
-            this.UsersMessages = new HashSet<UsersMessage>();
+            this.UsersMessages = new HashSet<UserMessage>();
+            this.UsersGroups = new HashSet<UsersGroup>();
+            this.Messages = new HashSet<Message>();
         }
     
         public int Id { get; set; }
@@ -38,10 +39,12 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersCourses> UsersCourses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersTests> UsersTests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersMessage> UsersMessages { get; set; }
+        public virtual ICollection<UserMessage> UsersMessages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsersGroup> UsersGroups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

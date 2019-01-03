@@ -9,6 +9,13 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class ContactRequestViewModel
     {
+        public int Id { get; set; }
+        public string CreationDate { get; set; }
+        [Required(ErrorMessage = "Proszę podać imię")]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwisko")]
+        public string Surname { get; set; }
+        public string Fullname { get; set; }
         [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Numer telefonu wymagany")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
@@ -18,9 +25,45 @@ namespace LanguageSchool.Models.ViewModels
         public string EmailAdress { get; set; }
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
-        public string PreferredHours { get; set; }
+        [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
+        public int PreferredHoursFrom { get; set; }
+        [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
+        public int PreferredHoursTo { get; set; }
         public int CourseId { get; set; }
+        public Course Course { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }
+        public string TakenTestName { get; set; }
+        public string TotalScore { get; set; }
+
+        public ContactRequestViewModel()
+        {
+            PreferredHoursFrom = 8;
+            PreferredHoursTo = 20;
+        }
+
+        public ContactRequestViewModel(ContactRequest contactRequest)
+        {
+            Id = contactRequest.Id;
+            Fullname = contactRequest.Name + " " + contactRequest.Surname;
+            CreationDate = contactRequest.CreationDate.ToString("yyyy-MM-dd");
+            PhoneNumber = contactRequest.PhoneNumber;
+            EmailAdress = contactRequest.EmailAdress;
+            Comment = contactRequest.Comment;
+            PreferredHoursFrom = contactRequest.PreferredHoursFrom;
+            PreferredHoursTo = contactRequest.PreferredHoursTo;
+            Course = contactRequest.Course;
+
+            if (contactRequest.Test != null)
+            {
+                TakenTestName = contactRequest.Test.Name;
+                TotalScore = contactRequest.Points + "/" + contactRequest.Test.Points;
+            }
+            else
+            {
+                TakenTestName = "-";
+                TotalScore = "-";
+            }
+        }
     }
 }

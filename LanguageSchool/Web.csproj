@@ -204,6 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactRequestController.cs" />
@@ -211,8 +212,10 @@
     <Compile Include="Controllers\EntryTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageSchoolController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -220,6 +223,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classrom.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClosedQuestion.cs">
@@ -231,13 +237,19 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CourseTime.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DaysOfWeek.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntryTest.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetContactInfoListItem.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupTime.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Holiday.cs">
@@ -270,6 +282,9 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageType.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpenQuestion.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
@@ -288,22 +303,27 @@
     <Compile Include="Models\UserData.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserMessage.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserOpenAnswer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UsersCourses.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UsersMessage.cs">
+    <Compile Include="Models\UsersGroup.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersTests.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\ContactInfoListParameters.cs" />
+    <Compile Include="Models\ViewModels\MaterialViewModel.cs" />
+    <Compile Include="Models\ViewModels\ListParameters.cs" />
     <Compile Include="Models\ViewModels\AlertViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserDataViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\TestViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
@@ -397,15 +417,28 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Delete.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
-    <Content Include="Views\Message\Edit.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLogo.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\UserData\Create.cshtml" />
+    <Content Include="Views\UserData\Delete.cshtml" />
+    <Content Include="Views\UserData\Details.cshtml" />
+    <Content Include="Views\UserData\Edit.cshtml" />
+    <Content Include="Views\UserData\Index.cshtml" />
+    <Content Include="Views\UserData\List.cshtml" />
+    <Content Include="Views\ContactRequest\Details.cshtml" />
+    <Content Include="Views\Material\Upload.cshtml" />
+    <Content Include="Views\Material\Delete.cshtml" />
+    <Content Include="Views\Material\Details.cshtml" />
+    <Content Include="Views\Material\Edit.cshtml" />
+    <Content Include="Views\Material\Index.cshtml" />
+    <Content Include="Views\Course\TempTeacher.cshtml" />
+    <Content Include="Views\Course\TempStudent.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

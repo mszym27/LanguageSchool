@@ -1,0 +1,92 @@
+﻿@model LanguageSchool.Models.ViewModels.ContactRequestViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row col-md-12 thumbnail">
+        <div class="col-md-offset-2 col-md-10">
+            <dl class="dl-horizontal">
+                <dt>
+                    Data wysłania prośby
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreationDate)
+                </dd>
+
+                <dt>
+                    Imię i nazwisko
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Fullname)
+                </dd>
+
+                <dt>
+                    Kurs
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Course.Name)
+                </dd>
+
+                <dt>
+                    Numer telefonu
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    Adres email
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EmailAdress)
+                </dd>
+
+                <dt>
+                    Komentarz
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Comment)
+                </dd>
+
+                <dt>
+                    Test
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TakenTestName)
+                </dd>
+
+                <dt>
+                    Zdobyte punkty
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TotalScore)
+                </dd>
+            </dl>
+
+            <div class="form-group">
+                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.Id })'">Edytuj dane</button>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("List", "UserData")'">Lista</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData", new { id = @Model.Id })'">Utwórz użytkownika</button>
+        </div>
+    </div>
+</div>

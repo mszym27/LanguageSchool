@@ -8,8 +8,9 @@
 }
 
 <body background="~/images/Background_test_faded.jpg">
-@using (Html.BeginForm("TakeTest", "EntryTest", FormMethod.Post))
+@using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.CourseId)
     @Html.HiddenFor(model => model.Points)
     @Html.HiddenFor(model => model.Questions)
     
@@ -23,24 +24,24 @@
     <hr />
 
     <table class="table">
-        @foreach (var question in Model.Questions)
+        @for (int i = 0; i < Model.Questions.Count; i++)
         {
-            @Html.HiddenFor(q => question.Points)
+            @Html.HiddenFor(q => Model.Questions[i].Points)
 
             <tr>
                 <td>
-                    @question.Contents
+                    @Model.Questions[i].Contents
 
-                    @foreach (var answer in question.Answers)
+                    @for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
                     {
                         <div class="form-group">
                             <div class="col-md-2">
-                                @answer.Answer
+                                @Model.Questions[i].Answers[j].Answer
                             </div>
                             <div class="col-md-10">
-                                @Html.RadioButton(question.Id.ToString(), answer.IsMarked)
+                                @Html.RadioButton(Model.Questions[i].Id.ToString(), Model.Questions[i].Answers[j].IsMarked)
 
-                                @Html.HiddenFor(a => answer.IsCorrect)
+                                @Html.HiddenFor(a => Model.Questions[i].Answers[j].IsCorrect)
                             </div>
                         </div>
                     }
@@ -63,5 +64,5 @@
             </div>
         </div>
     </div>
-    } 
+} 
 </body>

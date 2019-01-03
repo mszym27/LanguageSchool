@@ -4,25 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace LanguageSchool.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : LanguageSchoolController
     {
         // GET: Home
         public ActionResult Index()
         {
-            var role = ((ClaimsIdentity)User.Identity).Claims
-                .Where(c => c.Type == ClaimTypes.Role)
-                .Select(c => c.Value).FirstOrDefault();
+            var loggedUser = GetLoggedUser();
 
-            switch (role)
+            if (loggedUser == null)
             {
-                case ("Admin"): return RedirectToAction("FullList", "Course");
-                case ("Secretary"): return RedirectToAction("List", "Course");
-                //case ("Teacher"): return RedirectToAction("Timetable", "Report");
-                //case ("Student"): return RedirectToAction("Timetable", "Report");
-                default: return View();
+                return View();
+            }
+            else
+            {
+                if (loggedUser.UsersMessages.Where(um => (um.HasBeenReceived == false)).Any())
+                    return this.RedirectToAction("Index", "Message");
+
+                switch (loggedUser.Role.Id)
+                {
+                    case ((int) Consts.Roles.Admin): return RedirectToAction("FullList", "Course");
+                    case ((int) Consts.Roles.Secretary): return RedirectToAction("List", "Course");
+                    //case ("Teacher"): return RedirectToAction("Timetable", "Report");
+                    //case ("Student"): return RedirectToAction("Timetable", "Report");
+                    default: return View();
+                }
             }
         }
     }

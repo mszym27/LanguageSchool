@@ -12,6 +12,31 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : LanguageSchoolController
     {
+        [Route("Course/TempTeacher")]
+        public ActionResult TempTeacher()
+        {
+            var loggedUser = GetLoggedUser();
+
+            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted && c.Groups.Where(g => !g.IsDeleted && g.UsersGroups.Where(ug => ug.UserId == loggedUser.Id).Any()).Any());
+
+            List<Course> Courses = courses.ToList();
+
+            return View(Courses);
+        }
+
+        [Route("Course/TempStudent")]
+        public ActionResult TempStudent()
+        {
+            var loggedUser = GetLoggedUser();
+
+            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted && c.Groups.Where(g => !g.IsDeleted && g.UsersGroups.Where(ug => ug.UserId == loggedUser.Id).Any()).Any());
+
+            List<Course> Courses = courses.ToList();
+
+            return View(Courses);
+        }
+
+        [Route("Course")]
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
             var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
@@ -40,10 +65,26 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Course/List/")]
-        [Authorize(Roles = "Secretary")]
-        public ActionResult List(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
+        //[Authorize(Roles = "Secretary")] // do przywrocenia po nauczycielu
+        public ActionResult List(
+            string searchString, bool showActivated = true, bool showDeactivated = false,
+            string sortColumn = "startDate", string sortDirection = "asc", int page = 1
+        )
         {
-            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted);
+            var courses = unitOfWork.CourseRepository.Get(c => (
+                    !c.IsDeleted && (
+                        (showActivated && c.IsActive) || (showDeactivated && !c.IsActive)
+                    ) && (
+                        searchString == null ||
+                        (
+                            c.Name.Contains(searchString) ||
+                            c.Description.Contains(searchString) ||
+                            c.NumberOfHours.Contains(searchString) ||
+                            c.LanguageProficency.Name.Contains(searchString)
+                        )
+                    )
+                )
+            );
 
             if (page == 1)
             {
@@ -52,9 +93,16 @@ namespace LanguageSchool.Controllers
 
             courses = this.Sort(courses, sortColumn, sortDirection);
 
+            var pageSize = 20;
+
+            page = (courses.Count() + pageSize) < (page * pageSize) ? 1 : page;
+
             ViewBag.sortColumn = sortColumn;
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
+            ViewBag.searchString = searchString;
+            ViewBag.showActivated = showActivated;
+            ViewBag.showDeactivated = showDeactivated;
 
             // toDO
             //List<Course> Courses = courses.ToList();
@@ -66,7 +114,7 @@ namespace LanguageSchool.Controllers
             //    CoursesViewModels.Add(new CourseViewModel(c));
             //}
 
-            return View(courses.ToPagedList(page, 20));
+            return View(courses.ToPagedList(page, pageSize));
         }
 
         [Route("Course/{id}")]

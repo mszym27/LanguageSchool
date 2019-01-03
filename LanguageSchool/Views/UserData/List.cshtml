@@ -1,0 +1,237 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<LanguageSchool.Models.GetContactInfoListItem>
+
+@using LanguageSchool.Models.ViewModels;
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        DateTime now = DateTime.Now;
+
+        <div class="row thumbnail col-xs-12">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("Utworzono od:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:80px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Użytkownik:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("fullName", (string)ViewBag.fullName, new { @class = "textarea", @style = "width:300px" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Typ:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    <font color="gray">
+                        dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "disableButton()" })
+                        prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "disableButton()" })
+                    </font>
+                </div>
+            </div>
+            <p />
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("Utworzono do:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "disableButton()", @class = "textarea", @style = "width:80px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Email:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("emailAdress", (string)ViewBag.emailAdress, new { @class = "textarea", @style = "width:200px" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Miasto:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("city", (string)ViewBag.city, new { @class = "textarea", @style = "width:120px" })
+                </div>
+            </div>
+            <p />
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("Godziny:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                    -
+                    @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                </div>
+                <div class="col-xs-1">
+                    @Html.Label("Ulica:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBox("street", (string)ViewBag.street, new { @class = "textarea", @style = "width:300px" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Telefon:", new { @style = "float:right" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new { @class = "textarea", @style = "width:120px" })
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Kurs")
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("CourseId", (SelectList)ViewBag.Courses, "Wybierz kurs", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Rola")
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DropDownList("RoleId", (SelectList)ViewBag.Roles, "Wybierz rolę", new { @class = "form-control" })
+                    </div>
+            </div>
+    </div>
+    
+    <p />
+
+    <div class="row col-xs-12">
+        <div class="col-xs-10">
+            @Html.PagedListPager(Model, page => Url.Action("List",
+                new
+                {
+                    creationDateFrom = ViewBag.creationDateFrom,
+                    creationDateTo = ViewBag.creationDateTo,
+                    PreferredHoursFrom = ViewBag.PreferredHoursFrom,
+                    PreferredHoursTo = ViewBag.PreferredHoursTo,
+                    fullName = ViewBag.fullName,
+                    city = ViewBag.city,
+                    street = ViewBag.street,
+                    phoneNumber = ViewBag.phoneNumber,
+                    emailAdress = ViewBag.emailAdress,
+                    showUserData = ViewBag.showUserData,
+                    showContactRequests = ViewBag.showContactRequests,
+                    sortColumn = ViewBag.sortColumn,
+                    sortDirection = ViewBag.sortDirection,
+                    page
+                }
+            ))
+        </div>
+        <div class="col-xs-1">
+            <button class="btn btn-default" type="reset">Przywróć</button>
+        </div>
+        <div class="col-xs-1">
+            <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+        </div>
+    </div>
+}
+
+    <p />
+
+        <div class="row thumbnail col-xs-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Imię i nazwisko
+                    </th>
+                    <th>
+                        Miasto
+                    </th>
+                    <th>
+                        Ulica
+                    </th>
+                    <th>
+                        Numer telefonu
+                    </th>
+                    <th>
+                        Adres email
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    string controllerName = "UserData";
+
+                    if (item.IsContactRequest == 1)
+                    {
+                        controllerName = "ContactRequest";
+                    }
+
+                    <tr>
+                        <td>
+                            @item.CreationDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.FullName, "Details", controllerName, new { id = item.Id }, null)
+                        </td>
+                        <td>
+                            @item.City
+                        </td>
+                        <td>
+                            @item.Street
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            @item.EmailAdress
+                        </td>
+                        <td>
+                            @if (item.Comment != null)
+                            {
+                                <label data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-comment"></span></label>
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Komentarz</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                @item.Comment
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+<script>
+    window.onload = disableButton();
+
+    function disableButton() {
+        var showUserData = document.getElementById("showUserData");
+        var showContactRequests = document.getElementById("showContactRequests");
+        var preferredHoursFrom = document.getElementById("preferredHoursFrom");
+        var preferredHoursTo = document.getElementById("preferredHoursTo");
+        var creationDateFrom = document.getElementById("creationDateFrom");
+        var creationDateTo = document.getElementById("creationDateTo");
+
+        var submit = document.getElementById("submit");
+
+        debugger;
+
+        if ((!showUserData.checked & !showContactRequests.checked)
+            || !preferredHoursFrom.value || !preferredHoursTo.value
+            || !creationDateFrom.value || !creationDateTo.value)
+            submit.disabled = true;
+        else
+            submit.disabled = false;
+    }
+</script>

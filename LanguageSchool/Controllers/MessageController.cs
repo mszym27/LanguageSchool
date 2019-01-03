@@ -6,125 +6,301 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using Microsoft.AspNet.Identity;
+
 using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
-    public class MessageController : Controller
+    [Authorize]
+    public class MessageController : LanguageSchoolController
     {
-        private LanguageSchoolEntities db = new LanguageSchoolEntities();
-
-        public ActionResult Index()
+        public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "desc", int page = 1)
         {
-            return View(db.Messages.ToList());
+            var loggedUser = GetLoggedUser();
+
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted));
+
+            if (page == 1)
+            {
+                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            }
+
+            userMessages = this.Sort(userMessages, sortColumn, sortDirection);
+
+            ViewBag.sortColumn = sortColumn;
+            ViewBag.sortDirection = sortDirection;
+            ViewBag.page = page;
+
+            var userMessagesViewModels = new List<UserMessageViewModel>();
+
+            foreach (UserMessage um in userMessages)
+            {
+                userMessagesViewModels.Add(new UserMessageViewModel(um));
+            }
+
+            return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
-        // GET: Message/Details/5
-        public ActionResult Details(int? id)
+        [HttpGet]
+        [Route("Message/{userMessageId}")]
+        public ActionResult Details(int? userMessageId)
         {
-            if (id == null)
+            var userMessage = GetLoggedUser().UsersMessages.Where(um => um.Id == userMessageId).FirstOrDefault();
+
+            if (userMessage == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Message message = db.Messages.Find(id);
-            if (message == null)
+
+            if (!userMessage.HasBeenReceived)
             {
-                return HttpNotFound();
+                userMessage.HasBeenReceived = true;
+                userMessage.ReceivedDate = DateTime.Today;
+                unitOfWork.UserMessageRepository.Update(userMessage);
+                unitOfWork.Save();
             }
-            return View(message);
+
+            var userMessageViewModel = new UserMessageViewModel(userMessage);
+
+            return View(userMessageViewModel);
         }
 
-        // GET: Message
-        [Authorize(Roles = "Secretary, Administrator")]
-        // GET: Message/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // GET: Message
-        [Authorize(Roles = "Secretary, Administrator")]
-        // POST: Message/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Header,Contents")] Message message)
+        [Route("Message/{userMessageId}")]
+        public ActionResult Details(int userMessageId)
         {
-            if (ModelState.IsValid)
-            {
-                db.Messages.Add(message);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var userMessage = unitOfWork.UserMessageRepository.GetById(userMessageId);
 
-            return View(message);
-        }
+            userMessage.IsDeleted = true;
+            unitOfWork.UserMessageRepository.Update(userMessage);
+            unitOfWork.Save();
 
-        // GET: Message/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                return HttpNotFound();
-            }
-            return View(message);
-        }
-
-        // POST: Message/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Header,Contents")] Message message)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(message).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(message);
-        }
-
-        // GET: Message/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                return HttpNotFound();
-            }
-            return View(message);
-        }
-
-        // POST: Message/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Message message = db.Messages.Find(id);
-            db.Messages.Remove(message);
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        //// GET: Message
+        ////[Authorize(Roles = "Secretary, Administrator")]
+        //// GET: Message/Create
+        //[Route("Message/Create/")]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        [Authorize(Roles = "Secretary")]
+        [HttpGet]
+        [Route("Message/Create")]
+        public ActionResult Create()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
+
+            userMessageViewModel.MessageTypes = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+                                         "Id",
+                                         "Name");
+
+            userMessageViewModel.Users = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
+                                         "Id",
+                                         "Login");
+
+            userMessageViewModel.Groups = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
+                                         "Id",
+                                         "Name");
+
+            userMessageViewModel.Courses = new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+                                         "Id",
+                                         "Name");
+
+            userMessageViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
+                                         "Id",
+                                         "PLName");
+
+            return View(userMessageViewModel);
         }
+
+        [Authorize(Roles = "Secretary")]
+        [HttpPost]
+        [Route("Message/Create")]
+        public ActionResult Create(UserMessageViewModel uMVM)
+        {
+            try
+            {
+                Message message = new Message();
+
+                message.Header = uMVM.Topic;
+                message.Contents = uMVM.Contents;
+                message.MessageType = unitOfWork.MessageTypeRepository.GetById(uMVM.MessageTypeId);
+                message.CreationDate = DateTime.Now;
+                message.IsSystem = uMVM.IsSystem;
+                message.UsersMessages = new List<UserMessage>();
+
+                UserMessage userMessage;
+
+                switch (uMVM.MessageTypeId)
+                {
+                    case (int)Consts.MessageTypes.ToUser:
+                        message.UserId = uMVM.UserId;
+
+                        userMessage = new UserMessage() { UserId = uMVM.UserId };
+
+                        message.UsersMessages.Add(userMessage);
+
+                        break;
+                    case (int)Consts.MessageTypes.ToGroup:
+                        message.GroupId = uMVM.GroupId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == uMVM.GroupId).Any() && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToCourse:
+                        message.CourseId = uMVM.CourseId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == uMVM.CourseId).Any() && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToRole:
+                        message.RoleId = uMVM.RoleId;
+
+                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.RoleId == uMVM.RoleId && !u.IsDeleted)))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                    case (int)Consts.MessageTypes.ToAll:
+
+                        foreach(User u in unitOfWork.UserRepository.Get(u => !u.IsDeleted))
+                        {
+                            userMessage = new UserMessage() { User = u };
+
+                            message.UsersMessages.Add(userMessage);
+                        }
+
+                        break;
+                }
+
+                unitOfWork.MessageRepository.Insert(message);
+                unitOfWork.Save();
+
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Wiadomość wysłana pomyślnie",
+                    Message = "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów",
+                    AlertType = Consts.Success
+                };
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        private IEnumerable<UserMessage> Sort(IEnumerable<UserMessage> userMessages, string sortColumn, string sortDirection)
+        {
+            switch (sortColumn)
+            {
+                case "SentDate":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.Message.CreationDate);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.Message.CreationDate);
+                    break;
+                case "ReceivedDate":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.ReceivedDate);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.ReceivedDate);
+                    break;
+                case "Topic":
+                    if (sortDirection == "asc")
+                        userMessages = userMessages.OrderBy(um => um.Message.Header);
+                    else
+                        userMessages = userMessages.OrderByDescending(um => um.Message.Header);
+                    break;
+            }
+
+            return userMessages;
+        }
+
+        //// GET: Message
+        //[Authorize(Roles = "Secretary, Administrator")]
+        //// POST: Message/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,Header,Contents")] Message message)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Messages.Add(message);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(message);
+        //}
+
+        //// GET: Message/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Message message = db.Messages.Find(id);
+        //    if (message == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(message);
+        //}
+
+        //// POST: Message/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Header,Contents")] Message message)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(message).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(message);
+        //}
+
+        //// GET: Message/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Message message = db.Messages.Find(id);
+        //    if (message == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(message);
+        //}
     }
 }

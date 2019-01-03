@@ -244,3 +244,5 @@ ModelManifest.xml
 
 *.scmp
 *.config
+/Reports/Reports.rptproj.rsuser
+/Reports/Reports.rptproj.bak

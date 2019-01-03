@@ -73,12 +73,12 @@
     <Folder Include="Administration\" />
     <Folder Include="Administration\Tables\" />
     <Folder Include="Users\Stored Procedures\" />
+    <Folder Include="ContactInfo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Tables\Roles.sql" />
     <Build Include="Users\Tables\Users.sql" />
     <Build Include="Users\Tables\UsersTests.sql" />
-    <Build Include="Users\Tables\UsersCourses.sql" />
     <Build Include="Courses\Tables\Courses.sql" />
     <Build Include="ContactInfo\Tables\UserData.sql" />
     <Build Include="ContactInfo\Tables\ContactRequests.sql" />
@@ -98,13 +98,19 @@
     <Build Include="Tests\Tables\TestsLessonSubjects.sql" />
     <Build Include="Courses\Tables\EntryTests.sql" />
     <Build Include="Users\Tables\UsersMessages.sql" />
-    <Build Include="Users\Tables\Messages.sql" />
-    <Build Include="Courses\Tables\CourseTimes.sql" />
     <Build Include="Administration\Tables\Holidays.sql" />
     <Build Include="Administration\Tables\LanguageProficencies.sql" />
     <Build Include="Administration\Tables\DaysOfWeek.sql" />
     <Build Include="Security\Administration.sql" />
     <Build Include="Users\Stored Procedures\GetUserTimetable.sql" />
+    <Build Include="Users\Tables\UsersGroups.sql" />
+    <Build Include="Courses\Tables\GroupTimes.sql" />
+    <Build Include="Courses\Tables\Groups.sql" />
+    <Build Include="Administration\Tables\MessageTypes.sql" />
+    <Build Include="Administration\Tables\Messages.sql" />
+    <Build Include="Administration\Tables\Classroms.sql" />
+    <Build Include="ContactInfo\Stored Procedures\GetContactInfoList.sql" />
+    <Build Include="Users\Tables\WorkTimes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

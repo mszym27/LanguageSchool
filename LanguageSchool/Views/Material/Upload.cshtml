@@ -1,0 +1,99 @@
+﻿@model LanguageSchool.Models.ViewModels.MaterialViewModel
+
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Upload", "Material", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal thumbnail">
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <strong>Temat</strong>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("LessonSubjectId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LessonSubjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <strong>Nazwa</strong>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <strong>Komentarz</strong>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <strong>Plik</strong>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.File, null, new { type = "file", @class = "input-file", accept = ".pdf", id = "upload", onchange = "checkFile()" })
+            </div>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nieodpowiedni plik</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Wybrano niewłaściwy plik. Udostępniane dokumenty muszą być w formacie pdf, a ich maksymalny rozmiar wynosi 0,5 MB</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Utwórz" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+<script>
+function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+}
+
+function checkFile() {
+    var file = document.getElementById("upload").files[0];
+
+    if (file.size > 512000 || getExtension(file.name) != "pdf") {
+        $("#myModal").modal();
+       upload.value = "";
+    };
+};
+</script>

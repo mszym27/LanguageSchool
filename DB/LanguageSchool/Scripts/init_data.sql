@@ -1,14 +1,21 @@
 ﻿IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 1)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (1 ,'Administrator')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (1,'Admin','Administrator')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 2)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (2 ,'Secretary')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (2,'Secretary','Sekretariat')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 3)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (3 ,'Teacher')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (3,'Teacher','Nauczyciel')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 4)
-	INSERT INTO [Users].[Roles] ([Id],[Name]) VALUES (4 ,'Student')
+	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (4,'Student','Student')
+
+GO
+
+UPDATE [Users].[Users] SET [Password] = N'uBmnT9Q+rFZkSOwOBRNFOQ==' WHERE [Login] = N'techAdmin'
+UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
+UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
+UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'BL\S_MS_0001'
 
 GO
 
@@ -155,6 +162,48 @@ IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 7)
 		(7
 		,'Niedziela'
 		,'Sunday')
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 1)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(1
+		,N'Do konkretnego użytkownika')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 2)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(2
+		,N'Do członków grupy')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 3)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(3
+		,N'Do uczestników kursu')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(4
+		,N'Do wszystkich użytkowników o roli')
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 5)
+	INSERT INTO [Administration].[MessageTypes]
+		([Id]
+		,[Name])
+	VALUES
+		(5
+		,N'Do wszystkich')
 
 GO
 

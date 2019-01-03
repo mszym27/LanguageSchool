@@ -1,0 +1,184 @@
+﻿@model LanguageSchool.Models.ViewModels.UserDataViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="container thumbnail">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Rola</strong>
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker", @onchange = "RoleChanged()" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Imię</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Nazwisko</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Miasto</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Ulica</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Numer domu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.HouseNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HouseNumber, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Numer mieszkania</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.HomeNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HomeNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Publiczny numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.PublicPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PublicPhoneNumber, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Prywatny numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.PrivatePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PrivatePhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Adres email</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.EmailAdress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmailAdress, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Komentarz</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div id="timetable" class="thumbnail" style="display: none">
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="text-center">
+                        Poniedziałek
+                    </th>
+                    <th class="text-center">
+                        Wtorek
+                    </th>
+                    <th class="text-center">
+                        Środa
+                    </th>
+                    <th class="text-center">
+                        Czwartek
+                    </th>
+                    <th class="text-center">
+                        Piątek
+                    </th>
+                    <th class="text-center">
+                        Sobota
+                    </th>
+                    <th class="text-center">
+                        Niedziela
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < 12; i++)
+                {
+                    var days = Model.UserWorkHours.ElementAt(i);
+                    <tr>
+                        @for (int j = 0; j < 7; j++)
+                    {
+                        var currentHour = i + 8 + ".15";
+                        var nextHour = (i + 8 + 1) + ".15";
+                            <td>
+                                <label class="btn btn-default btn-block"> @*checked*@
+                                    @Html.EditorFor(model => model.UserWorkHours[i][j], new { htmlAttributes = new { @style = "display: none" } })
+                                    @currentHour - @nextHour
+                                </label>
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Utwórz" class="btn btn-default" />
+        </div>
+    </div>
+    }
+
+    <script>
+        window.onload = RoleChanged();
+
+        function RoleChanged() {
+            var TeacherRoleId = 3;
+
+            timetable = document.getElementById("timetable");
+
+            RoleId = document.getElementById("rolePicker").value;
+
+            if (RoleId == TeacherRoleId)
+                timetable.style.display = "block";
+            else
+                timetable.style.display = "none";
+        }
+    </script>
