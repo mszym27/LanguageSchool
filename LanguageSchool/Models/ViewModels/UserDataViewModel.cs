@@ -52,17 +52,26 @@ namespace LanguageSchool.Models.ViewModels
             }
         }
 
-        public UserDataViewModel(UserData userData)
+        public UserDataViewModel(ContactRequest contactRequest)
         {
-            //Id = userMessage.Id;
-            //SentDate = userMessage.Message.CreationDate.ToString("yyyy-MM-dd");
-            //ReceivedDate = userMessage.ReceivedDate.HasValue ? userMessage.ReceivedDate.Value.ToString("yyyy-MM-dd") : "-";
-            //Topic = userMessage.Message.Header;
-            //Contents = userMessage.Message.Contents;
-            //HasBeenReceived = userMessage.HasBeenReceived;
-            //IsSystem = userMessage.Message.IsSystem;
+            Name = contactRequest.Name;
+            Surname = contactRequest.Surname;
+            PrivatePhoneNumber = contactRequest.PhoneNumber;
+            EmailAdress = contactRequest.EmailAdress;
 
-            //ShortenedContents = (Contents.Length > 100) ? Contents.Substring(0, 100) + "..." : Contents;
+            //toDelete
+
+            UserWorkHours = new List<List<bool>>();
+
+            for (int i = 0; i < 12; i++) // hours
+            {
+                UserWorkHours.Add(new List<bool>(7));
+
+                for (int j = 0; j < 7; j++) // days
+                {
+                    UserWorkHours[i].Add(false);
+                }
+            }
         }
     }
 }

@@ -129,7 +129,24 @@ namespace LanguageSchool.Controllers
             return View(userData);
         }
 
-        // GET: UserData/Create
+        [HttpGet]
+        [Route("UserData/Create/{contactRequestId}")]
+        [Authorize(Roles = "Secretary, Administrator")]
+        public ActionResult Create(int contactRequestId)
+        {
+            var contactRequest = unitOfWork.ContactRequestRepository.GetById(contactRequestId);
+
+            UserDataViewModel userDataViewModel = new UserDataViewModel(contactRequest);
+
+            userDataViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(r => r.Id == (int) Consts.Roles.Student),
+                                         "Id",
+                                         "PLName");
+
+            return View(userDataViewModel);
+        }
+
+        [HttpGet]
+        [Route("UserData/Create")]
         [Authorize(Roles = "Secretary, Administrator")]
         public ActionResult Create()
         {

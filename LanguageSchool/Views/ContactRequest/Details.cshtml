@@ -86,7 +86,7 @@
             <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("List", "UserData")'">Lista</button>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData", new { id = @Model.Id })'">Utwórz użytkownika</button>
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData")/@Model.Id'">Utwórz użytkownika</button>
         </div>
     </div>
 </div>
