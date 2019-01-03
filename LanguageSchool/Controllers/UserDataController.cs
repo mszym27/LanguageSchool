@@ -163,14 +163,14 @@ namespace LanguageSchool.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("UserData/Create")]
+        [Route("UserData/Create/{Id}")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Secretary, Administrator")]
         public ActionResult Create(UserDataViewModel udvm)
         {
             //if (ModelState.IsValid)
-            try
-            {
+            //try
+            //{
                 UserData userData = new UserData();
 
                 userData.Name = udvm.Name;
@@ -184,14 +184,25 @@ namespace LanguageSchool.Controllers
                 userData.EmailAdress = udvm.EmailAdress;
                 userData.Comment = udvm.Comment;
 
+                var userRole = unitOfWork.RoleRepository.GetById(udvm.RoleId);
+
+                if (udvm.OriginContactRequestId != null)
+                {
+                    var contactRequest = unitOfWork.ContactRequestRepository.GetById(udvm.OriginContactRequestId);
+
+                    contactRequest.IsAwaiting = false;
+
+                    userRole = unitOfWork.RoleRepository.GetById((int)Consts.Roles.Student);
+                }
+
                 User user = new User();
+
+                user.Role = userRole;
 
                 user.CreationDate = DateTime.Now;
                 userData.CreationDate = DateTime.Now;
 
-                user.Role = unitOfWork.RoleRepository.GetById(udvm.RoleId);
-
-                user.Login = "BL\\" + user.Role.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
+                user.Login = "BL\\" + userRole.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
                 user.Password = Encryption.Encrypt(Membership.GeneratePassword(8, 3));
 
                 userData.User = user;
@@ -212,11 +223,11 @@ namespace LanguageSchool.Controllers
                 };
 
                 return RedirectToAction("Details", "UserData", new { id = userData.Id });
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
             //ViewBag.UserId = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted), "Id", "Login");
             //return View(udvm);
         }
