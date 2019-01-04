@@ -1,6 +1,6 @@
 ﻿DECLARE @CourseId INT = (SELECT Id FROM [Courses].[Courses] WHERE Name = N'Intensywny kurs angielskiego')
 	,@TeacherId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_LL_0001')
-	,@GroupId INT)
+	,@GroupId INT
 
 INSERT INTO [ContactInfo].[UserData]
     ([IsDeleted]
