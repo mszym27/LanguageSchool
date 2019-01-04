@@ -134,7 +134,13 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create()
         {
-            return View();
+            var courseViewModel = new CourseViewModel();
+
+            courseViewModel.LanguageProficenciens = new SelectList(unitOfWork.LanguageProficencyRepository.Get(),
+                                         "Id",
+                                         "Name");
+
+            return View(courseViewModel);
         }
 
         // POST: Course/Create

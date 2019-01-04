@@ -26,6 +26,15 @@ namespace LanguageSchool.DAL
         private Repository<Message> messageRepository;
         private Repository<UserMessage> userMessageRepository;
         private Repository<MessageType> messageTypeRepository;
+        private Repository<LanguageProficency> languageProficencyRepository;
+
+        public Repository<LanguageProficency> LanguageProficencyRepository
+        {
+            get
+            {
+                return this.languageProficencyRepository ?? new Repository<LanguageProficency>(entities);
+            }
+        }
 
         public Repository<LessonSubject> LessonSubjectRepository
         {
