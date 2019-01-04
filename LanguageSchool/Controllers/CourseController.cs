@@ -130,6 +130,20 @@ namespace LanguageSchool.Controllers
             return View(course);
         }
 
+        [Route("Course/FullDetails/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult FullDetails(int id)
+        {
+            Course course = unitOfWork.CourseRepository.GetById(id);
+
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(course);
+        }
+
         [Route("Course/Create/")]
         [Authorize(Roles = "Secretary")]
         public ActionResult Create()
@@ -145,13 +159,13 @@ namespace LanguageSchool.Controllers
 
         // POST: Course/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CourseViewModel courseViewModel)
         {
             try
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("FullDetails", new { id = 2 });
             }
             catch
             {

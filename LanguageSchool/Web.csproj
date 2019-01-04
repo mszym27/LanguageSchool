@@ -204,6 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -439,6 +440,12 @@
     <Content Include="Views\Material\Index.cshtml" />
     <Content Include="Views\Course\TempTeacher.cshtml" />
     <Content Include="Views\Course\TempStudent.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Course\FullDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

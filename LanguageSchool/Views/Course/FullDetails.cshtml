@@ -1,0 +1,124 @@
+﻿@model LanguageSchool.Models.Course
+
+@{
+    ViewBag.Title = "Kurs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row thumbnail col-md-12">
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Nazwa</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+
+            <div class="control-label col-md-2">
+                <strong>Poziom</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.LanguageProficency.Name)
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Liczba godzin</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.NumberOfHours)
+            </div>
+
+            <div class="control-label col-md-2">
+                <strong>Aktywny</strong>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    @Html.DisplayFor(model => model.IsActive)
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Data rozpoczęcia</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.StartDate)
+            </div>
+
+            <div class="control-label col-md-2">
+                <strong>Data zakończenia</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.EndDate)
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-6">
+            </div>
+            <div class="control-label col-md-2">
+                <strong>Opis</strong>
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-offset-2 col-md-4">
+                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")/@Model.Id'">Edytuj</button>
+            </div>
+        </div>
+    </div>
+    @if (Model.Groups.Any())
+    {
+        <p />
+        <div class="row thumbnail col-md-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Prowadzący
+                    </th>
+                </tr>
+                @foreach (var group in Model.Groups)
+                {
+                    var teacher = group.UsersGroups.Where(ug => !ug.IsDeleted && ug.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User;
+                    <tr>
+                        <td>
+                            @group.CreationDate
+                        </td>
+                        <td>
+                            @group.Name
+                        </td>
+                        <td>
+                            @teacher.UserDatas.FirstOrDefault().Name @teacher.UserDatas.FirstOrDefault().Surname (@teacher.Login)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    
+    <p />
+
+    <div class="row col-md-12">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("List", "Course")'">Lista</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Group")/@Model.Id'">Dodaj grupę</button>
+        </div>
+    </div>
+</div>

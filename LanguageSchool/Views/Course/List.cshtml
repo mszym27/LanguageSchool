@@ -144,7 +144,7 @@
                     @item.CreationDate.ToString("yyyy/MM/dd")
                 </td>
                 <td>
-                    @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
+                    @Html.ActionLink(item.Name, "FullDetails", new { id = item.Id })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)

@@ -1,6 +1,19 @@
 ﻿DECLARE @CourseId INT = (SELECT Id FROM [Courses].[Courses] WHERE Name = N'Intensywny kurs angielskiego')
 	,@TeacherId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_LL_0001')
-	,@GroupId INT
+	,@GroupId INT)
+
+INSERT INTO [ContactInfo].[UserData]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[UserId]
+    ,[Name]
+    ,[Surname])
+VALUES
+    (0
+    ,GETDATE()
+    ,@TeacherId
+    ,N'Łukasz'
+    ,N'Łukasiewicz')
 
 INSERT INTO [Courses].[Groups]
     ([IsDeleted]
@@ -307,6 +320,21 @@ VALUES
     ,'16:00'
     ,'20:00'
     ,1)
+
+SET @GroupId = SCOPE_IDENTITY()
+
+INSERT INTO [Users].[UsersGroups]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[UserId]
+    ,[GroupId])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,@TeacherId
+    ,@GroupId)
 
 INSERT INTO [Courses].[Groups]
     ([IsDeleted]
