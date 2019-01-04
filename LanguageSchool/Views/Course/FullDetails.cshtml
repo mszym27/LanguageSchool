@@ -70,7 +70,7 @@
 
         <div class="row form-group">
             <div class="col-md-offset-2 col-md-4">
-                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")/@Model.Id'">Edytuj</button>
+                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Edytuj</button>
             </div>
         </div>
     </div>
@@ -95,13 +95,13 @@
                     var teacher = group.UsersGroups.Where(ug => !ug.IsDeleted && ug.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User;
                     <tr>
                         <td>
-                            @group.CreationDate
+                            @group.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
                             @group.Name
                         </td>
                         <td>
-                            @teacher.UserDatas.FirstOrDefault().Name @teacher.UserDatas.FirstOrDefault().Surname (@teacher.Login)
+                            @teacher.UserData.FirstOrDefault().Name @teacher.UserData.FirstOrDefault().Surname (@teacher.Login)
                         </td>
                     </tr>
                 }

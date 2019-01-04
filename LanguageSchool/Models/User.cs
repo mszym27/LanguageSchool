@@ -17,7 +17,7 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.UserDatas = new HashSet<UserData>();
+            this.UserData = new HashSet<UserData>();
             this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
             this.UsersTests = new HashSet<UsersTests>();
             this.UsersMessages = new HashSet<UserMessage>();
@@ -34,7 +34,7 @@ namespace LanguageSchool.Models
         public int RoleId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserData> UserDatas { get; set; }
+        public virtual ICollection<UserData> UserData { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }

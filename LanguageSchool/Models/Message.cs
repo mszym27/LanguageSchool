@@ -34,7 +34,7 @@ namespace LanguageSchool.Models
         public virtual MessageType MessageType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMessage> UsersMessages { get; set; }
-        public virtual Course Cours { get; set; }
+        public virtual Course Course { get; set; }
         public virtual Group Group { get; set; }
         public virtual Role Role { get; set; }
         public virtual User User { get; set; }

@@ -205,6 +205,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="DAL\PopulateList.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -317,12 +318,14 @@
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\ContactInfoListParameters.cs" />
+    <Compile Include="Models\ViewModels\GroupViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialViewModel.cs" />
     <Compile Include="Models\ViewModels\ListParameters.cs" />
     <Compile Include="Models\ViewModels\AlertViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\UserDataViewModel.cs" />
     <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />

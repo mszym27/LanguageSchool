@@ -321,21 +321,6 @@ VALUES
     ,'20:00'
     ,1)
 
-SET @GroupId = SCOPE_IDENTITY()
-
-INSERT INTO [Users].[UsersGroups]
-    ([IsDeleted]
-    ,[CreationDate]
-    ,[DeletionDate]
-    ,[UserId]
-    ,[GroupId])
-VALUES
-    (0
-    ,GETDATE()
-    ,NULL
-    ,@TeacherId
-    ,@GroupId)
-
 INSERT INTO [Courses].[Groups]
     ([IsDeleted]
     ,[CreationDate]
@@ -350,6 +335,21 @@ VALUES
     ,@CourseId
     ,N'Grupa druga'
     ,1)
+
+SET @GroupId = SCOPE_IDENTITY()
+
+INSERT INTO [Users].[UsersGroups]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[UserId]
+    ,[GroupId])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,@TeacherId
+    ,@GroupId)
 
 INSERT INTO [Courses].[Groups]
     ([IsDeleted]

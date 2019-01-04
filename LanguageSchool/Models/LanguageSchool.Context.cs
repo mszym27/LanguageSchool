@@ -28,7 +28,7 @@ namespace LanguageSchool.Models
         }
     
         public virtual DbSet<ContactRequest> ContactRequests { get; set; }
-        public virtual DbSet<UserData> UserDatas { get; set; }
+        public virtual DbSet<UserData> UserData { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<EntryTest> EntryTests { get; set; }
         public virtual DbSet<LessonSubject> LessonSubjects { get; set; }
