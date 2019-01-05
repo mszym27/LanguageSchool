@@ -79,9 +79,9 @@
                                     var nextHour = (i + 8 + 1) + ".15";
                                     <td>
                                         <label class="btn btn-default btn-block">
-                                            @*checked*@
-                                            @*@Html.EditorFor(model => (bool)model.TeacherTimetable[i][j], new { htmlAttributes = new { @style = "display: block" } })*@
-                                            @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool) @Model.TeacherTimetable[i][j])
+                                            <label style="display: none">
+                                                @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
+                                            </label>
                                             @currentHour - @nextHour
                                         </label>
                                     </td>
