@@ -5,8 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.CourseId)
+    @Html.HiddenFor(model => model.SelectedUser.Id)
+
     @Html.AntiForgeryToken()
         <div class="row thumbnail">
             <div class="form-group">
@@ -66,7 +69,9 @@
                             {
                                 if (@Model.TeacherTimetable[i][j] == null)
                                 {
-                                    <td></td>
+                                    <td>
+                                        @Html.HiddenFor(model => model.TeacherTimetable[i][j])
+                                    </td>
                                 }
                                 else
                                 {
@@ -75,7 +80,8 @@
                                     <td>
                                         <label class="btn btn-default btn-block">
                                             @*checked*@
-                                            @Html.EditorFor(model => model.TeacherTimetable[i][j], new { htmlAttributes = new { @style = "display: none" } })
+                                            @*@Html.EditorFor(model => (bool)model.TeacherTimetable[i][j], new { htmlAttributes = new { @style = "display: block" } })*@
+                                            @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool) @Model.TeacherTimetable[i][j])
                                             @currentHour - @nextHour
                                         </label>
                                     </td>

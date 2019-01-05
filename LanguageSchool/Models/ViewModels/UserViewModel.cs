@@ -10,7 +10,7 @@ namespace LanguageSchool.Models.ViewModels
         public int Id { get; set; }
         public string Fullname { get; set; }
 
-        public List<List<bool?>> UserTimetable { get; set; }
+        public UserViewModel() { }
 
         public UserViewModel(User user)
         {

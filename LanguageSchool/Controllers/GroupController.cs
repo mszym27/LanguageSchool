@@ -29,6 +29,7 @@ namespace LanguageSchool.Controllers
         //}
 
         [HttpGet]
+        [Route("Group/Create/{id}")]
         public ActionResult Create(int id)
         {
             return View(new GroupViewModel(id));
@@ -41,6 +42,7 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
+        [Route("Group/Create/{id}")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
             if(groupViewModel.TeacherTimetable == null)
