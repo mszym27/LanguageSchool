@@ -449,6 +449,7 @@
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Course\FullDetails.cshtml" />
+    <Content Include="Views\Group\PickHours.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

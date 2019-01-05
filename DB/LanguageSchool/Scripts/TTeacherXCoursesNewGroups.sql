@@ -60,8 +60,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,6
-    ,'8:00'
-    ,'16:00'
+    ,8
+    ,16
     ,1)
 
 INSERT INTO [Courses].[Groups]
@@ -109,8 +109,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,7
-    ,'8:00'
-    ,'16:00'
+    ,8
+    ,16
     ,1)
 
 SET @CourseId = (SELECT Id FROM [Courses].[Courses] WHERE Name = N'Kurs przygotowujący do matury (I)')
@@ -160,8 +160,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,1
-    ,'16:00'
-    ,'18:00'
+    ,16
+    ,18
     ,1)
 
 INSERT INTO [Courses].[GroupTimes]
@@ -179,8 +179,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,2
-    ,'16:00'
-    ,'18:00'
+    ,16
+    ,18
     ,1)
 
 INSERT INTO [Courses].[GroupTimes]
@@ -198,8 +198,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,3
-    ,'16:00'
-    ,'18:00'
+    ,16
+    ,18
     ,1)
 
 INSERT INTO [Courses].[Groups]
@@ -247,8 +247,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,4
-    ,'16:00'
-    ,'20:00'
+    ,16
+    ,20
     ,1)
 
 INSERT INTO [Courses].[GroupTimes]
@@ -266,8 +266,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,5
-    ,'18:00'
-    ,'20:00'
+    ,18
+    ,20
     ,1)
 
 SET @CourseId = (SELECT Id FROM [Courses].[Courses] WHERE Name = N'Intensywny kurs przygotowujący do matury')
@@ -317,8 +317,8 @@ VALUES
     ,NULL
     ,@GroupId
     ,6
-    ,'16:00'
-    ,'20:00'
+    ,16
+    ,20
     ,1)
 
 INSERT INTO [Courses].[Groups]
@@ -350,6 +350,25 @@ VALUES
     ,NULL
     ,@TeacherId
     ,@GroupId)
+
+INSERT INTO [Courses].[GroupTimes]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[GroupId]
+    ,[DayOfWeekId]
+    ,[StartTime]
+    ,[EndTime]
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,@GroupId
+    ,3
+    ,10
+    ,12
+    ,1)
 
 INSERT INTO [Courses].[Groups]
     ([IsDeleted]
@@ -396,6 +415,6 @@ VALUES
     ,NULL
     ,@GroupId
     ,7
-    ,'16:00'
-    ,'20:00'
+    ,16
+    ,20
     ,1)

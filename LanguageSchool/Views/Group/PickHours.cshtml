@@ -1,0 +1,93 @@
+﻿@model LanguageSchool.Models.ViewModels.GroupViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+        <div class="row thumbnail">
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <strong>Nazwa</strong>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Prowadzący</strong>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.SelectedUser.Fullname)
+                </div>
+
+                <div class="col-md-2">
+                    <input type="submit" value="Utwórz" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        
+        <p/>
+
+        <div class="row thumbnail">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center">
+                            Poniedziałek
+                        </th>
+                        <th class="text-center">
+                            Wtorek
+                        </th>
+                        <th class="text-center">
+                            Środa
+                        </th>
+                        <th class="text-center">
+                            Czwartek
+                        </th>
+                        <th class="text-center">
+                            Piątek
+                        </th>
+                        <th class="text-center">
+                            Sobota
+                        </th>
+                        <th class="text-center">
+                            Niedziela
+                        </th>
+                    </tr>
+
+                    @for (int i = 0; i < 12; i++)
+                {
+                        <tr>
+                            @for (int j = 0; j < 7; j++)
+                            {
+                                if (@Model.TeacherTimetable[i][j] == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    var currentHour = i + 8 + ".15";
+                                    var nextHour = (i + 8 + 1) + ".15";
+                                    <td>
+                                        <label class="btn btn-default btn-block">
+                                            @*checked*@
+                                            @Html.EditorFor(model => model.TeacherTimetable[i][j], new { htmlAttributes = new { @style = "display: none" } })
+                                            @currentHour - @nextHour
+                                        </label>
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

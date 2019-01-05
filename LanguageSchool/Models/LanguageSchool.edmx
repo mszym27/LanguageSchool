@@ -153,8 +153,8 @@
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="GroupId" Type="int" Nullable="false" />
           <Property Name="DayOfWeekId" Type="int" Nullable="false" />
-          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
-          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="StartTime" Type="int" Nullable="false" />
+          <Property Name="EndTime" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LessonSubjects">
@@ -1664,8 +1664,8 @@
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
           <Property Name="DayOfWeekId" Type="Int32" Nullable="false" />
-          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="StartTime" Type="Int32" Nullable="false" />
+          <Property Name="EndTime" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DaysOfWeek" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="GroupTime" ToRole="DaysOfWeek" />
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="GroupTime" ToRole="Group" />

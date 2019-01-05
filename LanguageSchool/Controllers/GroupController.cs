@@ -28,10 +28,29 @@ namespace LanguageSchool.Controllers
         //    return View(group);
         //}
 
-        // GET: Group/Create
+        [HttpGet]
         public ActionResult Create(int id)
         {
             return View(new GroupViewModel(id));
+        }
+
+        [HttpGet]
+        public ActionResult PickHours(GroupViewModel groupViewModel)
+        {
+            return View(groupViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(GroupViewModel groupViewModel)
+        {
+            if(groupViewModel.TeacherTimetable == null)
+            { 
+                var selectedTeacher = unitOfWork.UserRepository.GetById(groupViewModel.UserId);
+
+                groupViewModel.FillTimetable(selectedTeacher);
+            }
+
+            return View("PickHours", groupViewModel);
         }
 
         //// POST: Group/Create

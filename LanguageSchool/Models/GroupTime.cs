@@ -20,8 +20,8 @@ namespace LanguageSchool.Models
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int GroupId { get; set; }
         public int DayOfWeekId { get; set; }
-        public System.TimeSpan StartTime { get; set; }
-        public Nullable<System.TimeSpan> EndTime { get; set; }
+        public int StartTime { get; set; }
+        public int EndTime { get; set; }
         public bool IsActive { get; set; }
     
         public virtual DaysOfWeek DaysOfWeek { get; set; }
