@@ -17,6 +17,13 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Users { get; set; }
         public int UserId { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime EndDate { get; set; }
+
         public UserViewModel Teacher { get; set; }
 
         public List<List<bool?>> TeacherTimetable { get; set; }
@@ -53,6 +60,8 @@ namespace LanguageSchool.Models.ViewModels
         {
             CourseId = course.Id;
             CourseNumberOfHours = course.NumberOfHours;
+            StartDate = course.StartDate;
+            StartDate = course.EndDate;
 
             Users = PopulateList.GetAllTeachers();
         }

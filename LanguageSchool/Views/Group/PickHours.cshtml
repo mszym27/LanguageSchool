@@ -10,6 +10,8 @@
     @Html.HiddenFor(model => model.CourseId)
     @Html.HiddenFor(model => model.Name)
     @Html.HiddenFor(model => model.Teacher.Id)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.EndDate)
 
     @Html.AntiForgeryToken()
         <div class="row thumbnail">

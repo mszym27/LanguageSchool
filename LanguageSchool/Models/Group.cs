@@ -29,6 +29,8 @@ namespace LanguageSchool.Models
         public int CourseId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
     
         public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
