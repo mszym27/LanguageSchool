@@ -5,8 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.CourseId)
+
     @Html.AntiForgeryToken()
         <div class="row thumbnail">
             <div class="form-group">

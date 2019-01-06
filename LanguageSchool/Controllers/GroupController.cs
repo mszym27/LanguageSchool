@@ -45,14 +45,85 @@ namespace LanguageSchool.Controllers
         [Route("Group/Create/{id}")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
-            if(groupViewModel.TeacherTimetable == null)
-            { 
-                var selectedTeacher = unitOfWork.UserRepository.GetById(groupViewModel.UserId);
+            var selectedTeacher = unitOfWork.UserRepository.GetById(groupViewModel.UserId);
 
-                groupViewModel.FillTimetable(selectedTeacher);
+            if (groupViewModel.TeacherTimetable == null)
+            {
+                var startDate = unitOfWork.CourseRepository.GetById(groupViewModel.CourseId).StartDate;
+
+                groupViewModel.FillTimetable(selectedTeacher, startDate);
+
+                return View("PickHours", groupViewModel);
             }
+            else
+            {
+                var now = DateTime.Now;
 
-            return View("PickHours", groupViewModel);
+                var group = new Group {
+                    CourseId = groupViewModel.CourseId,
+                    Name = groupViewModel.Name,
+                    CreationDate = now,
+                    IsActive = true
+                };
+
+                group.UsersGroups.Add(new UsersGroup
+                {
+                    CreationDate = now,
+                    UserId = groupViewModel.SelectedUser.Id
+                });
+
+                var groupTimes = new List<GroupTime>();
+
+                for (int i = 0; i < 7; i++) // days
+                {
+                    GroupTime groupTime = null;
+
+                    for (int j = 0; j < 12; j++) // hours
+                    {
+                        var isHourChecked = groupViewModel.TeacherTimetable.ElementAt(j).ElementAt(i);
+
+                        if(isHourChecked == true)
+                        {
+                            if(groupTime == null)
+                            {
+                                groupTime = new GroupTime
+                                {
+                                    IsActive = true,
+                                    CreationDate = now,
+                                    DayOfWeekId = (i + 1),
+                                    StartTime = j + 8,
+                                    EndTime = j + 8,
+                                };
+                            }
+                            else
+                            {
+                                if (groupTime.EndTime == (j + 8) - 1)
+                                    groupTime.EndTime++;
+                                else
+                                {
+                                    groupTimes.Add(groupTime);
+
+                                    groupTime = null;
+                                }
+                            }
+                        }
+                        else if (groupTime != null)
+                        {
+                            groupTimes.Add(groupTime);
+
+                            groupTime = null;
+                        }
+                    }
+                }
+
+                group.GroupTimes = groupTimes;
+
+                unitOfWork.GroupRepository.Insert(group);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //// POST: Group/Create

@@ -8,6 +8,7 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.CourseId)
+    @Html.HiddenFor(model => model.Name)
     @Html.HiddenFor(model => model.SelectedUser.Id)
 
     @Html.AntiForgeryToken()

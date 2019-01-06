@@ -31,13 +31,13 @@ namespace LanguageSchool.Models.ViewModels
             Users = PopulateList.GetAllTeachers();
         }
 
-        public void FillTimetable(User user)
+        public void FillTimetable(User user, DateTime startingDate)
         {
             SelectedUser = new UserViewModel(user);
 
             TeacherTimetable = new List<List<bool?>>();
 
-            var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted).ToList();
+            var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.Course.EndDate > startingDate).ToList();
 
             List<GroupTime> groupTimes = new List<GroupTime>();
 
