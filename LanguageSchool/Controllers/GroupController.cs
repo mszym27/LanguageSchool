@@ -32,7 +32,7 @@ namespace LanguageSchool.Controllers
         [Route("Group/Create/{id}")]
         public ActionResult Create(int id)
         {
-            return View(new GroupViewModel(id));
+            return View(new GroupViewModel(unitOfWork.CourseRepository.GetById(id)));
         }
 
         [HttpGet]
@@ -74,9 +74,16 @@ namespace LanguageSchool.Controllers
 
                 var groupTimes = new List<GroupTime>();
 
+                GroupTime groupTime = null;
+
                 for (int i = 0; i < 7; i++) // days
                 {
-                    GroupTime groupTime = null;
+                    if (groupTime != null)
+                    {
+                        groupTimes.Add(groupTime);
+                    }
+
+                    groupTime = null;
 
                     for (int j = 0; j < 12; j++) // hours
                     {
@@ -107,13 +114,12 @@ namespace LanguageSchool.Controllers
                                 }
                             }
                         }
-                        else if (groupTime != null)
-                        {
-                            groupTimes.Add(groupTime);
-
-                            groupTime = null;
-                        }
                     }
+                }
+
+                if (groupTime != null)
+                {
+                    groupTimes.Add(groupTime);
                 }
 
                 group.GroupTimes = groupTimes;

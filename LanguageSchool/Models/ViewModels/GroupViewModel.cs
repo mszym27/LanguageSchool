@@ -10,6 +10,7 @@ namespace LanguageSchool.Models.ViewModels
     public class GroupViewModel
     {
         public int CourseId { get; set; }
+        public string CourseNumberOfHours { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
@@ -24,9 +25,10 @@ namespace LanguageSchool.Models.ViewModels
         {
         }
 
-        public GroupViewModel(int CourseId)
+        public GroupViewModel(Course course)
         {
-            this.CourseId = CourseId;
+            CourseId = course.Id;
+            CourseNumberOfHours = course.NumberOfHours;
 
             Users = PopulateList.GetAllTeachers();
         }
