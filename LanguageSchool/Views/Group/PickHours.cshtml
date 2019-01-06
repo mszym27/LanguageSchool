@@ -84,10 +84,42 @@
                                 if (@Model.TeacherTimetable[i][j] == null)
                                 {
                                     var existingtime = Model.TeacherExistingTimetable[i][j];
-                                    <td  align="center" style="font-size: 10px;">
+
+                                    var style = "font-size: 10px;";
+
+                                    bool show = true;
+
+                                    if(i > 0)
+                                    {
+                                        if(@Model.TeacherTimetable[i - 1][j] == null)
+                                        {
+                                            if (Model.TeacherExistingTimetable[i - 1][j].GroupId == existingtime.GroupId)
+                                            {
+                                                style += "border-top-style: none;";
+
+                                                show = false;
+                                            }
+                                        }
+                                    }
+
+                                    if (i < 11)
+                                    {
+                                        if (@Model.TeacherTimetable[i + 1][j] == null)
+                                        {
+                                            if (Model.TeacherExistingTimetable[i + 1][j].GroupId == existingtime.GroupId)
+                                            {
+                                                style += "border-bottom-style: none;";
+                                            }
+                                        }
+                                    }
+
+                                    <td  align="center" style="@style">
                                         @Html.HiddenFor(model => model.TeacherTimetable[i][j])
-                                        <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
-                                        <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
+                                        @if (show)
+                                        {
+                                            <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
+                                            <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
+                                        }
                                     </td>
                                 }
                                 else

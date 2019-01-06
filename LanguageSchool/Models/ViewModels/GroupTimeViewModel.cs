@@ -9,6 +9,7 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class GroupTimeViewModel
     {
+        public int GroupId { get; set; }
         public string CourseName { get; set; }
         public string GroupName { get; set; }
         public string StartDate { get; set; }
@@ -16,6 +17,8 @@ namespace LanguageSchool.Models.ViewModels
 
         public GroupTimeViewModel(Group group)
         {
+            GroupId = group.Id;
+
             GroupName = group.Name;
             CourseName = group.Course.Name;
             StartDate = group.Course.StartDate.ToString("yyyy/MM/dd");
