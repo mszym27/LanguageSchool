@@ -84,7 +84,7 @@
                                 if (@Model.TeacherTimetable[i][j] == null)
                                 {
                                     var existingtime = Model.TeacherExistingTimetable[i][j];
-                                    <td style="font-size: 10px;">
+                                    <td  align="center" style="font-size: 10px;">
                                         @Html.HiddenFor(model => model.TeacherTimetable[i][j])
                                         <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
                                         <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
@@ -94,7 +94,7 @@
                                 {
                                     var currentHour = i + 8 + ".15";
                                     var nextHour = (i + 8 + 1) + ".15";
-                                    <td>
+                                    <td style="padding-top: 20px;">
                                         <label class="btn btn-default btn-block">
                                             <label style="display: none">
                                                 @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
