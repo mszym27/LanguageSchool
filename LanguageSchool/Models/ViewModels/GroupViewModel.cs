@@ -23,6 +23,8 @@ namespace LanguageSchool.Models.ViewModels
 
         public List<UserViewModel> Students { get; set; }
 
+        public List<GroupTime> Hours { get; set; }
+
         public GroupViewModel()
         {
         }
@@ -39,6 +41,11 @@ namespace LanguageSchool.Models.ViewModels
 
             foreach (var userGroup in assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Student))
                 Students.Add(new UserViewModel(userGroup.User));
+
+            Hours = new List<GroupTime>();
+
+            foreach (var GroupTime in group.GroupTimes)
+                Hours.Add(GroupTime);
         }
 
         public GroupViewModel(Course course)

@@ -12,10 +12,10 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DaysOfWeek
+    public partial class DayOfWeek
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DaysOfWeek()
+        public DayOfWeek()
         {
             this.GroupTimes = new HashSet<GroupTime>();
         }

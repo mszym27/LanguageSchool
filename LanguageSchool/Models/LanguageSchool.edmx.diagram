@@ -41,7 +41,7 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="LanguageSchoolModel.UserMessage" Width="1.5" PointX="6" PointY="11" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersMessages_Users" />
-        <EntityTypeShape EntityType="LanguageSchoolModel.DaysOfWeek" Width="1.5" PointX="6.125" PointY="4.125" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.DayOfWeek" Width="1.5" PointX="6.125" PointY="4.125" />
         <EntityTypeShape EntityType="LanguageSchoolModel.Holiday" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="LanguageSchoolModel.LanguageProficency" Width="1.5" PointX="1.125" PointY="21" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Courses_LanguageProficencies" />

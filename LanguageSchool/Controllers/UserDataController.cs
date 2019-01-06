@@ -218,7 +218,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel()
                 {
-                    Title = "Konto zostało utworzone pomyślne",
+                    Title = "Konto zostało utworzone pomyślnie",
                     Message = "proszę przekazać użytkownikowi jego login i hasło",
                     AlertType = Consts.Success
                 };

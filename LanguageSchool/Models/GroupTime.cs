@@ -24,7 +24,7 @@ namespace LanguageSchool.Models
         public int EndTime { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual DaysOfWeek DaysOfWeek { get; set; }
+        public virtual DayOfWeek DayOfWeek { get; set; }
         public virtual Group Group { get; set; }
     }
 }

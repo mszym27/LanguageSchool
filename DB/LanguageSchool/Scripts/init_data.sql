@@ -93,7 +93,7 @@ IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 1)
 		,ENName)
 	VALUES 
 		(1
-		,'Poniedziałek'
+		,N'Poniedziałek'
 		,'Monday')
 
 IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 2)
@@ -113,7 +113,7 @@ IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 3)
 		,ENName)
 	VALUES 
 		(3
-		,'Środa'
+		,N'Środa'
 		,'Wednesday')
 
 IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 4)
@@ -133,7 +133,7 @@ IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 5)
 		,ENName)
 	VALUES 
 		(5
-		,'Piątek'
+		,N'Piątek'
 		,'Friday')
 
 IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 6)

@@ -1455,7 +1455,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UsersMessage" EntitySet="UserMessages" />
           </AssociationSet>
-          <EntitySet Name="DaysOfWeeks" EntityType="LanguageSchoolModel.DaysOfWeek" />
+          <EntitySet Name="DayOfWeeks" EntityType="LanguageSchoolModel.DayOfWeek" />
           <EntitySet Name="Holidays" EntityType="LanguageSchoolModel.Holiday" />
           <EntitySet Name="LanguageProficencies" EntityType="LanguageSchoolModel.LanguageProficency" />
           <AssociationSet Name="FK_Courses_LanguageProficencies" Association="LanguageSchoolModel.FK_Courses_LanguageProficencies">
@@ -1469,7 +1469,7 @@
           <EntitySet Name="GroupTimes" EntityType="LanguageSchoolModel.GroupTime" />
           <EntitySet Name="UsersGroups" EntityType="LanguageSchoolModel.UsersGroup" />
           <AssociationSet Name="FK_GroupTimes_DaysOfWeek" Association="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek">
-            <End Role="DaysOfWeek" EntitySet="DaysOfWeeks" />
+            <End Role="DaysOfWeek" EntitySet="DayOfWeeks" />
             <End Role="GroupTime" EntitySet="GroupTimes" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_MessageTypes" Association="LanguageSchoolModel.FK_Messages_MessageTypes">
@@ -1558,7 +1558,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DaysOfWeek">
+        <EntityType Name="DayOfWeek">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1667,7 +1667,7 @@
           <Property Name="StartTime" Type="Int32" Nullable="false" />
           <Property Name="EndTime" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="DaysOfWeek" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="GroupTime" ToRole="DaysOfWeek" />
+          <NavigationProperty Name="DayOfWeek" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="GroupTime" ToRole="DaysOfWeek" />
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="GroupTime" ToRole="Group" />
         </EntityType>
         <EntityType Name="UsersGroup">
@@ -1684,7 +1684,7 @@
           <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_UsersGroups_Users" FromRole="UsersGroup" ToRole="User" />
         </EntityType>
         <Association Name="FK_GroupTimes_DaysOfWeek">
-          <End Type="LanguageSchoolModel.DaysOfWeek" Role="DaysOfWeek" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.DayOfWeek" Role="DaysOfWeek" Multiplicity="1" />
           <End Type="LanguageSchoolModel.GroupTime" Role="GroupTime" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DaysOfWeek">
@@ -2066,8 +2066,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DaysOfWeeks">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.DaysOfWeek">
+          <EntitySetMapping Name="DayOfWeeks">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.DayOfWeek">
               <MappingFragment StoreEntitySet="DaysOfWeek">
                 <ScalarProperty Name="ENName" ColumnName="ENName" />
                 <ScalarProperty Name="PLName" ColumnName="PLName" />

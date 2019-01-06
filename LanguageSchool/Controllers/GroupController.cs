@@ -13,7 +13,7 @@ namespace LanguageSchool.Controllers
 {
     public class GroupController : LanguageSchoolController
     {
-        // GET: Group/Details/5
+        [Route("Group/Details/{id}")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -139,7 +139,14 @@ namespace LanguageSchool.Controllers
 
                 unitOfWork.Save();
 
-                return RedirectToAction("Index", "Home");
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Grupa została utworzona pomyślnie",
+                    Message = "proszę przypisać do niej uczniów",
+                    AlertType = Consts.Success
+                };
+
+                return RedirectToAction("Details", "Group", new { id = group.Id });
             }
         }
 

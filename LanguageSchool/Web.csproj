@@ -239,7 +239,7 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DaysOfWeek.cs">
+    <Compile Include="Models\DayOfWeek.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntryTest.cs">
