@@ -17,12 +17,28 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Users { get; set; }
         public int UserId { get; set; }
 
-        public UserViewModel SelectedUser { get; set; }
+        public UserViewModel Teacher { get; set; }
 
         public List<List<bool?>> TeacherTimetable { get; set; }
 
+        public List<UserViewModel> Students { get; set; }
+
         public GroupViewModel()
         {
+        }
+
+        public GroupViewModel(Group group)
+        {
+            Name = group.Name;
+
+            var assignedUsers = group.UsersGroups.Where(ug => !ug.IsDeleted);
+
+            Teacher = new UserViewModel(assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User);
+
+            Students = new List<UserViewModel>();
+
+            foreach (var userGroup in assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Student))
+                Students.Add(new UserViewModel(userGroup.User));
         }
 
         public GroupViewModel(Course course)
@@ -35,7 +51,7 @@ namespace LanguageSchool.Models.ViewModels
 
         public void FillTimetable(User user, DateTime startingDate)
         {
-            SelectedUser = new UserViewModel(user);
+            Teacher = new UserViewModel(user);
 
             TeacherTimetable = new List<List<bool?>>();
 

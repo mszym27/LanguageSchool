@@ -122,7 +122,7 @@
                             @group.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
-                            @group.Name
+                            @Html.ActionLink(group.Name, "Details", "Group", new { id = group.Id }, null)
                         </td>
                         <td>
                             @teacher.UserData.FirstOrDefault().Name @teacher.UserData.FirstOrDefault().Surname (@teacher.Login)

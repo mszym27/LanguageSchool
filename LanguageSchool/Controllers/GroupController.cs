@@ -13,20 +13,25 @@ namespace LanguageSchool.Controllers
 {
     public class GroupController : LanguageSchoolController
     {
-        //// GET: Group/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Group group = db.Groups.Find(id);
-        //    if (group == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(group);
-        //}
+        // GET: Group/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var group = unitOfWork.GroupRepository.GetById(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var groupViewModel = new GroupViewModel(group);
+
+            return View(groupViewModel);
+        }
 
         [HttpGet]
         [Route("Group/Create/{id}")]
@@ -69,7 +74,7 @@ namespace LanguageSchool.Controllers
                 group.UsersGroups.Add(new UsersGroup
                 {
                     CreationDate = now,
-                    UserId = groupViewModel.SelectedUser.Id
+                    UserId = groupViewModel.Teacher.Id
                 });
 
                 var groupTimes = new List<GroupTime>();
