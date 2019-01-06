@@ -32,7 +32,7 @@
                         <strong>Rola</strong>
                     </div>
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker", @onchange = "RoleChanged()" })
+                        @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control", @id = "rolePicker" @*, @onchange = "RoleChanged()"*@ })
                     </div>
                 </div>
             }

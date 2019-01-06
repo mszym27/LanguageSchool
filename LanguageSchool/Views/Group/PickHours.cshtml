@@ -14,36 +14,61 @@
     @Html.HiddenFor(model => model.EndDate)
 
     @Html.AntiForgeryToken()
-        <div class="row thumbnail">
-            <div class="form-group">
-                <div class="control-label col-md-2">
-                    <strong>Nazwa</strong>
-                </div>
-                <div class="col-md-3">
-                    @Html.DisplayFor(model => model.Name)
+
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-2">
+            <input type="submit" value="Utwórz" class="btn btn-block btn-default" />
+        </div>
+    </div>
+        <div class="row form-horizontal thumbnail col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Nazwa</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.Name)
+                    </div>
                 </div>
 
-                <div class="control-label col-md-2">
-                    <strong>Prowadzący</strong>
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Prowadzący</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.Teacher.Fullname)
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    @Html.DisplayFor(model => model.Teacher.Fullname)
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Data rozpoczęcia</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.StartDate)
+                    </div>
                 </div>
 
-                <div class="col-md-2">
-                    <input type="submit" value="Utwórz" class="btn btn-default" />
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Data zakończenia</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.EndDate)
+                    </div>
                 </div>
             </div>
         </div>
 
         <p />
 
-        <div class="row thumbnail">
+        <div class="row thumbnail col-md-12">
             <div class="form-group">
-                <div class="control-label col-md-3">
+                <div class="control-label col-md-4">
                     <strong>Liczba godzin dla kursu</strong>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     @Html.DisplayFor(model => model.CourseNumberOfHours)
                 </div>
             </div>
@@ -51,7 +76,7 @@
 
         <p/>
 
-        <div class="row thumbnail">
+        <div class="row thumbnail col-md-12">
             <div class="btn-group-toggle" data-toggle="buttons">
                 <table class="table table-bordered">
                     <tr>

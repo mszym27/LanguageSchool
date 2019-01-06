@@ -61,7 +61,7 @@ namespace LanguageSchool.Models.ViewModels
             CourseId = course.Id;
             CourseNumberOfHours = course.NumberOfHours;
             StartDate = course.StartDate;
-            StartDate = course.EndDate;
+            EndDate = course.EndDate;
 
             Users = PopulateList.GetAllTeachers();
         }

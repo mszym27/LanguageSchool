@@ -58,9 +58,13 @@
                 <strong>Aktywny</strong>
             </div>
             <div class="col-md-4">
-                <div class="checkbox">
-                    @Html.DisplayFor(model => model.IsActive)
-                </div>
+                @{
+                    string active = "nie";
+
+                    if (Model.IsActive) { active = "tak"; }
+                }
+
+                @active
             </div>
         </div>
 
