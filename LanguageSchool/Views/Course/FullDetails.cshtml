@@ -6,6 +6,29 @@
 }
 
 <div class="container">
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-4">
+            <div class="col-md-4">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Edytuj</button>
+            </div>
+            <div class="col-md-4">
+                @{
+                    var activateButtonValue = "Aktywuj";
+
+                    if (@Model.IsActive)
+                    {
+                        activateButtonValue = "Dezaktywuj";
+                    }
+                }
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "Course")'">@activateButtonValue</button>
+            </div>
+
+            <div class="col-md-4">
+                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Usuń</button>
+            </div>
+        </div>
+    </div>
+
     <div class="row thumbnail col-md-12">
         <div class="row form-group">
             <div class="control-label col-md-2">
@@ -67,10 +90,11 @@
                 @Html.DisplayFor(model => model.Description)
             </div>
         </div>
-
-        <div class="row form-group">
-            <div class="col-md-offset-2 col-md-4">
-                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Edytuj</button>
+    </div>
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-2">
+            <div class="col-md-12">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Group")'">Dodaj grupę</button>
             </div>
         </div>
     </div>
@@ -108,17 +132,4 @@
             </table>
         </div>
     }
-    
-    <p />
-
-    <div class="row col-md-12">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("List", "Course")'">Lista</button>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Group")'">Dodaj grupę</button>
-        </div>
-    </div>
 </div>
