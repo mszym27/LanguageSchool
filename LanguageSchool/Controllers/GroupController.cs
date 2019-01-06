@@ -114,6 +114,12 @@ namespace LanguageSchool.Controllers
                                 }
                             }
                         }
+                        else if (groupTime != null)
+                        {
+                            groupTimes.Add(groupTime);
+
+                            groupTime = null;
+                        }
                     }
                 }
 
