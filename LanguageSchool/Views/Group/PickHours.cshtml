@@ -83,10 +83,11 @@
                             {
                                 if (@Model.TeacherTimetable[i][j] == null)
                                 {
-                                    <td>
+                                    var existingtime = Model.TeacherExistingTimetable[i][j];
+                                    <td style="font-size: 10px;">
                                         @Html.HiddenFor(model => model.TeacherTimetable[i][j])
-
-                                        @Model.TeacherExistingTimetable[i][j]
+                                        <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
+                                        <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
                                     </td>
                                 }
                                 else

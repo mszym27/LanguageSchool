@@ -20,7 +20,7 @@ namespace LanguageSchool.Models.ViewModels
         public UserViewModel Teacher { get; set; }
 
         public List<List<bool?>> TeacherTimetable { get; set; }
-        public List<List<string>> TeacherExistingTimetable { get; set; }
+        public List<List<GroupTimeViewModel>> TeacherExistingTimetable { get; set; }
 
         public List<UserViewModel> Students { get; set; }
 
@@ -62,7 +62,7 @@ namespace LanguageSchool.Models.ViewModels
             Teacher = new UserViewModel(user);
 
             TeacherTimetable = new List<List<bool?>>();
-            TeacherExistingTimetable = new List<List<string>>();
+            TeacherExistingTimetable = new List<List<GroupTimeViewModel>>();
 
             var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.Course.EndDate > startingDate).ToList();
 
@@ -80,7 +80,7 @@ namespace LanguageSchool.Models.ViewModels
             for (int i = 0; i < 12; i++) // hours
             {
                 TeacherTimetable.Add(new List<bool?>(7));
-                TeacherExistingTimetable.Add(new List<string>(7));
+                TeacherExistingTimetable.Add(new List<GroupTimeViewModel>(7));
 
                 for (int j = 0; j < 7; j++) // days
                 {
@@ -89,12 +89,8 @@ namespace LanguageSchool.Models.ViewModels
                     if (existingTime != null)
                     {
                         TeacherTimetable[i].Add(null);
-                        var existingGroup = existingTime.Group;
-                        TeacherExistingTimetable[i].Add(
-                            existingGroup.Name + "\n" +
-                            "(" + existingGroup.Course.Name + ") " + "\n" + 
-                            existingGroup.Course.StartDate.ToString("yyyy/MM/dd") + " - " + existingGroup.Course.EndDate.ToString("yyyy/MM/dd")
-                        );
+                        var GroupTimeViewModel = existingTime.Group;
+                        TeacherExistingTimetable[i].Add(new GroupTimeViewModel(GroupTimeViewModel));
                     }
                     else
                     {
