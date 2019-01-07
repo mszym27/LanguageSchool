@@ -40,6 +40,8 @@ namespace LanguageSchool.Models.ViewModels
         public GroupViewModel(Group group)
         {
             Name = group.Name;
+            StartDate = group.StartDate;
+            EndDate = group.EndDate;
 
             var assignedUsers = group.UsersGroups.Where(ug => !ug.IsDeleted);
 
@@ -66,14 +68,19 @@ namespace LanguageSchool.Models.ViewModels
             Users = PopulateList.GetAllTeachers();
         }
 
-        public void FillTimetable(User user, DateTime startingDate)
+        public void FillTimetable(User user)
         {
             Teacher = new UserViewModel(user);
 
             TeacherTimetable = new List<List<bool?>>();
             TeacherExistingTimetable = new List<List<GroupTimeViewModel>>();
 
-            var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.Course.EndDate > startingDate).ToList();
+            var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && (
+                (ug.Group.StartDate <= StartDate && StartDate <= ug.Group.EndDate) ||
+                (ug.Group.StartDate <= EndDate && EndDate <= ug.Group.EndDate) ||
+                (StartDate <= ug.Group.StartDate && ug.Group.StartDate <= EndDate) ||
+                (StartDate <= ug.Group.EndDate && ug.Group.EndDate <= EndDate)
+            )).ToList();
 
             List<GroupTime> groupTimes = new List<GroupTime>();
 
@@ -93,13 +100,13 @@ namespace LanguageSchool.Models.ViewModels
 
                 for (int j = 0; j < 7; j++) // days
                 {
-                    var existingTime = groupTimes.Where(gt => gt.DayOfWeekId == (j + 1) && gt.EndTime >= (i + 8) && gt.StartTime <= (i + 8)).FirstOrDefault();
+                    var existingTime = groupTimes.Where(gt => gt.DayOfWeekId == (j + 1) && (gt.EndTime >= (i + 8) || gt.StartTime <= (i + 8))).FirstOrDefault();
 
                     if (existingTime != null)
                     {
                         TeacherTimetable[i].Add(null);
-                        var GroupTimeViewModel = existingTime.Group;
-                        TeacherExistingTimetable[i].Add(new GroupTimeViewModel(GroupTimeViewModel));
+                        var group = existingTime.Group;
+                        TeacherExistingTimetable[i].Add(new GroupTimeViewModel(group));
                     }
                     else
                     {

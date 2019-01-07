@@ -54,9 +54,7 @@ namespace LanguageSchool.Controllers
 
             if (groupViewModel.TeacherTimetable == null)
             {
-                var startDate = unitOfWork.CourseRepository.GetById(groupViewModel.CourseId).StartDate;
-
-                groupViewModel.FillTimetable(selectedTeacher, startDate);
+                groupViewModel.FillTimetable(selectedTeacher);
 
                 return View("PickHours", groupViewModel);
             }
@@ -67,6 +65,8 @@ namespace LanguageSchool.Controllers
                 var group = new Group {
                     CourseId = groupViewModel.CourseId,
                     Name = groupViewModel.Name,
+                    StartDate = groupViewModel.StartDate,
+                    EndDate = groupViewModel.EndDate,
                     CreationDate = now,
                     IsActive = true
                 };

@@ -21,8 +21,8 @@ namespace LanguageSchool.Models.ViewModels
 
             GroupName = group.Name;
             CourseName = group.Course.Name;
-            StartDate = group.Course.StartDate.ToString("yyyy/MM/dd");
-            EndDate = group.Course.EndDate.ToString("yyyy/MM/dd");
+            StartDate = group.StartDate.ToString("yyyy/MM/dd");
+            EndDate = group.EndDate.ToString("yyyy/MM/dd");
         }
     }
 }

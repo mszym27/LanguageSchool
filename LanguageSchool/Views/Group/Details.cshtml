@@ -17,23 +17,45 @@
         </div>
     </div>
     <div class="row thumbnail col-md-12">
-        <div class="col-md-3">
-            <label>
-                Nazwa
-            </label>
-        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Nazwa
+                </label>
+            </div>
 
-        <div class="col-md-3">
-            @Html.DisplayFor(model => model.Name)
-        </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Name)
+            </div>
 
-        <div class="col-md-3">
-            <label>
-                Prowadzący
-            </label>
+            <div class="col-md-3">
+                <label>
+                    Prowadzący
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Teacher.Fullname)
+            </div>
         </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(model => model.Teacher.Fullname)
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Data rozpoczęcia
+                </label>
+            </div>
+
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.StartDate)
+            </div>
+
+            <div class="col-md-3">
+                <label>
+                    Data zakończenia
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.EndDate)
+            </div>
         </div>
     </div>
     <div class="row thumbnail col-md-12">
