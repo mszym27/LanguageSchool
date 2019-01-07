@@ -20,154 +20,152 @@
             <input type="submit" value="Utwórz" class="btn btn-block btn-default" />
         </div>
     </div>
-        <div class="row form-horizontal thumbnail col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Nazwa</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.Name)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Prowadzący</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.Teacher.Fullname)
-                    </div>
-                </div>
+    <div class="row thumbnail col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Nazwa
+                </label>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Data rozpoczęcia</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.StartDate)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Data zakończenia</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.EndDate)
-                    </div>
-                </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Data rozpoczęcia
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.StartDate)
             </div>
         </div>
-
-        <p />
-
-        <div class="row thumbnail col-md-12">
-            <div class="form-group">
-                <div class="control-label col-md-4">
-                    <strong>Liczba godzin dla kursu</strong>
-                </div>
-                <div class="col-md-8">
-                    @Html.DisplayFor(model => model.CourseNumberOfHours)
-                </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Prowadzący
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Teacher.Fullname)
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Data zakończenia
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.EndDate)
             </div>
         </div>
+    </div>
 
-        <p/>
+    <p />
 
-        <div class="row thumbnail col-md-12">
-            <div class="btn-group-toggle" data-toggle="buttons">
-                <table class="table table-bordered">
+    <div class="row thumbnail col-md-12">
+        <div class="form-group">
+            <div class="control-label col-md-4">
+                <strong>Liczba godzin dla kursu</strong>
+            </div>
+            <div class="col-md-8">
+                @Html.DisplayFor(model => model.CourseNumberOfHours)
+            </div>
+        </div>
+    </div>
+
+    <p/>
+
+    <div class="row thumbnail col-md-12">
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="text-center">
+                        Poniedziałek
+                    </th>
+                    <th class="text-center">
+                        Wtorek
+                    </th>
+                    <th class="text-center">
+                        Środa
+                    </th>
+                    <th class="text-center">
+                        Czwartek
+                    </th>
+                    <th class="text-center">
+                        Piątek
+                    </th>
+                    <th class="text-center">
+                        Sobota
+                    </th>
+                    <th class="text-center">
+                        Niedziela
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < 12; i++)
+            {
                     <tr>
-                        <th class="text-center">
-                            Poniedziałek
-                        </th>
-                        <th class="text-center">
-                            Wtorek
-                        </th>
-                        <th class="text-center">
-                            Środa
-                        </th>
-                        <th class="text-center">
-                            Czwartek
-                        </th>
-                        <th class="text-center">
-                            Piątek
-                        </th>
-                        <th class="text-center">
-                            Sobota
-                        </th>
-                        <th class="text-center">
-                            Niedziela
-                        </th>
-                    </tr>
-
-                    @for (int i = 0; i < 12; i++)
-                {
-                        <tr>
-                            @for (int j = 0; j < 7; j++)
+                        @for (int j = 0; j < 7; j++)
+                        {
+                            if (@Model.TeacherTimetable[i][j] == null)
                             {
-                                if (@Model.TeacherTimetable[i][j] == null)
+                                var existingtime = Model.TeacherExistingTimetable[i][j];
+
+                                var style = "font-size: 10px;";
+
+                                bool show = true;
+
+                                if(i > 0)
                                 {
-                                    var existingtime = Model.TeacherExistingTimetable[i][j];
-
-                                    var style = "font-size: 10px;";
-
-                                    bool show = true;
-
-                                    if(i > 0)
+                                    if(@Model.TeacherTimetable[i - 1][j] == null)
                                     {
-                                        if(@Model.TeacherTimetable[i - 1][j] == null)
+                                        if (Model.TeacherExistingTimetable[i - 1][j].GroupId == existingtime.GroupId)
                                         {
-                                            if (Model.TeacherExistingTimetable[i - 1][j].GroupId == existingtime.GroupId)
-                                            {
-                                                style += "border-top-style: none;";
+                                            style += "border-top-style: none;";
 
-                                                show = false;
-                                            }
+                                            show = false;
                                         }
                                     }
+                                }
 
-                                    if (i < 11)
+                                if (i < 11)
+                                {
+                                    if (@Model.TeacherTimetable[i + 1][j] == null)
                                     {
-                                        if (@Model.TeacherTimetable[i + 1][j] == null)
+                                        if (Model.TeacherExistingTimetable[i + 1][j].GroupId == existingtime.GroupId)
                                         {
-                                            if (Model.TeacherExistingTimetable[i + 1][j].GroupId == existingtime.GroupId)
-                                            {
-                                                style += "border-bottom-style: none;";
-                                            }
+                                            style += "border-bottom-style: none;";
                                         }
                                     }
+                                }
 
-                                    <td  align="center" style="@style">
-                                        @Html.HiddenFor(model => model.TeacherTimetable[i][j])
-                                        @if (show)
-                                        {
-                                            <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
-                                            <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
-                                        }
-                                    </td>
-                                }
-                                else
-                                {
-                                    var currentHour = i + 8 + ".15";
-                                    var nextHour = (i + 8 + 1) + ".15";
-                                    <td style="padding-top: 20px;">
-                                        <label class="btn btn-default btn-block">
-                                            <label style="display: none">
-                                                @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
-                                            </label>
-                                            @currentHour - @nextHour
-                                        </label>
-                                    </td>
-                                }
+                                <td  align="center" style="@style">
+                                    @Html.HiddenFor(model => model.TeacherTimetable[i][j])
+                                    @if (show)
+                                    {
+                                        <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
+                                        <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
+                                    }
+                                </td>
                             }
-                        </tr>
-                    }
-                </table>
-            </div>
+                            else
+                            {
+                                var currentHour = i + 8 + ".15";
+                                var nextHour = (i + 8 + 1) + ".15";
+                                <td style="padding-top: 20px;">
+                                    <label class="btn btn-default btn-block">
+                                        <label style="display: none">
+                                            @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
+                                        </label>
+                                        @currentHour - @nextHour
+                                    </label>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
         </div>
+    </div>
 }
 
 @section Scripts {
