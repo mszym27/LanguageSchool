@@ -83,12 +83,11 @@
     </div>
     <div class="row col-md-12">
         <div class="thumbnail col-md-3">
-            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddUser", "Group")'">Dodaj nowego ucznia</button>
+            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddUsers", "Group")'">Zapisz nowych uczniów</button>
         </div>
     </div>
     @if (Model.Students.Any())
     {
-        <p />
         <div class="row thumbnail col-md-12">
             <table class="table table-striped table-bordered">
                 <tr>

@@ -34,6 +34,51 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
+        [Route("Group/AddUsers/{id}")]
+        public ActionResult AddUsers(int id)
+        {
+            var group = unitOfWork.GroupRepository.GetById(id);
+
+            var usersGroupViewModel = new UsersGroupViewModel(group);
+
+            var students = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Student);
+
+            foreach(var student in students)
+            {
+                if (!student.UsersGroups.Where(ug => !ug.IsDeleted && (
+                    (ug.Group.StartDate <= group.StartDate && group.StartDate <= ug.Group.EndDate) ||
+                    (ug.Group.StartDate <= group.EndDate && group.EndDate <= ug.Group.EndDate) ||
+                    (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
+                    (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
+                )).Any())
+                    usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
+            }
+
+            return View(usersGroupViewModel);
+        }
+
+        [HttpPost]
+        [Route("Group/AddUsers/{id}")]
+        public ActionResult AddUsers(UsersGroupViewModel usersGroupViewModel)
+        {
+            var group = unitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
+
+            foreach (var userViewModel in usersGroupViewModel.usersAvaible)
+            {
+                var user = unitOfWork.UserRepository.GetById(userViewModel.Id);
+
+                group.UsersGroups.Add(new UsersGroup(){
+                    CreationDate = DateTime.Now,
+                    User = user
+                });
+            }
+
+            unitOfWork.Save();
+
+            return RedirectToAction("Details", "Group", new { id = usersGroupViewModel.GroupId });
+        }
+
+        [HttpGet]
         [Route("Group/Create/{id}")]
         public ActionResult Create(int id)
         {

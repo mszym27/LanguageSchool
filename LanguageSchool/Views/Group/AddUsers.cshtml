@@ -1,0 +1,52 @@
+﻿@model LanguageSchool.Models.ViewModels.UsersGroupViewModel
+
+@{
+    ViewBag.Title = "AddUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.GroupId)
+
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+            </div>
+        </div>
+
+        <div class="row thumbnail col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Zapisz
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < @Model.usersAvaible.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.usersAvaible[i].Id)
+                    <tr>
+                        <td>
+                            @Model.usersAvaible[i].Fullname
+                        </td>
+                        <td>
+                            <label>@Html.EditorFor(model => model.usersAvaible[i].IsMarked)</label>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -356,3 +356,41 @@ UPDATE [Users].[Users] SET [Password] = N'uBmnT9Q+rFZkSOwOBRNFOQ==' WHERE [Login
 UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
 UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
 UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'BL\S_MS_0001'
+
+GO
+
+DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\S_MS_0001')
+
+IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
+	INSERT INTO [ContactInfo].[UserData]
+		([IsDeleted]
+		,[CreationDate]
+		,[DeletionDate]
+		,[UserId]
+		,[Name]
+		,[Surname]
+		,[City]
+		,[Street]
+		,[HouseNumber]
+		,[HomeNumber]
+		,[PublicPhoneNumber]
+		,[PrivatePhoneNumber]
+		,[EmailAdress]
+		,[Comment])
+	VALUES
+		(0
+		,GETDATE()
+		,NULL
+		,@userId
+		,N'Mikołaj'
+		,N'Szumigaj'
+		,NULL
+		,NULL
+		,NULL
+		,NULL
+		,'990-354-123'
+		,NULL
+		,NULL
+		,N'Domyślnie obecny w systemie student')
+
+GO
