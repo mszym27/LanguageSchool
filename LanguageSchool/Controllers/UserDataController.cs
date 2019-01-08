@@ -123,7 +123,7 @@ namespace LanguageSchool.Controllers
 
             var usersGroupViewModel = new UsersGroupViewModel(student);
 
-            var allGroups = unitOfWork.GroupRepository.Get(g => !g.IsDeleted && g.EndDate < DateTime.Now);
+            var allGroups = unitOfWork.GroupRepository.Get(g => !g.IsDeleted && g.EndDate > DateTime.Now);
 
             var userGroupTimes = new List<GroupTime>();
 
@@ -134,12 +134,12 @@ namespace LanguageSchool.Controllers
 
             foreach (var group in allGroups)
             {
-                if (!student.UsersGroups.Where(ug => !ug.IsDeleted && (
+                if (!student.UsersGroups.Where(ug => !(!ug.IsDeleted && (
                     (ug.Group.StartDate <= group.StartDate && group.StartDate <= ug.Group.EndDate) ||
                     (ug.Group.StartDate <= group.EndDate && group.EndDate <= ug.Group.EndDate) ||
                     (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
                     (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
-                )).Any())
+                ))).Any())
                     usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
                 else
                 {
