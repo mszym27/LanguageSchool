@@ -7,8 +7,13 @@
 
 <div class="container">
     <div class="row col-md-12">
-        <div class="thumbnail col-md-3">
-            <button class="btn btn-default btn-block" type="button" onclick="location.href='@Url.Action("Edit", "UserData")'">Edytuj</button>
+        <div class="thumbnail col-md-4">
+            <div class="col-md-6">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddGroups", "User")/@Model.Id'">Dodaj do grup</button>
+            </div>
         </div>
     </div>
     <div class="row thumbnail col-md-12">
@@ -43,99 +48,90 @@
         </div>
     </div>
 
-    <p />
-
     <div class="row thumbnail col-md-12">
-        <dl class="dl-horizontal">
-            <dt>
-                Data utworzenia wpisu
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreationDate)
-            </dd>
-
-            <dt>
-                Imię
-            </dt>
-
-            <dd>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Data utworzenia wpisu</strong>
+            </div>
+            <div class="col-md-4">
+                @Model.CreationDate.ToString("yyyy/MM/dd")
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Imię</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.Name)
-            </dd>
+            </div>
 
-            <dt>
-                Nazwisko
-            </dt>
-
-            <dd>
+            <div class="control-label col-md-2">
+                <strong>Nazwisko</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.Surname)
-            </dd>
-
-            <dt>
-                Miasto
-            </dt>
-
-            <dd>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Miasto</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.City)
-            </dd>
+            </div>
 
-            <dt>
-                Ulica
-            </dt>
-
-            <dd>
+            <div class="control-label col-md-2">
+                <strong>Ulica</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.Street)
-            </dd>
-
-            <dt>
-                Numer domu
-            </dt>
-
-            <dd>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Numer domu</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.HouseNumber)
-            </dd>
+            </div>
 
-            <dt>
-                Numer mieszkania
-            </dt>
-
-            <dd>
+            <div class="control-label col-md-2">
+                <strong>Numer mieszkania</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.HomeNumber)
-            </dd>
-
-            <dt>
-                Publiczny numer telefonu
-            </dt>
-
-            <dd>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Publiczny numer telefonu</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.PublicPhoneNumber)
-            </dd>
+            </div>
 
-            <dt>
-                Prywatny numer telefonu
-            </dt>
-
-            <dd>
+            <div class="control-label col-md-2">
+                <strong>Prywatny numer telefonu</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.PrivatePhoneNumber)
-            </dd>
-
-            <dt>
-                Adres email
-            </dt>
-
-            <dd>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                <strong>Adres email</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.EmailAdress)
-            </dd>
+            </div>
 
-            <dt>
-                Komentarz
-            </dt>
-
-            <dd>
+            <div class="control-label col-md-2">
+                <strong>Komentarz</strong>
+            </div>
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.Comment)
-            </dd>
-
-        </dl>
+            </div>
+        </div>
     </div>
 </div>
 
