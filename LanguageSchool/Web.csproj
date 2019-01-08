@@ -453,6 +453,7 @@
     <Content Include="Views\Course\FullDetails.cshtml" />
     <Content Include="Views\Group\PickHours.cshtml" />
     <Content Include="Views\Group\AddUsers.cshtml" />
+    <Content Include="Views\UserData\AddGroups.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

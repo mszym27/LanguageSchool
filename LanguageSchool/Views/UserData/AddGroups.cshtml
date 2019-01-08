@@ -1,0 +1,88 @@
+﻿@model LanguageSchool.Models.ViewModels.UsersGroupViewModel
+
+@{
+    ViewBag.Title = "AddUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.GroupId)
+
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-3">
+                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+            </div>
+        </div>
+
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <strong>Grupy dostępne</strong>
+            </div>
+        </div>
+
+        <div class="row thumbnail col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Zapisz
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < @Model.GroupsAvaible.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.GroupsAvaible[i].GroupId)
+                    <tr>
+                        <td>
+                            @Model.GroupsAvaible[i].Fullname
+                        </td>
+                        <td>
+                            <label>@Html.EditorFor(model => model.GroupsAvaible[i].IsMarked)</label>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <strong>Grupy niedostępne</strong>
+            </div>
+        </div>
+
+        <div class="row thumbnail col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Zablokowana przez
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < @Model.GroupsNonavaible.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Model.GroupsNonavaible[i].Fullname
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -15,6 +15,19 @@ namespace LanguageSchool.Models.ViewModels
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
+        public string ConflictingDateFullName { get; set; }
+        public bool IsBlocked { get; set; }
+        public int DayOfWeekId { get; set; }
+        public int StartTime { get; set; }
+        public int EndTime { get; set; }
+
+        public GroupTimeViewModel(GroupTime groupTime)
+        {
+            DayOfWeekId = groupTime.DayOfWeekId;
+            StartTime = groupTime.StartTime;
+            EndTime = groupTime.EndTime;
+        }
+
         public GroupTimeViewModel(Group group)
         {
             GroupId = group.Id;

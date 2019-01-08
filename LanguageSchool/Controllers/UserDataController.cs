@@ -110,6 +110,96 @@ namespace LanguageSchool.Controllers
             return View(contactInfoPaged);
         }
 
+        [HttpGet]
+        [Route("UserData/AddGroups/{id}")]
+        public ActionResult AddGroups(int id)
+        {
+            var student = unitOfWork.UserRepository.Get(u => u.UserData.Where(ud => ud.Id == id).Any()).FirstOrDefault();
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+
+            var usersGroupViewModel = new UsersGroupViewModel(student);
+
+            var allGroups = unitOfWork.GroupRepository.Get(g => !g.IsDeleted && g.EndDate < DateTime.Now);
+
+            var userGroupTimes = new List<GroupTime>();
+
+            foreach (var userGroup in student.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.EndDate < DateTime.Now))
+            {
+                userGroupTimes.AddRange(userGroup.Group.GroupTimes);
+            }
+
+            foreach (var group in allGroups)
+            {
+                if (!student.UsersGroups.Where(ug => !ug.IsDeleted && (
+                    (ug.Group.StartDate <= group.StartDate && group.StartDate <= ug.Group.EndDate) ||
+                    (ug.Group.StartDate <= group.EndDate && group.EndDate <= ug.Group.EndDate) ||
+                    (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
+                    (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
+                )).Any())
+                    usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
+                else
+                {
+                    var groupViewModel = new UsersGroupViewModel(group);
+
+                    foreach(var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    {
+                        var hour = new GroupTimeViewModel(groupTime);
+
+                        var conflictingHour = userGroupTimes.Where(ugt => ugt.DayOfWeekId == hour.DayOfWeekId && (
+                            (ugt.StartTime <= hour.StartTime && hour.StartTime <= ugt.EndTime) ||
+                            (ugt.StartTime <= hour.EndTime && hour.EndTime <= ugt.EndTime) ||
+                            (hour.StartTime <= ugt.StartTime && ugt.StartTime <= hour.EndTime) ||
+                            (hour.StartTime <= ugt.EndTime && ugt.EndTime <= hour.EndTime)
+                        )).FirstOrDefault();
+
+                        if(conflictingHour != null)
+                        {
+                            hour.IsBlocked = true;
+                            hour.ConflictingDateFullName =
+                                conflictingHour.Group.Course.Name + "(" +
+                                conflictingHour.Group.Name + ")" +
+                                conflictingHour.DayOfWeek.PLName + " " +
+                                conflictingHour.StartTime + ".15 - " +
+                                conflictingHour.EndTime + ".15 ";
+                        }
+                            
+                        groupViewModel.Hours.Add(hour);
+                    }
+
+                    if(groupViewModel.Hours.Where(h => h.IsBlocked).Any())
+                        usersGroupViewModel.GroupsNonavaible.Add(new UsersGroupViewModel(group));
+                    else
+                        usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
+                } 
+            }
+
+            return View(usersGroupViewModel);
+        }
+
+        [HttpPost]
+        [Route("UserData/AddGroups/{id}")]
+        public ActionResult AddGroups(UsersGroupViewModel usersGroupViewModel)
+        {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //UserData userData = unitOfWork.UserDataRepository.GetById(id);
+
+            //if (userData == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //userData.User.Password = Encryption.Decrypt(userData.User.Password);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: UserData/Details/5
         public ActionResult Details(int? id)
         {
