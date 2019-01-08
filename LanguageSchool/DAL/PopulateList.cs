@@ -20,5 +20,19 @@ namespace LanguageSchool.DAL
 
             return new SelectList(teachersViewModels, "Id", "Fullname");
         }
+
+        public static SelectList GetPageSizes()
+        {
+            List<SelectListItem> pages = Consts.pages.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.ToString(),
+                    Value = a.ToString()
+                };
+            });
+
+            return new SelectList(pages);
+        }
     }
 }

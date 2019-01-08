@@ -127,7 +127,8 @@ namespace LanguageSchool.Controllers
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
                 // Sign In.    
-                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, claimIdenties);
+                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe, ExpiresUtc = DateTime.Now.AddDays(7)
+                }, claimIdenties);
             }
             catch (Exception ex)
             {

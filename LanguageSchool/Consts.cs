@@ -28,6 +28,13 @@ namespace LanguageSchool
             ToAll = 5
         }
 
+        public static List<int> pages = new List<int>()
+        {
+            20,
+            50,
+            100
+        };
+
         public static List<MenuViewModel> menus = (
             new List<MenuViewModel>()
             {
