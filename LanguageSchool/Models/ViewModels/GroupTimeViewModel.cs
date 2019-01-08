@@ -15,6 +15,7 @@ namespace LanguageSchool.Models.ViewModels
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
+        public string DateFullName { get; set; }
         public string ConflictingDateFullName { get; set; }
         public bool IsBlocked { get; set; }
         public int DayOfWeekId { get; set; }
@@ -26,6 +27,8 @@ namespace LanguageSchool.Models.ViewModels
             DayOfWeekId = groupTime.DayOfWeekId;
             StartTime = groupTime.StartTime;
             EndTime = groupTime.EndTime;
+
+            DateFullName = groupTime.DayOfWeek.PLName + " " + groupTime.StartTime + ".15 - " + (groupTime.EndTime + 1) + ".15 ";
         }
 
         public GroupTimeViewModel(Group group)

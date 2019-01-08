@@ -140,12 +140,23 @@ namespace LanguageSchool.Controllers
                     (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
                     (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
                 ))).Any())
-                    usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
+                {
+                    var groupViewModel = new UsersGroupViewModel(group);
+
+                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    {
+                        var hour = new GroupTimeViewModel(groupTime);
+
+                        groupViewModel.Hours.Add(hour);
+                    }
+
+                    usersGroupViewModel.GroupsAvaible.Add(groupViewModel);
+                }
                 else
                 {
                     var groupViewModel = new UsersGroupViewModel(group);
 
-                    foreach(var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
                     {
                         var hour = new GroupTimeViewModel(groupTime);
 
@@ -156,7 +167,7 @@ namespace LanguageSchool.Controllers
                             (hour.StartTime <= ugt.EndTime && ugt.EndTime <= hour.EndTime)
                         )).FirstOrDefault();
 
-                        if(conflictingHour != null)
+                        if (conflictingHour != null)
                         {
                             hour.IsBlocked = true;
                             hour.ConflictingDateFullName =
@@ -164,13 +175,13 @@ namespace LanguageSchool.Controllers
                                 conflictingHour.Group.Name + ")" +
                                 conflictingHour.DayOfWeek.PLName + " " +
                                 conflictingHour.StartTime + ".15 - " +
-                                conflictingHour.EndTime + ".15 ";
+                                (conflictingHour.EndTime + 1) + ".15 ";
                         }
-                            
+
                         groupViewModel.Hours.Add(hour);
                     }
 
-                    if(groupViewModel.Hours.Where(h => h.IsBlocked).Any())
+                    if (groupViewModel.Hours.Where(h => h.IsBlocked).Any())
                         usersGroupViewModel.GroupsNonavaible.Add(new UsersGroupViewModel(group));
                     else
                         usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
