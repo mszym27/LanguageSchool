@@ -42,7 +42,10 @@ namespace LanguageSchool.Models.ViewModels
             usersNonavaible = new List<UserViewModel>();
             Hours = new List<ViewModels.GroupTimeViewModel>();
 
-            Fullname = group.Name + " (" + group.Course.Name + ")";
+            Fullname = group.Name + " (" + 
+                group.Course.Name + ")" + " [" + 
+                group.StartDate.ToString("yyyy/MM/dd") + " - " + 
+                group.EndDate.ToString("yyyy/MM/dd") + "]";
         }
     }
 }

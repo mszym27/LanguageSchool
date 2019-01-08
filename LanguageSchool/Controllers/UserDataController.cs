@@ -125,6 +125,9 @@ namespace LanguageSchool.Controllers
 
             var allGroups = unitOfWork.GroupRepository.Get(g => !g.IsDeleted && g.EndDate > DateTime.Now);
 
+            foreach(var userGroup in student.UsersGroups.Where(ug => !ug.IsDeleted))
+                allGroups = allGroups.Where(g => g.Course.Id != userGroup.Group.Course.Id);
+
             var userGroupTimes = new List<GroupTime>();
 
             foreach (var userGroup in student.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.EndDate < DateTime.Now))
