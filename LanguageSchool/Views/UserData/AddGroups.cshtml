@@ -33,7 +33,8 @@
                     @Html.HiddenFor(model => model.GroupsAvaible[i].GroupId)
                     <tr>
                         <td>
-                            @Model.GroupsAvaible[i].Fullname
+                            <p><strong>@Model.GroupsAvaible[i].Fullname</strong></p>
+                            <p style="color: lightgray;">@Model.GroupsAvaible[i].StartDate - @Model.GroupsAvaible[i].EndDate</p>
                         </td>
                         <td>
                             @foreach(var hour in @Model.GroupsAvaible[i].Hours)
