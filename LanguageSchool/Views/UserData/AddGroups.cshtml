@@ -7,69 +7,55 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.GroupId)
+    @Html.HiddenFor(model => model.UserId)
 
     @Html.AntiForgeryToken()
 
     <div class="container">
-
-        <div class="row col-md-12">
-            <div class="thumbnail col-md-3">
-                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
-            </div>
-        </div>
-
         <div class="row col-md-12">
             <div class="thumbnail col-md-2">
                 <strong>Grupy dostępne</strong>
             </div>
         </div>
-
         <div class="row thumbnail col-md-12">
-            <div class="btn-group-toggle" data-toggle="buttons">
-                <table class="table table-bordered">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Godziny
+                    </th>
+                </tr>
+
+                @for (int i = 0; i < @Model.GroupsAvaible.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.GroupsAvaible[i].GroupId)
                     <tr>
-                        <th>
-                            Nazwa
-                        </th>
-                        <th>
-                            Godziny
-                        </th>
+                        <td>
+                            @Model.GroupsAvaible[i].Fullname
+                        </td>
+                        <td>
+                            @foreach(var hour in @Model.GroupsAvaible[i].Hours)
+                            {
+                                <p>@hour.DateFullName</p>
+                            }
+                        </td>
+                        <td>
+                            <label class="btn btn-default btn-block">
+                                Zapisz
+                                <input class="btn btn-default btn-block" style="display:none" type="submit" name="submit" value="@Model.GroupsAvaible[i].GroupId.ToString()" />
+                            </label>
+                        </td>
                     </tr>
-
-                    @for (int i = 0; i < @Model.GroupsAvaible.Count; i++)
-                    {
-                        @Html.HiddenFor(model => model.GroupsAvaible[i].GroupId)
-                        <tr>
-                            <td>
-                                @Model.GroupsAvaible[i].Fullname
-                            </td>
-                            <td>
-                                @foreach(var hour in @Model.GroupsAvaible[i].Hours)
-                                {
-                                    <p>@hour.DateFullName</p>
-                                }
-                            </td>
-                            <td>
-                                <label class="btn btn-default btn-block">
-                                    <label style="display: none">
-                                        @Html.EditorFor(model => model.GroupsAvaible[i].IsMarked)
-                                    </label>
-                                    Zapisz
-                                </label>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
+                }
+            </table>
         </div>
-
         <div class="row col-md-12">
             <div class="thumbnail col-md-2">
                 <strong>Grupy niedostępne</strong>
             </div>
         </div>
-
         <div class="row thumbnail col-md-12">
             <table class="table table-bordered">
                 <tr>

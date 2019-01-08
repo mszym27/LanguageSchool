@@ -193,20 +193,16 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("UserData/AddGroups/{id}")]
-        public ActionResult AddGroups(UsersGroupViewModel usersGroupViewModel)
+        public ActionResult AddGroups(int id, string submit)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //UserData userData = unitOfWork.UserDataRepository.GetById(id);
+            var student = unitOfWork.UserRepository.Get(u => u.UserData.Where(ud => ud.Id == id).Any()).FirstOrDefault();
 
-            //if (userData == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            student.UsersGroups.Add(new UsersGroup {
+                CreationDate = DateTime.Now,
+                GroupId = Int32.Parse(submit)
+            });
 
-            //userData.User.Password = Encryption.Decrypt(userData.User.Password);
+            unitOfWork.Save();
 
             return RedirectToAction("Index", "Home");
         }
