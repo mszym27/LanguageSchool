@@ -11,10 +11,34 @@ using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
+    [Authorize]
     public class GroupController : LanguageSchoolController
     {
+        [Route("Group/{id}")]
+        public ActionResult Redirect(int id)
+        {
+            var loggedUser = GetLoggedUser();
+
+            switch (loggedUser.Role.Id)
+            {
+                case ((int)Consts.Roles.Teacher): return RedirectToAction("Details", "Group", id);
+                case ((int)Consts.Roles.Student): return RedirectToAction("LessonSubjects", "LessonSubject", id);
+                default: return View();
+            }
+        }
+
         [Route("Group/Details/{id}")]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
+        {
+            var group = unitOfWork.GroupRepository.GetById(id);
+
+            var groupViewModel = new GroupViewModel(group);
+
+            return View(groupViewModel);
+        }
+
+        [Route("Group/FullDetails/{id}")]
+        public ActionResult FullDetails(int? id)
         {
             if (id == null)
             {
@@ -75,7 +99,7 @@ namespace LanguageSchool.Controllers
 
             unitOfWork.Save();
 
-            return RedirectToAction("Details", "Group", new { id = usersGroupViewModel.GroupId });
+            return RedirectToAction("FullDetails", "Group", new { id = usersGroupViewModel.GroupId });
         }
 
         [HttpGet]
@@ -191,7 +215,7 @@ namespace LanguageSchool.Controllers
                     AlertType = Consts.Success
                 };
 
-                return RedirectToAction("Details", "Group", new { id = group.Id });
+                return RedirectToAction("FullDetails", "Group", new { id = group.Id });
             }
         }
 

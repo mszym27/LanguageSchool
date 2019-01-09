@@ -6,6 +6,7 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; set; }
         public string CreationDate { get; set; }
+        public string GroupAddedDate { get; set; }
         public string Fullname { get; set; }
         public string EmailAdress { get; set; }
         public string PublicPhoneNumber { get; set; }
@@ -19,7 +20,6 @@ namespace LanguageSchool.Models.ViewModels
             CreationDate = user.CreationDate.ToString("yyyy/MM/dd");
 
             var userData = user.UserData.OfType<UserData>().FirstOrDefault();
-            Fullname = userData.Name + " " + userData.Surname + " (" + user.Login + ")";
             Fullname = userData.Name + " " + userData.Surname + " (" + user.Login + ")";
             EmailAdress = userData.EmailAdress;
             PublicPhoneNumber = userData.PublicPhoneNumber;

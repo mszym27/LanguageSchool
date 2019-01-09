@@ -448,7 +448,7 @@
     <Content Include="Views\Course\TempStudent.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Delete.cshtml" />
-    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\FullDetails.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Course\FullDetails.cshtml" />
@@ -460,7 +460,8 @@
     <Content Include="Views\LessonSubject\Delete.cshtml" />
     <Content Include="Views\LessonSubject\Details.cshtml" />
     <Content Include="Views\LessonSubject\Edit.cshtml" />
-    <Content Include="Views\LessonSubject\Index.cshtml" />
+    <Content Include="Views\LessonSubject\LessonSubjects.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

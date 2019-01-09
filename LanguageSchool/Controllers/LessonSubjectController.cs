@@ -14,10 +14,8 @@ namespace LanguageSchool.Controllers
     [Authorize]
     public class LessonSubjectController : LanguageSchoolController
     {
-        // GET: LessonSubject
-
         [Route("LessonSubjects/{id}")]
-        public ActionResult Index(int id)
+        public ActionResult LessonSubjects(int id)
         {
             var group = unitOfWork.GroupRepository.GetById(id);
 
