@@ -33,7 +33,7 @@ namespace LanguageSchool.Controllers
         [Route("Material/Upload/lessonSubjectId")]
         public ActionResult Upload(int lessonSubjectId)
         {
-            return View();
+            return View(new MaterialViewModel() { LessonSubjectId = lessonSubjectId });
         }
 
         [Route("Material/Upload/CourseId")]
