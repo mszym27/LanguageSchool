@@ -59,8 +59,26 @@
                     }
                     else
                     {
-                        <td>
-                            @current.Group.Course.Name + " (" + current.Group.Name + ")"
+                        var style = "font-size: 10px;";
+                        var show = true;
+
+                        if ((i + 8) > current.StartTime)
+                        {
+                            style += "border-top-style: none;";
+                            show = false;
+                        }
+
+                        if (current.EndTime > (i + 8))
+                        {
+                            style += "border-bottom-style: none;";
+                        }
+
+                        <td align="center" style="@style">
+                            @if (show)
+                            {
+                                <p><strong>@current.Group.Course.Name</strong></p>
+                                <p style="color: lightgray;">@current.Group.Name</p>
+                            }
                         </td>
                     }
                 }
