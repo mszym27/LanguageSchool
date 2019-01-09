@@ -110,12 +110,14 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
+        [Route("Group/PickHours/{id}")]
         public ActionResult PickHours(GroupViewModel groupViewModel)
         {
             return View(groupViewModel);
         }
 
         [HttpPost]
+        [Route("Group/PickHours/{id}")]
         [Route("Group/Create/{id}")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {

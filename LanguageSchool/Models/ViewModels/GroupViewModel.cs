@@ -60,7 +60,8 @@ namespace LanguageSchool.Models.ViewModels
             foreach (var GroupTime in group.GroupTimes)
                 Hours.Add(GroupTime);
 
-            LessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted && ls.IsActive).OrderByDescending(ls => ls.CreationDate).ToList();
+            if(group.LessonSubjects != null)
+                LessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted && ls.IsActive).OrderByDescending(ls => ls.CreationDate).ToList();
         }
 
         public GroupViewModel(Course course)

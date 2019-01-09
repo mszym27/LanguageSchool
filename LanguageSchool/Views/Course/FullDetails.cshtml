@@ -126,7 +126,7 @@
                             @group.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
-                            @Html.ActionLink(group.Name, "Details", "Group", new { id = group.Id }, null)
+                            @Html.ActionLink(group.Name, "FullDetails", "Group", new { id = group.Id }, null)
                         </td>
                         <td>
                             @teacher.UserData.FirstOrDefault().Name @teacher.UserData.FirstOrDefault().Surname (@teacher.Login)

@@ -28,10 +28,10 @@
             {
                 <tr>
                     <td>
-                        @lessonSubject.CreationDate
+                        @lessonSubject.CreationDate.ToString("yyy/MM/dd")
                     </td>
                     <td>
-                        @lessonSubject.Name
+                        @Html.ActionLink(lessonSubject.Name, "Index", "Material", new { CourseId = lessonSubject.CourseId }, null)
                     </td>
                     <td>
                         @lessonSubject.Description

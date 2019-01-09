@@ -15,10 +15,10 @@ namespace LanguageSchool.Controllers
     public class MaterialController : LanguageSchoolController
     {
         // GET: Material
-        [Route("Material/Index/CourseId")]
-        public ActionResult Index(int CourseId)
+        [Route("Material/Index/{id}")]
+        public ActionResult Index(int id)
         {
-            var materials = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.LessonSubject.CourseId == CourseId);
+            var materials = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.LessonSubjectId == id);
             return View(materials.ToList());
         }
 
