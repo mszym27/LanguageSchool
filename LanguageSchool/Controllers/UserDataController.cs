@@ -174,8 +174,8 @@ namespace LanguageSchool.Controllers
                         {
                             hour.IsBlocked = true;
                             hour.ConflictingDateFullName =
-                                conflictingHour.Group.Course.Name + "(" +
-                                conflictingHour.Group.Name + ")" +
+                                conflictingHour.Group.Course.Name + " (" +
+                                conflictingHour.Group.Name + ") " +
                                 conflictingHour.DayOfWeek.PLName + " " +
                                 conflictingHour.StartTime + ".15 - " +
                                 (conflictingHour.EndTime + 1) + ".15 ";
