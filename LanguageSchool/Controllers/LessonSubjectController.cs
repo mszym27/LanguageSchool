@@ -24,6 +24,31 @@ namespace LanguageSchool.Controllers
             return View(groupViewModel);
         }
 
+        [HttpPost]
+        public ActionResult Create()
+        {
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
+            return View();
+        }
+
+        // POST: LessonSubject/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,CourseId,Name,Description,IsActive")] LessonSubject lessonSubject)
+        {
+            if (ModelState.IsValid)
+            {
+                db.LessonSubjects.Add(lessonSubject);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", lessonSubject.CourseId);
+            return View(lessonSubject);
+        }
+
         //// GET: LessonSubject/Details/5
         //public ActionResult Details(int? id)
         //{
@@ -36,31 +61,6 @@ namespace LanguageSchool.Controllers
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(lessonSubject);
-        //}
-
-        //// GET: LessonSubject/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
-        //    return View();
-        //}
-
-        //// POST: LessonSubject/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,CourseId,Name,Description,IsActive")] LessonSubject lessonSubject)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.LessonSubjects.Add(lessonSubject);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", lessonSubject.CourseId);
         //    return View(lessonSubject);
         //}
 

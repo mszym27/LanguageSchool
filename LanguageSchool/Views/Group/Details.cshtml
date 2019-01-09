@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row col-md-12">
         <div class="thumbnail col-md-4">
-            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "LessonSubject")'">Dodaj nowy temat</button>
+            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "LessonSubject", new { id = Model.GroupId})'">Dodaj nowy temat</button>
         </div>
     </div>
     <div class="row thumbnail col-md-12">
@@ -20,6 +20,9 @@
                 <th>
                     Nazwa
                 </th>
+                <th>
+                    Opis
+                </th>
             </tr>
             @foreach (var lessonSubject in Model.LessonSubjects)
             {
@@ -29,6 +32,9 @@
                     </td>
                     <td>
                         @lessonSubject.Name
+                    </td>
+                    <td>
+                        @lessonSubject.Description
                     </td>
                 </tr>
             }

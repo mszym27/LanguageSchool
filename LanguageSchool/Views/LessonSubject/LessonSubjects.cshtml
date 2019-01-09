@@ -20,6 +20,9 @@
                 <th>
                     Nazwa
                 </th>
+                <th>
+                    Opis
+                </th>
             </tr>
             @foreach (var lessonSubject in Model.LessonSubjects)
             {
@@ -29,6 +32,9 @@
                     </td>
                     <td>
                         @lessonSubject.Name
+                    </td>
+                    <td>
+                        @lessonSubject.Description
                     </td>
                 </tr>
             }
