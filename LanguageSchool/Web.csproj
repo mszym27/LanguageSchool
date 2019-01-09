@@ -454,6 +454,7 @@
     <Content Include="Views\Group\PickHours.cshtml" />
     <Content Include="Views\Group\AddUsers.cshtml" />
     <Content Include="Views\UserData\AddGroups.cshtml" />
+    <Content Include="Views\User\TimeTable.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

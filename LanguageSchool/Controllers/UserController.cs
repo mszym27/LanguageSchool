@@ -13,12 +13,12 @@ namespace LanguageSchool.Controllers
     [Authorize]
     public class UserController : LanguageSchoolController
     {
-        //// GET: User
-        //public ActionResult Index()
-        //{
-        //    var users = db.Users.Include(u => u.Role);
-        //    return View(users.ToList());
-        //}
+        public ActionResult TimeTable()
+        {
+            var loggedUser = GetLoggedUser();
+
+            return View();
+        }
 
         // GET: User/Details/5
         public ActionResult Details(int? id)

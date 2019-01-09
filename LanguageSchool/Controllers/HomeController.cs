@@ -28,8 +28,8 @@ namespace LanguageSchool.Controllers
                 {
                     case ((int) Consts.Roles.Admin): return RedirectToAction("FullList", "Course");
                     case ((int) Consts.Roles.Secretary): return RedirectToAction("List", "Course");
-                    //case ("Teacher"): return RedirectToAction("Timetable", "Report");
-                    //case ("Student"): return RedirectToAction("Timetable", "Report");
+                    case ((int)Consts.Roles.Teacher): return RedirectToAction("Timetable", "User");
+                    case ((int)Consts.Roles.Student): return RedirectToAction("Timetable", "User");
                     default: return View();
                 }
             }
