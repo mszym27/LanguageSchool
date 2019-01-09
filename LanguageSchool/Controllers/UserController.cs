@@ -23,16 +23,31 @@ namespace LanguageSchool.Controllers
 
             var thisWeekUserGroups = loggedUser.UsersGroups.Where(ug => !ug.IsDeleted && !(ug.Group.EndDate < startOfWeek) && !(ug.Group.StartDate > endOfWeek ));
 
-            var model = new List<GroupTime>();
+            var temp = new List<GroupTime>();
 
             foreach (var userGroup in thisWeekUserGroups)
-                model.AddRange(userGroup.Group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted));
+                temp.AddRange(userGroup.Group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted));
 
-            int i = 0, j = 0;
+            var model = new List<List<Group>>();
 
-            GroupTime current = model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i) && !(gt.StartTime > i)).FirstOrDefault();
+            for (int i = 0; i < 12; i++)
+            {
+                model.Add(new List<Group>(7));
 
-            //var s = current.Group.Course.Name + " (" + current.Group.Name + ")";
+                for (int j = 0; j < 7; j++)
+                {
+                    var current = temp.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i) && !(gt.StartTime > i)).FirstOrDefault();
+
+                    if (current != null)
+                    {
+                        model[i].Add(current.Group);
+                    }
+                    else
+                    {
+                        model[i].Add(null);
+                    }
+                }
+            }
 
             return View(model);
         }

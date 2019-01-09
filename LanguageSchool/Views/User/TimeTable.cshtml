@@ -1,15 +1,6 @@
-﻿@using System;
-@using System.Collections.Generic;
-@using System.Data;
-@using System.Data.Entity;
-@using System.Linq;
-@using System.Net;
-@using System.Web;
-@using System.Web.Mvc;
-@using LanguageSchool.Models;
-@using LanguageSchool.Models.ViewModels;
+﻿@using LanguageSchool.Models;
 
-@model List<GroupTime>
+@model List<List<Group>>
 
 @{
     ViewBag.Title = "Create";
@@ -52,33 +43,21 @@
                 <td>@currentHour - @nextHour</td>
                 @for (int j = 0; j < 7; j++)
                 {
-                    GroupTime current = null; @*@Model.Where(gt => (gt.DayOfWeekId == (j + 1))).FirstOrDefault();*@
-                    if (current == null)
+                    string shown = null;
+                    Group currentGroup = Model[i][j];
+                    if (currentGroup != null)
                     {
-                        <td></td>
+                        shown = currentGroup.Course.Name + " (" + currentGroup.Name + ")";
                     }
-                    else
-                    {
-                        <td>
-                            @current.Group.Course.Name + " (" + current.Group.Name + ")"
-                        </td>
-                    }
+                    <td>
+                        @shown
+                    </td>
                 }
             </tr>
         }
         </table>
     </div>
 </div>
-
-<style type="text/css">
-    td {
-        width: 100px;
-    }
-
-    th {
-        width: 100px;
-    }
-</style>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
