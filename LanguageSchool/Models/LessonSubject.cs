@@ -31,6 +31,7 @@ namespace LanguageSchool.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<int> GroupId { get; set; }
     
         public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,5 +42,6 @@ namespace LanguageSchool.Models
         public virtual ICollection<OpenQuestion> OpenQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestsLessonSubject> TestsLessonSubjects { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

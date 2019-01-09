@@ -171,6 +171,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="4000" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="GroupId" Type="int" />
         </EntityType>
         <EntityType Name="Materials">
           <Key>
@@ -449,6 +450,18 @@
             </Principal>
             <Dependent Role="LessonSubjects">
               <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LessonSubjects_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonSubjects">
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -793,6 +806,10 @@
             <End Role="Courses" EntitySet="Courses" />
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
           </AssociationSet>
+          <AssociationSet Name="FK_LessonSubjects_Groups" Association="Self.FK_LessonSubjects_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
+          </AssociationSet>
           <AssociationSet Name="FK_Materials_LessonSubjects" Association="Self.FK_Materials_LessonSubjects">
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
             <End Role="Materials" EntitySet="Materials" />
@@ -978,6 +995,8 @@
           <NavigationProperty Name="Materials" Relationship="Self.FK_Materials_LessonSubjects" FromRole="LessonSubjects" ToRole="Materials" />
           <NavigationProperty Name="OpenQuestions" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="OpenQuestions" />
           <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_LessonSubjects" FromRole="LessonSubjects" ToRole="TestsLessonSubjects" />
+          <Property Name="GroupId" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_LessonSubjects_Groups" FromRole="LessonSubject" ToRole="Group" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -1533,6 +1552,10 @@
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_LessonSubjects_Groups" Association="LanguageSchoolModel.FK_LessonSubjects_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="LessonSubject" EntitySet="LessonSubjects" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
           <Key>
@@ -1657,6 +1680,7 @@
           <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Groups" FromRole="Group" ToRole="Message" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="LessonSubjects" Relationship="LanguageSchoolModel.FK_LessonSubjects_Groups" FromRole="Group" ToRole="LessonSubject" />
         </EntityType>
         <EntityType Name="GroupTime">
           <Key>
@@ -1831,6 +1855,18 @@
           <Property Type="Int32" Name="IsContactRequest" Nullable="false" />
           <Property Type="Int32" Name="TotalRowCount" Nullable="true" />
         </ComplexType>
+        <Association Name="FK_LessonSubjects_Groups">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.LessonSubject" Role="LessonSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonSubject">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1911,6 +1947,7 @@
           <EntitySetMapping Name="LessonSubjects">
             <EntityTypeMapping TypeName="LanguageSchoolModel.LessonSubject">
               <MappingFragment StoreEntitySet="LessonSubjects">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

@@ -20,6 +20,7 @@ namespace LanguageSchool.Models
             this.GroupTimes = new HashSet<GroupTime>();
             this.UsersGroups = new HashSet<UsersGroup>();
             this.Messages = new HashSet<Message>();
+            this.LessonSubjects = new HashSet<LessonSubject>();
         }
     
         public int Id { get; set; }
@@ -39,5 +40,7 @@ namespace LanguageSchool.Models
         public virtual ICollection<UsersGroup> UsersGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LessonSubject> LessonSubjects { get; set; }
     }
 }

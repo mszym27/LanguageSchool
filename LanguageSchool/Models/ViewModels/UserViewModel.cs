@@ -7,6 +7,8 @@ namespace LanguageSchool.Models.ViewModels
         public int Id { get; set; }
         public string CreationDate { get; set; }
         public string Fullname { get; set; }
+        public string EmailAdress { get; set; }
+        public string PublicPhoneNumber { get; set; }
         public bool IsMarked { get; set; }
 
         public UserViewModel() { }
@@ -18,6 +20,9 @@ namespace LanguageSchool.Models.ViewModels
 
             var userData = user.UserData.OfType<UserData>().FirstOrDefault();
             Fullname = userData.Name + " " + userData.Surname + " (" + user.Login + ")";
+            Fullname = userData.Name + " " + userData.Surname + " (" + user.Login + ")";
+            EmailAdress = userData.EmailAdress;
+            PublicPhoneNumber = userData.PublicPhoneNumber;
         }
 
         //public UserViewModel(User user)

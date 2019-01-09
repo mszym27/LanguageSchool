@@ -30,6 +30,7 @@ namespace LanguageSchool.Models.ViewModels
         public List<List<GroupTimeViewModel>> TeacherExistingTimetable { get; set; }
 
         public List<UserViewModel> Students { get; set; }
+        public List<LessonSubject> LessonSubjects { get; set; }
 
         public List<GroupTime> Hours { get; set; }
 
@@ -56,6 +57,8 @@ namespace LanguageSchool.Models.ViewModels
 
             foreach (var GroupTime in group.GroupTimes)
                 Hours.Add(GroupTime);
+
+            LessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted && ls.IsActive).OrderByDescending(ls => ls.CreationDate).ToList();
         }
 
         public GroupViewModel(Course course)
