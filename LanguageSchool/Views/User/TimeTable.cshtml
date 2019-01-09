@@ -62,6 +62,24 @@
                         var style = "font-size: 10px;";
                         var show = true;
 
+                        int color = 0;
+
+                        foreach (var character in current.Group.Name)
+                        {
+                            color += (int)character;
+                        }
+
+                        color *= current.Group.Id;
+
+                        foreach (var character in current.Group.Course.Name)
+                        {
+                            color += (int)character;
+                        }
+
+                        color *= current.Group.CourseId;
+
+                        string hexColor = color.ToString("X");
+
                         if ((i + 8) > current.StartTime)
                         {
                             style += "border-top-style: none;";
@@ -73,11 +91,10 @@
                             style += "border-bottom-style: none;";
                         }
 
-                        <td align="center" style="@style">
+                        <td align="center"  bgcolor="@hexColor" style="@style">
                             @if (show)
                             {
-                                <p><strong>@current.Group.Course.Name</strong></p>
-                                <p style="color: lightgray;">@current.Group.Name</p>
+                                <strong>@current.Group.Course.Name</strong>
                             }
                         </td>
                     }
@@ -90,11 +107,13 @@
 
 <style type="text/css">
     td {
-        width: 100px;
+        width: 120px;
+        max-height: 35px;
     }
 
     th {
-        width: 100px;
+        width: 120px;
+        max-height: 35px;
     }
 </style>
 
