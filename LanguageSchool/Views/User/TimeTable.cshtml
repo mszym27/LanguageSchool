@@ -80,28 +80,25 @@
 
                         string hexColor = color.ToString("X");
 
-                        if (current.StartTime < (i + 8))
+                        if ((i + 8) > current.StartTime)
                         {
                             style += "border-top-style: none;";
                             show = false;
                         }
 
-                        if ((i + 8) <= (current.EndTime + 1))
+                        if (current.EndTime > (i + 8))
                         {
                             style += "border-bottom-style: none;";
-                            show = false;
                         }
 
-                        if (current.StartTime == (i + 8))
+                        if(Model.Where(
+                            gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
+                            && (i + 8) == (current.StartTime + 1)
+                        )
                         {
-                            style += "border-top-style: solid;";
                             show = true;
                         }
-                        if (current.EndTime + 1 == (i + 8))
-                        {
-                            style += "border-top-style: solid;";
-                            show = true;
-                        }
+
                         <td align="center" bgcolor="@hexColor" style="@style">
                             <a href="@Url.Action("Redirect", "Group", new { id = current.Group.Id })" style = "text-decoration:none; color:white">
                                 @if (show)
