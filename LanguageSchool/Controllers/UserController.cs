@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
+using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -17,8 +18,73 @@ namespace LanguageSchool.Controllers
         {
             var loggedUser = GetLoggedUser();
 
-            return View();
+            var startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Monday);
+            var endOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Saturday);
+
+            var thisWeekUserGroups = loggedUser.UsersGroups.Where(ug => !ug.IsDeleted && !(ug.Group.EndDate < startOfWeek) && !(ug.Group.StartDate > endOfWeek ));
+
+            var model = new List<GroupTime>();
+
+            foreach (var userGroup in thisWeekUserGroups)
+                model.AddRange(userGroup.Group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted));
+
+            int i = 0, j = 0;
+
+            GroupTime current = model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i) && !(gt.StartTime > i)).FirstOrDefault();
+
+            //var s = current.Group.Course.Name + " (" + current.Group.Name + ")";
+
+            return View(model);
         }
+
+        //private void FillTimetable(User user)
+        //{
+        //    Teacher = new UserViewModel(user);
+
+        //    TeacherTimetable = new List<List<bool?>>();
+        //    TeacherExistingTimetable = new List<List<GroupTimeViewModel>>();
+
+        //    var userGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && (
+        //        (ug.Group.StartDate <= StartDate && StartDate <= ug.Group.EndDate) ||
+        //        (ug.Group.StartDate <= EndDate && EndDate <= ug.Group.EndDate) ||
+        //        (StartDate <= ug.Group.StartDate && ug.Group.StartDate <= EndDate) ||
+        //        (StartDate <= ug.Group.EndDate && ug.Group.EndDate <= EndDate)
+        //    )).ToList();
+
+        //    List<GroupTime> groupTimes = new List<GroupTime>();
+
+        //    foreach (var userGroup in userGroups)
+        //    {
+        //        foreach (var groupTime in userGroup.Group.GroupTimes)
+        //        {
+        //            if (!groupTime.IsDeleted && groupTime.IsActive)
+        //                groupTimes.Add(groupTime);
+        //        }
+        //    }
+
+        //    for (int i = 0; i < 12; i++) // hours
+        //    {
+        //        TeacherTimetable.Add(new List<bool?>(7));
+        //        TeacherExistingTimetable.Add(new List<GroupTimeViewModel>(7));
+
+        //        for (int j = 0; j < 7; j++) // days
+        //        {
+        //            var existingTime = groupTimes.Where(gt => gt.DayOfWeekId == (j + 1) && (gt.EndTime >= (i + 8) || gt.StartTime <= (i + 8))).FirstOrDefault();
+
+        //            if (existingTime != null)
+        //            {
+        //                TeacherTimetable[i].Add(null);
+        //                var group = existingTime.Group;
+        //                TeacherExistingTimetable[i].Add(new GroupTimeViewModel(group));
+        //            }
+        //            else
+        //            {
+        //                TeacherTimetable[i].Add(false);
+        //                TeacherExistingTimetable[i].Add(null);
+        //            }
+        //        }
+        //    }
+        //}
 
         // GET: User/Details/5
         public ActionResult Details(int? id)

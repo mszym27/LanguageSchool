@@ -1,4 +1,17 @@
-﻿@{
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Data;
+@using System.Data.Entity;
+@using System.Linq;
+@using System.Net;
+@using System.Web;
+@using System.Web.Mvc;
+@using LanguageSchool.Models;
+@using LanguageSchool.Models.ViewModels;
+
+@model List<GroupTime>
+
+@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -39,68 +52,33 @@
                 <td>@currentHour - @nextHour</td>
                 @for (int j = 0; j < 7; j++)
                 {
-                    <td>
-                    </td>
-                    @*if (@Model.TeacherTimetable[i][j] == null)
+                    GroupTime current = null; @*@Model.Where(gt => (gt.DayOfWeekId == (j + 1))).FirstOrDefault();*@
+                    if (current == null)
                     {
-                        var existingtime = Model.TeacherExistingTimetable[i][j];
-
-                        var style = "font-size: 10px;";
-
-                        bool show = true;
-
-                        if(i > 0)
-                        {
-                            if(@Model.TeacherTimetable[i - 1][j] == null)
-                            {
-                                if (Model.TeacherExistingTimetable[i - 1][j].GroupId == existingtime.GroupId)
-                                {
-                                    style += "border-top-style: none;";
-
-                                    show = false;
-                                }
-                            }
-                        }
-
-                        if (i < 11)
-                        {
-                            if (@Model.TeacherTimetable[i + 1][j] == null)
-                            {
-                                if (Model.TeacherExistingTimetable[i + 1][j].GroupId == existingtime.GroupId)
-                                {
-                                    style += "border-bottom-style: none;";
-                                }
-                            }
-                        }
-
-                        <td  align="center" style="@style">
-                            @Html.HiddenFor(model => model.TeacherTimetable[i][j])
-                            @if (show)
-                            {
-                                <p><strong>@existingtime.CourseName</strong> @existingtime.GroupName</p>
-                                <p style="color: lightgray;">@existingtime.StartDate - @existingtime.EndDate</p>
-                            }
-                        </td>
+                        <td></td>
                     }
                     else
                     {
-                        var currentHour = i + 8 + ".15";
-                        var nextHour = (i + 8 + 1) + ".15";
-                        <td style="padding-top: 20px;">
-                            <label class="btn btn-default btn-block">
-                                <label style="display: none">
-                                    @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
-                                </label>
-                                @currentHour - @nextHour
-                            </label>
+                        <td>
+                            @current.Group.Course.Name + " (" + current.Group.Name + ")"
                         </td>
-                    }*@
+                    }
                 }
             </tr>
         }
         </table>
     </div>
 </div>
+
+<style type="text/css">
+    td {
+        width: 100px;
+    }
+
+    th {
+        width: 100px;
+    }
+</style>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
