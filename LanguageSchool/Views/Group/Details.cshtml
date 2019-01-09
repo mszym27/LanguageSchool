@@ -31,7 +31,7 @@
                         @lessonSubject.CreationDate.ToString("yyy/MM/dd")
                     </td>
                     <td>
-                        @Html.ActionLink(lessonSubject.Name, "Upload", "Material", new { CourseId = lessonSubject.CourseId }, null)
+                        @Html.ActionLink(lessonSubject.Name, "Upload", "Material", new { lessonSubjectId = lessonSubject.Id }, null)
                     </td>
                     <td>
                         @lessonSubject.Description

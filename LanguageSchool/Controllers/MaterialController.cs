@@ -30,10 +30,9 @@ namespace LanguageSchool.Controllers
             return File(requestedMaterial.File, ".pdf", requestedMaterial.Name + ".pdf");
         }
 
-        [Route("Material/Upload/CourseId")]
-        public ActionResult Upload(int CourseId)
+        [Route("Material/Upload/lessonSubjectId")]
+        public ActionResult Upload(int lessonSubjectId)
         {
-            ViewBag.LessonSubjectId = new SelectList(unitOfWork.LessonSubjectRepository.Get(ls => ls.CourseId == CourseId), "Id", "Name");
             return View();
         }
 
