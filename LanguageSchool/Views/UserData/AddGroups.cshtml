@@ -75,6 +75,10 @@
                             @Model.GroupsNonavaible[i].Fullname
                         </td>
                         <td>
+                            @foreach (var hour in @Model.GroupsNonavaible[i].Hours)
+                            {
+                                <p>@hour.DateFullName</p>
+                            }
                         </td>
                     </tr>
                 }

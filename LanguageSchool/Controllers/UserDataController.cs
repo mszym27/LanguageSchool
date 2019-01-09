@@ -130,7 +130,7 @@ namespace LanguageSchool.Controllers
 
             var userGroupTimes = new List<GroupTime>();
 
-            foreach (var userGroup in student.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.EndDate < DateTime.Now))
+            foreach (var userGroup in student.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.EndDate > DateTime.Now))
             {
                 userGroupTimes.AddRange(userGroup.Group.GroupTimes);
             }
@@ -185,9 +185,9 @@ namespace LanguageSchool.Controllers
                     }
 
                     if (groupViewModel.Hours.Where(h => h.IsBlocked).Any())
-                        usersGroupViewModel.GroupsNonavaible.Add(new UsersGroupViewModel(group));
+                        usersGroupViewModel.GroupsNonavaible.Add(groupViewModel);
                     else
-                        usersGroupViewModel.GroupsAvaible.Add(new UsersGroupViewModel(group));
+                        usersGroupViewModel.GroupsAvaible.Add(groupViewModel);
                 } 
             }
 
