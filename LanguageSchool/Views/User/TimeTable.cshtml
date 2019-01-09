@@ -80,15 +80,27 @@
 
                         string hexColor = color.ToString("X");
 
-                        if ((i + 8) > current.StartTime)
+                        if (current.StartTime < (i + 8))
                         {
                             style += "border-top-style: none;";
                             show = false;
                         }
 
-                        if (current.EndTime > (i + 8))
+                        if ((i + 8) <= (current.EndTime + 1))
                         {
                             style += "border-bottom-style: none;";
+                            show = false;
+                        }
+
+                        if (current.StartTime == (i + 8))
+                        {
+                            style += "border-top-style: solid;";
+                            show = true;
+                        }
+                        if (current.EndTime + 1 == (i + 8))
+                        {
+                            style += "border-top-style: solid;";
+                            show = true;
                         }
                         <td align="center" bgcolor="@hexColor" style="@style">
                             <a href="@Url.Action("Redirect", "Group", new { id = current.Group.Id })" style = "text-decoration:none; color:white">
