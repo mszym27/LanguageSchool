@@ -34,7 +34,10 @@
                         <strong>Aktywny</strong>
                     </div>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
             </div>

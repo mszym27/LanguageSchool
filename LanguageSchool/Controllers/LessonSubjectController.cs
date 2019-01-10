@@ -61,8 +61,6 @@ namespace LanguageSchool.Controllers
             {
                 return View(lessonSubjectViewModel);
             }
-
-            return View(lessonSubjectViewModel);
         }
 
         //// GET: LessonSubject/Details/5

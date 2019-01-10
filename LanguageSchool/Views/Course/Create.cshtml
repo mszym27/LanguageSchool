@@ -7,12 +7,15 @@
 
 @using (Html.BeginForm())
 {
-    <div class="container thumbnail">
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <input type="submit" value="Utwórz" class="btn btn-block btn-default" />
+            </div>
+        </div>
 
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            
+        <div class="row form-horizontal thumbnail col-md-12">
             <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Nazwa</strong>
@@ -77,12 +80,6 @@
                 <div class="col-md-4">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row form-group">
-                <div class="col-md-offset-2 col-md-4">
-                    <input type="submit" value="Utwórz" class="btn btn-default" />
                 </div>
             </div>
         </div>
