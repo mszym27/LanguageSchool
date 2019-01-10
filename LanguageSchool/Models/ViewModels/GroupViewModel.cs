@@ -106,7 +106,7 @@ namespace LanguageSchool.Models.ViewModels
 
                 for (int j = 0; j < 7; j++) // days
                 {
-                    var existingTime = groupTimes.Where(gt => gt.DayOfWeekId == (j + 1) && (gt.EndTime >= (i + 8) || gt.StartTime <= (i + 8))).FirstOrDefault();
+                    var existingTime = groupTimes.Where(gt => gt.DayOfWeekId == (j + 1) && gt.EndTime >= (i + 8) && gt.StartTime <= (i + 8)).FirstOrDefault();
 
                     if (existingTime != null)
                     {
