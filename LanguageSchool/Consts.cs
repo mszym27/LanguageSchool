@@ -25,7 +25,8 @@ namespace LanguageSchool
             ToGroup = 2,
             ToCourse = 3,
             ToRole = 4,
-            ToAll = 5
+            ToAll = 5,
+            StudentWelcome = 6
         }
 
         public static List<int> pages = new List<int>()
