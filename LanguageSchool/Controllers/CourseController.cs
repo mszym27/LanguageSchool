@@ -12,30 +12,6 @@ namespace LanguageSchool.Controllers
 {
     public class CourseController : LanguageSchoolController
     {
-        [Route("Course/TempTeacher")]
-        public ActionResult TempTeacher()
-        {
-            var loggedUser = GetLoggedUser();
-
-            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted && c.Groups.Where(g => !g.IsDeleted && g.UsersGroups.Where(ug => ug.UserId == loggedUser.Id).Any()).Any());
-
-            List<Course> Courses = courses.ToList();
-
-            return View(Courses);
-        }
-
-        [Route("Course/TempStudent")]
-        public ActionResult TempStudent()
-        {
-            var loggedUser = GetLoggedUser();
-
-            var courses = unitOfWork.CourseRepository.Get(c => !c.IsDeleted && c.Groups.Where(g => !g.IsDeleted && g.UsersGroups.Where(ug => ug.UserId == loggedUser.Id).Any()).Any());
-
-            List<Course> Courses = courses.ToList();
-
-            return View(Courses);
-        }
-
         [Route("Course")]
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {

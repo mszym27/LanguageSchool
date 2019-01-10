@@ -24,30 +24,46 @@ namespace LanguageSchool.Controllers
             return View(groupViewModel);
         }
 
-        //[HttpPost]
-        //public ActionResult Create()
-        //{
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
-        //    return View();
-        //}
+        [HttpGet]
+        public ActionResult Create(int id)
+        {
+            var lessonSubjectViewModel = new LessonSubjectViewModel() { GroupId = id };
 
-        //// POST: LessonSubject/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,CourseId,Name,Description,IsActive")] LessonSubject lessonSubject)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.LessonSubjects.Add(lessonSubject);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+            return View(lessonSubjectViewModel);
+        }
 
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", lessonSubject.CourseId);
-        //    return View(lessonSubject);
-        //}
+        // POST: LessonSubject/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(LessonSubjectViewModel lessonSubjectViewModel)
+        {
+            try
+            {
+                var lessonSubject = new LessonSubject()
+                {
+                    CourseId = 9, // TODO
+                    GroupId = lessonSubjectViewModel.GroupId,
+                    Name = lessonSubjectViewModel.Name,
+                    Description = lessonSubjectViewModel.Description,
+                    IsActive = lessonSubjectViewModel.IsActive,
+                    CreationDate = DateTime.Now
+                };
+
+                unitOfWork.LessonSubjectRepository.Insert(lessonSubject);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("Details", "Group", new { id = lessonSubjectViewModel.GroupId });
+            }
+            catch
+            {
+                return View(lessonSubjectViewModel);
+            }
+
+            return View(lessonSubjectViewModel);
+        }
 
         //// GET: LessonSubject/Details/5
         //public ActionResult Details(int? id)
