@@ -14,8 +14,8 @@ namespace LanguageSchool.Controllers
     [Authorize]
     public class GroupController : LanguageSchoolController
     {
-        [Route("Group/{id}")]
-        public ActionResult Redirect(int id)
+        [Route("Group/View/{id}")]
+        public ActionResult View(int id)
         {
             var loggedUser = GetLoggedUser();
 
