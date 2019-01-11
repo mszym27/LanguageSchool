@@ -479,40 +479,6 @@ IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 		,NULL
 		,N'Domyślnie obecny w systemie członek sekretariatu')
 
-DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'techAdmin')
-
-IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
-	INSERT INTO [ContactInfo].[UserData]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[UserId]
-		,[Name]
-		,[Surname]
-		,[City]
-		,[Street]
-		,[HouseNumber]
-		,[HomeNumber]
-		,[PublicPhoneNumber]
-		,[PrivatePhoneNumber]
-		,[EmailAdress]
-		,[Comment])
-	VALUES
-		(0
-		,GETDATE()
-		,NULL
-		,@userId
-		,N'Użytkownik'
-		,N'Techniczny'
-		,NULL
-		,NULL
-		,NULL
-		,NULL
-		,'990-354-123'
-		,NULL
-		,NULL
-		,N'Domyślnie obecny w systemie administrator')
-
 GO
 
 UPDATE [Tests].[ClosedQuestions] SET [LessonSubjectId] = NULL -- TODO

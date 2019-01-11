@@ -314,7 +314,7 @@ namespace LanguageSchool.Controllers
 
                 user.Login = user.Login + "_" + randomInt.ToString("00000");
 
-                if(udvm.RoleId == (int)Consts.Roles.Student)
+                if(userRole.Id == (int)Consts.Roles.Student)
                 {
                     var welcome = unitOfWork.MessageRepository.Get(m => m.MessageTypeId == (int)Consts.MessageTypes.StudentWelcome).FirstOrDefault();
 

@@ -92,8 +92,8 @@ namespace LanguageSchool.Controllers
 
         [Authorize(Roles = "Secretary")]
         [HttpGet]
-        [Route("Message/Create")]
-        public ActionResult Create()
+        [Route("Message/Create/")]
+        public ActionResult Create(int? userId)
         {
             UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
 
@@ -101,9 +101,23 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
-            userMessageViewModel.Users = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
-                                         "Id",
-                                         "Login");
+            SelectList usersSelectList;
+
+            if (userId != null)
+            {
+                usersSelectList = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
+                                           "Id",
+                                           "Login",
+                                           unitOfWork.UserRepository.GetById(userId));
+            }
+            else
+            {
+                usersSelectList = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
+                                             "Id",
+                                             "Login");
+            }
+
+            userMessageViewModel.Users = usersSelectList;
 
             userMessageViewModel.Groups = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
