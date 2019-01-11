@@ -252,7 +252,7 @@ namespace LanguageSchool.Controllers
         {
             UserDataViewModel userDataViewModel = new UserDataViewModel();
 
-            userDataViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
+            userDataViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(r => r.Id != (int)Consts.Roles.Admin),
                                          "Id",
                                          "PLName");
 
