@@ -233,6 +233,40 @@ namespace LanguageSchool.Controllers
             }
         }
 
+        [Route("Course/DeActivate/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult DeActivate(int id)
+        {
+            try
+            {
+                var course = unitOfWork.CourseRepository.GetById(id);
+
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+
+                course.IsActive = !course.IsActive;
+
+                unitOfWork.CourseRepository.Update(course);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("FullDetails", new { id = id });
+            }
+            catch
+            {
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Nastąpił nieoczekiwany problem",
+                    Message = "operacja nie powiodła się.",
+                    AlertType = Consts.Error
+                };
+
+                return RedirectToAction("FullDetails", new { id = id });
+            }
+        }
+
         // GET: Course/Delete/5
         public ActionResult Delete(int id)
         {

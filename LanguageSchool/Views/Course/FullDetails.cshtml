@@ -20,7 +20,7 @@
                         activateButtonValue = "Dezaktywuj";
                     }
                 }
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "Course")'">@activateButtonValue</button>
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "Course", new { id = Model.Id })'">@activateButtonValue</button>
             </div>
 
             <div class="col-md-4">
