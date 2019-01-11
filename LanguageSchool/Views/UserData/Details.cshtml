@@ -7,20 +7,16 @@
 
 <div class="container">
     <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            @if(Model.User.RoleId == (int)Consts.Roles.Student)
-            {
-                <div class="col-md-6">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Dodaj do grupy</button>
-                </div>
-            }
-            else
-            {
+        <div class="thumbnail col-md-5">
+            <div class="col-md-4">
                 <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
-            }
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Dodaj do grupy</button>
+            </div>
         </div>
     </div>
     <div class="row thumbnail col-md-12">
