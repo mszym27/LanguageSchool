@@ -167,11 +167,10 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="4000" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="GroupId" Type="int" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Materials">
           <Key>
@@ -207,7 +206,7 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
-          <Property Name="LessonSubjectId" Type="int" Nullable="false" />
+          <Property Name="LessonSubjectId" Type="int" />
           <Property Name="Contents" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="NumberOfPossibleAnswers" Type="int" Nullable="false" />
           <Property Name="IsMultichoice" Type="bit" Nullable="false" />
@@ -334,7 +333,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClosedQuestions_LessonSubjects">
-          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
+          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="0..1" />
           <End Role="ClosedQuestions" Type="Self.ClosedQuestions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LessonSubjects">
@@ -441,20 +440,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LessonSubjects_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LessonSubjects">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LessonSubjects_Groups">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
           <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Groups">
@@ -802,10 +789,6 @@
             <End Role="Groups" EntitySet="Groups" />
             <End Role="GroupTimes" EntitySet="GroupTimes" />
           </AssociationSet>
-          <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
-          </AssociationSet>
           <AssociationSet Name="FK_LessonSubjects_Groups" Association="Self.FK_LessonSubjects_Groups">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
@@ -954,7 +937,6 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_Courses" FromRole="Courses" ToRole="ContactRequests" />
           <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Courses" FromRole="Courses" ToRole="EntryTests" />
-          <NavigationProperty Name="LessonSubjects" Relationship="Self.FK_LessonSubjects_Courses" FromRole="Courses" ToRole="LessonSubjects" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Courses" FromRole="Courses" ToRole="Tests" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="NumberOfHours" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -986,16 +968,14 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Course" Relationship="Self.FK_LessonSubjects_Courses" FromRole="LessonSubjects" ToRole="Courses" />
           <NavigationProperty Name="ClosedQuestions" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="ClosedQuestions" />
           <NavigationProperty Name="Materials" Relationship="Self.FK_Materials_LessonSubjects" FromRole="LessonSubjects" ToRole="Materials" />
           <NavigationProperty Name="OpenQuestions" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="LessonSubjects" ToRole="OpenQuestions" />
           <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_LessonSubjects" FromRole="LessonSubjects" ToRole="TestsLessonSubjects" />
-          <Property Name="GroupId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_LessonSubjects_Groups" FromRole="LessonSubject" ToRole="Group" />
         </EntityType>
         <EntityType Name="Material">
@@ -1034,7 +1014,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="LessonSubjectId" Type="Int32" Nullable="false" />
+          <Property Name="LessonSubjectId" Type="Int32" />
           <Property Name="Contents" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NumberOfPossibleAnswers" Type="Int32" Nullable="false" />
           <Property Name="IsMultichoice" Type="Boolean" Nullable="false" />
@@ -1199,18 +1179,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LessonSubjects_Courses">
-          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
-          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LessonSubjects">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tests_Courses">
           <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
           <End Role="Tests" Type="Self.Test" Multiplicity="*" />
@@ -1236,7 +1204,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClosedQuestions_LessonSubjects">
-          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="1" />
+          <End Role="LessonSubjects" Type="Self.LessonSubject" Multiplicity="0..1" />
           <End Role="ClosedQuestions" Type="Self.ClosedQuestion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LessonSubjects">
@@ -1410,10 +1378,6 @@
           <AssociationSet Name="FK_EntryTests_Courses" Association="Self.FK_EntryTests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="EntryTests" EntitySet="EntryTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LessonSubjects_Courses" Association="Self.FK_LessonSubjects_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="LessonSubjects" EntitySet="LessonSubjects" />
           </AssociationSet>
           <AssociationSet Name="FK_Tests_Courses" Association="Self.FK_Tests_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -1856,7 +1820,7 @@
           <Property Type="Int32" Name="TotalRowCount" Nullable="true" />
         </ComplexType>
         <Association Name="FK_LessonSubjects_Groups">
-          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
           <End Type="LanguageSchoolModel.LessonSubject" Role="LessonSubject" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
@@ -1952,7 +1916,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

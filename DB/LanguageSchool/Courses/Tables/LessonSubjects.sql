@@ -3,11 +3,13 @@
     [IsDeleted]    BIT             NOT NULL,
     [CreationDate] DATETIME        NOT NULL,
     [DeletionDate] DATETIME        NULL,
-    [CourseId]     INT             NOT NULL,
     [Name]         NVARCHAR (150)  NOT NULL,
     [Description]  NVARCHAR (4000) NULL,
     [IsActive]     BIT             NOT NULL,
+    [GroupId]      INT             NOT NULL,
     CONSTRAINT [PK_LessonSubjects] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_LessonSubjects_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id])
+    CONSTRAINT [FK_LessonSubjects_Groups] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id])
 );
+
+
 

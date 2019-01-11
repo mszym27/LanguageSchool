@@ -3,7 +3,7 @@
     [IsDeleted]               BIT            NOT NULL,
     [CreationDate]            DATETIME       NOT NULL,
     [DeletionDate]            DATETIME       NULL,
-    [LessonSubjectId]         INT            NOT NULL,
+    [LessonSubjectId]         INT            NULL,
     [Contents]                NVARCHAR (250) NOT NULL,
     [NumberOfPossibleAnswers] INT            NOT NULL,
     [IsMultichoice]           BIT            NOT NULL,
@@ -11,6 +11,8 @@
     CONSTRAINT [PK_ClosedQuestions] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ClosedQuestions_LessonSubjects] FOREIGN KEY ([LessonSubjectId]) REFERENCES [Courses].[LessonSubjects] ([Id])
 );
+
+
 
 
 

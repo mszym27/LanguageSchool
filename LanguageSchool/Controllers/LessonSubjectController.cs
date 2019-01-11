@@ -43,7 +43,6 @@ namespace LanguageSchool.Controllers
             {
                 var lessonSubject = new LessonSubject()
                 {
-                    CourseId = 9, // TODO
                     GroupId = lessonSubjectViewModel.GroupId,
                     Name = lessonSubjectViewModel.Name,
                     Description = lessonSubjectViewModel.Description,

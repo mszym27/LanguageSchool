@@ -45,7 +45,9 @@ namespace LanguageSchool.Controllers
             
             var ChosenQuestions = new List<ClosedQuestionViewModel>();
 
-            int LessonSubjectsCount = t.TestsLessonSubjects.Count;
+            //int LessonSubjectsCount = t.TestsLessonSubjects.Count;
+
+            int LessonSubjectsCount = t.NumberOfQuestions; // TODO
 
             var QuestionPartitioned = RandomList(t.Points, LessonSubjectsCount);
 

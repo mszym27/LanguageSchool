@@ -19,7 +19,6 @@ namespace LanguageSchool.Models
         {
             this.ContactRequests = new HashSet<ContactRequest>();
             this.EntryTests = new HashSet<EntryTest>();
-            this.LessonSubjects = new HashSet<LessonSubject>();
             this.Tests = new HashSet<Test>();
             this.Groups = new HashSet<Group>();
             this.Messages = new HashSet<Message>();
@@ -41,8 +40,6 @@ namespace LanguageSchool.Models
         public virtual ICollection<ContactRequest> ContactRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EntryTest> EntryTests { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LessonSubject> LessonSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
         public virtual LanguageProficency LanguageProficency { get; set; }
