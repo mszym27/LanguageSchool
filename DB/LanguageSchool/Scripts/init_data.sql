@@ -208,7 +208,7 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 6)
 
 GO
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE [MessageTypeId] = 6)
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Messages] WHERE [MessageTypeId] = 6)
 INSERT [Administration].[Messages] ([CreationDate], [Header], [Contents], [MessageTypeId], [UserId], [GroupId], [CourseId], [RoleId], [IsSystem]) 
 VALUES (GETDATE(), N'Witaj w szkole!', N'Miło nam Cię powitać w naszej szkole.
 Po kliknięciu na logo w prawym górnym rogu tej strony zobaczysz swój plan zajęć. Od momentu w którym odczytałeś ten komunikat 
@@ -411,7 +411,7 @@ IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 		,NULL
 		,N'Domyślnie obecny w systemie student')
 
-DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_LL_0001')
+SET @userId = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_LL_0001')
 
 IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 	INSERT INTO [ContactInfo].[UserData]
@@ -445,7 +445,7 @@ IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 		,NULL
 		,N'Domyślnie obecny w systemie nauczyciel')
 
-DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\S_DL')
+SET @userId = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\S_DL')
 
 IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 	INSERT INTO [ContactInfo].[UserData]
