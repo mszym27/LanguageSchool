@@ -104,7 +104,8 @@
                             <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
                                 @if (show)
                                 {
-                                    <strong>@current.Group.Course.Name</strong>
+                                    <p><strong>@current.Group.Course.Name</strong></p>
+                                    @*<p>@current.Group.Name</p>*@
                                 }
                             </a>
                         </td>
