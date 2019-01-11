@@ -151,7 +151,7 @@
                             {
                                 var currentHour = i + 8 + ".15";
                                 var nextHour = (i + 8 + 1) + ".15";
-                                <td style="padding-top: 20px;">
+                                <td style="padding-top: 25px; padding-bottom: 25px;">
                                     <label class="btn btn-default btn-block">
                                         <label style="display: none">
                                             @Html.CheckBox("TeacherTimetable[" + i + "][" + j + "]", (bool)@Model.TeacherTimetable[i][j])
@@ -167,6 +167,18 @@
         </div>
     </div>
 }
+
+<style type="text/css">
+    td {
+        width: 120px;
+        height: 45px;
+    }
+
+    th {
+        width: 120px;
+        height: 45px;
+    }
+</style>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

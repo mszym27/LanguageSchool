@@ -48,7 +48,9 @@
         var currentHour = i + 8 + ".15";
         var nextHour = (i + 8 + 1) + ".15";
         <tr>
-            <td>@currentHour - @nextHour</td>
+            <td style="padding-top: 25px; padding-bottom: 25px;">
+                @currentHour - @nextHour
+            <td/>
             @for (int j = 0; j < 7; j++)
             {
                 GroupTime current = Model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
@@ -116,12 +118,12 @@
 <style type="text/css">
     td {
         width: 120px;
-        max-height: 35px;
+        height: 45px;
     }
 
     th {
         width: 120px;
-        max-height: 35px;
+        height: 45px;
     }
 
     td {
