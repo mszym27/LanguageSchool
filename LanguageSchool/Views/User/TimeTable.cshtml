@@ -43,75 +43,75 @@
             </th>
         </tr>
 
-    @for (int i = 0; i < 12; i++)
-    {
-        var currentHour = i + 8 + ".15";
-        var nextHour = (i + 8 + 1) + ".15";
-        <tr>
-            <td style="padding-top: 25px; padding-bottom: 25px;">
-                @currentHour - @nextHour
-            <td/>
-            @for (int j = 0; j < 7; j++)
-            {
-                GroupTime current = Model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
-                if (current == null)
+        @for (int i = 0; i < 12; i++)
+        {
+            var currentHour = i + 8 + ".15";
+            var nextHour = (i + 8 + 1) + ".15";
+            <tr>
+                <td style="padding-top: 25px; padding-bottom: 25px;">
+                    @currentHour - @nextHour
+                </td>
+                @for (int j = 0; j < 7; j++)
                 {
-                    <td></td>
+                    GroupTime current = Model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
+                    if (current == null)
+                    {
+                        <td></td>
+                    }
+                    else
+                    {
+                        var style = "font-size: 10px;";
+                        var show = true;
+
+                        int color = 0;
+
+                        foreach (var character in current.Group.Name)
+                        {
+                            color += (int)character;
+                        }
+
+                        color *= current.Group.Id;
+
+                        foreach (var character in current.Group.Course.Name)
+                        {
+                            color += (int)character;
+                        }
+
+                        color *= current.Group.CourseId;
+
+                        string hexColor = color.ToString("X");
+
+                        if ((i + 8) > current.StartTime)
+                        {
+                            style += "border-top-style: none;";
+                            show = false;
+                        }
+
+                        if (current.EndTime > (i + 8))
+                        {
+                            style += "border-bottom-style: none;";
+                        }
+
+                        if (Model.Where(
+                            gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
+                            && (i + 8) == (current.StartTime + 1)
+                        )
+                        {
+                            show = true;
+                        }
+
+                        <td align="center" bgcolor="@hexColor" style="@style">
+                            <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
+                                @if (show)
+                                {
+                                    <strong>@current.Group.Course.Name</strong>
+                                }
+                            </a>
+                        </td>
+                    }
                 }
-                else
-                {
-                    var style = "font-size: 10px;";
-                    var show = true;
-
-                    int color = 0;
-
-                    foreach (var character in current.Group.Name)
-                    {
-                        color += (int)character;
-                    }
-
-                    color *= current.Group.Id;
-
-                    foreach (var character in current.Group.Course.Name)
-                    {
-                        color += (int)character;
-                    }
-
-                    color *= current.Group.CourseId;
-
-                    string hexColor = color.ToString("X");
-
-                    if ((i + 8) > current.StartTime)
-                    {
-                        style += "border-top-style: none;";
-                        show = false;
-                    }
-
-                    if (current.EndTime > (i + 8))
-                    {
-                        style += "border-bottom-style: none;";
-                    }
-
-                    if(Model.Where(
-                        gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
-                        && (i + 8) == (current.StartTime + 1)
-                    )
-                    {
-                        show = true;
-                    }
-
-                    <td align="center" bgcolor="@hexColor" style="@style">
-                        <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style = "text-decoration:none; color:white">
-                            @if (show)
-                            {
-                                <strong>@current.Group.Course.Name</strong>
-                            }
-                        </a>
-                    </td>
-                }
-            }
-        </tr>
-    }
+            </tr>
+        }
     </table>
 </div>
 
@@ -129,11 +129,12 @@
     td {
         overflow: hidden;
     }
-    td a {
-        display: block;
-        margin: -10em;
-        padding: 10em;
-    }
+
+        td a {
+            display: block;
+            margin: -10em;
+            padding: 10em;
+        }
 </style>
 
 @section Scripts {
