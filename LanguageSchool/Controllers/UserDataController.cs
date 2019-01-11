@@ -84,7 +84,7 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
-            ViewBag.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
+            ViewBag.Roles = new SelectList(unitOfWork.RoleRepository.Get(r => r.Id != (int)Consts.Roles.Admin),
                                          "Id",
                                          "PLName");
 
