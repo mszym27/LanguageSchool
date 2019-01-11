@@ -1,4 +1,4 @@
-﻿@model LanguageSchool.Models.Course
+﻿@model LanguageSchool.Models.ViewModels.CourseViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -7,122 +7,80 @@
 
 @using (Html.BeginForm())
 {
-    <div class="thumbnail">
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+            </div>
+        </div>
 
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-
-            <div class="form-group">
+        <div class="row form-horizontal thumbnail col-md-12">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Nazwa</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
+
+                <div class="control-label col-md-2">
+                    <strong>Poziom</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LanguageProficencyId, Model.LanguageProficenciens, new { @class = "form-control" })
+                </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Liczba godzin</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.NumberOfHours, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.NumberOfHours, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
-                    <strong>Opis</strong>
+                    <strong>Aktywny</strong>
                 </div>
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsActive)
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row form-group">
                 <div class="control-label col-md-2">
                     <strong>Data rozpoczęcia</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                 </div>
-            </div>
 
-            <div class="form-group">
                 <div class="control-label col-md-2">
                     <strong>Data zakończenia</strong>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="row col-md-offset-2 col-md-10">
-                    <div style="float:left;">
-                        <button class="btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "Course")'">Usuń</button>
-                    </div>
-                    <div style="float:left; padding-left:10px;">
-                        @{
-                            var activateButtonValue = "Aktywuj";
-
-                            if (@Model.IsActive)
-                            {
-                                activateButtonValue = "Dezaktywuj";
-                            }
-                        }
-
-                        <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "Course")'">@activateButtonValue</button>
-                    </div>
+            <div class="row form-group">
+                <div class="col-md-6">
                 </div>
-            </div>
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.LanguageProficencyId, "LanguageProficencyId", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("LanguageProficencyId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.LanguageProficencyId, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsDeleted)
-                            @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                <div class="control-label col-md-2">
+                    <strong>Opis</strong>
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DeletionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.DeletionDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DeletionDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsActive)
-                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            *@
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Wyślij" class="btn btn-default" />
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

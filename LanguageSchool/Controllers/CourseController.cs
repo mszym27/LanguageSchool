@@ -120,6 +120,7 @@ namespace LanguageSchool.Controllers
             return View(course);
         }
 
+        [HttpGet]
         [Route("Course/Create/")]
         [Authorize(Roles = "Secretary")]
         public ActionResult Create()
@@ -133,19 +134,41 @@ namespace LanguageSchool.Controllers
             return View(courseViewModel);
         }
 
-        // POST: Course/Create
         [HttpPost]
+        [Route("Course/Create/")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create(CourseViewModel courseViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                Course course = new Course()
+                {
+                    Name = courseViewModel.Name,
+                    Description = courseViewModel.Description,
+                    LanguageProficencyId = courseViewModel.LanguageProficencyId,
+                    IsActive = courseViewModel.IsActive,
+                    StartDate = courseViewModel.StartDate,
+                    EndDate = courseViewModel.EndDate,
+                    NumberOfHours = courseViewModel.NumberOfHours,
+                    CreationDate = DateTime.Now
+                };
 
-                return RedirectToAction("FullDetails", new { id = 2 });
+                unitOfWork.CourseRepository.Insert(course);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("FullDetails", new { id = course.Id });
             }
             catch
             {
-                return View();
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Nastąpił nieoczekiwany problem",
+                    Message = "operacja nie powiodła się.",
+                    AlertType = Consts.Error
+                };
+
+                return View(courseViewModel);
             }
         }
 
@@ -160,22 +183,53 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            return View(course);
+            CourseViewModel courseViewModel = new CourseViewModel(course);
+
+            courseViewModel.LanguageProficenciens = new SelectList(unitOfWork.LanguageProficencyRepository.Get(),
+                                         "Id",
+                                         "Name");
+
+            return View(courseViewModel);
         }
 
-        // POST: Course/Edit/5
+        [Route("Course/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(CourseViewModel courseViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                var course = unitOfWork.CourseRepository.GetById(courseViewModel.Id);
 
-                return RedirectToAction("Index");
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+
+                course.Name = courseViewModel.Name;
+                course.Description = courseViewModel.Description;
+                course.LanguageProficencyId = courseViewModel.LanguageProficencyId;
+                course.IsActive = courseViewModel.IsActive;
+                course.StartDate = courseViewModel.StartDate;
+                course.EndDate = courseViewModel.EndDate;
+                course.NumberOfHours = courseViewModel.NumberOfHours;
+
+                unitOfWork.CourseRepository.Update(course);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("FullDetails", new { id = course.Id });
             }
             catch
             {
-                return View();
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Nastąpił nieoczekiwany problem",
+                    Message = "operacja nie powiodła się.",
+                    AlertType = Consts.Error
+                };
+
+                return View(courseViewModel);
             }
         }
 
