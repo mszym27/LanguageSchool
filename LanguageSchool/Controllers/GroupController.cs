@@ -89,12 +89,16 @@ namespace LanguageSchool.Controllers
 
             foreach (var userViewModel in usersGroupViewModel.usersAvaible)
             {
-                var user = unitOfWork.UserRepository.GetById(userViewModel.Id);
+                if (userViewModel.IsMarked)
+                {
+                    var user = unitOfWork.UserRepository.GetById(userViewModel.Id);
 
-                group.UsersGroups.Add(new UsersGroup(){
-                    CreationDate = DateTime.Now,
-                    User = user
-                });
+                    group.UsersGroups.Add(new UsersGroup()
+                    {
+                        CreationDate = DateTime.Now,
+                        User = user
+                    });
+                }
             }
 
             unitOfWork.Save();
