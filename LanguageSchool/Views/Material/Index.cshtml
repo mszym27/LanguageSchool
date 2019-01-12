@@ -26,7 +26,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
+                    @item.CreationDate.ToString("yyyy/MM/dd")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LessonSubject.Name)

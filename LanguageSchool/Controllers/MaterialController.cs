@@ -60,20 +60,12 @@ namespace LanguageSchool.Controllers
 
             unitOfWork.MaterialRepository.Insert(material);
             unitOfWork.Save();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Details", "LessonSubject", new { id = materialViewModel.LessonSubjectId });
             //}
 
             //ViewBag.LessonSubjectId = new SelectList(unitOfWork.LessonSubjectRepository.Get(), "Id", "Name", material.LessonSubjectId);
             //return View(material);
         }
-
-        /*
-        materiały dostępne do pobrania bezpośrednio z poziomu indeksu
-        może ograniczone do wybranego kursu? Powiedzmy że użytkownik wchodzi do serwisu, widzi swój plan zajęć
-        i może z jego poziomu przejść do wybranego kursu. Widzi tam opis, testy oraz materiały które zostały mu wystawione.
-        Można też pomyśleć o jakimś znaczniku ,,Nowy test/materiał" przy danym kursie, ale wtedy trzeba byłoby pomyśleć również
-        o przechowywaniu daty ostatniego logowania. Chociaż byłoby to też pewnie możliwe do wykorzystania w wiadomościach.
-        */
 
         //// GET: Material/Edit/5
         //public ActionResult Edit(int? id)

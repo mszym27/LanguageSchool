@@ -62,20 +62,57 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        //// GET: LessonSubject/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    LessonSubject lessonSubject = db.LessonSubjects.Find(id);
-        //    if (lessonSubject == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(lessonSubject);
-        //}
+        // GET: LessonSubject/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            LessonSubject lessonSubject = unitOfWork.LessonSubjectRepository.GetById(id);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(lessonSubject);
+        }
+
+        [Route("LessonSubject/DeActivate/{id}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DeActivate(int id)
+        {
+            try
+            {
+                var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(id);
+
+                if (lessonSubject == null)
+                {
+                    return HttpNotFound();
+                }
+
+                lessonSubject.IsActive = !lessonSubject.IsActive;
+
+                unitOfWork.LessonSubjectRepository.Update(lessonSubject);
+
+                unitOfWork.Save();
+
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch
+            {
+                TempData["Alert"] = new AlertViewModel()
+                {
+                    Title = "Nastąpił nieoczekiwany problem",
+                    Message = "operacja nie powiodła się.",
+                    AlertType = Consts.Error
+                };
+
+                return RedirectToAction("Details", new { id = id });
+            }
+        }
 
         //// GET: LessonSubject/Edit/5
         //public ActionResult Edit(int? id)

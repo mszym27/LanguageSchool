@@ -4,72 +4,117 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-4">
+            <div class="col-md-4">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "LessonSubject")'">Edytuj</button>
+            </div>
+            <div class="col-md-4">
+                @{
+                    var DeActivateButtonValue = "Aktywuj";
 
-<h2>Details</h2>
+                    if (@Model.IsActive)
+                    {
+                        DeActivateButtonValue = "Dezaktywuj";
+                    }
+                }
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "LessonSubject", new { id = Model.Id })'">@DeActivateButtonValue</button>
+            </div>
 
-<div>
-    <h4>LessonSubject</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "LessonSubject")'">Usuń</button>
+            </div>
+        </div>
+    </div>
+    <div class="row thumbnail col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Utworzono
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Model.CreationDate.ToString("yyy/MM/dd")
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Nazwa
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    Aktywny
+                </label>
+            </div>
+            <div class="col-md-3">
+                @{
+                    string active = "nie";
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
+                    if (Model.IsActive) { active = "tak"; }
+                }
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+                @active
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Opis
+                </label>
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
+    </div>   
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-2">
+            <div class="col-md-12">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Upload", "Material", new { lessonSubjectId = Model.Id })'">Dodaj materiały</button>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course.Name)
-        </dd>
-
-    </dl>
+    @if (Model.Materials.Any())
+    {
+        <div class="row thumbnail col-md-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Komentarz
+                    </th>
+                </tr>
+                @foreach (var item in Model.Materials)
+                {
+                    <tr>
+                        <td>
+                            @item.CreationDate.ToString("yyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
+                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
