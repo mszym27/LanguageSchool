@@ -29,10 +29,13 @@ SET @EmailAdress = LTRIM(RTRIM(@EmailAdress))
 SET @Street = LTRIM(RTRIM(@Street))
 
 SELECT @ShowContactRequests = 0
-WHERE (@FullName IS NOT NULL AND @FullName != '')
-	OR (@Street IS NOT NULL AND @Street != '')
-	OR (@City IS NOT NULL AND @City != '')
-	OR (@RoleId IS NOT NULL AND @RoleId != '')
+WHERE @ShowUserData = 1
+	AND (
+		(@FullName IS NOT NULL AND @FullName != '')
+		OR (@Street IS NOT NULL AND @Street != '')
+		OR (@City IS NOT NULL AND @City != '')
+		OR (@RoleId IS NOT NULL AND @RoleId != '')
+	)
 
 SET @Query = N''
 
@@ -72,9 +75,7 @@ BEGIN
 		AND [Users].[RoleId] = @RoleId '
 				
 	SET @Query += N'
-	WHERE [UserData].[IsDeleted] = 0
-		AND [UserData].[CreationDate] >= @CreationDateFrom
-		AND [UserData].[CreationDate] <= @CreationDateTo '
+	WHERE [UserData].[IsDeleted] = 0 '
 	
 	IF(@City IS NOT NULL AND @City != '')
 		SET @Query += N'
@@ -176,6 +177,7 @@ SET @QueryParameters = N'
 	,@PageIndex INT
 	,@PageSize INT '
 
+--SELECT @Query
 EXECUTE sp_executesql @Query, @QueryParameters
 	,@CreationDateFrom
 	,@CreationDateTo

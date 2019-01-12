@@ -118,5 +118,6 @@
     <None Include="LanguageSchool.publish.xml" />
     <None Include="Scripts\TestData.sql" />
     <None Include="Scripts\courses_add.sql" />
+    <None Include="Scripts\clear_groups.sql" />
   </ItemGroup>
 </Project>
