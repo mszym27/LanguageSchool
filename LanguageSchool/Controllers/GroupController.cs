@@ -69,13 +69,32 @@ namespace LanguageSchool.Controllers
 
             foreach(var student in students)
             {
-                if (!student.UsersGroups.Where(ug => !ug.IsDeleted && (
+                var studentPotentiallyConflictingGroups = student.UsersGroups.Where(ug => !ug.IsDeleted && (
                     (ug.Group.StartDate <= group.StartDate && group.StartDate <= ug.Group.EndDate) ||
                     (ug.Group.StartDate <= group.EndDate && group.EndDate <= ug.Group.EndDate) ||
                     (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
                     (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
-                )).Any())
+                ));
+
+                if (studentPotentiallyConflictingGroups == null)
                     usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
+                else
+                {
+                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    {
+                        if(studentPotentiallyConflictingGroups.Where(ug => ug.Group.GroupTimes.Where(
+                            gt => gt.DayOfWeekId == groupTime.DayOfWeekId && (
+                                (gt.StartTime <= groupTime.StartTime && groupTime.StartTime <= gt.EndTime) ||
+                                (gt.StartTime <= groupTime.EndTime && groupTime.EndTime <= gt.EndTime) ||
+                                (groupTime.StartTime <= gt.StartTime && gt.StartTime <= groupTime.EndTime) ||
+                                (groupTime.StartTime <= gt.EndTime && gt.EndTime <= groupTime.EndTime)
+                            )).Any()
+                        ).Any())
+                            usersGroupViewModel.usersNonavaible.Add(new UserViewModel(student)); // todo?
+                        else
+                            usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
+                    }
+                }
             }
 
             return View(usersGroupViewModel);
