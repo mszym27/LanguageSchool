@@ -80,6 +80,8 @@ namespace LanguageSchool.Controllers
                     usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
                 else
                 {
+                    var isAvaible = true;
+
                     foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
                     {
                         if(studentPotentiallyConflictingGroups.Where(ug => ug.Group.GroupTimes.Where(
@@ -90,10 +92,16 @@ namespace LanguageSchool.Controllers
                                 (groupTime.StartTime <= gt.EndTime && gt.EndTime <= groupTime.EndTime)
                             )).Any()
                         ).Any())
-                            usersGroupViewModel.usersNonavaible.Add(new UserViewModel(student)); // todo?
-                        else
-                            usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
+                        {
+                            isAvaible = false;
+                            break;
+                        }
                     }
+
+                    if(isAvaible)
+                        usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
+                    else
+                        usersGroupViewModel.usersNonavaible.Add(new UserViewModel(student)); // todo?
                 }
             }
 

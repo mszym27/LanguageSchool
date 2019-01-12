@@ -26,7 +26,14 @@
             </tr>
             @foreach (var lessonSubject in Model.LessonSubjects)
             {
-                <tr>
+                var fontColor = "black";
+
+                if (!lessonSubject.IsActive)
+                {
+                    fontColor = "silver";
+                }
+
+                <tr style="color: @fontColor">
                     <td>
                         @lessonSubject.CreationDate.ToString("yyy/MM/dd")
                     </td>

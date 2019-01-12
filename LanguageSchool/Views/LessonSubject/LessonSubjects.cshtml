@@ -24,7 +24,7 @@
                     Opis
                 </th>
             </tr>
-            @foreach (var lessonSubject in Model.LessonSubjects)
+            @foreach (var lessonSubject in Model.LessonSubjects.Where(ls => ls.IsActive))
             {
                 <tr>
                     <td>
