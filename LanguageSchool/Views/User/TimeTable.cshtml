@@ -9,7 +9,7 @@
 @using LanguageSchool.Models;
 @using LanguageSchool.Models.ViewModels;
 
-@model List<GroupTime>
+@model TimeTableViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -53,7 +53,7 @@
                 </td>
                 @for (int j = 0; j < 7; j++)
                 {
-                    GroupTime current = Model.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
+                    GroupTime current = Model.Times.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
                     if (current == null)
                     {
                         <td></td>
@@ -92,7 +92,7 @@
                             style += "border-bottom-style: none;";
                         }
 
-                        if (Model.Where(
+                        if (Model.Times.Where(
                             gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
                             && (i + 8) == (current.StartTime + 1)
                         )
@@ -104,8 +104,14 @@
                             <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
                                 @if (show)
                                 {
-                                    <p><strong>@current.Group.Course.Name</strong></p>
-                                    @*<p>@current.Group.Name</p>*@
+                                    string shown = current.Group.Course.Name;
+
+                                    if (Model.IsTeacher)
+                                    {
+                                        shown = current.Group.Name;
+                                    }
+
+                                    <p><strong>@shown</strong></p>
                                 }
                             </a>
                         </td>

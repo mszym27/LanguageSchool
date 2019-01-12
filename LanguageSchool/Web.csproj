@@ -319,6 +319,7 @@
     <Compile Include="Models\UsersTests.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\TimeTableViewModel.cs" />
     <Compile Include="Models\ViewModels\SubjectsQuestionsViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactInfoListParameters.cs" />
     <Compile Include="Models\ViewModels\LessonSubjectViewModel.cs" />
