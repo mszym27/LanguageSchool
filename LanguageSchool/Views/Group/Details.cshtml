@@ -72,7 +72,7 @@
             {
                 <tr>
                     <td>
-                        @student.CreationDate
+                        @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First().CreationDate.ToString("yyyy/MM/dd")
                     </td>
                     <td>
                         @student.Fullname
