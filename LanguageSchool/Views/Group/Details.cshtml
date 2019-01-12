@@ -11,80 +11,85 @@
             <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "LessonSubject", new { id = Model.GroupId})'">Dodaj nowy temat</button>
         </div>
     </div>
-    <div class="row thumbnail col-md-12">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>
-                    Utworzono
-                </th>
-                <th>
-                    Nazwa
-                </th>
-                <th>
-                    Opis
-                </th>
-            </tr>
-            @foreach (var lessonSubject in Model.LessonSubjects)
-            {
-                var fontColor = "black";
-
-                if (!lessonSubject.IsActive)
-                {
-                    fontColor = "silver";
-                }
-
-                <tr style="color: @fontColor">
-                    <td>
-                        @lessonSubject.CreationDate.ToString("yyy/MM/dd")
-                    </td>
-                    <td>
-                        @Html.ActionLink(lessonSubject.Name, "Upload", "Material", new { lessonSubjectId = lessonSubject.Id }, null)
-                    </td>
-                    <td>
-                        @lessonSubject.Description
-                    </td>
-                </tr>
-            }
-        </table>
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-4">
+            <strong>Tematy</strong>
+        </div>
+        <div class="thumbnail col-md-7 col-md-offset-1">
+            <strong>Uczestnicy</strong>
+        </div>
     </div>
     <div class="row col-md-12">
         <div class="thumbnail col-md-4">
-            Uczestnicy
-        </div>
-    </div>
-    <div class="row thumbnail col-md-12">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>
-                    Dodano
-                </th>
-                <th>
-                    Nazwa użytkownika
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Numer telefonu
-                </th>
-            </tr>
-            @foreach (var student in Model.Students)
-            {
+            <table class="table table-striped table-bordered">
                 <tr>
-                    <td>
-                        @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First().CreationDate.ToString("yyyy/MM/dd")
-                    </td>
-                    <td>
-                        @student.Fullname
-                    </td>
-                    <td>
-                        @student.EmailAdress
-                    </td>
-                    <td>
-                        @student.PublicPhoneNumber
-                    </td>
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Opis
+                    </th>
                 </tr>
-            }
-        </table>
+                @foreach (var lessonSubject in Model.LessonSubjects)
+                {
+                    var fontColor = "black";
+
+                    if (!lessonSubject.IsActive)
+                    {
+                        fontColor = "silver";
+                    }
+
+                    <tr style="color: @fontColor">
+                        <td>
+                            @lessonSubject.CreationDate.ToString("yyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.ActionLink(lessonSubject.Name, "Upload", "Material", new { lessonSubjectId = lessonSubject.Id }, null)
+                        </td>
+                        <td>
+                            @lessonSubject.Description
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="thumbnail col-md-7 col-md-offset-1">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>
+                        Dodano
+                    </th>
+                    <th>
+                        Nazwa użytkownika
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Numer telefonu
+                    </th>
+                </tr>
+                @foreach (var student in Model.Students)
+                {
+                    <tr>
+                        <td>
+                            @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First().CreationDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @student.Fullname
+                        </td>
+                        <td>
+                            @student.EmailAdress
+                        </td>
+                        <td>
+                            @student.PublicPhoneNumber
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
