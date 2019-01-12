@@ -1,0 +1,49 @@
+﻿@model LanguageSchool.Models.ViewModels.SubjectsQuestionsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-4">
+            <strong>Pytania otwarte</strong>
+        </div>
+    </div>
+    <div class="thumbnail row col-md-12">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    Utworzono
+                </th>
+                <th>
+                    Treść
+                </th>
+                <th>
+                    Punkty
+                </th>
+            </tr>
+
+            @foreach (var closedQuestion in Model.ClosedQuestions)
+            {
+                <tr>
+                    <td>
+                        @closedQuestion.CreationDate.ToString("yyyy/MM/dd")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(cq => closedQuestion.Contents)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(cq => closedQuestion.Points)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="row col-md-12">
+        <div class="thumbnail col-md-4">
+            <strong>Pytania zamknięte</strong>
+        </div>
+    </div>
+</div>

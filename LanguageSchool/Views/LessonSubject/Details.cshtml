@@ -21,7 +21,6 @@
                 }
                 <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "LessonSubject", new { id = Model.Id })'">@DeActivateButtonValue</button>
             </div>
-
             <div class="col-md-4">
                 <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "LessonSubject")'">Usuń</button>
             </div>
@@ -73,13 +72,15 @@
         </div>
     </div>   
     <div class="row col-md-12">
-        <div class="thumbnail col-md-2">
-            <div class="col-md-12">
+        <div class="thumbnail col-md-4">
+            <div class="col-md-6">
                 <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Upload", "Material", new { lessonSubjectId = Model.Id })'">Dodaj materiały</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Question", new { lessonSubjectId = Model.Id } )'">Pytania</button>
             </div>
         </div>
     </div>
-
     @if (Model.Materials.Any())
     {
         <div class="row thumbnail col-md-12">
