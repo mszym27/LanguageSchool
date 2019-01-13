@@ -10,9 +10,11 @@
 {
     @Html.AntiForgeryToken()
 
+    @Html.HiddenFor(model => model.LessonSubjectId)
     @Html.HiddenFor(model => model.Contents)
     @Html.HiddenFor(model => model.Points)
-    @Html.HiddenFor(model => model.LessonSubjectId)
+    @Html.HiddenFor(model => model.IsMultichoice)
+    @Html.HiddenFor(model => model.NumberOfPossibleAnswers)
 
     var curr = Model.Answers.Count - 1;
 
