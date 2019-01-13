@@ -23,12 +23,24 @@ namespace LanguageSchool.Controllers
             return View(subjectsQuestionsViewModel);
         }
 
-        //// GET: Question/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.LessonSubjectId = new SelectList(db.LessonSubjects, "Id", "Name");
-        //    return View();
-        //}
+        [HttpGet]
+        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        public ActionResult CreateOpen(int lessonSubjectId)
+        {
+            var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            var openQuestion = new OpenQuestionViewModel(lessonSubject);
+
+            return View(openQuestion);
+        }
+
+        [HttpPost]
+        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        public ActionResult CreateOpen(OpenQuestionViewModel question)
+        {
+
+            return View(question);
+        }
 
         //// POST: Question/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 

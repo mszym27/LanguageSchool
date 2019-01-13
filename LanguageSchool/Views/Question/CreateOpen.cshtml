@@ -1,0 +1,50 @@
+﻿@model LanguageSchool.Models.ViewModels.OpenQuestionViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.LessonSubjectId)
+
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="thumbnail col-md-2">
+                <input type="submit" value="Utwórz" class="btn btn-block btn-default" />
+            </div>
+        </div>
+        <div class="row form-horizontal thumbnail col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Punkty</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Points, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Points, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <strong>Treść</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
