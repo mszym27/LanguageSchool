@@ -88,6 +88,9 @@ namespace LanguageSchool.Controllers
             }
             else
             {
+                if (closedQuestion.Answers == null)
+                    closedQuestion.Answers = new List<AnswerViewModel>();
+
                 closedQuestion.Answers.Add(new AnswerViewModel());
                 closedQuestion.CurrentAnswer += 1;
 

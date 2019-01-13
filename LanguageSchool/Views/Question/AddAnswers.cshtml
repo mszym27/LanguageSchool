@@ -10,21 +10,18 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(model => model.LessonSubjectId)
     @Html.HiddenFor(model => model.CurrentAnswer)
     @Html.HiddenFor(model => model.Contents)
     @Html.HiddenFor(model => model.Points)
+    @Html.HiddenFor(model => model.LessonSubjectId)
 
     var CurrentAnswer = Model.CurrentAnswer - 1;
 
-    //if(model.Answers.)
-    //{
-    for (var i = 0; i < Model.CurrentAnswer; i++)
+    for (var i = 0; i < (CurrentAnswer - 1); i++)
     {
         @Html.HiddenFor(model => model.Answers[i].Answer)
         @Html.HiddenFor(model => model.Answers[i].IsCorrect)
-        }
-    @*  }*@
+    }
 
     <div class="container">
         <div class="row col-md-12">
@@ -32,6 +29,48 @@
                 <input type="submit" value="Dalej" class="btn btn-block btn-default" />
             </div>
         </div>
+        <div class="row thumbnail col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>
+                        Treść
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Contents)
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Punkty
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Points)
+                </div>
+            </div>
+        </div>
+        
+        @if (CurrentAnswer > 1)
+        {
+            <div class="row thumbnail col-md-12">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>
+                            Pytania
+                        </th>
+                    </tr>                    
+                    @for (var i = 0; i < (CurrentAnswer - 1); i++)
+                    {
+                        <tr>
+                            <td>
+                                @Model.Answers[i].Answer
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+
         <div class="row form-horizontal thumbnail col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
@@ -49,7 +88,7 @@
                         <strong>Poprawna</strong>
                     </div>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Answers[CurrentAnswer].IsCorrect, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.CheckBoxFor(model => model.Answers[CurrentAnswer].IsCorrect)
                     </div>
                 </div>
             </div>

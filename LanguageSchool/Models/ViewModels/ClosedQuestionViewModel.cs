@@ -24,7 +24,6 @@ namespace LanguageSchool.Models.ViewModels
 
         public ClosedQuestionViewModel()
         {
-            Answers = new List<AnswerViewModel>();
         }
 
         public ClosedQuestionViewModel(LessonSubject lessonSubject)
