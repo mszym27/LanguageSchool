@@ -17,7 +17,7 @@
 
     var CurrentAnswer = Model.CurrentAnswer - 1;
 
-    for (var i = 0; i < (CurrentAnswer - 1); i++)
+    for (var i = 0; i < CurrentAnswer; i++)
     {
         @Html.HiddenFor(model => model.Answers[i].Answer)
         @Html.HiddenFor(model => model.Answers[i].IsCorrect)
@@ -50,7 +50,7 @@
             </div>
         </div>
         
-        @if (CurrentAnswer > 1)
+        @if (CurrentAnswer >= 1)
         {
             <div class="row thumbnail col-md-12">
                 <table class="table table-striped table-bordered">
@@ -59,7 +59,7 @@
                             Pytania
                         </th>
                     </tr>                    
-                    @for (var i = 0; i < (CurrentAnswer - 1); i++)
+                    @for (var i = 0; i < CurrentAnswer; i++)
                     {
                         <tr>
                             <td>
