@@ -58,6 +58,45 @@ namespace LanguageSchool.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        public ActionResult CreateClosed(int lessonSubjectId)
+        {
+            var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            var closedQuestion = new ClosedQuestionViewModel(lessonSubject);
+
+            return View(closedQuestion);
+        }
+
+        [HttpGet]
+        [Route("Questions/AddAnswers/{lessonSubjectId}")]
+        public ActionResult AddAnswers(ClosedQuestionViewModel closedQuestion)
+        {
+            return View(closedQuestion);
+        }
+
+        [HttpPost]
+        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        public ActionResult CreateClosed(ClosedQuestionViewModel closedQuestion)
+        {
+            if (closedQuestion.Answers != null
+                && closedQuestion.Answers.Count != 0
+                && closedQuestion.Answers.Where(a => a.IsCorrect).Any())
+            {
+                //Insert
+            }
+            else
+            {
+                closedQuestion.Answers.Add(new AnswerViewModel());
+                closedQuestion.CurrentAnswer += 1;
+
+                return View("AddAnswers", closedQuestion);
+            }
+
+            return View();
+        }
+
         //// POST: Question/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.

@@ -481,6 +481,7 @@
     <Content Include="Views\OpenQuestion\Index.cshtml" />
     <Content Include="Views\Question\CreateClosed.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\AddAnswers.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

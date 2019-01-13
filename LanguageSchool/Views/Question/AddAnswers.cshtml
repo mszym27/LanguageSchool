@@ -8,36 +8,48 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.LessonSubjectId)
-
     @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.LessonSubjectId)
+    @Html.HiddenFor(model => model.CurrentAnswer)
+    @Html.HiddenFor(model => model.Contents)
+    @Html.HiddenFor(model => model.Points)
+
+    var CurrentAnswer = Model.CurrentAnswer - 1;
+
+    //if(model.Answers.)
+    //{
+    for (var i = 0; i < Model.CurrentAnswer; i++)
+    {
+        @Html.HiddenFor(model => model.Answers[i].Answer)
+        @Html.HiddenFor(model => model.Answers[i].IsCorrect)
+        }
+    @*  }*@
 
     <div class="container">
         <div class="row col-md-12">
-            <div class="thumbnail col-md-2">
-                <input type="submit" value="Dodaj odpowiedzi" class="btn btn-block btn-default" />
+            <div class="thumbnail col-md-3">
+                <input type="submit" value="Dalej" class="btn btn-block btn-default" />
             </div>
         </div>
         <div class="row form-horizontal thumbnail col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="control-label col-md-4">
-                        <strong>Punkty</strong>
+                        <strong>Treść</strong>
                     </div>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Points, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Points, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Answers[CurrentAnswer].Answer, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="control-label col-md-4">
-                        <strong>Treść</strong>
+                        <strong>Poprawna</strong>
                     </div>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Answers[CurrentAnswer].IsCorrect, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
             </div>

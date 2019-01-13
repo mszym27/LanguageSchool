@@ -14,6 +14,10 @@ namespace LanguageSchool.Models.ViewModels
 
         public bool IsMarked { get; set; }
 
+        public AnswerViewModel()
+        {
+        }
+
         public AnswerViewModel (Answer a)
         {
             Id = a.Id;
