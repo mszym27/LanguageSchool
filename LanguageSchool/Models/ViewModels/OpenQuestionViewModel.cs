@@ -16,6 +16,8 @@ namespace LanguageSchool.Models.ViewModels
         [RangeAttribute(1, int.MaxValue, ErrorMessage = "Wartość musi być większa od zera")]
         public int Points { get; set; }
 
+        public OpenQuestionViewModel() { }
+
         public OpenQuestionViewModel(LessonSubject lessonSubject)
         {
             LessonSubjectId = lessonSubject.Id;

@@ -24,7 +24,7 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
-        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        [Route("Questions/CreateOpen/{lessonSubjectId}")]
         public ActionResult CreateOpen(int lessonSubjectId)
         {
             var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
@@ -35,11 +35,27 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
-        [Route("Questions/CreateClosed/{lessonSubjectId}")]
-        public ActionResult CreateOpen(OpenQuestionViewModel question)
+        [Route("Questions/CreateOpen/{lessonSubjectId}")]
+        public ActionResult CreateOpen(OpenQuestionViewModel openQuestionViewModel)
         {
+            try
+            {
+                var openQuestion = new OpenQuestion();
 
-            return View(question);
+                openQuestion.LessonSubjectId = openQuestionViewModel.LessonSubjectId;
+                openQuestion.Points = openQuestionViewModel.Points;
+                openQuestion.Contents = openQuestionViewModel.Contents;
+                openQuestion.CreationDate = DateTime.Now;
+
+                unitOfWork.OpenQuestionRepository.Insert(openQuestion);
+                unitOfWork.Save();
+
+                return RedirectToAction("Index", openQuestionViewModel.LessonSubjectId);
+            }
+            catch
+            {
+                return View(openQuestionViewModel);
+            }
         }
 
         //// POST: Question/Create
