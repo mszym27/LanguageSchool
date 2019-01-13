@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.DAL;
 
 namespace LanguageSchool.Controllers
 {
@@ -21,7 +22,9 @@ namespace LanguageSchool.Controllers
         {
             var loggedUser = GetLoggedUser();
 
-            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted));
+            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted)
+                , orderBy: q => q.OrderByDescending(d => d.Message.CreationDate)
+            );
 
             if (page == 1)
             {
@@ -105,16 +108,12 @@ namespace LanguageSchool.Controllers
 
             if (userId != null)
             {
-                usersSelectList = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
-                                           "Id",
-                                           "Login",
-                                           unitOfWork.UserRepository.GetById(userId));
+                var selectedUser = unitOfWork.UserRepository.GetById(userId);
+                usersSelectList = PopulateList.AllUsers(selectedUser);
             }
             else
             {
-                usersSelectList = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted),
-                                             "Id",
-                                             "Login");
+                usersSelectList = PopulateList.AllUsers();
             }
 
             userMessageViewModel.Users = usersSelectList;

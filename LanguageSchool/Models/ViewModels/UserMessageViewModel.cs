@@ -43,7 +43,7 @@ namespace LanguageSchool.Models.ViewModels
             HasBeenReceived = userMessage.HasBeenReceived;
             IsSystem = userMessage.Message.IsSystem;
 
-            ShortenedContents = (Contents.Length > 100) ? Contents.Substring(0, 100) + "..." : Contents;
+            ShortenedContents = (Contents.Length > 80) ? Contents.Substring(0, 80) + "..." : Contents;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace LanguageSchool.Models.ViewModels
             StartDate = course.StartDate;
             EndDate = course.EndDate;
 
-            Users = PopulateList.GetAllTeachers();
+            Users = PopulateList.AllUsersInRole((int)Consts.Roles.Teacher);
         }
 
         public void FillTimetable(User user)

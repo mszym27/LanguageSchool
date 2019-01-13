@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
 
 namespace LanguageSchool.DAL
@@ -9,16 +10,28 @@ namespace LanguageSchool.DAL
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
 
-        public static SelectList GetAllTeachers()
+        public static SelectList AllUsers(User selectedUser = null)
         {
-            var teachers = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Teacher);
+            var users = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId != (int)Consts.Roles.Admin);
 
-            var teachersViewModels = new List<UserViewModel>();
+            var usersViewModels = new List<UserViewModel>();
 
-            foreach (var teacher in teachers)
-                teachersViewModels.Add(new UserViewModel(teacher));
+            foreach (var user in users)
+                usersViewModels.Add(new UserViewModel(user));
 
-            return new SelectList(teachersViewModels, "Id", "Fullname");
+            return new SelectList(usersViewModels, "Id", "Fullname", selectedUser);
+        }
+
+        public static SelectList AllUsersInRole(int RoleId)
+        {
+            var users = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == RoleId);
+
+            var usersViewModels = new List<UserViewModel>();
+
+            foreach (var user in users)
+                usersViewModels.Add(new UserViewModel(user));
+
+            return new SelectList(usersViewModels, "Id", "Fullname");
         }
 
         public static SelectList GetPageSizes()
