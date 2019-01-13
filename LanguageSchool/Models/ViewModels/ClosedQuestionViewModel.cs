@@ -29,6 +29,7 @@ namespace LanguageSchool.Models.ViewModels
         {
             LessonSubjectId = lessonSubject.Id;
             Points = 1;
+            NumberOfPossibleAnswers = 3;
             Answers = new List<AnswerViewModel>();
         }
 

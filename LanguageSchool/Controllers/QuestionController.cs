@@ -78,25 +78,45 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
-        public ActionResult CreateClosed(ClosedQuestionViewModel closedQuestion)
+        public ActionResult CreateClosed(ClosedQuestionViewModel closedQuestionViewModel, string submit)
         {
-            if (closedQuestion.Answers != null
-                && closedQuestion.Answers.Count != 0
-                && closedQuestion.Answers.Where(a => a.IsCorrect).Any())
+            if (submit == "Utwórz")
             {
-                //Insert
+                var closedQuestion = new ClosedQuestion();
+
+                closedQuestion.CreationDate = DateTime.Now;
+                closedQuestion.LessonSubjectId = closedQuestionViewModel.LessonSubjectId;
+                closedQuestion.Contents = closedQuestionViewModel.Contents;
+                closedQuestion.NumberOfPossibleAnswers = closedQuestionViewModel.NumberOfPossibleAnswers;
+                closedQuestion.IsMultichoice = closedQuestionViewModel.IsMultichoice;
+
+                closedQuestion.Answers = new List<Answer>();
+
+                foreach(var answerViewModel in closedQuestionViewModel.Answers)
+                {
+                    var answer = new Answer();
+
+                    answer.AnswerContent = answerViewModel.Answer;
+                    answer.IsCorrect = answerViewModel.IsCorrect;
+                    answer.CreationDate = DateTime.Now;
+
+                    closedQuestion.Answers.Add(answer);
+                }
+
+                unitOfWork.ClosedQuestionRepository.Insert(closedQuestion);
+                unitOfWork.Save();
+
+                return RedirectToAction("Index", closedQuestionViewModel.LessonSubjectId);
             }
             else
             {
-                if (closedQuestion.Answers == null)
-                    closedQuestion.Answers = new List<AnswerViewModel>();
+                if (closedQuestionViewModel.Answers == null)
+                    closedQuestionViewModel.Answers = new List<AnswerViewModel>();
 
-                closedQuestion.Answers.Add(new AnswerViewModel());
+                closedQuestionViewModel.Answers.Add(new AnswerViewModel());
 
-                return View("AddAnswers", closedQuestion);
+                return View("AddAnswers", closedQuestionViewModel);
             }
-
-            return View();
         }
 
         //// POST: Question/Create

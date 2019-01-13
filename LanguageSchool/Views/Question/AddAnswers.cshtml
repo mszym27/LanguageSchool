@@ -25,7 +25,12 @@
     <div class="container">
         <div class="row col-md-12">
             <div class="thumbnail col-md-3">
-                <input type="submit" value="Dalej" class="btn btn-block btn-default" />
+                <div class="col-md-6">
+                    <input type="submit" name="submit" value="Dalej" class="btn btn-block btn-default" />
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" name="submit" value="Utwórz" class="btn btn-block btn-primary" />
+                </div>
             </div>
         </div>
         <div class="row thumbnail col-md-12">
@@ -47,6 +52,24 @@
                     @Html.DisplayFor(model => model.Points)
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>
+                        Liczba wyświetlanych odpowiedzi
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.NumberOfPossibleAnswers)
+                </div>
+                <div class="col-md-3">
+                    <label>
+                       Wielokrotnego wyboru
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.IsMultichoice)
+                </div>
+            </div>
         </div>
         
         @if (curr >= 1)
@@ -55,13 +78,19 @@
                 <table class="table table-striped table-bordered">
                     <tr>
                         <th>
-                            Pytania
+                            Odpowiedzi
                         </th>
                     </tr>                    
                     @for (var i = 0; i < curr; i++)
                     {
+                        var color = "black";
+
+                        if (@Model.Answers[i].IsCorrect)
+                        {
+                            color = "forestgreen";
+                        }
                         <tr>
-                            <td>
+                            <td style="color:@color">
                                 @Model.Answers[i].Answer
                             </td>
                         </tr>
