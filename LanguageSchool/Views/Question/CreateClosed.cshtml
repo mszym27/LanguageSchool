@@ -19,47 +19,49 @@
             </div>
         </div>
         <div class="row form-horizontal thumbnail col-md-12">
-            <div class="col-md-6">
+            <div class="row">
                 <div class="form-group">
-                    <div class="control-label col-md-4">
+                    <div class="control-label col-md-2">
                         <strong>Treść</strong>
                     </div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "widetextarea", @style = "width:800px" } })
                         @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Liczba wyświetlanych odpowiedzi</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.NumberOfPossibleAnswers, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NumberOfPossibleAnswers, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Punkty</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Points, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Points, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="control-label col-md-7">
+                            <strong>Wyświetlane</strong>
+                        </div>
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.NumberOfPossibleAnswers, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NumberOfPossibleAnswers, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Wielokrotnego wyboru</strong>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="control-label col-md-7">
+                            <strong>Punkty</strong>
+                        </div>
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Points, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Points, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.IsMultichoice, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.IsMultichoice, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="control-label col-md-7">
+                            <strong>Wielokrotnego wyboru</strong>
+                        </div>
+                        <div class="col-md-3">
+                            @Html.CheckBoxFor(model => model.IsMultichoice, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsMultichoice, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
             </div>
