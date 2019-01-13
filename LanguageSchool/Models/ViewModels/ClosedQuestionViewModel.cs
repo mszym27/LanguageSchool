@@ -18,7 +18,6 @@ namespace LanguageSchool.Models.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić ilość punktów")]
         [RangeAttribute(1, int.MaxValue, ErrorMessage = "Wartość musi być większa od zera")]
         public int Points { get; set; }
-        public int CurrentAnswer { get; set; }
 
         public List<AnswerViewModel> Answers { get; set; }
 

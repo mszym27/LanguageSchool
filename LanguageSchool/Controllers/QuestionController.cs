@@ -92,7 +92,6 @@ namespace LanguageSchool.Controllers
                     closedQuestion.Answers = new List<AnswerViewModel>();
 
                 closedQuestion.Answers.Add(new AnswerViewModel());
-                closedQuestion.CurrentAnswer += 1;
 
                 return View("AddAnswers", closedQuestion);
             }
