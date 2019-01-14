@@ -12,6 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public int LessonSubjectId { get; set; }
         [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = "Proszę wprowadzić treść pytania")]
+        [StringLength(250, ErrorMessage = "Maksymalna długość pytania to 1000 znaków")]
         public string Contents { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić ilość punktów")]
         [RangeAttribute(1, int.MaxValue, ErrorMessage = "Wartość musi być większa od zera")]

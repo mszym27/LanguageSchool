@@ -31,7 +31,14 @@
                     <input type="submit" name="submit" value="Dalej" class="btn btn-block btn-default" />
                 </div>
                 <div class="col-md-6">
-                    <input type="submit" name="submit" value="Utwórz" class="btn btn-block btn-primary" />
+                    @if (curr < Model.NumberOfPossibleAnswers || !Model.Answers.Where(a => a.IsCorrect).Any())
+                    {
+                        <input value="Utwórz" class="btn btn-block btn-primary" disabled="disabled"/>
+                    }
+                    else
+                    {
+                        <input type="submit" name="submit" value="Utwórz" class="btn btn-block btn-primary" />
+                    }
                 </div>
             </div>
         </div>
