@@ -28,17 +28,10 @@
         <div class="row col-md-12">
             <div class="thumbnail col-md-3">
                 <div class="col-md-6">
-                    <input type="submit" name="submit" value="Dalej" class="btn btn-block btn-default" />
+                    <input type="submit" name="next" value="Dalej" class="btn btn-block btn-default" />
                 </div>
                 <div class="col-md-6">
-                    @if (curr < Model.NumberOfPossibleAnswers || !Model.Answers.Where(a => a.IsCorrect).Any())
-                    {
-                        <input value="Utwórz" class="btn btn-block btn-primary" disabled="disabled"/>
-                    }
-                    else
-                    {
-                        <input type="submit" name="submit" value="Utwórz" class="btn btn-block btn-primary" />
-                    }
+                    <input type="submit" name="submit" id="submit" value="Utwórz" class="btn btn-block btn-primary" disabled="disabled"/>
                 </div>
             </div>
         </div>
@@ -132,12 +125,29 @@
                         <strong>Poprawna</strong>
                     </div>
                     <div class="col-md-8">
-                        @Html.CheckBoxFor(model => model.Answers[curr].IsCorrect)
+                        @Html.CheckBoxFor(model => model.Answers[curr].IsCorrect, new { @id = "isCorrect", @onchange = "enableButton()" })
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        window.onload = enableButton();
+
+        function enableButton() {
+            var hasAnyCorrect = "@(Model.Answers.Where(a => a.IsCorrect).Any())";
+            var isEnough = "@(!(Model.Answers.Count < Model.NumberOfPossibleAnswers))";
+
+            var isCorrect = document.getElementById("isCorrect");
+
+            var submit = document.getElementById("submit");
+
+            if ((isCorrect.checked || hasAnyCorrect == "True") && isEnough == "True")
+                submit.disabled = false;
+            else
+                submit.disabled = true;
+        }
+    </script>
 }
 
 @section Scripts {
