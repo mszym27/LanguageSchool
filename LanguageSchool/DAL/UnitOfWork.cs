@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using System.Data.Entity.Validation;
 
 namespace LanguageSchool.DAL
 {
@@ -184,7 +185,19 @@ namespace LanguageSchool.DAL
 
         public void Save()
         {
-            entities.SaveChanges();
+            try {
+                entities.SaveChanges();
+            }
+            catch (DbEntityValidationException ee)
+            {
+                foreach (var error in ee.EntityValidationErrors)
+                {
+                    foreach (var thisError in error.ValidationErrors)
+                    {
+                        var errorMessage = thisError.ErrorMessage;
+                    }
+                }
+            }
         }
 
         private bool disposed = false;

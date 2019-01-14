@@ -12,6 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public int Id { get; set; }
         public int LessonSubjectId { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić treść pytania")]
+        [StringLength(250, ErrorMessage = "Maksymalna długość pytania to 250 znaków")]
         public string Contents { get; set; }
         public int NumberOfPossibleAnswers { get; set; }
         public bool IsMultichoice { get; set; }

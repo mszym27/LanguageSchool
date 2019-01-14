@@ -88,6 +88,7 @@ namespace LanguageSchool.Controllers
                 closedQuestion.LessonSubjectId = closedQuestionViewModel.LessonSubjectId;
                 closedQuestion.Contents = closedQuestionViewModel.Contents;
                 closedQuestion.NumberOfPossibleAnswers = closedQuestionViewModel.NumberOfPossibleAnswers;
+                closedQuestion.Points = closedQuestionViewModel.Points;
                 closedQuestion.IsMultichoice = closedQuestionViewModel.IsMultichoice;
 
                 closedQuestion.Answers = new List<Answer>();
