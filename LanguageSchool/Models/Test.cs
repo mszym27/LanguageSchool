@@ -36,6 +36,7 @@ namespace LanguageSchool.Models
         public int NumberOfClosedQuestions { get; set; }
         public int Points { get; set; }
         public bool IsActive { get; set; }
+        public int GroupId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContactRequest> ContactRequests { get; set; }
@@ -48,5 +49,6 @@ namespace LanguageSchool.Models
         public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersTests> UsersTests { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

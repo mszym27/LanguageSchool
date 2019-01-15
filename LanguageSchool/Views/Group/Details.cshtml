@@ -92,4 +92,58 @@
             </table>
         </div>
     </div>
+    @if (Model.Tests.Any())
+    {
+        <div class="row">
+            <div class="thumbnail col-md-7 col-md-offset-1">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>
+                            Utworzono
+                        </th>
+                        <th>
+                            Nazwa
+                        </th>
+                        <th>
+                            Komentarz
+                        </th>
+                        <th>
+                            Liczba pytań
+                        </th>
+                        <th>
+                            Punkty
+                        </th>
+                    </tr>
+                    @foreach (var test in Model.Tests)
+                    {   
+                        <tr>
+                            <td>
+                                @test.CreationDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td>
+                                @test.Name
+                            </td>
+                            <td>
+                                @test.Comment
+                            </td>
+                            <td>
+                                @test.NumberOfClosedQuestions/@test.NumberOfOpenQuestions/@test.NumberOfQuestions
+                            </td>
+                            <td>
+                                @test.Points
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    }
+    @if (Model.LessonSubjects.Any())
+    {
+        <div class="row">
+            <div class="col-md-3 col-md-offset-7">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Test", new { GroupId = Model.GroupId})'">Utwórz nowy test</button>
+            </div>
+        </div>
+    }
 </div>

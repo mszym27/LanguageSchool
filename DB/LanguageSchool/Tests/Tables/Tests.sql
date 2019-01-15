@@ -11,9 +11,13 @@
     [NumberOfClosedQuestions] INT             NOT NULL,
     [Points]                  INT             NOT NULL,
     [IsActive]                BIT             NOT NULL,
+    [GroupId]                 INT             NOT NULL,
     CONSTRAINT [PK_Tests] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Tests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id])
+    CONSTRAINT [FK_Tests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id]),
+    CONSTRAINT [FK_Tests_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id])
 );
+
+
 
 
 

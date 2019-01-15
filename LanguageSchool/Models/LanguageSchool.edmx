@@ -240,6 +240,7 @@
           <Property Name="NumberOfClosedQuestions" Type="int" Nullable="false" />
           <Property Name="Points" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TestsLessonSubjects">
           <Key>
@@ -548,6 +549,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tests_GroupId">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TestsLessonSubjects_LessonSubjects">
           <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="1" />
           <End Role="TestsLessonSubjects" Type="Self.TestsLessonSubjects" Multiplicity="*" />
@@ -825,6 +838,10 @@
             <End Role="Courses" EntitySet="Courses" />
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tests_GroupId" Association="Self.FK_Tests_GroupId">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
           <AssociationSet Name="FK_TestsLessonSubjects_LessonSubjects" Association="Self.FK_TestsLessonSubjects_LessonSubjects">
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
             <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
@@ -1058,6 +1075,8 @@
           <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_Tests" FromRole="Tests" ToRole="TestsLessonSubjects" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="Tests" ToRole="UserOpenAnswers" />
           <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Tests" FromRole="Tests" ToRole="UsersTests" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_Tests_GroupId" FromRole="Test" ToRole="Group" />
         </EntityType>
         <EntityType Name="TestsLessonSubject">
           <Key>
@@ -1520,6 +1539,10 @@
             <End Role="Group" EntitySet="Groups" />
             <End Role="LessonSubject" EntitySet="LessonSubjects" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tests_GroupId" Association="LanguageSchoolModel.FK_Tests_GroupId">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
           <Key>
@@ -1645,6 +1668,7 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="LessonSubjects" Relationship="LanguageSchoolModel.FK_LessonSubjects_Groups" FromRole="Group" ToRole="LessonSubject" />
+          <NavigationProperty Name="Tests" Relationship="LanguageSchoolModel.FK_Tests_GroupId" FromRole="Group" ToRole="Test" />
         </EntityType>
         <EntityType Name="GroupTime">
           <Key>
@@ -1831,6 +1855,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tests_GroupId">
+          <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1981,6 +2017,7 @@
           <EntitySetMapping Name="Tests">
             <EntityTypeMapping TypeName="LanguageSchoolModel.Test">
               <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

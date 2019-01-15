@@ -32,8 +32,9 @@ namespace LanguageSchool.Models.ViewModels
 
         public List<UserViewModel> Students { get; set; }
         public List<LessonSubject> LessonSubjects { get; set; }
-
         public List<GroupTime> Hours { get; set; }
+
+        public List<Test> Tests { get; set; }
 
         public GroupViewModel()
         {
@@ -62,6 +63,8 @@ namespace LanguageSchool.Models.ViewModels
 
             if(group.LessonSubjects != null)
                 LessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted).OrderByDescending(ls => ls.CreationDate).ToList();
+
+            Tests = group.Tests.Where(t => t.IsActive && !t.IsDeleted).ToList();
         }
 
         public GroupViewModel(Course course)
