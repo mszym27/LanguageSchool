@@ -52,7 +52,7 @@ namespace LanguageSchool.Controllers
             creationDateTo = (creationDateTo == null) ? now : creationDateTo;
 
             PreferredHoursFrom = (PreferredHoursFrom == null) ? 8 : PreferredHoursFrom;
-            PreferredHoursTo = (PreferredHoursTo == null) ? now.Hour : PreferredHoursTo;
+            PreferredHoursTo = (PreferredHoursTo == null) ? now.Hour + 1 : PreferredHoursTo;
 
             var contactInfo = unitOfWork.GetContactInfoList(
                 creationDateFrom,

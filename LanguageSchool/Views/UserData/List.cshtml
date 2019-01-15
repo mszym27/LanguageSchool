@@ -161,14 +161,16 @@
                 </tr>
                 @foreach (var item in Model)
                 {
+                    string style = "";
                     string controllerName = "UserData";
 
                     if (item.IsContactRequest == 1)
                     {
                         controllerName = "ContactRequest";
+                        style += "color:Red;";
                     }
 
-                    <tr>
+                    <tr style="@style">
                         <td>
                             @item.CreationDate.ToString("yyyy/MM/dd")
                         </td>
