@@ -34,6 +34,8 @@
                 <div class="col-md-2">
                     <font color="gray">
                         dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "disableButton()" })
+                    </font>
+                    <font color="red">
                         prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "disableButton()" })
                     </font>
                 </div>
@@ -98,30 +100,30 @@
                 </div>
             </div>
     </div>
-    
+
     <p />
 
     <div class="row col-md-12">
         <div class="col-md-10">
             @Html.PagedListPager(Model, page => Url.Action("List",
-                new
-                {
-                    creationDateFrom = ViewBag.creationDateFrom,
-                    creationDateTo = ViewBag.creationDateTo,
-                    PreferredHoursFrom = ViewBag.PreferredHoursFrom,
-                    PreferredHoursTo = ViewBag.PreferredHoursTo,
-                    fullName = ViewBag.fullName,
-                    city = ViewBag.city,
-                    street = ViewBag.street,
-                    phoneNumber = ViewBag.phoneNumber,
-                    emailAdress = ViewBag.emailAdress,
-                    showUserData = ViewBag.showUserData,
-                    showContactRequests = ViewBag.showContactRequests,
-                    sortColumn = ViewBag.sortColumn,
-                    sortDirection = ViewBag.sortDirection,
-                    page
-                }
-            ))
+             new
+             {
+                 creationDateFrom = ViewBag.creationDateFrom,
+                 creationDateTo = ViewBag.creationDateTo,
+                 PreferredHoursFrom = ViewBag.PreferredHoursFrom,
+                 PreferredHoursTo = ViewBag.PreferredHoursTo,
+                 fullName = ViewBag.fullName,
+                 city = ViewBag.city,
+                 street = ViewBag.street,
+                 phoneNumber = ViewBag.phoneNumber,
+                 emailAdress = ViewBag.emailAdress,
+                 showUserData = ViewBag.showUserData,
+                 showContactRequests = ViewBag.showContactRequests,
+                 sortColumn = ViewBag.sortColumn,
+                 sortDirection = ViewBag.sortDirection,
+                 page
+             }
+         ))
             @*<div class="col-md-2">
                 @Html.DropDownList("pageSize", (SelectList)PopulateList.GetPageSizes(), "Liczba wyników", new { @class = "form-control" })
             </div>*@
@@ -134,11 +136,12 @@
         </div>
     </div>
 }
+    @{bool hasUserData = Model.Where(m => m.IsContactRequest == 0).Any(); }
 
     <p />
 
         <div class="row thumbnail col-md-12">
-            <table class="table table-striped table-bordered">
+            <table class="table table-bordered">
                 <tr>
                     <th>
                         Utworzono
@@ -146,12 +149,15 @@
                     <th>
                         Imię i nazwisko
                     </th>
-                    <th>
-                        Miasto
-                    </th>
-                    <th>
-                        Ulica
-                    </th>
+                    @if (hasUserData)
+                    {
+                        <th>
+                            Miasto
+                        </th>
+                        <th>
+                            Ulica
+                        </th>
+                    }
                     <th>
                         Numer telefonu
                     </th>
@@ -167,7 +173,7 @@
                     if (item.IsContactRequest == 1)
                     {
                         controllerName = "ContactRequest";
-                        style += "color:Red;";
+                        style += "background-color: pink; color:red;";
                     }
 
                     <tr style="@style">
@@ -177,12 +183,15 @@
                         <td>
                             @Html.ActionLink(item.FullName, "Details", controllerName, new { id = item.Id }, null)
                         </td>
-                        <td>
-                            @item.City
-                        </td>
-                        <td>
-                            @item.Street
-                        </td>
+                        @if (hasUserData)
+                        {
+                            <td>
+                                @item.City
+                            </td>
+                            <td>
+                                @item.Street
+                            </td>
+                        }
                         <td>
                             @item.PhoneNumber
                         </td>
