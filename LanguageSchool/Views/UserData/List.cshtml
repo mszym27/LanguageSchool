@@ -167,21 +167,23 @@
                 </tr>
                 @foreach (var item in Model)
                 {
-                    string style = "";
+                    string rowStyle = "";
+                    string linkStyle = "";
                     string controllerName = "UserData";
 
                     if (item.IsContactRequest == 1)
                     {
                         controllerName = "ContactRequest";
-                        style += "background-color: pink; color:red;";
+                        rowStyle = "background-color: pink; color:darkred;";
+                        linkStyle = "color:red";
                     }
 
-                    <tr style="@style">
+                    <tr style="@rowStyle">
                         <td>
                             @item.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
-                            @Html.ActionLink(item.FullName, "Details", controllerName, new { id = item.Id }, null)
+                            @Html.ActionLink(item.FullName, "Details", controllerName, new { id = item.Id }, new { style = linkStyle })
                         </td>
                         @if (hasUserData)
                         {
