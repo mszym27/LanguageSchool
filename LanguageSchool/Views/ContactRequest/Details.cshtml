@@ -30,7 +30,7 @@
                 <strong>Numer telefonu</strong>
             </div>
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.PhoneNumber)
+                <a href="tel:@Model.PhoneNumber.Replace("-", "")">@Model.PhoneNumber</a>
             </div>
         </div>
         <div class="row form-group">
@@ -68,7 +68,7 @@
                 <strong>Adres email</strong>
             </div>
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.EmailAdress)
+                <a href="mailto:@Model.EmailAdress">@Model.EmailAdress</a>
             </div>
 
             <div class="control-label col-md-2">
