@@ -211,10 +211,9 @@ GO
 IF NOT EXISTS(SELECT 1 FROM [Administration].[Messages] WHERE [MessageTypeId] = 6)
 INSERT [Administration].[Messages] ([CreationDate], [Header], [Contents], [MessageTypeId], [UserId], [GroupId], [CourseId], [RoleId], [IsSystem]) 
 VALUES (GETDATE(), N'Witaj w szkole!', N'Miło nam Cię powitać w naszej szkole.
-Po kliknięciu na logo w prawym górnym rogu tej strony zobaczysz swój plan zajęć. Od momentu w którym odczytałeś ten komunikat 
-Jeśli w przyszłości otrzymasz nowe wiadomości to automatycznie odeśle Cię on do podglądu ich listy. Rozkład zajęć stanie się dla Ciebie z powrotem dostępny po tym jak zapoznasz się z ich treścią .
-Cały masz też możliwość zobaczenia listy komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 6, NULL, NULL, NULL, 4, 1)
-
+W lewym górnym rogu tej strony zobaczysz logo. Od momentu w którym odczytałeś ten komunikat po kliknięciu na nie zostaniesz przeniesiony na podgląd swojego planu zajęć.
+Jeśli w przyszłości otrzymasz nowe komunikaty to po zalogowaniu automatycznie zobaczysz listę swoich wiadomości. Rozkład zajęć stanie się dla Ciebie z powrotem dostępny po tym jak zapoznasz się z treścią tych które otrzymałeś.
+Cały masz też możliwość zobaczenia historii komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 6, NULL, NULL, NULL, 4, 1)
 
 GO
 
