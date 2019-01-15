@@ -7,28 +7,12 @@
 
 <div class="container">
     <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            <div class="col-md-4">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Edytuj</button>
-            </div>
-            <div class="col-md-4">
-                @{
-                    var activateButtonValue = "Aktywuj";
-
-                    if (@Model.IsActive)
-                    {
-                        activateButtonValue = "Dezaktywuj";
-                    }
-                }
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "Course", new { id = Model.Id })'">@activateButtonValue</button>
-            </div>
-
-            <div class="col-md-4">
-                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Usuń</button>
+        <div class="thumbnail col-md-2">
+            <div class="col-md-offset-1">
+                <h5><strong>Dane kursu</strong></h5>
             </div>
         </div>
     </div>
-
     <div class="row thumbnail col-md-12">
         <div class="row form-group">
             <div class="control-label col-md-2">
@@ -95,10 +79,30 @@
             </div>
         </div>
     </div>
+
     <div class="row col-md-12">
-        <div class="thumbnail col-md-2">
-            <div class="col-md-12">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Group")'">Dodaj grupę</button>
+        <div class="col-md-5">
+        </div>
+        <div class="thumbnail col-md-6">
+            <div class="col-md-3">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Edytuj</button>
+            </div>
+            <div class="col-md-3">
+                @{
+                    var activateButtonValue = "Aktywuj";
+
+                    if (@Model.IsActive)
+                    {
+                        activateButtonValue = "Dezaktywuj";
+                    }
+                }
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("DeActivate", "Course", new { id = Model.Id })'">@activateButtonValue</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Edit", "Course")'">Usuń</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Group")'">Dodaj grupę</button>
             </div>
         </div>
     </div>
