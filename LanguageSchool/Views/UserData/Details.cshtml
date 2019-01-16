@@ -6,41 +6,23 @@
 }
 
 <div class="container">
-    <div class="row col-md-12">
-        <div class="thumbnail col-md-5">
-            @if (Model.User.RoleId == (int)Consts.Roles.Student)
-            {
-                <div class="col-md-4">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Dodaj do grupy</button>
-                </div>
-            }
-            else
-            {
-                <div class="col-md-6">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
-                </div>
-            }
-        </div>
-    </div>
+    @{ Html.RenderPartial("_PartHeader", "Dane konta"); }
     <div class="row thumbnail col-md-12">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <label class="col-md-offset-2">
+                Rola:
+            </label>
+
+            @Html.DisplayFor(model => model.User.Role.PLName)
+        </div>
+        <div class="col-md-3">
             <label>
                 Login:
             </label>
 
             @Html.DisplayFor(model => model.User.Login)
         </div>
-
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="col-md-6">
                 <label>
                     Hasło:
@@ -54,15 +36,14 @@
                 @Html.DisplayFor(model => model.User.Password)
             </div>
         </div>
-
-        <div class="col-md-4">
+        <div class="col-md-2 col-md-offset-1">
             <label>
                 Pokaż hasło:
             </label>
             <input type="checkbox" onclick="showPassword()">
         </div>
     </div>
-
+    @{ Html.RenderPartial("_PartHeader", "Dane użytkownika"); }
     <div class="row thumbnail col-md-12">
         <div class="row form-group">
             <div class="control-label col-md-2">
@@ -146,6 +127,37 @@
             <div class="col-md-4">
                 @Html.DisplayFor(model => model.Comment)
             </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-6 col-md-offset-6">
+            @if (Model.User.RoleId == (int)Consts.Roles.Student)
+            {
+                <div class="col-md-2">
+                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Zapisz do grupy</button>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3 col-md-offset-2">
+                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -6,17 +6,7 @@
 }
 
 <div class="container-fluid">
-    <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            <div class="col-md-6">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.Id })'">Edytuj</button>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData")/@Model.Id'">Utwórz użytkownika</button>
-            </div>
-        </div>
-    </div>
-
+    @{ Html.RenderPartial("_PartHeader", "Prośba o kontakt"); }
     <div class="row col-md-12 thumbnail">
         <div class="row form-group">
             <div class="control-label col-md-2">
@@ -76,6 +66,16 @@
             </div>
             <div class="col-md-4">
                 @Html.DisplayFor(model => model.Comment)
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-4 col-md-offset-8">
+            <div class="col-md-6">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.Id })'">Edytuj</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData")/@Model.Id'">Utwórz użytkownika</button>
             </div>
         </div>
     </div>
