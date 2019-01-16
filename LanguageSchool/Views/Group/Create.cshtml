@@ -8,16 +8,13 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.CourseId)
+    @Html.HiddenFor(model => model.CourseName)
     @Html.HiddenFor(model => model.CourseNumberOfHours)
 
     @Html.AntiForgeryToken()
 
     <div class="container">
-        <div class="row col-md-12">
-            <div class="thumbnail col-md-2">
-                <input type="submit" value="Dalej" class="btn btn-block btn-default" />
-            </div>
-        </div>
+        @{ Html.RenderPartial("_PartHeader", "Dodaj grupę - " + Model.CourseName); }
         <div class="row form-horizontal thumbnail col-md-12">
             <div class="col-md-6">
                 <div class="form-group">
@@ -60,6 +57,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-2 col-md-offset-10">
+            <input type="submit" value="Wybierz godziny zajęć" class="btn btn-block btn-default" />
         </div>
     </div>
 }

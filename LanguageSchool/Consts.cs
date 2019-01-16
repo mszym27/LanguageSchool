@@ -69,35 +69,6 @@ namespace LanguageSchool
                         new MenuViewModel { ShownName = "Wyślij komunikat", ControllerName = "Message", ActionName = "Create" }
                     }
                 },
-                //new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "List", RoleName = "Secretary" },
-                new MenuViewModel { ShownName = "Adninistracja", RoleName = "Secretary",
-                    SubMenu = new List<MenuViewModel>()
-                    {
-                        new MenuViewModel { ShownName = "Dni świąteczne", ControllerName = "Message", ActionName = "Index" },
-                        new MenuViewModel { ShownName = "Sale lekcyjne", ControllerName = "Message", ActionName = "Create" }
-                    }
-                },
-
-                ////Nauczyciel
-                //new MenuViewModel { ShownName = "ToDo", ControllerName = "Course", ActionName = "TempTeacher", RoleName = "Teacher" },// raczej Timetable
-                ////new MenuViewModel { ShownName = "Materiały", RoleName = "Teacher",
-                ////    SubMenu = new List<MenuViewModel>()
-                ////    {
-                ////        new MenuViewModel { ShownName = "Lista", ControllerName = "Material", ActionName = "List" },
-                ////        new MenuViewModel { ShownName = "Udostępnij", ControllerName = "Material", ActionName = "Upload" }
-                ////    }
-                ////}, // zamiast tego dostep z poziomu podgladu kursu
-                ////new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "List", RoleName = "Teacher" },
-                //new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Teacher" },
-                //new MenuViewModel { ShownName = "Uczniowie", ControllerName = "UserData", ActionName = "Index", RoleName = "Teacher" },
-
-                ////Uczeń
-                //new MenuViewModel { ShownName = "ToDo", ControllerName = "Course", ActionName = "TempStudent", RoleName = "Student" },// raczej Timetable
-                ////new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "Index", RoleName = "Student" },
-                ////new MenuViewModel { ShownName = "Materiały", ControllerName = "Material", ActionName = "Index", RoleName = "Student" },
-                ////new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "Index", RoleName = "Student" },
-                //new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "Index", RoleName = "Student" },
-                //new MenuViewModel { ShownName = "Prowadzący", ControllerName = "Users", ActionName = "Index", RoleName = "Student" },
             }
         );
     }

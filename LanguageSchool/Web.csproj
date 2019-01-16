@@ -484,6 +484,7 @@
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\AddAnswers.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
+    <Content Include="Views\Shared\_PartHeader.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

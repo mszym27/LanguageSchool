@@ -16,15 +16,15 @@
     @Html.AntiForgeryToken()
 
     <div class="row col-md-12">
-        <div class="thumbnail col-md-2">
-            <input type="submit" value="Utwórz" class="btn btn-block btn-default" />
+        <div class="col-md-12">
+            @{ Html.RenderPartial("_PartHeader", "Wybierz godziny zajęć - " + @Model.Name + "(" + Model.CourseName + ")"); }
         </div>
     </div>
     <div class="row thumbnail col-md-12">
         <div class="row">
             <div class="col-md-3">
                 <label>
-                    Nazwa
+                    Nazwa grupy
                 </label>
             </div>
             <div class="col-md-3">
@@ -69,6 +69,12 @@
             <div class="col-md-8">
                 @Html.DisplayFor(model => model.CourseNumberOfHours)
             </div>
+        </div>
+    </div>
+
+    <div class="row col-md-12">
+        <div class="col-md-2 col-md-offset-10">
+            <input type="submit" value="Utwórz grupę" class="btn btn-block btn-primary" />
         </div>
     </div>
 
