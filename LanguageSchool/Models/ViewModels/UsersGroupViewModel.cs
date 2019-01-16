@@ -13,6 +13,7 @@ namespace LanguageSchool.Models.ViewModels
         public int UserId { get; set; }
 
         public string Fullname { get; set; }
+        public string Groupname { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
@@ -44,6 +45,7 @@ namespace LanguageSchool.Models.ViewModels
             usersNonavaible = new List<UserViewModel>();
             Hours = new List<ViewModels.GroupTimeViewModel>();
 
+            Groupname = group.Name;
             Fullname = group.Name + " (" + group.Course.Name + ")";
             StartDate = group.StartDate.ToString("yyyy/MM/dd");
             EndDate = group.EndDate.ToString("yyyy/MM/dd");

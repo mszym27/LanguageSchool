@@ -12,21 +12,15 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-
-        <div class="row col-md-12">
-            <div class="thumbnail col-md-2">
-                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
-            </div>
-        </div>
-
+        @{ Html.RenderPartial("_PartHeader", "Zapisz nowych studentów - " + @Model.Groupname); }
         <div class="row thumbnail col-md-12">
             <table class="table table-bordered">
                 <tr>
                     <th>
-                        Nazwa
+                        Student
                     </th>
                     <th>
-                        Zapisz
+                        Zostanie zapisany
                     </th>
                 </tr>
 
@@ -43,6 +37,11 @@
                     </tr>
                 }
             </table>
+        </div>
+        <div class="row col-md-12">
+            <div class="col-md-2 col-md-offset-10">
+                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+            </div>
         </div>
     </div>
 }
