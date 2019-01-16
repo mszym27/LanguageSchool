@@ -232,7 +232,7 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
@@ -538,7 +538,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tests_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
           <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
@@ -1061,7 +1061,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
@@ -1070,7 +1070,7 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_Tests" FromRole="Tests" ToRole="ContactRequests" />
-          <NavigationProperty Name="Course" Relationship="Self.FK_Tests_Courses" FromRole="Tests" ToRole="Courses" />
+          <NavigationProperty Name="Course" Relationship="LanguageSchoolModel.FK_Tests_Courses" FromRole="Tests" ToRole="Courses" />
           <NavigationProperty Name="EntryTests" Relationship="Self.FK_EntryTests_Tests" FromRole="Tests" ToRole="EntryTests" />
           <NavigationProperty Name="TestsLessonSubjects" Relationship="Self.FK_TestsLessonSubjects_Tests" FromRole="Tests" ToRole="TestsLessonSubjects" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="Tests" ToRole="UserOpenAnswers" />
@@ -1199,7 +1199,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tests_Courses">
-          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
+          <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="0..1" />
           <End Role="Tests" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">

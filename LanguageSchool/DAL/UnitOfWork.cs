@@ -30,6 +30,15 @@ namespace LanguageSchool.DAL
         private Repository<LanguageProficency> languageProficencyRepository;
         private Repository<ClosedQuestion> closedQuestionRepository;
         private Repository<OpenQuestion> openQuestionRepository;
+        private Repository<Test> testRepository;
+
+        public Repository<Test> TestRepository
+        {
+            get
+            {
+                return this.testRepository ?? new Repository<Test>(entities);
+            }
+        }
 
         public Repository<OpenQuestion> OpenQuestionRepository
         {

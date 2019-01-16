@@ -10,7 +10,9 @@ namespace LanguageSchool.Models.ViewModels
     public class TestViewModel
     {
         public int Id { get; set; }
-        public int CourseId { get; set; }
+        public bool IsActive { get; set; }
+        public int? CourseId { get; set; }
+        public int GroupId { get; set; }
         public string CreationDate { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwę testu")]
         [StringLength(250, ErrorMessage = "Maksymalna długość nazwy to 50 znaków")]
@@ -45,10 +47,10 @@ namespace LanguageSchool.Models.ViewModels
 
         public TestViewModel(Group group)
         {
-            NumberOfQuestions = 1;
+            GroupId = group.Id;
+
             NumberOfOpenQuestions = 1;
             NumberOfClosedQuestions = 1;
-            Points = 1;
 
             var lessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted && ls.IsActive).ToList();
 

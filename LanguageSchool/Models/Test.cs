@@ -28,7 +28,7 @@ namespace LanguageSchool.Models
         public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int CourseId { get; set; }
+        public Nullable<int> CourseId { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
         public int NumberOfQuestions { get; set; }

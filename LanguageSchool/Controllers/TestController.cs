@@ -50,8 +50,32 @@ namespace LanguageSchool.Controllers
         [Route("Test/Create/{GroupId}")]
         public ActionResult Create(TestViewModel testViewModel)
         {
+            var test = new Test();
 
-            return View(testViewModel);
+            test.CreationDate = DateTime.Now;
+
+            test.Name = testViewModel.Name;
+            test.Comment = testViewModel.Comment;
+            test.IsActive = testViewModel.IsActive;
+            test.GroupId = testViewModel.GroupId;
+            test.NumberOfOpenQuestions = testViewModel.NumberOfOpenQuestions;
+            test.NumberOfClosedQuestions = testViewModel.NumberOfClosedQuestions;
+
+            test.TestsLessonSubjects = new List<TestsLessonSubject>();
+
+            foreach (var lessonSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
+            {
+                var testLessonSubject = new TestsLessonSubject();
+
+                testLessonSubject.LessonSubjectId = lessonSubject.Id;
+
+                test.TestsLessonSubjects.Add(testLessonSubject);
+            }
+
+            unitOfWork.TestRepository.Insert(test);
+            unitOfWork.Save();
+
+            return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
         }
     }
 }
