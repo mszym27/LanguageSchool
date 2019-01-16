@@ -38,3 +38,12 @@ textarea {
     margin-bottom: 8px;
     padding: 8px;
 }
+
+div.bordered {
+    display: inline-block;
+    padding: 8px;
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+}
