@@ -42,6 +42,8 @@ textarea {
 div.bordered {
     display: inline-block;
     padding: 8px;
+    margin-top: 3px;
+    margin-bottom: 3px;
     border: 1px solid lightgray;
     background-color: white;
     border-radius: 5px;

@@ -65,7 +65,7 @@ namespace LanguageSchool.Models.ViewModels
             if(group.LessonSubjects != null)
                 LessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted).OrderByDescending(ls => ls.CreationDate).ToList();
 
-            Tests = group.Tests.Where(t => t.IsActive && !t.IsDeleted).ToList();
+            Tests = group.Tests.Where(t => !t.IsDeleted).ToList();
         }
 
         public GroupViewModel(Course course)
