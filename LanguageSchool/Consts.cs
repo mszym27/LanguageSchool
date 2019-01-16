@@ -69,6 +69,7 @@ namespace LanguageSchool
                         new MenuViewModel { ShownName = "Wyślij komunikat", ControllerName = "Message", ActionName = "Create" }
                     }
                 },
+                new MenuViewModel { ShownName = "Administracja", RoleName = "Secretary" }
             }
         );
     }
