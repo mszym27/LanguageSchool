@@ -6,38 +6,36 @@
 }
 
 <div class="container">
-    <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            <strong>Prowadzący:</strong> @Model.Teacher.Fullname
-        </div>
-    </div>
-    <div class="row thumbnail col-md-12">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>
-                    Utworzono
-                </th>
-                <th>
-                    Nazwa
-                </th>
-                <th>
-                    Opis
-                </th>
-            </tr>
-            @foreach (var lessonSubject in Model.LessonSubjects.Where(ls => ls.IsActive))
-            {
+    @{ Html.RenderPartial("_PartHeader", "Prowadzący:" + Model.Teacher.Fullname); }
+    <div class="row">
+        <div class="bordered col-md-12">
+            <table class="table table-striped table-bordered">
                 <tr>
-                    <td>
-                        @lessonSubject.CreationDate.ToString("yyy/MM/dd")
-                    </td>
-                    <td>
-                        @Html.ActionLink(lessonSubject.Name, "Index", "Material", new { Id = lessonSubject.Id }, null)
-                    </td>
-                    <td>
-                        @lessonSubject.Description
-                    </td>
+                    <th>
+                        Utworzono
+                    </th>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Opis
+                    </th>
                 </tr>
-            }
-        </table>
+                @foreach (var lessonSubject in Model.LessonSubjects.Where(ls => ls.IsActive))
+                {
+                    <tr>
+                        <td>
+                            @lessonSubject.CreationDate.ToString("yyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.ActionLink(lessonSubject.Name, "Index", "Material", new { Id = lessonSubject.Id }, null)
+                        </td>
+                        <td>
+                            @lessonSubject.Description
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
