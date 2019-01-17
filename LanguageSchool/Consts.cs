@@ -9,6 +9,8 @@ namespace LanguageSchool
         // Alerts
         public static readonly string Success = "green";
 
+        public static readonly string Info = "blue";
+
         public static readonly string Error = "red";
 
         public enum Roles

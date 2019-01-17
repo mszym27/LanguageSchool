@@ -45,11 +45,7 @@ namespace LanguageSchool.Controllers
                 unitOfWork.ContactRequestRepository.Insert(cr);
                 unitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel() {
-                    Title = "Wysłano pomyślnie",
-                    Message = "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt",
-                    AlertType = Consts.Success
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Wysłano pomyślnie", "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt");
 
                 return RedirectToAction("Index", "Course");
             }

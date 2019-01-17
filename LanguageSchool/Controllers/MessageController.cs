@@ -209,12 +209,7 @@ namespace LanguageSchool.Controllers
                 unitOfWork.MessageRepository.Insert(message);
                 unitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Wiadomość wysłana pomyślnie",
-                    Message = "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów",
-                    AlertType = Consts.Success
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Wiadomość wysłana pomyślnie", "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów");
 
                 return RedirectToAction("Index", "Home");
             }

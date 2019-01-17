@@ -11,5 +11,12 @@ namespace LanguageSchool.Models.ViewModels
         public string AlertType;
         public string Title;
         public string Message;
+
+        public AlertViewModel(string AlertType, string Title, string Message)
+        {
+            this.AlertType = AlertType;
+            this.Title = Title;
+            this.Message = Message;
+        }
     }
 }

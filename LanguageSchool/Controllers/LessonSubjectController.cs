@@ -103,12 +103,7 @@ namespace LanguageSchool.Controllers
             }
             catch
             {
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Nastąpił nieoczekiwany problem",
-                    Message = "operacja nie powiodła się.",
-                    AlertType = Consts.Error
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
 
                 return RedirectToAction("Details", new { id = id });
             }

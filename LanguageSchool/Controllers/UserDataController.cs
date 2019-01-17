@@ -325,12 +325,7 @@ namespace LanguageSchool.Controllers
 
                 unitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Konto zostało utworzone pomyślnie",
-                    Message = "proszę przekazać użytkownikowi jego login i hasło",
-                    AlertType = Consts.Success
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Konto zostało utworzone", "proszę przekazać użytkownikowi jego login i hasło");
 
                 return RedirectToAction("Details", "UserData", new { id = userData.Id });
             //}

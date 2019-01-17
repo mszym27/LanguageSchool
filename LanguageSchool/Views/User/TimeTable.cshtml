@@ -15,111 +15,113 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row thumbnail col-md-12">
-    <table class="table table-bordered">
-        <tr>
-            <th class="text-center">
-            </th>
-            <th class="text-center">
-                Poniedziałek
-            </th>
-            <th class="text-center">
-                Wtorek
-            </th>
-            <th class="text-center">
-                Środa
-            </th>
-            <th class="text-center">
-                Czwartek
-            </th>
-            <th class="text-center">
-                Piątek
-            </th>
-            <th class="text-center">
-                Sobota
-            </th>
-            <th class="text-center">
-                Niedziela
-            </th>
-        </tr>
-
-        @for (int i = 0; i < 12; i++)
-        {
-            var currentHour = i + 8 + ".15";
-            var nextHour = (i + 8 + 1) + ".15";
+<div class="row">
+    <div class="bordered col-md-12">
+        <table class="table table-bordered">
             <tr>
-                <td style="padding-top: 25px; padding-bottom: 25px;">
-                    @currentHour - @nextHour
-                </td>
-                @for (int j = 0; j < 7; j++)
+                <th class="text-center">
+                </th>
+                <th class="text-center">
+                    Poniedziałek
+                </th>
+                <th class="text-center">
+                    Wtorek
+                </th>
+                <th class="text-center">
+                    Środa
+                </th>
+                <th class="text-center">
+                    Czwartek
+                </th>
+                <th class="text-center">
+                    Piątek
+                </th>
+                <th class="text-center">
+                    Sobota
+                </th>
+                <th class="text-center">
+                    Niedziela
+                </th>
+            </tr>
+
+            @for (int i = 0; i < 12; i++)
+            {
+                var currentHour = i + 8 + ".15";
+                var nextHour = (i + 8 + 1) + ".15";
+                <tr>
+                    <td style="padding-top: 25px; padding-bottom: 25px;">
+                        @currentHour - @nextHour
+                    </td>
+                    @for (int j = 0; j < 7; j++)
                 {
                     GroupTime current = Model.Times.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
                     if (current == null)
                     {
-                        <td></td>
-                    }
-                    else
-                    {
-                        var style = "font-size: 10px;";
-                        var show = true;
-
-                        int color = 0;
-
-                        foreach (var character in current.Group.Name)
-                        {
-                            color += (int)character;
+                            <td></td>
                         }
-
-                        color *= current.Group.Id;
-
-                        foreach (var character in current.Group.Course.Name)
+                        else
                         {
-                            color += (int)character;
-                        }
+                            var style = "font-size: 10px;";
+                            var show = true;
 
-                        color *= current.Group.CourseId;
+                            int color = 0;
 
-                        string hexColor = color.ToString("X");
+                            foreach (var character in current.Group.Name)
+                            {
+                                color += (int)character;
+                            }
 
-                        if ((i + 8) > current.StartTime)
-                        {
-                            style += "border-top-style: none;";
-                            show = false;
-                        }
+                            color *= current.Group.Id;
 
-                        if (current.EndTime > (i + 8))
-                        {
-                            style += "border-bottom-style: none;";
-                        }
+                            foreach (var character in current.Group.Course.Name)
+                            {
+                                color += (int)character;
+                            }
 
-                        if (Model.Times.Where(
-                            gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
-                            && (i + 8) == (current.StartTime + 1)
-                        )
-                        {
-                            show = true;
-                        }
+                            color *= current.Group.CourseId;
 
-                        <td align="center" bgcolor="@hexColor" style="@style">
-                            <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
-                                @if (show)
-                                {
-                                    string shown = current.Group.Course.Name;
+                            string hexColor = color.ToString("X");
 
-                                    if (Model.IsTeacher)
+                            if ((i + 8) > current.StartTime)
+                            {
+                                style += "border-top-style: none;";
+                                show = false;
+                            }
+
+                            if (current.EndTime > (i + 8))
+                            {
+                                style += "border-bottom-style: none;";
+                            }
+
+                            if (Model.Times.Where(
+                                gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
+                                && (i + 8) == (current.StartTime + 1)
+                            )
+                            {
+                                show = true;
+                            }
+
+                            <td align="center" bgcolor="@hexColor" style="@style">
+                                <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
+                                    @if (show)
                                     {
-                                        shown = current.Group.Name;
-                                    }
+                                        string shown = current.Group.Course.Name;
 
-                                    <p><strong>@shown</strong></p>
-                                }
-                            </a>
-                        </td>
+                                        if (Model.IsTeacher)
+                                        {
+                                            shown = current.Group.Name;
+                                        }
+
+                                        <p><strong>@shown</strong></p>
+                                    }
+                                </a>
+                            </td>
+                        }
                     }
-                }
-            </tr>
-        }
-    </table>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
 
 <style type="text/css">

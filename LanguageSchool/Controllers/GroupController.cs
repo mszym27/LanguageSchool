@@ -241,12 +241,7 @@ namespace LanguageSchool.Controllers
 
                 unitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Grupa została utworzona pomyślnie",
-                    Message = "proszę zapisać do niej studentów",
-                    AlertType = Consts.Success
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
 
                 return RedirectToAction("FullDetails", "Group", new { id = group.Id });
             }

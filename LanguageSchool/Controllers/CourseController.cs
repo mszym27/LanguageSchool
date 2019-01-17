@@ -161,12 +161,7 @@ namespace LanguageSchool.Controllers
             }
             catch
             {
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Nastąpił nieoczekiwany problem",
-                    Message = "operacja nie powiodła się.",
-                    AlertType = Consts.Error
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Error,"Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
 
                 return View(courseViewModel);
             }
@@ -222,12 +217,7 @@ namespace LanguageSchool.Controllers
             }
             catch
             {
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Nastąpił nieoczekiwany problem",
-                    Message = "operacja nie powiodła się.",
-                    AlertType = Consts.Error
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
 
                 return View(courseViewModel);
             }
@@ -256,12 +246,7 @@ namespace LanguageSchool.Controllers
             }
             catch
             {
-                TempData["Alert"] = new AlertViewModel()
-                {
-                    Title = "Nastąpił nieoczekiwany problem",
-                    Message = "operacja nie powiodła się.",
-                    AlertType = Consts.Error
-                };
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
 
                 return RedirectToAction("FullDetails", new { id = id });
             }

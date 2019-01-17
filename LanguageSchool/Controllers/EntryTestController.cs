@@ -143,12 +143,7 @@ namespace LanguageSchool.Controllers
                     userPoints += cqvm.Points;
             }
 
-            TempData["Alert"] = new AlertViewModel()
-            {
-                Title = "Ukończono test",
-                Message = "wynik który otrzymałeś to " + userPoints + " na " + tvm.Points + " możliwych",
-                AlertType = Consts.Success
-            };
+            TempData["Alert"] = new AlertViewModel(Consts.Info, "Ukończono test", "wynik który otrzymałeś to " + userPoints + " na " + tvm.Points + " możliwych");
 
             return RedirectToAction("Create", "ContactRequest", new { id = tvm.CourseId });
             //}
