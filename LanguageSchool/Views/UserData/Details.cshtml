@@ -7,125 +7,129 @@
 
 <div class="container">
     @{ Html.RenderPartial("_PartHeader", "Dane konta"); }
-    <div class="row thumbnail col-md-12">
-        <div class="col-md-3">
-            <label class="col-md-offset-2">
-                Rola:
-            </label>
-
-            @Html.DisplayFor(model => model.User.Role.PLName)
-        </div>
-        <div class="col-md-3">
-            <label>
-                Login:
-            </label>
-
-            @Html.DisplayFor(model => model.User.Login)
-        </div>
-        <div class="col-md-3">
-            <div class="col-md-6">
-                <label>
-                    Hasło:
+    <div class="row">
+        <div class="bordered col-md-12">
+            <div class="col-md-3">
+                <label class="col-md-offset-2">
+                    Rola:
                 </label>
-            </div>
 
-            <div class="col-md-6" id="placeholder" style="display: block">
-                ●●●●●●●●
+                @Html.DisplayFor(model => model.User.Role.PLName)
             </div>
-            <div class="col-md-6" id="password" style="display: none">
-                @Html.DisplayFor(model => model.User.Password)
+            <div class="col-md-3">
+                <label>
+                    Login:
+                </label>
+
+                @Html.DisplayFor(model => model.User.Login)
             </div>
-        </div>
-        <div class="col-md-2 col-md-offset-1">
-            <label>
-                Pokaż hasło:
-            </label>
-            <input type="checkbox" onclick="showPassword()">
+            <div class="col-md-3">
+                <div class="col-md-6">
+                    <label>
+                        Hasło:
+                    </label>
+                </div>
+
+                <div class="col-md-6" id="placeholder" style="display: block">
+                    ●●●●●●●●
+                </div>
+                <div class="col-md-6" id="password" style="display: none">
+                    @Html.DisplayFor(model => model.User.Password)
+                </div>
+            </div>
+            <div class="col-md-2 col-md-offset-1">
+                <label>
+                    Pokaż hasło:
+                </label>
+                <input type="checkbox" onclick="showPassword()">
+            </div>
         </div>
     </div>
     @{ Html.RenderPartial("_PartHeader", "Dane użytkownika"); }
-    <div class="row thumbnail col-md-12">
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Data utworzenia wpisu</strong>
+    <div class="row">
+        <div class="bordered col-md-12">
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Data utworzenia wpisu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Model.CreationDate.ToString("yyyy/MM/dd")
+                </div>
             </div>
-            <div class="col-md-4">
-                @Model.CreationDate.ToString("yyyy/MM/dd")
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Imię</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Name)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Imię</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Nazwisko</strong>
+                <div class="control-label col-md-2">
+                    <strong>Nazwisko</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Surname)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Surname)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Miasto</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.City)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Miasto</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.City)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Ulica</strong>
+                <div class="control-label col-md-2">
+                    <strong>Ulica</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Street)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Street)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Numer domu</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.HouseNumber)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Numer domu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.HouseNumber)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Numer mieszkania</strong>
+                <div class="control-label col-md-2">
+                    <strong>Numer mieszkania</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.HomeNumber)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.HomeNumber)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Publiczny numer telefonu</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.PublicPhoneNumber)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Publiczny numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.PublicPhoneNumber)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Prywatny numer telefonu</strong>
+                <div class="control-label col-md-2">
+                    <strong>Prywatny numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.PrivatePhoneNumber)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.PrivatePhoneNumber)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Adres email</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.EmailAdress)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Adres email</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.EmailAdress)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Komentarz</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Comment)
+                <div class="control-label col-md-2">
+                    <strong>Komentarz</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Comment)
+                </div>
             </div>
         </div>
     </div>

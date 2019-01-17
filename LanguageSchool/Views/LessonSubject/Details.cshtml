@@ -5,117 +5,107 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            <div class="col-md-4">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "LessonSubject")'">Edytuj</button>
+    @{ Html.RenderPartial("_PartHeader", "Dane tematu"); }
+    <div class="row">
+        <div class="bordered col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>
+                        Utworzono
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Model.CreationDate.ToString("yyy/MM/dd")
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Nazwa
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
             </div>
-            <div class="col-md-4">
-                @{
-                    var DeActivateButtonValue = "Aktywuj";
 
-                    if (@Model.IsActive)
-                    {
-                        DeActivateButtonValue = "Dezaktywuj";
+            <div class="row">
+                <div class="col-md-3">
+                    <label>
+                        Aktywny
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @{
+                        string active = "nie";
+
+                        if (Model.IsActive) { active = "tak"; }
                     }
-                }
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("DeActivate", "LessonSubject", new { id = Model.Id })'">@DeActivateButtonValue</button>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "LessonSubject")'">Usuń</button>
+
+                    @active
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Opis
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Description)
+                </div>
             </div>
         </div>
     </div>
-    <div class="row thumbnail col-md-12">
-        <div class="row">
-            <div class="col-md-3">
-                <label>
-                    Utworzono
-                </label>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-6">
+            <div class="col-md-2">
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "LessonSubject")'">Edytuj</button>
             </div>
-            <div class="col-md-3">
-                @Model.CreationDate.ToString("yyy/MM/dd")
+            <div class="col-md-2">
+                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "LessonSubject")'">Usuń</button>
             </div>
-            <div class="col-md-3">
-                <label>
-                    Nazwa
-                </label>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Upload", "Material", new { lessonSubjectId = Model.Id })'">Dodaj materiały</button>
             </div>
-            <div class="col-md-3">
-                @Html.DisplayFor(model => model.Name)
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <label>
-                    Aktywny
-                </label>
-            </div>
-            <div class="col-md-3">
-                @{
-                    string active = "nie";
-
-                    if (Model.IsActive) { active = "tak"; }
-                }
-
-                @active
-            </div>
-            <div class="col-md-3">
-                <label>
-                    Opis
-                </label>
-            </div>
-            <div class="col-md-3">
-                @Html.DisplayFor(model => model.Description)
-            </div>
-        </div>
-    </div>   
-    <div class="row col-md-12">
-        <div class="thumbnail col-md-4">
-            <div class="col-md-6">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Upload", "Material", new { lessonSubjectId = Model.Id })'">Dodaj materiały</button>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Question", new { lessonSubjectId = Model.Id } )'">Pytania</button>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Question", new { lessonSubjectId = Model.Id } )'">Pytania z tematu</button>
             </div>
         </div>
     </div>
     @if (Model.Materials.Any())
     {
-        <div class="row thumbnail col-md-12">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>
-                        Utworzono
-                    </th>
-                    <th>
-                        Nazwa
-                    </th>
-                    <th>
-                        Komentarz
-                    </th>
-                </tr>
-                @foreach (var item in Model.Materials)
-                {
+        <div class="row">
+            <div class="bordered col-md-12">
+                <table class="table table-striped table-bordered">
                     <tr>
-                        <td>
-                            @item.CreationDate.ToString("yyy/MM/dd")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Comment)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
-                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                            </a>
-                        </td>
+                        <th>
+                            Utworzono
+                        </th>
+                        <th>
+                            Nazwa
+                        </th>
+                        <th>
+                            Komentarz
+                        </th>
                     </tr>
-                }
-            </table>
+                    @foreach (var item in Model.Materials)
+                    {
+                        <tr>
+                            <td>
+                                @item.CreationDate.ToString("yyy/MM/dd")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comment)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
+                                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
         </div>
     }
 </div>
