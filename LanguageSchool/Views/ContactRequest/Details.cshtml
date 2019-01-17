@@ -7,65 +7,67 @@
 
 <div class="container-fluid">
     @{ Html.RenderPartial("_PartHeader", "Prośba o kontakt"); }
-    <div class="row col-md-12 thumbnail">
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Imię i nazwisko</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Fullname)
-            </div>
+    <div class="row">
+        <div class="bordered col-md-12">
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Imię i nazwisko</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Fullname)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Numer telefonu</strong>
+                <div class="control-label col-md-2">
+                    <strong>Numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    <a href="tel:@Model.PhoneNumber.Replace("-", "")">@Model.PhoneNumber</a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <a href="tel:@Model.PhoneNumber.Replace("-", "")">@Model.PhoneNumber</a>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Data wysłania prośby</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.CreationDate)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Data wysłania prośby</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.CreationDate)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Kurs</strong>
+                <div class="control-label col-md-2">
+                    <strong>Kurs</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Course.Name)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Course.Name)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Test</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.TakenTestName)
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Test</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.TakenTestName)
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Zdobyte punkty</strong>
+                <div class="control-label col-md-2">
+                    <strong>Zdobyte punkty</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.TotalScore)
+                </div>
             </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.TotalScore)
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="control-label col-md-2">
-                <strong>Adres email</strong>
-            </div>
-            <div class="col-md-4">
-                <a href="mailto:@Model.EmailAdress">@Model.EmailAdress</a>
-            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Adres email</strong>
+                </div>
+                <div class="col-md-4">
+                    <a href="mailto:@Model.EmailAdress">@Model.EmailAdress</a>
+                </div>
 
-            <div class="control-label col-md-2">
-                <strong>Komentarz</strong>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.Comment)
+                <div class="control-label col-md-2">
+                    <strong>Komentarz</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Comment)
+                </div>
             </div>
         </div>
     </div>

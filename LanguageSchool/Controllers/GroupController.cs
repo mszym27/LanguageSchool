@@ -244,7 +244,7 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel()
                 {
                     Title = "Grupa została utworzona pomyślnie",
-                    Message = "proszę przypisać do niej uczniów",
+                    Message = "proszę zapisać do niej studentów",
                     AlertType = Consts.Success
                 };
 

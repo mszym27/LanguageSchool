@@ -11,87 +11,88 @@
 
     <div class="container">
         @{ Html.RenderPartial("_PartHeader", "Wyślij komunikat"); }
-        <div class="row form-horizontal thumbnail col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Temat</strong>
+        <div class="row form-horizontal">
+            <div class="bordered col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="control-label col-md-4">
+                            <strong>Temat</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Systemowy</strong>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsSystem)
-                            @Html.ValidationMessageFor(model => model.IsSystem, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="control-label col-md-4">
+                            <strong>Systemowy</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsSystem)
+                                @Html.ValidationMessageFor(model => model.IsSystem, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="control-label col-md-4">
-                        <strong>Typ wiadomości</strong>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="control-label col-md-4">
+                            <strong>Typ wiadomości</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.MessageTypeId, Model.MessageTypes, new { @class = "form-control", @onchange = "MessageTypeChanged(this.value)" })
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.MessageTypeId, Model.MessageTypes, new { @class = "form-control", @onchange = "MessageTypeChanged(this.value)" })
+                    <div id="1" class="form-group" style="display: block">
+                        <div class="control-label col-md-4">
+                            <strong>Użytkownik</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.UserId, Model.Users, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div id="1" class="form-group" style="display: block">
-                    <div class="control-label col-md-4">
-                        <strong>Użytkownik</strong>
+                    <div id="2" class="form-group" style="display: none">
+                        <div class="control-label col-md-4">
+                            <strong>Grupa</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.GroupId, Model.Groups, new { @class = "form-control" })
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.UserId, Model.Users, new { @class = "form-control" })
+                    <div id="3" class="form-group" style="display: none">
+                        <div class="control-label col-md-4">
+                            <strong>Kurs</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.CourseId, Model.Courses, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div id="2" class="form-group" style="display: none">
-                    <div class="control-label col-md-4">
-                        <strong>Grupa</strong>
+                    <div id="4" class="form-group" style="display: none">
+                        <div class="control-label col-md-4">
+                            <strong>Rola</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control" })
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.GroupId, Model.Groups, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div id="3" class="form-group" style="display: none">
-                    <div class="control-label col-md-4">
-                        <strong>Kurs</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.CourseId, Model.Courses, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div id="4" class="form-group" style="display: none">
-                    <div class="control-label col-md-4">
-                        <strong>Rola</strong>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control" })
-                    </div>
-                </div>
-                <script>
-                    function MessageTypeChanged(Id) {
-                        var element;
-                        var i;
+                    <script>
+                        function MessageTypeChanged(Id) {
+                            var element;
+                            var i;
 
-                        for (i = 1; i <= 4; i++) {
-                            element = document.getElementById(i);
+                            for (i = 1; i <= 4; i++) {
+                                element = document.getElementById(i);
 
-                            element.style.display = "none";
+                                element.style.display = "none";
+                            }
+
+                            var visibleElement = document.getElementById(Id);
+
+                            visibleElement.style.display = "block";
                         }
-
-                        var visibleElement = document.getElementById(Id);
-
-                        visibleElement.style.display = "block";
-                    }
-                </script>
-            </div>
+                    </script>
+                </div>
                 <div class="form-group">
                     <div class="control-label col-md-2">
                         <strong>Treść</strong>
@@ -101,10 +102,11 @@
                         @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
                     </div>
                 </div>
-        </div>
-        <div class="row col-md-12">
-            <div class="col-md-2 col-md-offset-10">
-                <input type="submit" value="Wyślij" class="btn btn-block btn-default" />
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-2 col-md-offset-10">
+                    <input type="submit" value="Wyślij" class="btn btn-block btn-default" />
+                </div>
             </div>
         </div>
     </div>

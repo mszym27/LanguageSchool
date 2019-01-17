@@ -13,34 +13,36 @@
 
     <div class="container">
         @{ Html.RenderPartial("_PartHeader", "Zapisz nowych studentów - " + @Model.Groupname); }
-        <div class="row thumbnail col-md-12">
-            <table class="table table-bordered">
-                <tr>
-                    <th>
-                        Student
-                    </th>
-                    <th>
-                        Zostanie zapisany
-                    </th>
-                </tr>
-
-                @for (int i = 0; i < @Model.usersAvaible.Count; i++)
-                {
-                    @Html.HiddenFor(model => model.usersAvaible[i].Id)
+        <div class="row">
+            <div class="bordered col-md-12">
+                <table class="table table-bordered">
                     <tr>
-                        <td>
-                            @Model.usersAvaible[i].Fullname
-                        </td>
-                        <td>
-                            <label>@Html.EditorFor(model => model.usersAvaible[i].IsMarked)</label>
-                        </td>
+                        <th>
+                            Student
+                        </th>
+                        <th>
+                            Zostanie zapisany
+                        </th>
                     </tr>
-                }
-            </table>
-        </div>
-        <div class="row col-md-12">
-            <div class="col-md-2 col-md-offset-10">
-                <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+
+                    @for (int i = 0; i < @Model.usersAvaible.Count; i++)
+                {
+                        @Html.HiddenFor(model => model.usersAvaible[i].Id)
+                        <tr>
+                            <td>
+                                @Model.usersAvaible[i].Fullname
+                            </td>
+                            <td>
+                                <label>@Html.EditorFor(model => model.usersAvaible[i].IsMarked)</label>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-2 col-md-offset-10">
+                    <input type="submit" value="Zapisz" class="btn btn-block btn-default" />
+                </div>
             </div>
         </div>
     </div>
