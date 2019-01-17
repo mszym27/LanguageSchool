@@ -12,7 +12,8 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        <div class="row form-horizontal">
+        @{ Html.RenderPartial("_PartHeader", "Udostępnij nowe materiały dla tematu"); }
+        <div class="row form-horizontal">            
             <div class="bordered col-md-12">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -65,7 +66,7 @@
         </div>
         <div class="row">
             <div class="col-md-2 col-md-offset-10">
-                <input type="submit" value="Dodaj materiały" class="btn btn-block btn-default" />
+                <input type="submit" value="Udostępnij" class="btn btn-block btn-default" />
             </div>
         </div>
     </div>
