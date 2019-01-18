@@ -1,0 +1,63 @@
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.ViewModels.TestViewModel
+
+@{
+    ViewBag.Title = "TakeTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        @Html.HiddenFor(model => model.CourseId)
+        @Html.HiddenFor(model => model.Points)
+        @Html.HiddenFor(model => model.ClosedQuestions)
+
+        <div class="row">
+            <div class="bordered col-md-12">
+                <table class="table table-striped table-bordered">
+                @for (int i = 0; i < Model.ClosedQuestions.Count; i++)
+                {
+                        @Html.HiddenFor(model => Model.ClosedQuestions[i].Points)
+                        <tr>
+                            <td>
+                                @Model.ClosedQuestions[i].Contents
+
+                                @for (int j = 0; j < Model.ClosedQuestions[i].Answers.Count; j++)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            @Model.ClosedQuestions[i].Answers[j].Answer
+                                        </div>
+                                        @if (Model.ClosedQuestions[i].IsMultichoice)
+                                        {
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked)
+
+                                                @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].IsCorrect)
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-10">
+                                                @Html.RadioButton(Model.ClosedQuestions[i].Id.ToString(), Model.ClosedQuestions[i].Answers[j].IsMarked)
+
+                                                @Html.HiddenFor(a => Model.ClosedQuestions[i].Answers[j].IsCorrect)
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-9">
+                    <input type="submit" value="Zakończ test" class="btn btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

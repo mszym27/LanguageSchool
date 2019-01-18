@@ -77,5 +77,16 @@ namespace LanguageSchool.Controllers
 
             return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
         }
+
+        [HttpGet]
+        [Route("Test/Take/{testId}")]
+        public ActionResult Take(int testId)
+        {
+            var test = unitOfWork.TestRepository.GetById(testId);
+
+            var testViewModel = new TestViewModel(test);
+
+            return View(testViewModel);
+        }
     }
 }

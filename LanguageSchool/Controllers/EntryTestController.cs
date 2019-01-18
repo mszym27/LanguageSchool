@@ -105,7 +105,7 @@ namespace LanguageSchool.Controllers
                 //NumberOfQuestions
             }
 
-            tvm.Questions = ChosenQuestions;
+            tvm.ClosedQuestions = ChosenQuestions;
 
             return View(tvm);
         }
@@ -137,7 +137,7 @@ namespace LanguageSchool.Controllers
             var userCorrectAnswers = new List<AnswerViewModel>();
             int userPoints = 0;
 
-            foreach (ClosedQuestionViewModel cqvm in tvm.Questions)
+            foreach (ClosedQuestionViewModel cqvm in tvm.ClosedQuestions)
             {
                 if(cqvm.Answers.Where(a => (a.IsCorrect == true) && (a.IsMarked == true)).Any())
                     userPoints += cqvm.Points;

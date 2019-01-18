@@ -28,21 +28,37 @@ namespace LanguageSchool.Models.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić ilość punktów do uzyskania")]
         public int Points { get; set; }
 
-        public List<ClosedQuestionViewModel> Questions { get; set; }
+        public List<ClosedQuestionViewModel> ClosedQuestions { get; set; }
+        public List<OpenQuestion> OpenQuestions { get; set; }
 
         public List<LessonSubjectViewModel> LessonSubjects { get; set; }
 
         public TestViewModel() { }
 
-        public TestViewModel(Test t)
+        public TestViewModel(Test test)
         {
-            Id = t.Id;
-            CourseId = t.CourseId;
-            CreationDate = t.CreationDate.ToString("yyyy-MM-dd");
-            Name = t.Name;
-            Comment = t.Comment == null? "-": t.Comment;
-            NumberOfQuestions = t.NumberOfQuestions;
-            Points = t.Points;
+            Id = test.Id;
+            CourseId = test.CourseId;
+            CreationDate = test.CreationDate.ToString("yyyy-MM-dd");
+            Name = test.Name;
+            Comment = test.Comment == null? "-": test.Comment;
+            NumberOfQuestions = test.NumberOfQuestions;
+            Points = test.Points;
+
+            ClosedQuestions = new List<ClosedQuestionViewModel>();
+            OpenQuestions = new List<OpenQuestion>();
+
+            foreach (TestsLessonSubject testLessonSubject in test.TestsLessonSubjects)
+            {
+                foreach(ClosedQuestion closedQuestion in testLessonSubject.LessonSubject.ClosedQuestions)
+                {
+                    ClosedQuestions.Add(new ClosedQuestionViewModel(closedQuestion));
+                }
+                foreach (OpenQuestion openQuestion in testLessonSubject.LessonSubject.OpenQuestions)
+                {
+                    OpenQuestions.Add(openQuestion);
+                }
+            }
         }
 
         public TestViewModel(Group group)
