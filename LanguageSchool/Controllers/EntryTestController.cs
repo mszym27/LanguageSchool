@@ -43,69 +43,69 @@ namespace LanguageSchool.Controllers
 
             TestViewModel tvm = new TestViewModel(t);
             
-            var ChosenQuestions = new List<ClosedQuestionViewModel>();
+            //var ChosenQuestions = new List<ClosedQuestionViewModel>();
 
-            //int LessonSubjectsCount = t.TestsLessonSubjects.Count;
+            ////int LessonSubjectsCount = t.TestsLessonSubjects.Count;
 
-            int LessonSubjectsCount = t.NumberOfQuestions; // TODO
+            //int LessonSubjectsCount = t.NumberOfQuestions; // TODO
 
-            var QuestionPartitioned = RandomList(t.Points, LessonSubjectsCount);
+            //var QuestionPartitioned = RandomList(t.Points, LessonSubjectsCount);
 
-            for (int i = 1; i <= LessonSubjectsCount; i++)
-            {
-                int LessonSubjectId = t.TestsLessonSubjects.ElementAt(i - 1).LessonSubjectId;
+            //for (int i = 1; i <= LessonSubjectsCount; i++)
+            //{
+            //    int LessonSubjectId = t.TestsLessonSubjects.ElementAt(i - 1).LessonSubjectId;
 
-                var cqquery = from cq in db.ClosedQuestions
-                        where cq.LessonSubjectId == LessonSubjectId
-                            && cq.IsDeleted == false
-                        select cq;
+            //    var cqquery = from cq in db.ClosedQuestions
+            //            where cq.LessonSubjectId == LessonSubjectId
+            //                && cq.IsDeleted == false
+            //            select cq;
 
-                var LessonSubjectQuestions = cqquery.ToList();
+            //    var LessonSubjectQuestions = cqquery.ToList();
 
-                int HowMany = QuestionPartitioned[i - 1];
+            //    int HowMany = QuestionPartitioned[i - 1];
 
-                var ChosenForTheSubject = LessonSubjectQuestions.OrderBy(x => random.Next()).Take(HowMany);
+            //    var ChosenForTheSubject = LessonSubjectQuestions.OrderBy(x => random.Next()).Take(HowMany);
 
-                foreach(var chosen in ChosenForTheSubject)
-                {
-                    var paquery = from a in db.Answers
-                                 where a.ClosedQuestionId == chosen.Id
-                                     && a.IsDeleted == false
-                                     && a.IsCorrect == true
-                                  select a;
+            //    foreach(var chosen in ChosenForTheSubject)
+            //    {
+            //        var paquery = from a in db.Answers
+            //                     where a.ClosedQuestionId == chosen.Id
+            //                         && a.IsDeleted == false
+            //                         && a.IsCorrect == true
+            //                      select a;
 
-                    var ProperAnswer = paquery.First();
+            //        var ProperAnswer = paquery.First();
 
-                    var waquery = from a in db.Answers
-                                  where a.ClosedQuestionId == chosen.Id
-                                      && a.IsDeleted == false
-                                      && a.IsCorrect == false
-                                  select a;
+            //        var waquery = from a in db.Answers
+            //                      where a.ClosedQuestionId == chosen.Id
+            //                          && a.IsDeleted == false
+            //                          && a.IsCorrect == false
+            //                      select a;
 
-                    var WrongAnswers = waquery.ToList().OrderBy(x => random.Next()).Take(chosen.NumberOfPossibleAnswers - 1);
+            //        var WrongAnswers = waquery.ToList().OrderBy(x => random.Next()).Take(chosen.NumberOfPossibleAnswers - 1);
 
-                    var chosenvm = new ClosedQuestionViewModel(chosen);
+            //        var chosenvm = new ClosedQuestionViewModel(chosen);
 
-                    foreach (var wronganswer in WrongAnswers)
-                    {
-                        var WrongAnswerVM = new AnswerViewModel(wronganswer);
+            //        foreach (var wronganswer in WrongAnswers)
+            //        {
+            //            var WrongAnswerVM = new AnswerViewModel(wronganswer);
 
-                        chosenvm.Answers.Add(WrongAnswerVM);
-                    }
+            //            chosenvm.Answers.Add(WrongAnswerVM);
+            //        }
 
-                    var ProperAnswerVM = new AnswerViewModel(ProperAnswer);
+            //        var ProperAnswerVM = new AnswerViewModel(ProperAnswer);
 
-                    chosenvm.Answers.Add(ProperAnswerVM);
+            //        chosenvm.Answers.Add(ProperAnswerVM);
 
-                    chosenvm.Answers = chosenvm.Answers.OrderBy(x => random.Next()).ToList();
+            //        chosenvm.Answers = chosenvm.Answers.OrderBy(x => random.Next()).ToList();
 
-                    ChosenQuestions.Add(chosenvm);
-                }
+            //        ChosenQuestions.Add(chosenvm);
+            //    }
 
-                //NumberOfQuestions
-            }
+            //    //NumberOfQuestions
+            //}
 
-            tvm.ClosedQuestions = ChosenQuestions;
+            //tvm.ClosedQuestions = ChosenQuestions;
 
             return View(tvm);
         }

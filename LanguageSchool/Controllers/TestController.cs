@@ -88,5 +88,12 @@ namespace LanguageSchool.Controllers
 
             return View(testViewModel);
         }
+
+        [HttpPost]
+        [Route("Test/Take/{testId}")]
+        public ActionResult Take(TestViewModel testViewModel)
+        {
+            return View(testViewModel);
+        }
     }
 }

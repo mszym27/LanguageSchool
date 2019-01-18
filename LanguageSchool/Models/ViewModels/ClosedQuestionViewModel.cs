@@ -34,15 +34,18 @@ namespace LanguageSchool.Models.ViewModels
             Answers = new List<AnswerViewModel>();
         }
 
-        public ClosedQuestionViewModel(ClosedQuestion cq)
+        public ClosedQuestionViewModel(ClosedQuestion closedQuestion)
         {
-            Id = cq.Id;
-            Contents = cq.Contents;
-            NumberOfPossibleAnswers = cq.NumberOfPossibleAnswers;
-            IsMultichoice = cq.IsMultichoice;
-            Points = cq.Points;
+            Id = closedQuestion.Id;
+            Contents = closedQuestion.Contents;
+            NumberOfPossibleAnswers = closedQuestion.NumberOfPossibleAnswers;
+            IsMultichoice = closedQuestion.IsMultichoice;
+            Points = closedQuestion.Points;
 
             Answers = new List<AnswerViewModel>();
+
+            foreach (var answer in closedQuestion.Answers.Where(a => !a.IsDeleted))
+                Answers.Add(new AnswerViewModel(answer));
         }
     }
 }
