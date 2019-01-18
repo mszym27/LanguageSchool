@@ -37,9 +37,7 @@
                                     }
                                     else
                                     {
-                                        string id = "ClosedQuestions_" + i + "__Answers_" + j + "__IsMarked";
-                                        @Html.RadioButton(Model.ClosedQuestions[i].Id.ToString(), Model.ClosedQuestions[i].Answers[j].IsMarked, new { htmlAttributes = new { @id = id } })
-                                        @Html.HiddenFor(a => Model.ClosedQuestions[i].Answers[j].IsCorrect)
+                                        @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].Id)
                                     }
                                 </li>
                             }
