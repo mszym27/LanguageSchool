@@ -1,0 +1,26 @@
+﻿@model LanguageSchool.Models.ViewModels.TestViewModel
+
+@{
+    int i = ViewBag.i;
+
+    Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
+    
+    @(i + 1 + "." + @Model.ClosedQuestions[i].Contents)
+
+    <ul type="a">
+        @for (int j = 0; j < Model.ClosedQuestions[i].Answers.Count; j++)
+        {
+            <li>
+                @Model.ClosedQuestions[i].Answers[j].Answer
+                @if (Model.ClosedQuestions[i].IsMultichoice)
+                {
+                    @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked)
+                }
+                else
+                {
+                    @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].Id)
+                }
+            </li>
+        }
+    </ul>
+}

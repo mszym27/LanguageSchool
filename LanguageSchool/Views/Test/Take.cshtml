@@ -20,55 +20,17 @@
                 <div class="form-group bordered col-md-6">
                     @for (int i = 0; i <= (Model.ClosedQuestions.Count / 2); i++)
                     {
-                        @Html.HiddenFor(model => Model.ClosedQuestions[i].Points)
-                        @(i + 1 + "." + @Model.ClosedQuestions[i].Contents)
+                        ViewBag.i = i;
 
-                        <ul type="a">
-                            @for (int j = 0; j < Model.ClosedQuestions[i].Answers.Count; j++)
-                            {
-                                <li>
-                                    @Model.ClosedQuestions[i].Answers[j].Answer
-                                    @if (Model.ClosedQuestions[i].IsMultichoice)
-                                    {
-                                        @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked)
-                                        @*@Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].IsCorrect)*@
-
-                                        @Html.CheckBox("ClosedQuestions[" + i + "].Answers[" + j + "]", Model.ClosedQuestions[i].Answers[j].IsMarked)
-                                    }
-                                    else
-                                    {
-                                        @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].Id)
-                                    }
-                                </li>
-                            }
-                        </ul>
+                        @Html.Partial("_PrepareAnswers");
                     }
                 </div>
                 <div class="form-group bordered col-md-6">
                     @for (int i = (Model.ClosedQuestions.Count / 2) + 1; i < Model.ClosedQuestions.Count; i++)
                     {
-                        @Html.HiddenFor(model => Model.ClosedQuestions[i].Points)
-                        @(i + 1 + "." + @Model.ClosedQuestions[i].Contents)
+                        ViewBag.i = i;
 
-                        <ul type="a">
-                            @for (int j = 0; j < Model.ClosedQuestions[i].Answers.Count; j++)
-                            {
-                                <li>
-                                    @Model.ClosedQuestions[i].Answers[j].Answer
-                                    @if (Model.ClosedQuestions[i].IsMultichoice)
-                                    {
-                                        @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked)
-                                        @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].IsCorrect)
-                                    }
-                                    else
-                                    {
-                                        string id = "ClosedQuestions_" + i + "__Answers_" + j + "__IsMarked";
-                                        @Html.RadioButton(Model.ClosedQuestions[i].Id.ToString(), Model.ClosedQuestions[i].Answers[j].IsMarked, new { htmlAttributes = new { @id = id } })
-                                        @Html.HiddenFor(a => Model.ClosedQuestions[i].Answers[j].IsCorrect)
-                                    }
-                                </li>
-                            }
-                        </ul>
+                        @Html.Partial("_PrepareAnswers");
                     }
                 </div>
             </div>
