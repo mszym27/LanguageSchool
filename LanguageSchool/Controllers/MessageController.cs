@@ -22,7 +22,7 @@ namespace LanguageSchool.Controllers
         {
             var loggedUser = GetLoggedUser();
 
-            var userMessages = unitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted)
+            var userMessages = UnitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted)
                 , orderBy: q => q.OrderByDescending(d => d.Message.CreationDate)
             );
 
@@ -62,8 +62,8 @@ namespace LanguageSchool.Controllers
             {
                 userMessage.HasBeenReceived = true;
                 userMessage.ReceivedDate = DateTime.Today;
-                unitOfWork.UserMessageRepository.Update(userMessage);
-                unitOfWork.Save();
+                UnitOfWork.UserMessageRepository.Update(userMessage);
+                UnitOfWork.Save();
             }
 
             var userMessageViewModel = new UserMessageViewModel(userMessage);
@@ -75,11 +75,11 @@ namespace LanguageSchool.Controllers
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int userMessageId)
         {
-            var userMessage = unitOfWork.UserMessageRepository.GetById(userMessageId);
+            var userMessage = UnitOfWork.UserMessageRepository.GetById(userMessageId);
 
             userMessage.IsDeleted = true;
-            unitOfWork.UserMessageRepository.Update(userMessage);
-            unitOfWork.Save();
+            UnitOfWork.UserMessageRepository.Update(userMessage);
+            UnitOfWork.Save();
 
             return RedirectToAction("Index");
         }
@@ -100,7 +100,7 @@ namespace LanguageSchool.Controllers
         {
             UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
 
-            userMessageViewModel.MessageTypes = new SelectList(unitOfWork.MessageTypeRepository.Get(),
+            userMessageViewModel.MessageTypes = new SelectList(UnitOfWork.MessageTypeRepository.Get(),
                                          "Id",
                                          "Name");
 
@@ -108,7 +108,7 @@ namespace LanguageSchool.Controllers
 
             if (userId != null)
             {
-                var selectedUser = unitOfWork.UserRepository.GetById(userId);
+                var selectedUser = UnitOfWork.UserRepository.GetById(userId);
                 usersSelectList = PopulateList.AllUsers(selectedUser);
             }
             else
@@ -118,15 +118,15 @@ namespace LanguageSchool.Controllers
 
             userMessageViewModel.Users = usersSelectList;
 
-            userMessageViewModel.Groups = new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
+            userMessageViewModel.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
                                          "Name");
 
-            userMessageViewModel.Courses = new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+            userMessageViewModel.Courses = new SelectList(UnitOfWork.CourseRepository.Get(c => !c.IsDeleted),
                                          "Id",
                                          "Name");
 
-            userMessageViewModel.Roles = new SelectList(unitOfWork.RoleRepository.Get(),
+            userMessageViewModel.Roles = new SelectList(UnitOfWork.RoleRepository.Get(),
                                          "Id",
                                          "PLName");
 
@@ -144,7 +144,7 @@ namespace LanguageSchool.Controllers
 
                 message.Header = uMVM.Topic;
                 message.Contents = uMVM.Contents;
-                message.MessageType = unitOfWork.MessageTypeRepository.GetById(uMVM.MessageTypeId);
+                message.MessageType = UnitOfWork.MessageTypeRepository.GetById(uMVM.MessageTypeId);
                 message.CreationDate = DateTime.Now;
                 message.IsSystem = uMVM.IsSystem;
                 message.UsersMessages = new List<UserMessage>();
@@ -164,7 +164,7 @@ namespace LanguageSchool.Controllers
                     case (int)Consts.MessageTypes.ToGroup:
                         message.GroupId = uMVM.GroupId;
 
-                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == uMVM.GroupId).Any() && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == uMVM.GroupId).Any() && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -175,7 +175,7 @@ namespace LanguageSchool.Controllers
                     case (int)Consts.MessageTypes.ToCourse:
                         message.CourseId = uMVM.CourseId;
 
-                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == uMVM.CourseId).Any() && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == uMVM.CourseId).Any() && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -186,7 +186,7 @@ namespace LanguageSchool.Controllers
                     case (int)Consts.MessageTypes.ToRole:
                         message.RoleId = uMVM.RoleId;
 
-                        foreach (User u in unitOfWork.UserRepository.Get(u => (u.RoleId == uMVM.RoleId && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.RoleId == uMVM.RoleId && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -196,7 +196,7 @@ namespace LanguageSchool.Controllers
                         break;
                     case (int)Consts.MessageTypes.ToAll:
 
-                        foreach(User u in unitOfWork.UserRepository.Get(u => !u.IsDeleted))
+                        foreach(User u in UnitOfWork.UserRepository.Get(u => !u.IsDeleted))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -206,8 +206,8 @@ namespace LanguageSchool.Controllers
                         break;
                 }
 
-                unitOfWork.MessageRepository.Insert(message);
-                unitOfWork.Save();
+                UnitOfWork.MessageRepository.Insert(message);
+                UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Wiadomość wysłana pomyślnie", "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów");
 

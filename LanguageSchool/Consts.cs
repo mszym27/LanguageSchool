@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using LanguageSchool.Models.ViewModels;
 
@@ -7,9 +8,10 @@ namespace LanguageSchool
     public class Consts
     {
         // Alerts
-        public static readonly string Success = "green";
+        public static readonly string Success = "forestgreen";
+        public static readonly string Failure = "darkred";
 
-        public static readonly string Info = "blue";
+        public static readonly string Info = "dodgerblue";
 
         public static readonly string Error = "red";
 
@@ -29,6 +31,21 @@ namespace LanguageSchool
             ToRole = 4,
             ToAll = 5,
             StudentWelcome = 6
+        }
+
+        public static Dictionary<double, string> Grades = new Dictionary<double, string>() {
+            { 100, "bardzo dobry" },
+            { 85, "dobry" },
+            { 70, "dostateczny" },
+            { 55, "dopuszczający" },
+            { 40, "niedostateczny" },
+        };
+
+        public static readonly int FailingPercentage = 39;
+
+        public static string GetGrade(double percentage)
+        {
+            return Grades.FirstOrDefault(g => g.Key <= percentage).Value;
         }
 
         public static List<int> pages = new List<int>()

@@ -30,7 +30,7 @@ namespace LanguageSchool.Controllers
         [Route("Group/Details/{id}")]
         public ActionResult Details(int id)
         {
-            var group = unitOfWork.GroupRepository.GetById(id);
+            var group = UnitOfWork.GroupRepository.GetById(id);
 
             var groupViewModel = new GroupViewModel(group);
 
@@ -45,7 +45,7 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var group = unitOfWork.GroupRepository.GetById(id);
+            var group = UnitOfWork.GroupRepository.GetById(id);
 
             if (group == null)
             {
@@ -61,11 +61,11 @@ namespace LanguageSchool.Controllers
         [Route("Group/AddUsers/{id}")]
         public ActionResult AddUsers(int id)
         {
-            var group = unitOfWork.GroupRepository.GetById(id);
+            var group = UnitOfWork.GroupRepository.GetById(id);
 
             var usersGroupViewModel = new UsersGroupViewModel(group);
 
-            var students = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Student);
+            var students = UnitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Student);
 
             foreach(var student in students)
             {
@@ -112,13 +112,13 @@ namespace LanguageSchool.Controllers
         [Route("Group/AddUsers/{id}")]
         public ActionResult AddUsers(UsersGroupViewModel usersGroupViewModel)
         {
-            var group = unitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
+            var group = UnitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
 
             foreach (var userViewModel in usersGroupViewModel.usersAvaible)
             {
                 if (userViewModel.IsMarked)
                 {
-                    var user = unitOfWork.UserRepository.GetById(userViewModel.Id);
+                    var user = UnitOfWork.UserRepository.GetById(userViewModel.Id);
 
                     group.UsersGroups.Add(new UsersGroup()
                     {
@@ -128,7 +128,7 @@ namespace LanguageSchool.Controllers
                 }
             }
 
-            unitOfWork.Save();
+            UnitOfWork.Save();
 
             return RedirectToAction("FullDetails", "Group", new { id = usersGroupViewModel.GroupId });
         }
@@ -137,7 +137,7 @@ namespace LanguageSchool.Controllers
         [Route("Group/Create/{id}")]
         public ActionResult Create(int id)
         {
-            return View(new GroupViewModel(unitOfWork.CourseRepository.GetById(id)));
+            return View(new GroupViewModel(UnitOfWork.CourseRepository.GetById(id)));
         }
 
         [HttpGet]
@@ -152,7 +152,7 @@ namespace LanguageSchool.Controllers
         [Route("Group/Create/{id}")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
-            var selectedTeacher = unitOfWork.UserRepository.GetById(groupViewModel.UserId);
+            var selectedTeacher = UnitOfWork.UserRepository.GetById(groupViewModel.UserId);
 
             if (groupViewModel.TeacherTimetable == null)
             {
@@ -237,9 +237,9 @@ namespace LanguageSchool.Controllers
 
                 group.GroupTimes = groupTimes;
 
-                unitOfWork.GroupRepository.Insert(group);
+                UnitOfWork.GroupRepository.Insert(group);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
 

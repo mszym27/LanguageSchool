@@ -12,10 +12,8 @@
     int anotherHalf = (Model.ClosedQuestions.Count / 2) + 1;
 
     <div class="container">
-        @*@Html.HiddenFor(model => model.CourseId)
-        @Html.HiddenFor(model => model.Points)
-        @Html.HiddenFor(model => model.Name)
-        @Html.HiddenFor(model => model.Comment)*@
+        @Html.HiddenFor(model => model.Id);
+        @Html.HiddenFor(model => model.GroupId)
 
         @if (Model.ClosedQuestions.Any())
         {

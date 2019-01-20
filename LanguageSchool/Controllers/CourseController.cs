@@ -15,7 +15,7 @@ namespace LanguageSchool.Controllers
         [Route("Course")]
         public ActionResult Index(string sortColumn = "startDate", string sortDirection = "asc", int page = 1)
         {
-            var courses = unitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
+            var courses = UnitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
 
             if(page == 1)
             {
@@ -47,7 +47,7 @@ namespace LanguageSchool.Controllers
             string sortColumn = "startDate", string sortDirection = "asc", int page = 1
         )
         {
-            var courses = unitOfWork.CourseRepository.Get(c => (
+            var courses = UnitOfWork.CourseRepository.Get(c => (
                     !c.IsDeleted && (
                         (showActivated && c.IsActive) || (showDeactivated && !c.IsActive)
                     ) && (
@@ -96,7 +96,7 @@ namespace LanguageSchool.Controllers
         [Route("Course/{id}")]
         public ActionResult Details(int id)
         {
-            Course course = unitOfWork.CourseRepository.GetById(id);
+            Course course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
             {
@@ -110,7 +110,7 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult FullDetails(int id)
         {
-            Course course = unitOfWork.CourseRepository.GetById(id);
+            Course course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
             {
@@ -127,7 +127,7 @@ namespace LanguageSchool.Controllers
         {
             var courseViewModel = new CourseViewModel();
 
-            courseViewModel.LanguageProficenciens = new SelectList(unitOfWork.LanguageProficencyRepository.Get(),
+            courseViewModel.LanguageProficenciens = new SelectList(UnitOfWork.LanguageProficencyRepository.Get(),
                                          "Id",
                                          "Name");
 
@@ -153,9 +153,9 @@ namespace LanguageSchool.Controllers
                     CreationDate = DateTime.Now
                 };
 
-                unitOfWork.CourseRepository.Insert(course);
+                UnitOfWork.CourseRepository.Insert(course);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 return RedirectToAction("FullDetails", new { id = course.Id });
             }
@@ -171,7 +171,7 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Edit(int id)
         {
-            var course = unitOfWork.CourseRepository.GetById(id);
+            var course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
             {
@@ -180,7 +180,7 @@ namespace LanguageSchool.Controllers
 
             CourseViewModel courseViewModel = new CourseViewModel(course);
 
-            courseViewModel.LanguageProficenciens = new SelectList(unitOfWork.LanguageProficencyRepository.Get(),
+            courseViewModel.LanguageProficenciens = new SelectList(UnitOfWork.LanguageProficencyRepository.Get(),
                                          "Id",
                                          "Name");
 
@@ -194,7 +194,7 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                var course = unitOfWork.CourseRepository.GetById(courseViewModel.Id);
+                var course = UnitOfWork.CourseRepository.GetById(courseViewModel.Id);
 
                 if (course == null)
                 {
@@ -209,9 +209,9 @@ namespace LanguageSchool.Controllers
                 course.EndDate = courseViewModel.EndDate;
                 course.NumberOfHours = courseViewModel.NumberOfHours;
 
-                unitOfWork.CourseRepository.Update(course);
+                UnitOfWork.CourseRepository.Update(course);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 return RedirectToAction("FullDetails", new { id = course.Id });
             }
@@ -229,7 +229,7 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                var course = unitOfWork.CourseRepository.GetById(id);
+                var course = UnitOfWork.CourseRepository.GetById(id);
 
                 if (course == null)
                 {
@@ -238,9 +238,9 @@ namespace LanguageSchool.Controllers
 
                 course.IsActive = !course.IsActive;
 
-                unitOfWork.CourseRepository.Update(course);
+                UnitOfWork.CourseRepository.Update(course);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 return RedirectToAction("FullDetails", new { id = id });
             }

@@ -16,7 +16,7 @@ namespace LanguageSchool.Controllers
         [Route("Questions/{lessonSubjectId}")]
         public ActionResult Index(int lessonSubjectId)
         {
-            var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
 
             var subjectsQuestionsViewModel = new SubjectsQuestionsViewModel(lessonSubject);
 
@@ -27,7 +27,7 @@ namespace LanguageSchool.Controllers
         [Route("Questions/CreateOpen/{lessonSubjectId}")]
         public ActionResult CreateOpen(int lessonSubjectId)
         {
-            var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
 
             var openQuestion = new OpenQuestionViewModel(lessonSubject);
 
@@ -47,8 +47,8 @@ namespace LanguageSchool.Controllers
                 openQuestion.Contents = openQuestionViewModel.Contents;
                 openQuestion.CreationDate = DateTime.Now;
 
-                unitOfWork.OpenQuestionRepository.Insert(openQuestion);
-                unitOfWork.Save();
+                UnitOfWork.OpenQuestionRepository.Insert(openQuestion);
+                UnitOfWork.Save();
 
                 return RedirectToAction("Index", openQuestionViewModel.LessonSubjectId);
             }
@@ -62,7 +62,7 @@ namespace LanguageSchool.Controllers
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
         public ActionResult CreateClosed(int lessonSubjectId)
         {
-            var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
 
             var closedQuestion = new ClosedQuestionViewModel(lessonSubject);
 
@@ -104,8 +104,8 @@ namespace LanguageSchool.Controllers
                     closedQuestion.Answers.Add(answer);
                 }
 
-                unitOfWork.ClosedQuestionRepository.Insert(closedQuestion);
-                unitOfWork.Save();
+                UnitOfWork.ClosedQuestionRepository.Insert(closedQuestion);
+                UnitOfWork.Save();
 
                 return RedirectToAction("Index", closedQuestionViewModel.LessonSubjectId);
             }

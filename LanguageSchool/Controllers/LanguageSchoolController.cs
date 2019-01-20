@@ -15,7 +15,7 @@ namespace LanguageSchool.Controllers
 {
     public class LanguageSchoolController : Controller
     {
-        protected UnitOfWork unitOfWork = new UnitOfWork();
+        protected UnitOfWork UnitOfWork = new UnitOfWork();
 
         protected User GetLoggedUser()
         {
@@ -23,14 +23,14 @@ namespace LanguageSchool.Controllers
 
             Int32.TryParse(User.Identity.GetUserId(), out userId);
 
-            return unitOfWork.UserRepository.GetById(userId);
+            return UnitOfWork.UserRepository.GetById(userId);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                unitOfWork.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

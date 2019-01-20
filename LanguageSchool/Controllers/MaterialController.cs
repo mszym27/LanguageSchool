@@ -18,14 +18,14 @@ namespace LanguageSchool.Controllers
         [Route("Material/Index/{id}")]
         public ActionResult Index(int id)
         {
-            var materials = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.LessonSubjectId == id);
+            var materials = UnitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.LessonSubjectId == id);
             return View(materials.ToList());
         }
 
         [HttpGet]
         public FileResult Download(int id)
         {
-            var requestedMaterial = unitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.Id == id).FirstOrDefault();
+            var requestedMaterial = UnitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.IsActive && m.Id == id).FirstOrDefault();
 
             return File(requestedMaterial.File, ".pdf", requestedMaterial.Name + ".pdf");
         }
@@ -58,8 +58,8 @@ namespace LanguageSchool.Controllers
 
             material.File = file;
 
-            unitOfWork.MaterialRepository.Insert(material);
-            unitOfWork.Save();
+            UnitOfWork.MaterialRepository.Insert(material);
+            UnitOfWork.Save();
             return RedirectToAction("Details", "LessonSubject", new { id = materialViewModel.LessonSubjectId });
             //}
 

@@ -38,6 +38,7 @@ namespace LanguageSchool.Models.ViewModels
         public TestViewModel(Test test)
         {
             Id = test.Id;
+            GroupId = test.GroupId;
             CourseId = test.CourseId;
             CreationDate = test.CreationDate.ToString("yyyy-MM-dd");
             Name = test.Name;

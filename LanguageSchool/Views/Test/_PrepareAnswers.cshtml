@@ -4,6 +4,7 @@
     int i = ViewBag.i;
 
     Html.HiddenFor(model => model.ClosedQuestions[i].Id);
+    Html.HiddenFor(model => model.ClosedQuestions[i].Contents);
     Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
 
     <li>
@@ -14,6 +15,7 @@
             {
                 <li>
                     @Model.ClosedQuestions[i].Answers[j].Answer
+                    @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].Answer)
                     @if (Model.ClosedQuestions[i].IsMultichoice)
                     {
                         @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked, new { @style = "float:right" })

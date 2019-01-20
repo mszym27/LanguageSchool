@@ -42,8 +42,8 @@ namespace LanguageSchool.Controllers
                 cr.IsAwaiting = true;
                 cr.CreationDate = DateTime.Now;
 
-                unitOfWork.ContactRequestRepository.Insert(cr);
-                unitOfWork.Save();
+                UnitOfWork.ContactRequestRepository.Insert(cr);
+                UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Wysłano pomyślnie", "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt");
 
@@ -58,7 +58,7 @@ namespace LanguageSchool.Controllers
         [Route("ContactRequest/{id}")]
         public ActionResult Details(int id)
         {
-            var contactRequest = unitOfWork.ContactRequestRepository.GetById(id);
+            var contactRequest = UnitOfWork.ContactRequestRepository.GetById(id);
 
             if (contactRequest == null)
             {

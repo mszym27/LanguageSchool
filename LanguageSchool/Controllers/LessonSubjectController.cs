@@ -17,7 +17,7 @@ namespace LanguageSchool.Controllers
         [Route("LessonSubjects/{id}")]
         public ActionResult LessonSubjects(int id)
         {
-            var group = unitOfWork.GroupRepository.GetById(id);
+            var group = UnitOfWork.GroupRepository.GetById(id);
 
             var groupViewModel = new GroupViewModel(group);
 
@@ -50,9 +50,9 @@ namespace LanguageSchool.Controllers
                     CreationDate = DateTime.Now
                 };
 
-                unitOfWork.LessonSubjectRepository.Insert(lessonSubject);
+                UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 return RedirectToAction("Details", "Group", new { id = lessonSubjectViewModel.GroupId });
             }
@@ -70,7 +70,7 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            LessonSubject lessonSubject = unitOfWork.LessonSubjectRepository.GetById(id);
+            LessonSubject lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
 
             if (lessonSubject == null)
             {
@@ -86,7 +86,7 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                var lessonSubject = unitOfWork.LessonSubjectRepository.GetById(id);
+                var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
 
                 if (lessonSubject == null)
                 {
@@ -95,9 +95,9 @@ namespace LanguageSchool.Controllers
 
                 lessonSubject.IsActive = !lessonSubject.IsActive;
 
-                unitOfWork.LessonSubjectRepository.Update(lessonSubject);
+                UnitOfWork.LessonSubjectRepository.Update(lessonSubject);
 
-                unitOfWork.Save();
+                UnitOfWork.Save();
 
                 return RedirectToAction("Details", new { id = id });
             }
