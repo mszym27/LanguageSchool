@@ -3,6 +3,7 @@
 @{
     int i = ViewBag.i;
 
+    Html.HiddenFor(model => model.ClosedQuestions[i].Id);
     Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
 
     <li>

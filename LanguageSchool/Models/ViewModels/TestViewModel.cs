@@ -29,7 +29,7 @@ namespace LanguageSchool.Models.ViewModels
         public int Points { get; set; }
 
         public List<ClosedQuestionViewModel> ClosedQuestions { get; set; }
-        public List<OpenQuestion> OpenQuestions { get; set; }
+        public List<OpenQuestionViewModel> OpenQuestions { get; set; }
 
         public List<LessonSubjectViewModel> LessonSubjects { get; set; }
 
@@ -46,7 +46,7 @@ namespace LanguageSchool.Models.ViewModels
             Points = test.Points;
 
             ClosedQuestions = new List<ClosedQuestionViewModel>();
-            OpenQuestions = new List<OpenQuestion>();
+            OpenQuestions = new List<OpenQuestionViewModel>();
 
             foreach (TestsLessonSubject testLessonSubject in test.TestsLessonSubjects)
             {
@@ -56,7 +56,7 @@ namespace LanguageSchool.Models.ViewModels
                 }
                 foreach (OpenQuestion openQuestion in testLessonSubject.LessonSubject.OpenQuestions)
                 {
-                    OpenQuestions.Add(openQuestion);
+                    OpenQuestions.Add(new OpenQuestionViewModel(openQuestion));
                 }
             }
         }

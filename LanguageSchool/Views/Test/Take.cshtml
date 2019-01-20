@@ -17,38 +17,75 @@
         @Html.HiddenFor(model => model.Name)
         @Html.HiddenFor(model => model.Comment)*@
 
-        <div class="row">
-            <div class="bordered col-md-12">
-                <div class="form-group col-md-6" style="border-right: 1px solid lightgray;">
-                    <ol>
-                        @for (int i = 0; i <= (Model.ClosedQuestions.Count / 2); i++)
-                        {
-                            ViewBag.i = i;
-
-                            @Html.Partial("_PrepareAnswers");
-                        }
-                    </ol>
-                </div>
-                <div class="form-group col-md-6">
-                    <ol start=@anotherHalf>
-                        @for (int i = anotherHalf; i < Model.ClosedQuestions.Count; i++)
-                        {
-                            ViewBag.i = i;
-
-                            @Html.Partial("_PrepareAnswers");
-                        }
-                    </ol>
-                </div>
-            </div>
-        <div class="row">
-            <div class="bordered col-md-12">
-            </div>
-        </div>
+        @if (Model.ClosedQuestions.Any())
+        {
+            Html.RenderPartial("_PartHeader", "Pytania zamknięte");
             <div class="row">
-                <div class="col-md-3 col-md-offset-9">
-                    <input type="submit" value="Zakończ test" class="btn btn-block btn-default" />
+                <div class="bordered col-md-12">
+                    <div class="form-group col-md-6" style="border-right: 1px solid lightgray;">
+                        <ol>
+                            @for (int i = 0; i <= (Model.ClosedQuestions.Count / 2); i++)
+                            {
+                                ViewBag.i = i;
+
+                                @Html.Partial("_PrepareAnswers");
+                            }
+                        </ol>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <ol start=@anotherHalf>
+                            @for (int i = anotherHalf; i < Model.ClosedQuestions.Count; i++)
+                            {
+                                ViewBag.i = i;
+
+                                @Html.Partial("_PrepareAnswers");
+                            }
+                        </ol>
+                    </div>
                 </div>
+            </div>
+        }
+
+        @if (Model.OpenQuestions.Any())
+        {
+            Html.RenderPartial("_PartHeader", "Pytania otwarte");
+            <div class="row">
+                <div class="bordered col-md-12">
+                    @for (int i = 0; i < Model.OpenQuestions.Count; i++)
+                    {
+                        Html.HiddenFor(model => model.OpenQuestions[i].Id);
+
+                        <div class="form-group">
+                            <div class="control-label col-md-12">
+                                <strong>@(i + 1). @Model.OpenQuestions[i].Contents</strong>
+                            </div>
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.OpenQuestions[i].Answer, new { htmlAttributes = new { @class = "widetextarea", @style = "width:1050px;height:150px" } })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-3 col-md-offset-9">
+                <input type="submit" value="Zakończ test" class="btn btn-block btn-default" />
             </div>
         </div>
     </div>
 }
+
+<style type="text/css">
+    div.bordered {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    ol {
+      font-weight: bold;
+    }
+
+    ul {
+      font-weight: normal;
+    }
+</style>
