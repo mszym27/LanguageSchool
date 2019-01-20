@@ -12,7 +12,7 @@
     int anotherHalf = (Model.ClosedQuestions.Count / 2) + 1;
 
     <div class="container">
-        @Html.HiddenFor(model => model.Id);
+        @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.GroupId)
 
         @if (Model.ClosedQuestions.Any())
@@ -51,9 +51,8 @@
                 <div class="bordered col-md-12">
                     @for (int i = 0; i < Model.OpenQuestions.Count; i++)
                     {
-                        Html.HiddenFor(model => model.OpenQuestions[i].Id);
-
-                        <div class="form-group">
+                        <div class="form-group">                            
+                            @Html.HiddenFor(model => model.OpenQuestions[i].Id)
                             <div class="control-label col-md-12">
                                 <strong>@(i + 1). @Model.OpenQuestions[i].Contents</strong>
                             </div>
@@ -61,6 +60,8 @@
                                 @Html.EditorFor(model => model.OpenQuestions[i].Answer, new { htmlAttributes = new { @class = "widetextarea", @style = "width:1050px;height:150px" } })
                             </div>
                         </div>
+
+                        <p/>
                     }
                 </div>
             </div>

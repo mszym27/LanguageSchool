@@ -138,13 +138,14 @@ namespace LanguageSchool.Controllers
                         var answer = new UserOpenAnswer();
 
                         answer.CreationDate = now;
+                        answer.TestId = testViewModel.Id;
                         answer.OpenQuestionId = question.Id;
                         answer.Content = question.Answer;
 
                         student.UserOpenAnswers.Add(answer);
                     }
 
-                    userAlertContents = "Czekaj aż prowadzący oceni część otwartą testu.";
+                    userAlertContents += "Czekaj aż prowadzący oceni część otwartą testu.";
                 }
                 else
                 {

@@ -34,18 +34,19 @@ namespace LanguageSchool
         }
 
         public static Dictionary<double, string> Grades = new Dictionary<double, string>() {
-            { 100, "bardzo dobry" },
-            { 85, "dobry" },
-            { 70, "dostateczny" },
-            { 55, "dopuszczający" },
             { 40, "niedostateczny" },
+            { 55, "dopuszczający" },
+            { 70, "dostateczny" },
+            { 85, "dobry" },
+            { 100, "bardzo dobry" },
         };
 
         public static readonly int FailingPercentage = 39;
 
         public static string GetGrade(double percentage)
         {
-            return Grades.FirstOrDefault(g => g.Key <= percentage).Value;
+            string grade = Grades.FirstOrDefault(g => g.Key >= percentage).Value;
+            return grade;
         }
 
         public static List<int> pages = new List<int>()
