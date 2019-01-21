@@ -1,4 +1,5 @@
-﻿@model LanguageSchool.Models.ViewModels.GroupViewModel
+﻿@using System.Linq;
+@model LanguageSchool.Models.ViewModels.GroupViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -79,7 +80,14 @@
                             @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First().CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
-                            @student.Fullname
+                            @if (student.UserTests.Where(t => !t.IsMarked).Any())
+                            {
+                                @Html.ActionLink(student.Fullname, "Index", "UserOpenAnswers", new { Id = student.Id }, null)
+                            }
+                            else
+                            {
+                                @student.Fullname
+                            }
                         </td>
                         <td>
                             @student.EmailAdress
