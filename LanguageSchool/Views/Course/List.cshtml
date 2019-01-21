@@ -18,7 +18,8 @@
             </div>
             <div class="col-xs-9">
                 @Html.Label("Szukana w tabeli fraza:")
-                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:620px" })
+                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:620px",
+                    placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"})
             </div>
         </div>
 

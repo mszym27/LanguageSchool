@@ -23,10 +23,11 @@
                     @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:80px" })
                 </div>
                 <div class="col-md-1">
-                    @Html.Label("Użytkownik:", new { @style = "float:right" })
+                    @Html.Label("Nazwa:", new { style = "float:right" })
                 </div>
                 <div class="col-md-3">
-                    @Html.TextBox("fullName", (string)ViewBag.fullName, new { @class = "textarea", @style = "width:300px" })
+                    @Html.TextBox("fullName", (string)ViewBag.fullName, new { @class = "textarea", @style = "width:300px",
+                        placeholder = "dane i prośby" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Typ:", new { @style = "float:right" })
@@ -52,13 +53,15 @@
                     @Html.Label("Email:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-3">
-                    @Html.TextBox("emailAdress", (string)ViewBag.emailAdress, new { @class = "textarea", @style = "width:200px" })
+                    @Html.TextBox("emailAdress", (string)ViewBag.emailAdress, new { @class = "textarea", @style = "width:200px",
+                        placeholder = "dane i prośby" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Miasto:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-2">
-                    @Html.TextBox("city", (string)ViewBag.city, new { @class = "textarea", @style = "width:120px" })
+                    @Html.TextBox("city", (string)ViewBag.city, new { @class = "textarea", @style = "width:120px",
+                        placeholder = "dane" })
                 </div>
             </div>
             <p />
@@ -75,13 +78,15 @@
                     @Html.Label("Ulica:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-3">
-                    @Html.TextBox("street", (string)ViewBag.street, new { @class = "textarea", @style = "width:300px" })
+                    @Html.TextBox("street", (string)ViewBag.street, new { @class = "textarea", @style = "width:300px",
+                        placeholder = "dane" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Telefon:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-2">
-                    @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new { @class = "textarea", @style = "width:120px" })
+                    @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new { @class = "textarea", @style = "width:120px",
+                        placeholder = "dane i prośby" })
                 </div>
             </div>
             <p />
