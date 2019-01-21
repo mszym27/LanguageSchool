@@ -59,7 +59,11 @@
                     <strong>Adres email</strong>
                 </div>
                 <div class="col-md-4">
-                    <a href="mailto:@Model.EmailAdress">@Model.EmailAdress</a>
+                    @{ string subject = "Prośba o kontakt - " + Model.Course.Name;
+                        string body = "Dzień dobry,<br>" +
+                            "Piszę w odpowiedzi na prośbę o kontakt złożoną w kwestii prowadzonego przez naszą szkołę szkolenia. "; }
+
+                    <a href="mailto:@Model.EmailAdress&subject=@subject&body=@body">@Model.EmailAdress</a>
                 </div>
 
                 <div class="control-label col-md-2">
