@@ -103,7 +103,6 @@
     <Build Include="Administration\Tables\Messages.sql" />
     <Build Include="Administration\Tables\Classrooms.sql" />
     <Build Include="ContactInfo\Stored Procedures\GetContactInfoList.sql" />
-    <None Include="Scripts\TTeacherXCoursesNewGroups.sql" />
     <Build Include="Tests\Tables\TestOpenQuestions.sql" />
     <Build Include="Tests\Tables\TestClosedQuestions.sql" />
     <Build Include="Tests\Tables\TestAnswers.sql" />
@@ -112,13 +111,6 @@
     <None Include="Scripts\insert_pliku.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LanguageSchool.scmp" />
     <None Include="LanguageSchool.publish.xml" />
-    <None Include="Scripts\TestData.sql" />
-    <None Include="Scripts\courses_add.sql" />
-    <None Include="Scripts\clear_groups.sql" />
-    <None Include="Scripts\dictionary_rewrite.sql" />
-    <None Include="Scripts\adddefaults.sql" />
-    <None Include="Scripts\new_init.sql" />
   </ItemGroup>
 </Project>
