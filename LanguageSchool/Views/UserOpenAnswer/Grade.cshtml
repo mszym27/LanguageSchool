@@ -1,0 +1,38 @@
+﻿@model LanguageSchool.Models.ViewModels.UserOpenAnswerViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(model => model.TestId)
+
+    <div class="container-fluid">
+        @{ Html.RenderPartial("_PartHeader", "Oceń odpowiedź"); }
+        <div class="row">
+            <div class="bordered col-md-12">
+                <div class="col-md-2">
+                    <strong>Odpowiedź</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Content)
+                </div>
+                <div class="col-md-2">
+                    <strong>Możliwe punkty</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.Points)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <input type="submit" value="Zapisz" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

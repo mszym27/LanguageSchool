@@ -30,6 +30,36 @@ namespace LanguageSchool.Controllers
             return View(user.UserOpenAnswers.Where(a => !a.IsMarked));
         }
 
+        [HttpGet]
+        [Route("Grade/{id}")]
+        public ActionResult Grade(int id)
+        {
+            var answer = UnitOfWork.UserOpenAnswerRepository.GetById(id);
+
+            if (answer == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(new UserOpenAnswerViewModel(answer));
+        }
+
+        [HttpPost]
+        [Route("Grade/{id}")]
+        public ActionResult Grade(UserOpenAnswerViewModel answer)
+        {
+            //User user = UnitOfWork.UserRepository.GetById(userId);
+
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //return View(user.UserOpenAnswers.Where(a => !a.IsMarked));
+
+            return View(answer);
+        }
+
         //// GET: User/Create
         //public ActionResult Create()
         //{

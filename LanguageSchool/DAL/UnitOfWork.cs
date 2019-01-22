@@ -32,6 +32,15 @@ namespace LanguageSchool.DAL
         private Repository<OpenQuestion> openQuestionRepository;
         private Repository<Test> testRepository;
         private Repository<Answer> answerRepository;
+        private Repository<UserOpenAnswer> userOpenAnswerRepository;
+        
+        public Repository<UserOpenAnswer> UserOpenAnswerRepository
+        {
+            get
+            {
+                return this.userOpenAnswerRepository ?? new Repository<UserOpenAnswer>(entities);
+            }
+        }
 
         public Repository<Answer> AnswerRepository
         {
