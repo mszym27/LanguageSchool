@@ -263,7 +263,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsMarked" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
@@ -1103,7 +1103,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
@@ -1115,6 +1114,7 @@
           <NavigationProperty Name="OpenQuestion" Relationship="Self.FK_UsersOpenAnswers_OpenQuestions" FromRole="UserOpenAnswers" ToRole="OpenQuestions" />
           <NavigationProperty Name="Test" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="UserOpenAnswers" ToRole="Tests" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersOpenAnswers_Users" FromRole="UserOpenAnswers" ToRole="Users" />
+          <Property Name="IsMarked" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -2054,8 +2054,8 @@
           <EntitySetMapping Name="UserOpenAnswers">
             <EntityTypeMapping TypeName="LanguageSchoolModel.UserOpenAnswer">
               <MappingFragment StoreEntitySet="UserOpenAnswers">
+                <ScalarProperty Name="IsMarked" ColumnName="IsMarked" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="DeletionDate" ColumnName="DeletionDate" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

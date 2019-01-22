@@ -15,7 +15,6 @@ namespace LanguageSchool.Models
     public partial class UserOpenAnswer
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int UserId { get; set; }
@@ -24,6 +23,7 @@ namespace LanguageSchool.Models
         public string Content { get; set; }
         public Nullable<int> Points { get; set; }
         public string Comment { get; set; }
+        public bool IsMarked { get; set; }
     
         public virtual OpenQuestion OpenQuestion { get; set; }
         public virtual Test Test { get; set; }

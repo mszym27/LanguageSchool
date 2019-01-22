@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Users].[UserOpenAnswers] (
     [Id]             INT             IDENTITY (1, 1) NOT NULL,
-    [IsDeleted]      BIT             NOT NULL,
+    [IsMarked]       BIT             NOT NULL,
     [CreationDate]   DATETIME        NOT NULL,
     [DeletionDate]   DATETIME        NULL,
     [UserId]         INT             NOT NULL,
@@ -14,6 +14,8 @@
     CONSTRAINT [FK_UsersOpenAnswers_OpenQuestions] FOREIGN KEY ([OpenQuestionId]) REFERENCES [Tests].[OpenQuestions] ([Id]),
     CONSTRAINT [FK_UsersOpenAnswers_Users] FOREIGN KEY ([UserId]) REFERENCES [Users].[Users] ([Id])
 );
+
+
 
 
 

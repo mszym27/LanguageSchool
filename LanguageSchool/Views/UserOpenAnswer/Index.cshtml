@@ -1,0 +1,74 @@
+﻿@model IEnumerable<LanguageSchool.Models.UserOpenAnswer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row bordered">
+        <table class="col-md-12 table table-striped table-bordered">
+            <tr>
+                <th>
+                    Nazwa testu
+                </th>
+                <th>
+                    Treść pytania
+                </th>
+                <th>
+                    Udzielona odpowiedź
+                </th>
+                <th>
+                    Punkty do uzyskania
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                var shownContent = item.Content;
+
+                if (item.Content.Length > 30)
+                {
+                    shownContent = item.Content.Substring(0, 30) + "...";
+                }
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenQuestion.Contents)
+                    </td>
+                    <td>
+                        @Html.ActionLink(shownContent, "Grade", new { Id = item.Id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenQuestion.Points)
+                    </td>
+                    <td>
+                        @if (item.Comment != null)
+                        {
+                            <label data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-comment"></span></label>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Komentarz</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @item.Comment
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

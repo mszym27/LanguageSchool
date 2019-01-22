@@ -208,6 +208,7 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\LessonSubjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\UserOpenAnswerController.cs" />
     <Compile Include="DAL\PopulateList.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
@@ -487,6 +488,7 @@
     <Content Include="Views\Shared\_PartHeader.cshtml" />
     <Content Include="Views\Test\Take.cshtml" />
     <Content Include="Views\Test\_PrepareAnswers.cshtml" />
+    <Content Include="Views\UserOpenAnswer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

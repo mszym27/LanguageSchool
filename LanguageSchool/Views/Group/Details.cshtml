@@ -82,7 +82,7 @@
                         <td>
                             @if (student.UserTests.Where(t => !t.IsMarked).Any())
                             {
-                                @Html.ActionLink(student.Fullname, "Index", "UserOpenAnswers", new { Id = student.Id }, null)
+                                @Html.ActionLink(student.Fullname, "Index", "UserOpenAnswer", new { userId = student.Id }, null)
                             }
                             else
                             {
