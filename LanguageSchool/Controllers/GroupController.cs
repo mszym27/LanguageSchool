@@ -137,6 +137,8 @@ namespace LanguageSchool.Controllers
         [Route("Group/Create/{id}")]
         public ActionResult Create(int id)
         {
+            TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź dane nowej grupy", "wybierz prowadzącego oraz daty w których odbywać się będą zajęcia");
+
             return View(new GroupViewModel(UnitOfWork.CourseRepository.GetById(id)));
         }
 
@@ -157,6 +159,8 @@ namespace LanguageSchool.Controllers
             if (groupViewModel.TeacherTimetable == null)
             {
                 groupViewModel.FillTimetable(selectedTeacher);
+
+                TempData["Alert"] = new AlertViewModel(Consts.Info, "Wybierz godziny zajęć", "są one ograniczone do dostępnych dla wybranego przez Ciebie prowadzącego w tym przedziale dat");
 
                 return View("PickHours", groupViewModel);
             }
