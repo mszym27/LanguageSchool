@@ -108,19 +108,22 @@ namespace LanguageSchool.Controllers
 
                 foreach (var question in testViewModel.ClosedQuestions) // userTest.Points
                 {
-                    var correctAnswerIds = UnitOfWork.AnswerRepository.Get(a => !a.IsDeleted 
-                        && a.ClosedQuestion.Id == question.Id && a.IsCorrect).Select(a => a.Id);
-
-                    if (question.IsMultichoice)
+                    if(question.ChosenAnswerId != null)
                     {
-                        //if(question.NumberOfPossibleAnswers) // TODO - czy user wybral WSZYSTKIE poprawne ktore mu sie wyswietlily
+                        var correctAnswerIds = UnitOfWork.AnswerRepository.Get(a => !a.IsDeleted 
+                            && a.ClosedQuestion.Id == question.Id && a.IsCorrect).Select(a => a.Id);
 
-                        userTest.Points += question.Points;
-                    }
-                    else
-                    {
-                        if(correctAnswerIds.Contains(question.ChosenAnswerId))
+                        if (question.IsMultichoice)
+                        {
+                            //if(question.NumberOfPossibleAnswers) // TODO - czy user wybral WSZYSTKIE poprawne ktore mu sie wyswietlily
+
                             userTest.Points += question.Points;
+                        }
+                        else
+                        {
+                            if(correctAnswerIds.Contains((int)question.ChosenAnswerId))
+                                userTest.Points += question.Points;
+                        }
                     }
                 }
 
