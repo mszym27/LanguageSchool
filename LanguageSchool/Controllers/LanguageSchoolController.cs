@@ -26,6 +26,37 @@ namespace LanguageSchool.Controllers
             return UnitOfWork.UserRepository.GetById(userId);
         }
 
+        protected Guid LogException (Exception ex)
+        {
+            var guid = Guid.NewGuid();
+
+            StringBuilder builder = new StringBuilder();
+            builder
+                .AppendLine(guid.ToString())
+                .AppendLine("----------")
+                .AppendLine(DateTime.Now.ToString())
+                .AppendFormat("Source:\t{0}", ex.Source)
+                .AppendLine()
+                .AppendFormat("Target:\t{0}", ex.TargetSite)
+                .AppendLine()
+                .AppendFormat("Type:\t{0}", ex.GetType().Name)
+                .AppendLine()
+                .AppendFormat("Message:\t{0}", ex.Message)
+                .AppendLine()
+                .AppendFormat("Stack:\t{0}", ex.StackTrace)
+                .AppendLine();
+
+            string filePath = this.HttpContext.Server.MapPath("~/App_Data/Error.log");
+
+            using (StreamWriter writer = System.IO.File.AppendText(filePath))
+            {
+                writer.Write(builder.ToString());
+                writer.Flush();
+            }
+
+            return guid;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -270,8 +270,8 @@ namespace LanguageSchool.Controllers
         public ActionResult Create(UserDataViewModel udvm)
         {
             //if (ModelState.IsValid)
-            //try
-            //{
+            try
+            {
                 UserData userData = new UserData();
 
                 userData.Name = udvm.Name;
@@ -303,16 +303,12 @@ namespace LanguageSchool.Controllers
                 user.CreationDate = DateTime.Now;
                 userData.CreationDate = DateTime.Now;
 
-                user.Login = "BL\\" + userRole.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
+                user.Login = userRole.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
                 user.Password = Encryption.Encrypt(Membership.GeneratePassword(8, 3));
 
                 userData.User = user;
 
                 UnitOfWork.UserDataRepository.Insert(userData);
-
-                var randomInt = new Random().Next(0, 10000);
-
-                user.Login = user.Login + "_" + randomInt.ToString("00000");
 
                 if(userRole.Id == (int)Consts.Roles.Student)
                 {
@@ -322,19 +318,31 @@ namespace LanguageSchool.Controllers
 
                     user.UsersMessages.Add(userMessage);
                 }
+                else
+                {
+                    user.Login = "BL\\" + user.Login;
+                }
+
+                UnitOfWork.Save();
+
+                var randomInt = new Random(user.Id).Next(0, 10000);
+
+                user.Login = user.Login + "_" + randomInt.ToString("00000");
 
                 UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Konto zostało utworzone", "proszę przekazać użytkownikowi jego login i hasło");
 
                 return RedirectToAction("Details", "UserData", new { id = userData.Id });
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-            //ViewBag.UserId = new SelectList(unitOfWork.UserRepository.Get(u => !u.IsDeleted), "Id", "Login");
-            //return View(udvm);
+            }
+            catch(Exception ex)
+            {
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
+
+                ViewBag.UserId = new SelectList(UnitOfWork.UserRepository.Get(u => !u.IsDeleted), "Id", "Login");
+
+                return View(udvm);
+            }
         }
 
         //// GET: UserData/Edit/5
