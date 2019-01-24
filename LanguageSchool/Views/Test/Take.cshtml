@@ -18,7 +18,24 @@
         @if (Model.ClosedQuestions.Any())
         {
             Html.RenderPartial("_PartHeader", "Pytania zamknięte");
-            <div class="row">
+            <div class="modal fade" id="confirmation" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Pozostały pytania bez odpowiedzi</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>W teście niektóre pozostały pytania zamknięte bez zaznaczonych odpowiedzi. Czy jesteś pewien że chcesz go zakończyć?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Zakończ test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="closedQuestions">
                 <div class="bordered col-md-12">
                     @if (amountOfQuestions > 10)
                     {
@@ -86,11 +103,32 @@
         }
         <div class="row">
             <div class="col-md-3 col-md-offset-9">
-                <input type="submit" value="Zakończ test" class="btn btn-block btn-default" />
+                <input onclick = "EndTest()" value="Zakończ test" class="btn btn-block btn-default" />
             </div>
         </div>
     </div>
 }
+
+
+<script>
+    function EndTest()
+    {
+        var closedQuestions = document.getElementById("closedQuestions");
+
+        var inputs = closedQuestions.getElementsByTagName("input");
+
+        var i;
+
+        debugger;
+
+        for (i = 0; i < inputs.length; i++) {
+            if (inputs[i].checked == false) {
+                $("#confirmation").modal();
+                break;
+            }
+        }
+    }
+</script>
 
 <style type="text/css">
     div.bordered {
