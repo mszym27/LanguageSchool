@@ -80,41 +80,50 @@ namespace LanguageSchool.Controllers
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
         public ActionResult CreateClosed(ClosedQuestionViewModel closedQuestionViewModel, string submit)
         {
-            if (submit == "Utwórz")
+            try
             {
-                var closedQuestion = new ClosedQuestion();
-
-                closedQuestion.CreationDate = DateTime.Now;
-                closedQuestion.LessonSubjectId = closedQuestionViewModel.LessonSubjectId;
-                closedQuestion.Contents = closedQuestionViewModel.Contents;
-                closedQuestion.NumberOfPossibleAnswers = closedQuestionViewModel.NumberOfPossibleAnswers;
-                closedQuestion.Points = closedQuestionViewModel.Points;
-                closedQuestion.IsMultichoice = closedQuestionViewModel.IsMultichoice;
-
-                closedQuestion.Answers = new List<Answer>();
-
-                foreach(var answerViewModel in closedQuestionViewModel.Answers)
+                if (submit == "Utwórz pytanie")
                 {
-                    var answer = new Answer();
+                    var closedQuestion = new ClosedQuestion();
 
-                    answer.AnswerContent = answerViewModel.Answer;
-                    answer.IsCorrect = answerViewModel.IsCorrect;
-                    answer.CreationDate = DateTime.Now;
+                    closedQuestion.CreationDate = DateTime.Now;
+                    closedQuestion.LessonSubjectId = closedQuestionViewModel.LessonSubjectId;
+                    closedQuestion.Contents = closedQuestionViewModel.Contents;
+                    closedQuestion.NumberOfPossibleAnswers = closedQuestionViewModel.NumberOfPossibleAnswers;
+                    closedQuestion.Points = closedQuestionViewModel.Points;
+                    closedQuestion.IsMultichoice = closedQuestionViewModel.IsMultichoice;
 
-                    closedQuestion.Answers.Add(answer);
+                    closedQuestion.Answers = new List<Answer>();
+
+                    foreach(var answerViewModel in closedQuestionViewModel.Answers)
+                    {
+                        var answer = new Answer();
+
+                        answer.AnswerContent = answerViewModel.Answer;
+                        answer.IsCorrect = answerViewModel.IsCorrect;
+                        answer.CreationDate = DateTime.Now;
+
+                        closedQuestion.Answers.Add(answer);
+                    }
+
+                    UnitOfWork.ClosedQuestionRepository.Insert(closedQuestion);
+                    UnitOfWork.Save();
+
+                    return RedirectToAction("Index", closedQuestionViewModel.LessonSubjectId);
                 }
+                else
+                {
+                    if (closedQuestionViewModel.Answers == null)
+                        closedQuestionViewModel.Answers = new List<AnswerViewModel>();
 
-                UnitOfWork.ClosedQuestionRepository.Insert(closedQuestion);
-                UnitOfWork.Save();
+                    closedQuestionViewModel.Answers.Add(new AnswerViewModel());
 
-                return RedirectToAction("Index", closedQuestionViewModel.LessonSubjectId);
+                    return View("AddAnswers", closedQuestionViewModel);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                if (closedQuestionViewModel.Answers == null)
-                    closedQuestionViewModel.Answers = new List<AnswerViewModel>();
-
-                closedQuestionViewModel.Answers.Add(new AnswerViewModel());
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
 
                 return View("AddAnswers", closedQuestionViewModel);
             }
