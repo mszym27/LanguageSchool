@@ -62,6 +62,70 @@ namespace LanguageSchool.Controllers
             }
         }
 
+
+        [HttpGet]
+        public ActionResult CreateFromExisting(int groupId)
+        {
+            var group = UnitOfWork.GroupRepository.GetById(groupId);
+
+            var lessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted).OrderByDescending(ls => ls.CreationDate).ToList();
+
+            return View(lessonSubjects);
+        }
+
+        [HttpPost]
+        public ActionResult CreateFromExisting(int id, int groupId)
+        {
+            try
+            {
+                var existing = UnitOfWork.LessonSubjectRepository.GetById(id);
+
+                var lessonSubject = new LessonSubject()
+                {
+                    GroupId = groupId,
+                    Name = existing.Name,
+                    Description = existing.Description,
+                    IsActive = false,
+                    CreationDate = DateTime.Now
+                };
+
+                lessonSubject.ClosedQuestions = new List<ClosedQuestion>();
+
+                foreach(var question in lessonSubject.ClosedQuestions)
+                {
+
+                }
+
+                lessonSubject.OpenQuestions = new List<OpenQuestion>();
+
+                foreach (var question in lessonSubject.OpenQuestions)
+                {
+
+                }
+
+                lessonSubject.Materials = new List<Material>();
+
+                foreach (var material in lessonSubject.Materials)
+                {
+
+                }
+
+                UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
+
+                UnitOfWork.Save();
+
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Utworzono nowy temat", "możesz już przystąpić do dostosowywania go do potrzeb prowadzonej przez Ciebie grupy");
+
+                return RedirectToAction("Details", new { id = lessonSubject.Id });
+            }
+            catch(Exception ex)
+            {
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
+
+                return RedirectToAction("Details", "Group", new { id = groupId });
+            }
+        }
+
         // GET: LessonSubject/Details/5
         public ActionResult Details(int? id)
         {
