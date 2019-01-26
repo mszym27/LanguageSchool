@@ -137,9 +137,9 @@ namespace LanguageSchool.Controllers
 
             foreach (var group in allGroups)
             {
-                if (!student.UsersGroups.Where(ug => !(!ug.IsDeleted && (
+                if (!student.UsersGroups.Where(ug => (!ug.IsDeleted && (
                     (ug.Group.StartDate <= group.StartDate && group.StartDate <= ug.Group.EndDate) ||
-                    (ug.Group.StartDate <= group.EndDate && group.EndDate <= ug.Group.EndDate) ||
+                    (group.EndDate <= ug.Group.EndDate && ug.Group.StartDate <= group.EndDate) ||
                     (group.StartDate <= ug.Group.StartDate && ug.Group.StartDate <= group.EndDate) ||
                     (group.StartDate <= ug.Group.EndDate && ug.Group.EndDate <= group.EndDate)
                 ))).Any())
