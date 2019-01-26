@@ -22,13 +22,12 @@
                             <th>
                                 Opis
                             </th>
-                            <th></th>
                         </tr>
                         @foreach (var lessonSubject in group.LessonSubjects.Where(ls => !ls.IsDeleted))
                         {
-                            <tr>
+                            <tr valign="middle">
                                 <td>
-                                    @lessonSubject.CreationDate
+                                    @lessonSubject.CreationDate.ToString("yyy/MM/dd")
                                 </td>
                                 <td>
                                     @lessonSubject.Name
@@ -37,7 +36,7 @@
                                     @lessonSubject.Description
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Wybierz", "Copy", new { lessonSubjectId = lessonSubject.Id, groupId = Model.TeacherGroupId })
+                                    <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Copy", new { lessonSubjectId = lessonSubject.Id, groupId = Model.TeacherGroupId })'">Wybierz</button>
                                 </td>
                             </tr>
                         }
