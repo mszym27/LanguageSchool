@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "test" }))
 {
     int amountOfQuestions = Model.ClosedQuestions.Count;
 
@@ -26,11 +26,11 @@
                             <h4 class="modal-title">Pozostały pytania bez odpowiedzi</h4>
                         </div>
                         <div class="modal-body">
-                            <p>W teście niektóre pozostały pytania zamknięte bez zaznaczonych odpowiedzi. Czy jesteś pewien że chcesz go zakończyć?</p>
+                            <p>W teście niektóre pytania zamknięte pozostały bez zaznaczonych odpowiedzi. Czy jesteś pewien że chcesz go zakończyć?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Zakończ test</button>
+                            <button type="submit" class="btn btn-danger">Zakończ test</button>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
         }
         <div class="row">
             <div class="col-md-3 col-md-offset-9">
-                <input onclick = "EndTest()" value="Zakończ test" class="btn btn-block btn-default" />
+                <input type="button" onclick = "EndTest()" value="Zakończ test" class="btn btn-block btn-default" />
             </div>
         </div>
     </div>
@@ -119,13 +119,42 @@
 
         var i;
 
-        debugger;
+        var prevQuestionNumber = -1,
+            questionNumber = 0,
+            wasChecked = true;
 
         for (i = 0; i < inputs.length; i++) {
-            if (inputs[i].checked == false) {
-                $("#confirmation").modal();
-                break;
+            if (inputs[i].type != 'hidden') {
+                var answerName = inputs[i].getAttribute("name");
+
+                questionNumber = parseInt(answerName.match(/\d+/), 10)
+
+                debugger;
+
+                var isChecked = inputs[i].checked;
+
+                if (questionNumber != prevQuestionNumber) {
+                    if (!wasChecked) {
+                        break;
+                    }
+                    else {
+                        prevQuestionNumber = questionNumber;
+
+                        wasChecked = false;
+                    }
+                }
+
+                if (isChecked) {
+                    wasChecked = true;
+                }
             }
+        }
+        
+        if (!wasChecked) {
+            $("#confirmation").modal();
+        }
+        else {
+            document.getElementById("test").submit();
         }
     }
 </script>

@@ -18,5 +18,12 @@ namespace LanguageSchool.Models.ViewModels
             this.Title = Title;
             this.Message = Message;
         }
+
+        public AlertViewModel(Guid errorLogGuid)
+        {
+            this.AlertType = Consts.Error;
+            this.Title = "Nastąpił nieoczekiwany wyjątek";
+            this.Message = "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + errorLogGuid.ToString();
+        }
     }
 }

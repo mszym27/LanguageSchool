@@ -133,8 +133,8 @@ namespace LanguageSchool.Controllers
 
                 string userAlertType = Consts.Info;
 
-                if (testViewModel.OpenQuestions.Any()
-                    & testViewModel.OpenQuestions.Where(q => q.Answer != null).Any())
+                if (testViewModel.OpenQuestions != null
+                    && testViewModel.OpenQuestions.Where(q => q.Answer != null).Any())
                 {
                     foreach (var question in testViewModel.OpenQuestions.Where(q => q.Answer != null))
                     {
@@ -170,7 +170,9 @@ namespace LanguageSchool.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Operacja nie powiodła się", "jeśli problem się powtórzy skontaktuj się z prowadzącym.");
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
                 return View(testViewModel);
             }

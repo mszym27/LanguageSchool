@@ -123,7 +123,9 @@ namespace LanguageSchool.Controllers
             }
             catch(Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
                 return View("AddAnswers", closedQuestionViewModel);
             }
