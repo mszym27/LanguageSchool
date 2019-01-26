@@ -321,6 +321,7 @@
     <Compile Include="Models\UsersTests.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\ExistingLessonSubjectsVM.cs" />
     <Compile Include="Models\ViewModels\UserOpenAnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\OpenQuestionViewModel.cs" />
     <Compile Include="Models\ViewModels\TimeTableViewModel.cs" />
@@ -492,6 +493,7 @@
     <Content Include="Views\UserOpenAnswer\Index.cshtml" />
     <Content Include="Views\UserOpenAnswer\Grade.cshtml" />
     <Content Include="Views\UserOpenAnswer\Details.cshtml" />
+    <Content Include="Views\LessonSubject\CreateFromExisting.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

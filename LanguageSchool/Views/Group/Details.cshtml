@@ -9,12 +9,12 @@
 <div class="container">
     <div class="row">
         <div class="bordered col-md-4">
-            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "LessonSubject", new { id = Model.GroupId})'">Utwórz nowy temat</button>
+            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Create", "LessonSubject", new { id = Model.GroupId })'">Utwórz nowy temat</button>
         </div>
     </div>
     <div class="row">
         <div class="bordered col-md-4">
-            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("CreateFromExisting", "LessonSubject", new { id = Model.CourseId})'">Utwórz nowy temat na podstawie istniejącego</button>
+            <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("CreateFromExisting", "LessonSubject", new { groupId = Model.GroupId })'">Utwórz nowy temat na podstawie istniejącego</button>
         </div>
     </div>
     <div class="row">

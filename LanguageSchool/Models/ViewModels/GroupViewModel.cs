@@ -44,6 +44,7 @@ namespace LanguageSchool.Models.ViewModels
         public GroupViewModel(Group group)
         {
             GroupId = group.Id;
+            CourseId = group.CourseId;
             Name = group.Name;
             StartDate = group.StartDate;
             EndDate = group.EndDate;

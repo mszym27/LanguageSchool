@@ -62,65 +62,102 @@ namespace LanguageSchool.Controllers
             }
         }
 
-
-        [HttpGet]
+        [Route("LessonSubject/CreateFromExisting/{groupId}")]
         public ActionResult CreateFromExisting(int groupId)
         {
             var group = UnitOfWork.GroupRepository.GetById(groupId);
 
-            var lessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted).OrderByDescending(ls => ls.CreationDate).ToList();
+            var lessonSubjects = new ExistingLessonSubjectsVM(group.Course, groupId);
 
             return View(lessonSubjects);
         }
 
-        [HttpPost]
-        public ActionResult CreateFromExisting(int id, int groupId)
+        [Route("LessonSubject/Copy/{lessonSubjectId}/{groupId}")]
+        public ActionResult Copy(int lessonSubjectId, int groupId)
         {
             try
             {
-                var existing = UnitOfWork.LessonSubjectRepository.GetById(id);
+                var existingSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
 
                 var lessonSubject = new LessonSubject()
                 {
                     GroupId = groupId,
-                    Name = existing.Name,
-                    Description = existing.Description,
+                    Name = existingSubject.Name,
+                    Description = existingSubject.Description,
                     IsActive = false,
                     CreationDate = DateTime.Now
                 };
 
                 lessonSubject.ClosedQuestions = new List<ClosedQuestion>();
 
-                foreach(var question in lessonSubject.ClosedQuestions)
+                foreach (var existingQuestion in lessonSubject.ClosedQuestions.Where(q => !q.IsDeleted))
                 {
+                    var copiedQuestion = new ClosedQuestion()
+                    {
+                        Contents = existingQuestion.Contents,
+                        NumberOfPossibleAnswers = existingQuestion.NumberOfPossibleAnswers,
+                        IsMultichoice = existingQuestion.IsMultichoice,
+                        Points = existingQuestion.Points,
+                        CreationDate = DateTime.Now
+                    };
 
+                    foreach (var existingAnswer in existingQuestion.Answers.Where(a => !a.IsDeleted))
+                    {
+                        var copiedAnswer = new Answer()
+                        {
+                            AnswerContent = existingAnswer.AnswerContent,
+                            IsCorrect = existingAnswer.IsCorrect,
+                            CreationDate = DateTime.Now
+                        };
+
+                        copiedQuestion.Answers.Add(copiedAnswer);
+                    }
+
+                    lessonSubject.ClosedQuestions.Add(copiedQuestion);
                 }
 
                 lessonSubject.OpenQuestions = new List<OpenQuestion>();
 
-                foreach (var question in lessonSubject.OpenQuestions)
+                foreach (var existingQuestion in lessonSubject.OpenQuestions)
                 {
+                    var copiedQuestion = new OpenQuestion()
+                    {
+                        Contents = existingQuestion.Contents,
+                        Points = existingQuestion.Points,
+                        CreationDate = DateTime.Now
+                    };
 
+                    lessonSubject.OpenQuestions.Add(copiedQuestion);
                 }
 
                 lessonSubject.Materials = new List<Material>();
 
-                foreach (var material in lessonSubject.Materials)
+                foreach (var existingMaterial in lessonSubject.Materials.Where(m => !m.IsDeleted))
                 {
+                    var copiedMaterial = new Material()
+                    {
+                        Name = existingMaterial.Name,
+                        Comment = existingMaterial.Comment,
+                        File = existingMaterial.File,
+                        CreationDate = DateTime.Now
+                    };
 
+                    lessonSubject.Materials.Add(copiedMaterial);
                 }
 
                 UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
 
                 UnitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel(Consts.Success, "Utworzono nowy temat", "możesz już przystąpić do dostosowywania go do potrzeb prowadzonej przez Ciebie grupy");
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Utworzono nowy temat", "możesz przystąpić do dostosowywania go do potrzeb prowadzonej przez Ciebie grupy");
 
                 return RedirectToAction("Details", new { id = lessonSubject.Id });
             }
             catch(Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
+                var logGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(logGuid);
 
                 return RedirectToAction("Details", "Group", new { id = groupId });
             }
