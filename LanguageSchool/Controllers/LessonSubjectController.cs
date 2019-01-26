@@ -90,7 +90,7 @@ namespace LanguageSchool.Controllers
 
                 lessonSubject.ClosedQuestions = new List<ClosedQuestion>();
 
-                foreach (var existingQuestion in lessonSubject.ClosedQuestions.Where(q => !q.IsDeleted))
+                foreach (var existingQuestion in existingSubject.ClosedQuestions.Where(q => !q.IsDeleted))
                 {
                     var copiedQuestion = new ClosedQuestion()
                     {
@@ -118,7 +118,7 @@ namespace LanguageSchool.Controllers
 
                 lessonSubject.OpenQuestions = new List<OpenQuestion>();
 
-                foreach (var existingQuestion in lessonSubject.OpenQuestions)
+                foreach (var existingQuestion in existingSubject.OpenQuestions)
                 {
                     var copiedQuestion = new OpenQuestion()
                     {
@@ -132,7 +132,7 @@ namespace LanguageSchool.Controllers
 
                 lessonSubject.Materials = new List<Material>();
 
-                foreach (var existingMaterial in lessonSubject.Materials.Where(m => !m.IsDeleted))
+                foreach (var existingMaterial in existingSubject.Materials.Where(m => !m.IsDeleted))
                 {
                     var copiedMaterial = new Material()
                     {
