@@ -86,6 +86,11 @@ namespace LanguageSchool.Controllers
 
             var testViewModel = new TestViewModel(test);
 
+            foreach (var question in testViewModel.ClosedQuestions)
+            {
+                question.Answers = Shuffle(question.Answers);
+            }
+
             return View(testViewModel);
         }
 
@@ -176,6 +181,21 @@ namespace LanguageSchool.Controllers
 
                 return View(testViewModel);
             }
+        }
+
+        private List<AnswerViewModel> Shuffle(List<AnswerViewModel> answers)
+        {
+            int n = answers.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                var value = answers[k];
+                answers[k] = answers[n];
+                answers[n] = value;
+            }
+
+            return answers;
         }
 
         private double GradeTest(int obtainedPoints, int maxPoints)
