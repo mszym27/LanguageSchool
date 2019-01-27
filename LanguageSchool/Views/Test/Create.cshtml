@@ -89,14 +89,13 @@
                             <th>
                                 Liczba otwartych pytań
                             </th>
-                            <th>
-                                Wybrano
-                            </th>
                         </tr>
 
                         @for (var i = 0; i < Model.LessonSubjects.Count; i++)
                         {
                             @Html.HiddenFor(model => model.LessonSubjects[i].Id)
+                            @Html.HiddenFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { id = "numberClosed" + i })
+                            @Html.HiddenFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { id = "numberOpen" + i })
 
                             if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
                                 || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
@@ -109,30 +108,18 @@
                                         @Model.LessonSubjects[i].Description
                                     </td>
                                     <td>
-                                        @if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0)
-                                        {
-                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions); @: \
-                                            @Model.LessonSubjects[i].MaxNumberOfClosedQuestions;
-                                        }
-                                        else
-                                        {
-                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
-                                        }
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions
+                                            , new { htmlAttributes = new { @disabled = "disabled" } }) \ 
+                                        @Model.LessonSubjects[i].MaxNumberOfClosedQuestions
                                     </td>
                                     <td>
-                                        @if (Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
-                                        {
-                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions); @: \
-                                            @Model.LessonSubjects[i].MaxNumberOfOpenQuestions;
-                                        }
-                                        else
-                                        {
-                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
-                                        }
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions
+                                            , new { htmlAttributes = new { @disabled = "disabled" } }) \ 
+                                        @Model.LessonSubjects[i].MaxNumberOfOpenQuestions
                                     </td>
                                     <td>
                                         <label class="btn btn-default btn-block" onclick="enableRow(@i)">
-                                            <label style="display: block">
+                                            <label style="display: none">
                                                 @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
                                             </label>
                                             Wybierz
@@ -155,17 +142,28 @@
 
 <script>
     function enableRow(rowId) {
-        var row = document.getElementById(rowId);
-
+        var row = document.getElementById(rowId),
+        //,
+        //    numberClosed = document.getElementById(numberClosed + rowId),
+        //    numberOpen = document.getElementById(numberOpen + rowId),
+            answerClosed = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions"),
+            answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfClosedQuestions");
+        
         debugger;
 
         if (row.style.color == "black") {
             row.style.background = "whitesmoke";
             row.style.color = "silver";
+
+            answerClosed.disabled = true;
+            answerOpen.disabled = true;
         }
         else {
             row.style.background = "white";
             row.style.color = "black";
+
+            answerClosed.disabled = false;
+            answerOpen.disabled = false;
         }
 
 
