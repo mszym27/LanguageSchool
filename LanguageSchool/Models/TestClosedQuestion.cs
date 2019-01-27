@@ -12,23 +12,20 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class TestClosedQuestion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Answer()
+        public TestClosedQuestion()
         {
             this.TestAnswers = new HashSet<TestAnswer>();
         }
     
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int ClosedQuestionId { get; set; }
-        public string AnswerContent { get; set; }
-        public bool IsCorrect { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
     
         public virtual ClosedQuestion ClosedQuestion { get; set; }
+        public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
     }

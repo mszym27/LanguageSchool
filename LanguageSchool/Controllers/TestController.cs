@@ -10,7 +10,7 @@ namespace LanguageSchool.Controllers
 {
     public class TestController : LanguageSchoolController
     {
-        private Random random = new Random();
+        private Random Rand = new Random();
 
         //[Route("Test/{id}")]
         //public ActionResult Index(int id)
@@ -65,11 +65,78 @@ namespace LanguageSchool.Controllers
 
             foreach (var lessonSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
             {
-                var testLessonSubject = new TestsLessonSubject();
+                var chosenSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubject.Id);
 
-                testLessonSubject.LessonSubjectId = lessonSubject.Id;
+                var testLessonSubject = new TestsLessonSubject() {
+                    LessonSubjectId = chosenSubject.Id
+                };
 
                 test.TestsLessonSubjects.Add(testLessonSubject);
+
+                var closedQuestions = chosenSubject.ClosedQuestions
+                    .Where(q => !q.IsDeleted)
+                    .OrderBy(x => Rand.Next())
+                    .Take(test.NumberOfClosedQuestions);
+
+                test.TestClosedQuestions = new List<TestClosedQuestion>();
+
+                foreach (var question in closedQuestions)
+                {
+                    var possibleAnswers = question.NumberOfPossibleAnswers;
+
+                    var properAnswers = question.IsMultichoice? Rand.Next(1, possibleAnswers) : 1;
+
+                    var answers = question.Answers
+                        .Where(a => !a.IsDeleted && !a.IsCorrect)
+                        .OrderBy(x => Rand.Next())
+                        .Take(possibleAnswers - properAnswers)
+                        .ToList();
+
+                    var proper = question.Answers
+                        .Where(a => !a.IsDeleted && a.IsCorrect)
+                        .OrderByDescending(a => a.IsCorrect)
+                        .ThenBy(x => Rand.Next())
+                        .Take(properAnswers)
+                        .ToList();
+
+                    answers.AddRange(proper);
+
+                    TestClosedQuestion testQuestion = new TestClosedQuestion
+                    {
+                        QuestionId = question.Id
+                    };
+
+                    testQuestion.TestAnswers = new List<TestAnswer>();
+
+                    foreach (var answer in answers)
+                    {
+                        testQuestion.TestAnswers.Add(
+                            new TestAnswer
+                            {
+                                AnswerId = answer.Id
+                            }
+                        );
+                    }
+
+                    test.TestClosedQuestions.Add(testQuestion);
+                }
+
+                var openQuestions = chosenSubject.OpenQuestions
+                    .Where(q => !q.IsDeleted)
+                    .OrderBy(x => Rand.Next())
+                    .Take(test.NumberOfOpenQuestions);
+
+                test.TestOpenQuestions = new List<TestOpenQuestion>();
+
+                foreach (var question in openQuestions)
+                {
+                    test.TestOpenQuestions.Add(
+                        new TestOpenQuestion
+                        {
+                            QuestionId = question.Id
+                        }
+                    );
+                }
             }
 
             UnitOfWork.TestRepository.Insert(test);
@@ -189,7 +256,7 @@ namespace LanguageSchool.Controllers
             while (n > 1)
             {
                 n--;
-                int k = random.Next(n + 1);
+                int k = Rand.Next(n + 1);
                 var value = answers[k];
                 answers[k] = answers[n];
                 answers[n] = value;

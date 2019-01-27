@@ -112,6 +112,9 @@
     <Build Include="ContactInfo\Stored Procedures\GetContactInfoList.sql" />
     <Build Include="Users\Tables\WorkTimes.sql" />
     <None Include="Scripts\TTeacherXCoursesNewGroups.sql" />
+    <Build Include="Tests\Tables\TestOpenQuestions.sql" />
+    <Build Include="Tests\Tables\TestClosedQuestions.sql" />
+    <Build Include="Tests\Tables\TestAnswers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

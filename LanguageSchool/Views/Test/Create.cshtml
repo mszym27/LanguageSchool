@@ -14,7 +14,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Utwórz test dla grupy"); }
+        @Html.Partial("_PartHeader", "Utwórz test dla grupy")
         <div class="row">
             <div class="bordered col-md-12">
                 <div class="row">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        @{ Html.RenderPartial("_PartHeader", "Wybierz tematy dla testu"); }
+        @Html.Partial("_PartHeader", "Wybierz tematy dla testu")
         <div class="row">
             <div class="bordered col-md-12">
                 <table class="table table-bordered">
@@ -83,25 +83,58 @@
                             Opis
                         </th>
                         <th>
+                            Liczba zamkniętych pytań
+                        </th>
+                        <th>
+                            Liczba otwartych pytań
+                        </th>
+                        <th>
                             Wybrano
                         </th>
                     </tr>
+
                     @for (var i = 0; i < Model.LessonSubjects.Count; i++)
                     {
-                        @Html.HiddenFor(model => model.LessonSubjects[i].Id)
-                        <tr>
-                            <td>
-                                @Model.LessonSubjects[i].Name
-                            </td>
-                            <td>
-                                @Model.LessonSubjects[i].Description
-                            </td>
-                            <td>
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
-                                </div>
-                            </td>
-                        </tr>
+                        if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
+                            || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
+                        { 
+                            @Html.HiddenFor(model => model.LessonSubjects[i].Id)
+                            <tr>
+                                <td>
+                                    @Model.LessonSubjects[i].Name
+                                </td>
+                                <td>
+                                    @Model.LessonSubjects[i].Description
+                                </td>
+                                <td>
+                                    @if(Model.LessonSubjects[i].NumberOfClosedQuestions != 0)
+                                    {
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions); @: \ 
+                                        @Model.LessonSubjects[i].MaxNumberOfClosedQuestions;
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
+                                    {
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions); @: \ 
+                                        @Model.LessonSubjects[i].MaxNumberOfOpenQuestions;
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    }
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </table>
             </div>

@@ -224,6 +224,30 @@
           <Property Name="Contents" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="Points" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TestAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestClosedQuestionId" Type="int" Nullable="false" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestClosedQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestOpenQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tests">
           <Key>
             <PropertyRef Name="Id" />
@@ -537,6 +561,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TestAnswers_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
+          <End Role="TestAnswers" Type="Self.TestAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestAnswers">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestAnswers_Tests">
+          <End Role="TestClosedQuestions" Type="Self.TestClosedQuestions" Multiplicity="1" />
+          <End Role="TestAnswers" Type="Self.TestAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestClosedQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestAnswers">
+              <PropertyRef Name="TestClosedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestClosedQuestions_ClosedQuestions">
+          <End Role="ClosedQuestions" Type="Self.ClosedQuestions" Multiplicity="1" />
+          <End Role="TestClosedQuestions" Type="Self.TestClosedQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClosedQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestClosedQuestions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestClosedQuestions_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="TestClosedQuestions" Type="Self.TestClosedQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestClosedQuestions">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestOpenQuestions_OpenQuestions">
+          <End Role="OpenQuestions" Type="Self.OpenQuestions" Multiplicity="1" />
+          <End Role="TestOpenQuestions" Type="Self.TestOpenQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestOpenQuestions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestOpenQuestions_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="TestOpenQuestions" Type="Self.TestOpenQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestOpenQuestions">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tests_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
           <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
@@ -754,6 +850,9 @@
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="ClosedQuestions" EntityType="Self.ClosedQuestions" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="OpenQuestions" EntityType="Self.OpenQuestions" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="TestAnswers" EntityType="Self.TestAnswers" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="TestClosedQuestions" EntityType="Self.TestClosedQuestions" Schema="Tests" store:Type="Tables" />
+          <EntitySet Name="TestOpenQuestions" EntityType="Self.TestOpenQuestions" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubjects" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Users" store:Type="Tables" />
@@ -833,6 +932,30 @@
           <AssociationSet Name="FK_OpenQuestions_LessonSubjects" Association="Self.FK_OpenQuestions_LessonSubjects">
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
             <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestAnswers_Answers" Association="Self.FK_TestAnswers_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="TestAnswers" EntitySet="TestAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestAnswers_Tests" Association="Self.FK_TestAnswers_Tests">
+            <End Role="TestClosedQuestions" EntitySet="TestClosedQuestions" />
+            <End Role="TestAnswers" EntitySet="TestAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestClosedQuestions_ClosedQuestions" Association="Self.FK_TestClosedQuestions_ClosedQuestions">
+            <End Role="ClosedQuestions" EntitySet="ClosedQuestions" />
+            <End Role="TestClosedQuestions" EntitySet="TestClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestClosedQuestions_Tests" Association="Self.FK_TestClosedQuestions_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestClosedQuestions" EntitySet="TestClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestOpenQuestions_OpenQuestions" Association="Self.FK_TestOpenQuestions_OpenQuestions">
+            <End Role="OpenQuestions" EntitySet="OpenQuestions" />
+            <End Role="TestOpenQuestions" EntitySet="TestOpenQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestOpenQuestions_Tests" Association="Self.FK_TestOpenQuestions_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestOpenQuestions" EntitySet="TestOpenQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK_Tests_Courses" Association="Self.FK_Tests_Courses">
             <End Role="Courses" EntitySet="Courses" />
@@ -1022,6 +1145,7 @@
           <Property Name="AnswerContent" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ClosedQuestion" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="Answers" ToRole="ClosedQuestions" />
+          <NavigationProperty Name="TestAnswers" Relationship="LanguageSchoolModel.FK_TestAnswers_Answers" FromRole="Answer" ToRole="TestAnswer" />
         </EntityType>
         <EntityType Name="ClosedQuestion">
           <Key>
@@ -1038,6 +1162,7 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LessonSubject" Relationship="Self.FK_ClosedQuestions_LessonSubjects" FromRole="ClosedQuestions" ToRole="LessonSubjects" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="ClosedQuestions" ToRole="Answers" />
+          <NavigationProperty Name="TestClosedQuestions" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_ClosedQuestions" FromRole="ClosedQuestion" ToRole="TestClosedQuestion" />
         </EntityType>
         <EntityType Name="OpenQuestion">
           <Key>
@@ -1052,6 +1177,7 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LessonSubject" Relationship="Self.FK_OpenQuestions_LessonSubjects" FromRole="OpenQuestions" ToRole="LessonSubjects" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UsersOpenAnswers_OpenQuestions" FromRole="OpenQuestions" ToRole="UserOpenAnswers" />
+          <NavigationProperty Name="TestOpenQuestions" Relationship="LanguageSchoolModel.FK_TestOpenQuestions_OpenQuestions" FromRole="OpenQuestion" ToRole="TestOpenQuestion" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -1077,6 +1203,8 @@
           <NavigationProperty Name="UsersTests" Relationship="Self.FK_UsersTests_Tests" FromRole="Tests" ToRole="UsersTests" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_Tests_GroupId" FromRole="Test" ToRole="Group" />
+          <NavigationProperty Name="TestClosedQuestions" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_Tests" FromRole="Test" ToRole="TestClosedQuestion" />
+          <NavigationProperty Name="TestOpenQuestions" Relationship="LanguageSchoolModel.FK_TestOpenQuestions_Tests" FromRole="Test" ToRole="TestOpenQuestion" />
         </EntityType>
         <EntityType Name="TestsLessonSubject">
           <Key>
@@ -1543,6 +1671,33 @@
             <End Role="Group" EntitySet="Groups" />
             <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
+          <EntitySet Name="TestClosedQuestions" EntityType="LanguageSchoolModel.TestClosedQuestion" />
+          <EntitySet Name="TestOpenQuestions" EntityType="LanguageSchoolModel.TestOpenQuestion" />
+          <AssociationSet Name="FK_TestClosedQuestions_ClosedQuestions" Association="LanguageSchoolModel.FK_TestClosedQuestions_ClosedQuestions">
+            <End Role="ClosedQuestion" EntitySet="ClosedQuestions" />
+            <End Role="TestClosedQuestion" EntitySet="TestClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestOpenQuestions_OpenQuestions" Association="LanguageSchoolModel.FK_TestOpenQuestions_OpenQuestions">
+            <End Role="OpenQuestion" EntitySet="OpenQuestions" />
+            <End Role="TestOpenQuestion" EntitySet="TestOpenQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestClosedQuestions_Tests" Association="LanguageSchoolModel.FK_TestClosedQuestions_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestClosedQuestion" EntitySet="TestClosedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestOpenQuestions_Tests" Association="LanguageSchoolModel.FK_TestOpenQuestions_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestOpenQuestion" EntitySet="TestOpenQuestions" />
+          </AssociationSet>
+          <EntitySet Name="TestAnswers" EntityType="LanguageSchoolModel.TestAnswer" />
+          <AssociationSet Name="FK_TestAnswers_Answers" Association="LanguageSchoolModel.FK_TestAnswers_Answers">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="TestAnswer" EntitySet="TestAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestAnswers_Tests" Association="LanguageSchoolModel.FK_TestAnswers_Tests">
+            <End Role="TestClosedQuestion" EntitySet="TestClosedQuestions" />
+            <End Role="TestAnswer" EntitySet="TestAnswers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
           <Key>
@@ -1864,6 +2019,109 @@
             </Principal>
             <Dependent Role="Test">
               <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TestClosedQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClosedQuestion" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_ClosedQuestions" FromRole="TestClosedQuestion" ToRole="ClosedQuestion" />
+          <NavigationProperty Name="Test" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_Tests" FromRole="TestClosedQuestion" ToRole="Test" />
+          <NavigationProperty Name="TestAnswers" Relationship="LanguageSchoolModel.FK_TestAnswers_Tests" FromRole="TestClosedQuestion" ToRole="TestAnswer" />
+        </EntityType>
+        <EntityType Name="TestOpenQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OpenQuestion" Relationship="LanguageSchoolModel.FK_TestOpenQuestions_OpenQuestions" FromRole="TestOpenQuestion" ToRole="OpenQuestion" />
+          <NavigationProperty Name="Test" Relationship="LanguageSchoolModel.FK_TestOpenQuestions_Tests" FromRole="TestOpenQuestion" ToRole="Test" />
+        </EntityType>
+        <Association Name="FK_TestClosedQuestions_ClosedQuestions">
+          <End Type="LanguageSchoolModel.ClosedQuestion" Role="ClosedQuestion" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestClosedQuestion" Role="TestClosedQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClosedQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestClosedQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestOpenQuestions_OpenQuestions">
+          <End Type="LanguageSchoolModel.OpenQuestion" Role="OpenQuestion" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestOpenQuestion" Role="TestOpenQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestOpenQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestClosedQuestions_Tests">
+          <End Type="LanguageSchoolModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestClosedQuestion" Role="TestClosedQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestClosedQuestion">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestOpenQuestions_Tests">
+          <End Type="LanguageSchoolModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestOpenQuestion" Role="TestOpenQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestOpenQuestion">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TestAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestClosedQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answer" Relationship="LanguageSchoolModel.FK_TestAnswers_Answers" FromRole="TestAnswer" ToRole="Answer" />
+          <NavigationProperty Name="TestClosedQuestion" Relationship="LanguageSchoolModel.FK_TestAnswers_Tests" FromRole="TestAnswer" ToRole="TestClosedQuestion" />
+        </EntityType>
+        <Association Name="FK_TestAnswers_Answers">
+          <End Type="LanguageSchoolModel.Answer" Role="Answer" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestAnswer" Role="TestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestAnswer">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestAnswers_Tests">
+          <End Type="LanguageSchoolModel.TestClosedQuestion" Role="TestClosedQuestion" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.TestAnswer" Role="TestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestClosedQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestAnswer">
+              <PropertyRef Name="TestClosedQuestionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2230,6 +2488,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TestClosedQuestions">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.TestClosedQuestion">
+              <MappingFragment StoreEntitySet="TestClosedQuestions">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestOpenQuestions">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.TestOpenQuestion">
+              <MappingFragment StoreEntitySet="TestOpenQuestions">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestAnswers">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.TestAnswer">
+              <MappingFragment StoreEntitySet="TestAnswers">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="TestClosedQuestionId" ColumnName="TestClosedQuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

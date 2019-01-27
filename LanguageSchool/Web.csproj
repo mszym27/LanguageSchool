@@ -300,6 +300,15 @@
     <Compile Include="Models\Test.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestAnswer.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestClosedQuestion.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestOpenQuestion.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TestsLessonSubject.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>

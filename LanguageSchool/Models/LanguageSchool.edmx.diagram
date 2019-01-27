@@ -64,6 +64,15 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_Messages_Users" />
         <AssociationConnector Association="LanguageSchoolModel.FK_LessonSubjects_Groups" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Tests_GroupId" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.TestClosedQuestion" Width="1.5" PointX="10.5" PointY="26.5" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.TestOpenQuestion" Width="1.5" PointX="10.5" PointY="32.5" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestClosedQuestions_ClosedQuestions" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestOpenQuestions_OpenQuestions" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestClosedQuestions_Tests" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestOpenQuestions_Tests" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.TestAnswer" Width="1.5" PointX="12.75" PointY="24" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestAnswers_Answers" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_TestAnswers_Tests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
