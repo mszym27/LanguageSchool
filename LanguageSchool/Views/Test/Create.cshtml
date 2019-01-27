@@ -74,69 +74,75 @@
         @Html.Partial("_PartHeader", "Wybierz tematy dla testu")
         <div class="row">
             <div class="bordered col-md-12">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>
-                            Nazwa
-                        </th>
-                        <th>
-                            Opis
-                        </th>
-                        <th>
-                            Liczba zamkniętych pytań
-                        </th>
-                        <th>
-                            Liczba otwartych pytań
-                        </th>
-                        <th>
-                            Wybrano
-                        </th>
-                    </tr>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                Nazwa
+                            </th>
+                            <th>
+                                Opis
+                            </th>
+                            <th>
+                                Liczba zamkniętych pytań
+                            </th>
+                            <th>
+                                Liczba otwartych pytań
+                            </th>
+                            <th>
+                                Wybrano
+                            </th>
+                        </tr>
 
-                    @for (var i = 0; i < Model.LessonSubjects.Count; i++)
-                    {
-                        if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
-                            || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
-                        { 
+                        @for (var i = 0; i < Model.LessonSubjects.Count; i++)
+                        {
                             @Html.HiddenFor(model => model.LessonSubjects[i].Id)
-                            <tr>
-                                <td>
-                                    @Model.LessonSubjects[i].Name
-                                </td>
-                                <td>
-                                    @Model.LessonSubjects[i].Description
-                                </td>
-                                <td>
-                                    @if(Model.LessonSubjects[i].NumberOfClosedQuestions != 0)
-                                    {
-                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions); @: \ 
-                                        @Model.LessonSubjects[i].MaxNumberOfClosedQuestions;
-                                    }
-                                    else
-                                    {
-                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
-                                    }
-                                </td>
-                                <td>
-                                    @if (Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
-                                    {
-                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions); @: \ 
-                                        @Model.LessonSubjects[i].MaxNumberOfOpenQuestions;
-                                    }
-                                    else
-                                    {
-                                        @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
-                                    }
-                                </td>
-                                <td>
-                                    <div class="checkbox">
-                                        @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
-                                    </div>
-                                </td>
-                            </tr>
+
+                            if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
+                                || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
+                            {
+                                <tr style="background:whitesmoke;color:silver" id="@i">
+                                    <td>
+                                        @Model.LessonSubjects[i].Name
+                                    </td>
+                                    <td>
+                                        @Model.LessonSubjects[i].Description
+                                    </td>
+                                    <td>
+                                        @if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0)
+                                        {
+                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions); @: \
+                                            @Model.LessonSubjects[i].MaxNumberOfClosedQuestions;
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
+                                        {
+                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions); @: \
+                                            @Model.LessonSubjects[i].MaxNumberOfOpenQuestions;
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { htmlAttributes = new { @disabled = "disabled" } })
+                                        }
+                                    </td>
+                                    <td>
+                                        <label class="btn btn-default btn-block" onclick="enableRow(@i)">
+                                            <label style="display: block">
+                                                @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
+                                            </label>
+                                            Wybierz
+                                        </label>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row col-md-12">
@@ -146,6 +152,36 @@
         </div>
     </div>
 }
+
+<script>
+    function enableRow(rowId) {
+        var row = document.getElementById(rowId);
+
+        debugger;
+
+        if (row.style.color == "black") {
+            row.style.background = "whitesmoke";
+            row.style.color = "silver";
+        }
+        else {
+            row.style.background = "white";
+            row.style.color = "black";
+        }
+
+
+        @*var hasAnyCorrect = "@(Model.Answers.Where(a => a.IsCorrect).Any())";
+        var isEnough = "@(!(Model.Answers.Count < Model.NumberOfPossibleAnswers))";
+
+        var isCorrect = document.getElementById("isCorrect");
+
+        var submit = document.getElementById("submit");
+
+        if ((isCorrect.checked || hasAnyCorrect == "True") && isEnough == "True")
+            submit.disabled = false;
+        else
+            submit.disabled = true;*@
+    }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

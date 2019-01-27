@@ -58,25 +58,26 @@ namespace LanguageSchool.Controllers
             test.Comment = testViewModel.Comment;
             test.IsActive = testViewModel.IsActive;
             test.GroupId = testViewModel.GroupId;
-            test.NumberOfOpenQuestions = testViewModel.NumberOfOpenQuestions;
-            test.NumberOfClosedQuestions = testViewModel.NumberOfClosedQuestions;
 
             test.TestsLessonSubjects = new List<TestsLessonSubject>();
 
-            foreach (var lessonSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
+            foreach (var chosenSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
             {
-                var chosenSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubject.Id);
+                var closedQuestionsNumber = chosenSubject.NumberOfClosedQuestions;
+                var openQuestionsNumber = chosenSubject.NumberOfOpenQuestions;
+
+                var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(chosenSubject.Id);
 
                 var testLessonSubject = new TestsLessonSubject() {
-                    LessonSubjectId = chosenSubject.Id
+                    LessonSubjectId = lessonSubject.Id
                 };
 
                 test.TestsLessonSubjects.Add(testLessonSubject);
 
-                var closedQuestions = chosenSubject.ClosedQuestions
+                var closedQuestions = lessonSubject.ClosedQuestions
                     .Where(q => !q.IsDeleted)
                     .OrderBy(x => Rand.Next())
-                    .Take(test.NumberOfClosedQuestions);
+                    .Take(closedQuestionsNumber);
 
                 test.TestClosedQuestions = new List<TestClosedQuestion>();
 
@@ -119,12 +120,16 @@ namespace LanguageSchool.Controllers
                     }
 
                     test.TestClosedQuestions.Add(testQuestion);
+
+                    test.NumberOfClosedQuestions += closedQuestionsNumber;
+
+                    test.NumberOfOpenQuestions += openQuestionsNumber;
                 }
 
-                var openQuestions = chosenSubject.OpenQuestions
+                var openQuestions = lessonSubject.OpenQuestions
                     .Where(q => !q.IsDeleted)
                     .OrderBy(x => Rand.Next())
-                    .Take(test.NumberOfOpenQuestions);
+                    .Take(openQuestionsNumber);
 
                 test.TestOpenQuestions = new List<TestOpenQuestion>();
 
