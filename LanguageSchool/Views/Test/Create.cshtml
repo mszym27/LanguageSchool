@@ -94,8 +94,8 @@
                         @for (var i = 0; i < Model.LessonSubjects.Count; i++)
                         {
                             @Html.HiddenFor(model => model.LessonSubjects[i].Id)
-                            @Html.HiddenFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, new { id = "numberClosed" + i })
-                            @Html.HiddenFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, new { id = "numberOpen" + i })
+                            @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfClosedQuestions, new { id = "numberClosed" + i })
+                            @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfOpenQuestions, new { id = "numberOpen" + i })
 
                             if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
                                 || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
@@ -143,11 +143,10 @@
 <script>
     function enableRow(rowId) {
         var row = document.getElementById(rowId),
-        //,
-        //    numberClosed = document.getElementById(numberClosed + rowId),
-        //    numberOpen = document.getElementById(numberOpen + rowId),
-            answerClosed = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions"),
-            answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfClosedQuestions");
+            numberClosed = document.getElementById("numberClosed" + rowId),
+            numberOpen = document.getElementById("numberOpen" + rowId),
+            answerClosed = document.getElementById("LessonSubjects_" + rowId + "__NumberOfClosedQuestions"),
+            answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions");
         
         debugger;
 
@@ -162,8 +161,13 @@
             row.style.background = "white";
             row.style.color = "black";
 
-            answerClosed.disabled = false;
-            answerOpen.disabled = false;
+            if(numberClosed.value != 0) {
+                answerClosed.disabled = false;
+            }
+
+            if(numberOpen.value != 0) {
+                answerOpen.disabled = false;
+            }
         }
 
 

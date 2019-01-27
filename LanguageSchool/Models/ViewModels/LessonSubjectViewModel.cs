@@ -33,7 +33,7 @@ namespace LanguageSchool.Models.ViewModels
             MaxNumberOfClosedQuestions = lessonSubject.ClosedQuestions.Count;
             MaxNumberOfOpenQuestions = lessonSubject.OpenQuestions.Count;
 
-            NumberOfOpenQuestions = MaxNumberOfClosedQuestions;
+            NumberOfClosedQuestions = MaxNumberOfClosedQuestions;
             NumberOfOpenQuestions = MaxNumberOfOpenQuestions;
         }
     }
