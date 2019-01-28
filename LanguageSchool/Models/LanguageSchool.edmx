@@ -72,7 +72,7 @@
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="ModificationDate" Type="datetime" />
           <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
@@ -1041,7 +1041,7 @@
           <Property Name="PreferredHoursFrom" Type="Int32" Nullable="false" />
           <Property Name="PreferredHoursTo" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="true" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>

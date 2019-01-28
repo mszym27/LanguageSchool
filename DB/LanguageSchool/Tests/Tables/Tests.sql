@@ -3,7 +3,7 @@
     [IsDeleted]               BIT             NOT NULL,
     [CreationDate]            DATETIME        NOT NULL,
     [DeletionDate]            DATETIME        NULL,
-    [CourseId]                INT             NOT NULL,
+    [CourseId]                INT             NULL,
     [Name]                    NVARCHAR (50)   NOT NULL,
     [Comment]                 NVARCHAR (1000) NULL,
     [NumberOfQuestions]       INT             NOT NULL,
@@ -16,6 +16,8 @@
     CONSTRAINT [FK_Tests_Courses] FOREIGN KEY ([CourseId]) REFERENCES [Courses].[Courses] ([Id]),
     CONSTRAINT [FK_Tests_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id])
 );
+
+
 
 
 

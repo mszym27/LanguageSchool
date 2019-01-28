@@ -13,7 +13,6 @@ namespace LanguageSchool.Models.ViewModels
         public string CreationDate { get; set; }
         [Required(ErrorMessage = "Proszę podać imię")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Proszę podać nazwisko")]
         public string Surname { get; set; }
         public string Fullname { get; set; }
         [DataType(DataType.PhoneNumber)]
