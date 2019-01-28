@@ -331,7 +331,7 @@ IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 2)
 		(0
 		,@Now
 		,NULL
-		,'BL\S_DL'
+		,'BL\S_DL_00211'
 		,'456'
 		,2)
 
@@ -363,7 +363,7 @@ IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 4)
 		(0
 		,@Now
 		,NULL
-		,'BL\S_MS_0001'
+		,'S_MS_0001'
 		,'012'
 		,4)
 
@@ -372,11 +372,11 @@ GO
 UPDATE [Users].[Users] SET [Password] = N'uBmnT9Q+rFZkSOwOBRNFOQ==' WHERE [Login] = N'techAdmin'
 UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
 UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
-UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'BL\S_MS_0001'
+UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'S_MS_0001'
 
 GO
 
-DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\S_MS_0001')
+DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'S_MS_0001')
 
 IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
 	INSERT INTO [ContactInfo].[UserData]
