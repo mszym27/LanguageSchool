@@ -57,7 +57,7 @@
                             <strong>Komentarz</strong>
                         </div>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "widetextarea", @style = "width:400px" } })
+                            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "widetextarea form-control", @style = "width:400px" } })
                             @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                         </div>
                     </div>

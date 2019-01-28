@@ -17,8 +17,8 @@
         @Html.Partial("_PartHeader", "Utwórz test dla grupy")
         <div class="row">
             <div class="bordered col-md-12">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group col-md-12">
                         <div class="control-label col-md-2">
                             <strong>Nazwa</strong>
                         </div>
@@ -27,8 +27,8 @@
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="control-label col-md-5">
+                    <div class="form-group col-md-12">
+                        <div class="control-label col-md-2">
                             <strong>Aktywny</strong>
                         </div>
                         <div class="col-md-4">
@@ -40,33 +40,13 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="control-label col-md-2">
-                            <strong>Opis</strong>
-                        </div>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-                        </div>
+                <div class="col-md-6">
+                    <div class="control-label col-md-2">
+                        <strong>Opis</strong>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="control-label col-md-5">
-                            <strong>Liczba pytań otwartych</strong>
-                        </div>
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.NumberOfOpenQuestions, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NumberOfOpenQuestions, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <div class="control-label col-md-5">
-                            <strong>Liczba pytań zamkniętych</strong>
-                        </div>
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.NumberOfClosedQuestions, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NumberOfClosedQuestions, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "widetextarea form-control", @style="width:375px" } })
+                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

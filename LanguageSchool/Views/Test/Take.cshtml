@@ -92,7 +92,7 @@
                                 <strong>@(i + 1). @Model.OpenQuestions[i].Contents</strong>
                             </div>
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.OpenQuestions[i].Answer, new { htmlAttributes = new { @class = "widetextarea", @style = "width:1050px;height:150px" } })
+                                @Html.EditorFor(model => model.OpenQuestions[i].Answer, new { htmlAttributes = new { @class = "widetextarea form-control", @style = "width:1050px;height:150px" } })
                             </div>
                         </div>
 

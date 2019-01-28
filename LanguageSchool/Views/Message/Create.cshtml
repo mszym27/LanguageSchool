@@ -98,7 +98,7 @@
                         <strong>Treść</strong>
                     </div>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "widetextarea", @style = "width:830px;height:300px" } })
+                        @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "widetextarea form-control", @style = "width:830px;height:300px" } })
                         @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
                     </div>
                 </div>
