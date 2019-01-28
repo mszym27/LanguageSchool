@@ -44,9 +44,6 @@ namespace LanguageSchool.Models.ViewModels
             Points = closedQuestion.Points;
 
             Answers = new List<AnswerViewModel>();
-
-            foreach (var answer in closedQuestion.Answers.Where(a => !a.IsDeleted))
-                Answers.Add(new AnswerViewModel(answer));
         }
     }
 }

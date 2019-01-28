@@ -60,6 +60,8 @@ namespace LanguageSchool.Controllers
             test.GroupId = testViewModel.GroupId;
 
             test.TestsLessonSubjects = new List<TestsLessonSubject>();
+            test.TestClosedQuestions = new List<TestClosedQuestion>();
+            test.TestOpenQuestions = new List<TestOpenQuestion>();
 
             foreach (var chosenSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
             {
@@ -78,8 +80,6 @@ namespace LanguageSchool.Controllers
                     .Where(q => !q.IsDeleted)
                     .OrderBy(x => Rand.Next())
                     .Take(closedQuestionsNumber);
-
-                test.TestClosedQuestions = new List<TestClosedQuestion>();
 
                 foreach (var question in closedQuestions)
                 {
@@ -121,17 +121,13 @@ namespace LanguageSchool.Controllers
 
                     test.TestClosedQuestions.Add(testQuestion);
 
-                    test.NumberOfClosedQuestions += closedQuestionsNumber;
-
-                    test.NumberOfOpenQuestions += openQuestionsNumber;
+                    test.Points += question.Points;
                 }
 
                 var openQuestions = lessonSubject.OpenQuestions
                     .Where(q => !q.IsDeleted)
                     .OrderBy(x => Rand.Next())
                     .Take(openQuestionsNumber);
-
-                test.TestOpenQuestions = new List<TestOpenQuestion>();
 
                 foreach (var question in openQuestions)
                 {
@@ -141,7 +137,13 @@ namespace LanguageSchool.Controllers
                             QuestionId = question.Id
                         }
                     );
+
+                    test.Points += question.Points;
                 }
+
+                test.NumberOfClosedQuestions += closedQuestionsNumber;
+
+                test.NumberOfOpenQuestions += openQuestionsNumber;
             }
 
             UnitOfWork.TestRepository.Insert(test);
@@ -270,7 +272,7 @@ namespace LanguageSchool.Controllers
 
         private double GradeTest(int obtainedPoints, int maxPoints)
         {
-            return ((double)maxPoints / 100) * obtainedPoints;
+            return 100 * ((double) obtainedPoints / maxPoints);
         }
     }
 }

@@ -49,15 +49,27 @@ namespace LanguageSchool.Models.ViewModels
             ClosedQuestions = new List<ClosedQuestionViewModel>();
             OpenQuestions = new List<OpenQuestionViewModel>();
 
-            foreach (TestsLessonSubject testLessonSubject in test.TestsLessonSubjects)
+            foreach (TestsLessonSubject testSubject in test.TestsLessonSubjects)
             {
-                foreach(ClosedQuestion closedQuestion in testLessonSubject.LessonSubject.ClosedQuestions)
+                foreach(var testQuestion in test.TestClosedQuestions
+                    .Where(t => t.ClosedQuestion.LessonSubjectId == testSubject.LessonSubjectId)
+                )
                 {
-                    ClosedQuestions.Add(new ClosedQuestionViewModel(closedQuestion));
+                    var questionVM = new ClosedQuestionViewModel(testQuestion.ClosedQuestion);
+
+                    foreach(var answer in testQuestion.TestAnswers.Select(a => a.Answer).ToList())
+                    {
+                        questionVM.Answers.Add(new AnswerViewModel(answer));
+                    }
+
+                    ClosedQuestions.Add(questionVM);
                 }
-                foreach (OpenQuestion openQuestion in testLessonSubject.LessonSubject.OpenQuestions)
+                foreach (var question in test.TestOpenQuestions
+                    .Where(t => t.OpenQuestion.LessonSubjectId == testSubject.LessonSubjectId)
+                    .Select(t => t.OpenQuestion)
+                )
                 {
-                    OpenQuestions.Add(new OpenQuestionViewModel(openQuestion));
+                    OpenQuestions.Add(new OpenQuestionViewModel(question));
                 }
             }
         }
