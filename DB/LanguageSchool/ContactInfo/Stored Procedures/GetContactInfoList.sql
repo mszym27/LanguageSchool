@@ -115,7 +115,7 @@ BEGIN
 	SET @Query += N'
 	SELECT [ContactRequests].[Id]
 		,[ContactRequests].[CreationDate]
-		,[ContactRequests].[Name] + '' '' + [ContactRequests].[Surname] AS FullName
+		,[ContactRequests].[Name] + '' '' + ISNULL([ContactRequests].[Surname], '''') AS FullName
 		,'''' AS City
 		,'''' AS Street
 		,[ContactRequests].[PhoneNumber]
