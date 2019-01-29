@@ -6,7 +6,7 @@
 }
 
 <div class="container-fluid">
-    @{ Html.RenderPartial("_PartHeader", "Odpowiedzi na pytania otwarte"); }
+    @Html.Partial("_PartHeader", "Odpowiedzi na pytania otwarte")
     <div class="row bordered">
         <table class="col-md-12 table table-striped table-bordered">
             <tr>
@@ -21,6 +21,9 @@
                 </th>
                 <th>
                     Punkty do uzyskania
+                </th>
+                <th>
+                    Komentarz
                 </th>
             </tr>
 
@@ -46,28 +49,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.OpenQuestion.Points)
                     </td>
-                    <td>
                         @if (item.Comment != null)
                         {
-                            <label data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-comment"></span></label>
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog modal-sm" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Komentarz</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            @item.Comment
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <td>
+                                @item.Comment
+                            </td>
                         }
-                    </td>
+                        else
+                        {
+                            <td align="center"> - </td>
+                        }
                 </tr>
             }
         </table>

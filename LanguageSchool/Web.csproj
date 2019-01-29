@@ -282,6 +282,9 @@
     <Compile Include="Models\LessonSubject.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Mark.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Material.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>

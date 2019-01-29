@@ -42,6 +42,14 @@
           <Property Name="PLDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ENDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Marks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PLName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ENName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Messages">
           <Key>
             <PropertyRef Name="Id" />
@@ -344,6 +352,7 @@
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="Points" Type="int" />
           <Property Name="IsMarked" Type="bit" Nullable="false" />
+          <Property Name="MarkId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Answers_ClosedQuestions">
           <End Role="ClosedQuestions" Type="Self.ClosedQuestions" Multiplicity="1" />
@@ -789,6 +798,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsersTests_Marks">
+          <End Role="Marks" Type="Self.Marks" Multiplicity="1" />
+          <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="MarkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersTests_Tests">
           <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
           <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
@@ -837,6 +858,7 @@
           <EntitySet Name="DaysOfWeek" EntityType="Self.DaysOfWeek" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="LanguageProficencies" EntityType="Self.LanguageProficencies" Schema="Administration" store:Type="Tables" />
+          <EntitySet Name="Marks" EntityType="Self.Marks" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="MessageTypes" EntityType="Self.MessageTypes" Schema="Administration" store:Type="Tables" />
           <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" Schema="ContactInfo" store:Type="Tables" />
@@ -1008,6 +1030,10 @@
           <AssociationSet Name="FK_UsersOpenAnswers_Users" Association="Self.FK_UsersOpenAnswers_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Marks" Association="Self.FK_UsersTests_Marks">
+            <End Role="Marks" EntitySet="Marks" />
+            <End Role="UsersTests" EntitySet="UsersTests" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Tests" Association="Self.FK_UsersTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
@@ -1277,6 +1303,8 @@
           <Property Name="IsMarked" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Self.FK_UsersTests_Tests" FromRole="UsersTests" ToRole="Tests" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersTests_Users" FromRole="UsersTests" ToRole="Users" />
+          <Property Name="MarkId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Mark" Relationship="LanguageSchoolModel.FK_UsersTests_Marks" FromRole="UsersTests" ToRole="Mark" />
         </EntityType>
         <Association Name="FK_ContactRequests_Courses">
           <End Role="Courses" Type="LanguageSchoolModel.Course" Multiplicity="1" />
@@ -1697,6 +1725,11 @@
           <AssociationSet Name="FK_TestAnswers_Tests" Association="LanguageSchoolModel.FK_TestAnswers_Tests">
             <End Role="TestClosedQuestion" EntitySet="TestClosedQuestions" />
             <End Role="TestAnswer" EntitySet="TestAnswers" />
+          </AssociationSet>
+          <EntitySet Name="Marks" EntityType="LanguageSchoolModel.Mark" />
+          <AssociationSet Name="FK_UsersTests_Marks" Association="LanguageSchoolModel.FK_UsersTests_Marks">
+            <End Role="Mark" EntitySet="Marks" />
+            <End Role="UsersTests" EntitySet="UsersTests1" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
@@ -2125,6 +2158,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PLName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ENName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UsersTests" Relationship="LanguageSchoolModel.FK_UsersTests_Marks" FromRole="Mark" ToRole="UsersTests" />
+        </EntityType>
+        <Association Name="FK_UsersTests_Marks">
+          <End Type="LanguageSchoolModel.Mark" Role="Mark" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UsersTests" Role="UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mark">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="MarkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2341,6 +2395,7 @@
           <EntitySetMapping Name="UsersTests1">
             <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTests">
               <MappingFragment StoreEntitySet="UsersTests">
+                <ScalarProperty Name="MarkId" ColumnName="MarkId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
@@ -2511,6 +2566,15 @@
               <MappingFragment StoreEntitySet="TestAnswers">
                 <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
                 <ScalarProperty Name="TestClosedQuestionId" ColumnName="TestClosedQuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marks">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.Mark">
+              <MappingFragment StoreEntitySet="Marks">
+                <ScalarProperty Name="ENName" ColumnName="ENName" />
+                <ScalarProperty Name="PLName" ColumnName="PLName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

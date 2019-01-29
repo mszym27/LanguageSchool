@@ -73,6 +73,8 @@
         <EntityTypeShape EntityType="LanguageSchoolModel.TestAnswer" Width="1.5" PointX="12.75" PointY="24" />
         <AssociationConnector Association="LanguageSchoolModel.FK_TestAnswers_Answers" />
         <AssociationConnector Association="LanguageSchoolModel.FK_TestAnswers_Tests" />
+        <EntityTypeShape EntityType="LanguageSchoolModel.Mark" Width="1.5" PointX="8.375" PointY="6.875" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Marks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

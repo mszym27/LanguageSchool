@@ -12,6 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TestId { get; set; }
+        public int QuestionId { get; set; }
         public int? Points { get; set; }
         public int PointsAwarded { get; set; }
         [DataType(DataType.MultilineText)]
@@ -31,7 +32,8 @@ namespace LanguageSchool.Models.ViewModels
             Id = answer.Id;
             UserId = answer.UserId;
             TestId = answer.TestId;
-            Points = (int)answer.Points;
+            QuestionId = answer.OpenQuestionId;
+            Points = answer.Points == null ? 0 : answer.Points;
             Content = answer.Content;
         }
     }

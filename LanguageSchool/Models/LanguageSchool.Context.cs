@@ -55,6 +55,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<TestClosedQuestion> TestClosedQuestions { get; set; }
         public virtual DbSet<TestOpenQuestion> TestOpenQuestions { get; set; }
         public virtual DbSet<TestAnswer> TestAnswers { get; set; }
+        public virtual DbSet<Mark> Marks { get; set; }
     
         public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
         {

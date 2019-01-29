@@ -33,21 +33,20 @@ namespace LanguageSchool
             StudentWelcome = 6
         }
 
-        public static Dictionary<double, string> Grades = new Dictionary<double, string>() {
-            { 40, "niedostateczny" },
-            { 55, "dopuszczający" },
-            { 70, "dostateczny" },
-            { 85, "dobry" },
-            { 95, "bardzo dobry" },
-            { 100, "celujący" },
+        public static Dictionary<double, int> Grades = new Dictionary<double, int>() {
+            { 40, 1 },
+            { 55, 2 },
+            { 70, 3 },
+            { 85, 4 },
+            { 95, 5 },
+            { 100, 6 },
         };
 
         public static readonly int FailingPercentage = 40;
 
-        public static string GetGrade(double percentage)
+        public static int GetGrade(double percentage)
         {
-            string grade = Grades.FirstOrDefault(g => g.Key >= percentage).Value;
-            return grade;
+            return Grades.FirstOrDefault(g => g.Key >= percentage).Value;
         }
 
         public static List<int> pages = new List<int>()

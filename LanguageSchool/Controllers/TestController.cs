@@ -221,7 +221,11 @@ namespace LanguageSchool.Controllers
 
                 double percentageGoten = GradeTest((int)userTest.Points, testViewModel.Points);
 
-                string userAlertContents = "uzyskana przez Ciebie ocena to " + Consts.GetGrade(percentageGoten) + ". ";
+                var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
+
+                userTest.Mark = mark;
+
+                string userAlertContents = "uzyskana przez Ciebie ocena to " + mark.PLName + ". ";
 
                 string userAlertType = Consts.Info;
 

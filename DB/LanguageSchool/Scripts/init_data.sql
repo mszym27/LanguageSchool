@@ -86,6 +86,68 @@ IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 6
 
 GO
 
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 1)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(1
+		,N'niedostateczny'
+		,NULL)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 2)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(2
+		,N'dopuszczający'
+		,NULL)
+		
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 3)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(3
+		,N'dostateczny'
+		,NULL)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 4)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(4
+		,N'dobry'
+		,NULL)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 5)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(5
+		,N'bardzo dobry'
+		,NULL)
+
+IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 6)
+	INSERT INTO [Administration].[Marks]
+		([Id]
+		,[PLName]
+		,[ENName])
+	VALUES
+		(6
+		,N'celujący'
+		,NULL)
+
+GO
+
 IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 1)
 	INSERT INTO Administration.DaysOfWeek 
 		(Id

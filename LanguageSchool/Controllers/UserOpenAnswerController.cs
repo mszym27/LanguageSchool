@@ -46,18 +46,38 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("Grade/{id}")]
-        public ActionResult Grade(UserOpenAnswerViewModel answer)
+        public ActionResult Grade(UserOpenAnswerViewModel answerVM)
         {
-            //User user = UnitOfWork.UserRepository.GetById(userId);
+            try
+            {
+                var user = UnitOfWork.UserRepository.GetById(answerVM.UserId);
 
-            //if (user == null)
-            //{
-            //    return HttpNotFound();
-            //}
+                var userAnswer = user.UserOpenAnswers.Where(t => t.OpenQuestionId == answerVM.QuestionId).First();
 
-            //return View(user.UserOpenAnswers.Where(a => !a.IsMarked));
+                userAnswer.Points = answerVM.PointsAwarded;
+                userAnswer.Comment = answerVM.Comment;
 
-            return View(answer);
+                var test = user.UsersTests.Where(t => t.TestId == answerVM.TestId).First();
+
+                test.Points += answerVM.PointsAwarded;
+
+                if(!user.UserOpenAnswers.Where(a => a.TestId == test.Id && !a.IsMarked).Any())
+                {
+                    test.IsMarked = true;
+                }
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Taken", "Test", new { id = answerVM.TestId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(answerVM);
+            }
         }
 
         //// GET: User/Create
