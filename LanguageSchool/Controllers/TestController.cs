@@ -240,7 +240,7 @@ namespace LanguageSchool.Controllers
                         student.UserOpenAnswers.Add(answer);
                     }
 
-                    userAlertContents += "Czekaj aż prowadzący oceni część otwartą testu.";
+                    userAlertContents += "Czekaj aż prowadzący sprawdzi część otwartą testu - ocena może wtedy ulec zmianie.";
                 }
                 else
                 {
