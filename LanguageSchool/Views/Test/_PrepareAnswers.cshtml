@@ -13,14 +13,17 @@
             {
                 <li>
                     @Model.ClosedQuestions[i].Answers[j].Answer
+                    
+                    @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].AnswerId)
                     @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].Answer)
+
                     @if (Model.ClosedQuestions[i].IsMultichoice)
                     {
                         @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked, new { @style = "float:right" })
                     }
                     else
                     {
-                        @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].Id, new { @style = "float:right" })
+                        @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].AnswerId, new { @style = "float:right" })
                     }
                 </li>
             }

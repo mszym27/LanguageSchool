@@ -9,12 +9,12 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class AnswerViewModel
     {
-        public int Id { get; set; }
+        public int AnswerId { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić treść pytania")]
         [StringLength(250, ErrorMessage = "Maksymalna długość odpowiedzi to 250 znaków")]
         public string Answer { get; set; }
-        public bool IsCorrect { get; set; }
 
+        public bool IsCorrect { get; set; }
         public bool IsMarked { get; set; }
 
         public AnswerViewModel()
@@ -23,9 +23,8 @@ namespace LanguageSchool.Models.ViewModels
 
         public AnswerViewModel (Answer a)
         {
-            Id = a.Id;
+            AnswerId = a.Id;
             Answer = a.AnswerContent;
-            IsCorrect = a.IsCorrect;
         }
     }
 }

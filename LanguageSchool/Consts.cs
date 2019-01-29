@@ -45,7 +45,7 @@ namespace LanguageSchool
 
         public static string GetGrade(double percentage)
         {
-            string grade = Grades.FirstOrDefault(g => g.Key >= percentage).Value;
+            string grade = Grades.FirstOrDefault(g => g.Key > percentage).Value;
             return grade;
         }
 

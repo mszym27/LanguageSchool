@@ -172,9 +172,10 @@ namespace LanguageSchool.Controllers
         [Route("Test/Take/{testId}")]
         public ActionResult Take(TestViewModel testViewModel)
         {
-            try
+            //try
             {
                 var student = GetLoggedUser();
+                var takenTest = UnitOfWork.TestRepository.GetById(testViewModel.Id);
 
                 var userTest = new UsersTests();
 
@@ -187,21 +188,33 @@ namespace LanguageSchool.Controllers
 
                 foreach (var question in testViewModel.ClosedQuestions) // userTest.Points
                 {
-                    if(question.ChosenAnswerId != null)
+                    if(question.ChosenAnswerId != null || question.Answers.Where(a => a.IsMarked).Any())
                     {
-                        var correctAnswerIds = UnitOfWork.AnswerRepository.Get(a => !a.IsDeleted 
-                            && a.ClosedQuestion.Id == question.Id && a.IsCorrect).Select(a => a.Id);
+                        var correctAnswerIds = takenTest.TestClosedQuestions
+                            .Where(q => q.QuestionId == question.Id)
+                            .First()
+                            .TestAnswers.Where(a => a.Answer.IsCorrect)
+                            .OrderBy(a => a.AnswerId)
+                            .Select(a => a.AnswerId);
 
                         if (question.IsMultichoice)
                         {
-                            //if(question.NumberOfPossibleAnswers) // TODO - czy user wybral WSZYSTKIE poprawne ktore mu sie wyswietlily
+                            var chosenAnswerIds = question.Answers
+                                .Where(a => a.IsMarked)
+                                .OrderBy(a => a.AnswerId)
+                                .Select(a => a.AnswerId);
 
-                            userTest.Points += question.Points;
+                            if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
+                            { 
+                                userTest.Points += question.Points;
+                            }
                         }
                         else
                         {
                             if(correctAnswerIds.Contains((int)question.ChosenAnswerId))
+                            {
                                 userTest.Points += question.Points;
+                            }
                         }
                     }
                 }
@@ -247,14 +260,14 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("LessonSubjects", "LessonSubject", new { id = testViewModel.GroupId });
             }
-            catch (Exception ex)
-            {
-                var errorLogGuid = LogException(ex);
+            //catch (Exception ex)
+            //{
+            //    var errorLogGuid = LogException(ex);
 
-                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+            //    TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return View(testViewModel);
-            }
+            //    return View(testViewModel);
+            //}
         }
 
         private void Shuffle(List<AnswerViewModel> answers)

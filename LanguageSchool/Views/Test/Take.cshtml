@@ -50,6 +50,7 @@
 
                                     @Html.HiddenFor(model => model.ClosedQuestions[i].Id);
                                     @Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
+                                    @Html.HiddenFor(model => Model.ClosedQuestions[i].IsMultichoice);
 
                                     @Html.Partial("_PrepareAnswers");
                                 }
@@ -63,6 +64,7 @@
 
                                     @Html.HiddenFor(model => model.ClosedQuestions[i].Id);
                                     @Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
+                                    @Html.HiddenFor(model => Model.ClosedQuestions[i].IsMultichoice);
 
                                     @Html.Partial("_PrepareAnswers");
                                 }
@@ -79,6 +81,7 @@
 
                                     @Html.HiddenFor(model => model.ClosedQuestions[i].Id);
                                     @Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
+                                    @Html.HiddenFor(model => Model.ClosedQuestions[i].IsMultichoice);
 
                                     @Html.Partial("_PrepareAnswers");
                                 }
