@@ -38,14 +38,15 @@ namespace LanguageSchool
             { 55, "dopuszczający" },
             { 70, "dostateczny" },
             { 85, "dobry" },
-            { 100, "bardzo dobry" },
+            { 95, "bardzo dobry" },
+            { 100, "celujący" },
         };
 
-        public static readonly int FailingPercentage = 39;
+        public static readonly int FailingPercentage = 40;
 
         public static string GetGrade(double percentage)
         {
-            string grade = Grades.FirstOrDefault(g => g.Key > percentage).Value;
+            string grade = Grades.FirstOrDefault(g => g.Key >= percentage).Value;
             return grade;
         }
 
