@@ -58,7 +58,7 @@
                                 GroupTime current = Model.Times.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
                                 if (current == null)
                                 {
-                                            <td></td>
+                                    <td></td>
                                 }
                                 else
                                 {
@@ -67,13 +67,6 @@
 
                                     int color = 0;
 
-                                    foreach (var character in current.Group.Name)
-                                    {
-                                        color += (int)character;
-                                    }
-
-                                    color *= current.Group.Id;
-
                                     foreach (var character in current.Group.Course.Name)
                                     {
                                         color += (int)character;
@@ -81,7 +74,14 @@
 
                                     color *= current.Group.CourseId;
 
-                                    string hexColor = color.ToString("X");
+                                    string hexColor = color.ToString("X6"); // int.Parse(color, System.Globalization.NumberStyles.HexNumber);
+
+                                    //foreach (var character in current.Group.Name)
+                                    //{
+                                    //    color += (int)character;
+                                    //}
+
+                                    //color *= current.Group.Id;
 
                                     if ((i + 8) > current.StartTime)
                                     {
@@ -114,6 +114,8 @@
                                                 }
 
                                                 <p><strong>@shown</strong></p>
+                                                <p>@hexColor</p>
+                                                <p>@color</p>
                                             }
                                         </a>
                                     </td>
