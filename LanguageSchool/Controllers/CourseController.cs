@@ -252,25 +252,32 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        // GET: Course/Delete/5
+        [Route("Course/Delete/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Course/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                var course = UnitOfWork.CourseRepository.GetById(id);
 
-                return RedirectToAction("Index");
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+
+                course.IsDeleted = true;
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("List");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("List");
             }
         }
 

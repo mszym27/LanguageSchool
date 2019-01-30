@@ -336,6 +336,7 @@
     <Compile Include="Models\UserTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\DeleteDialogViewModel.cs" />
     <Compile Include="Models\ViewModels\ExistingLessonSubjectsVM.cs" />
     <Compile Include="Models\ViewModels\UserTestViewModel.cs" />
     <Compile Include="Models\ViewModels\UserOpenAnswerViewModel.cs" />
@@ -511,6 +512,7 @@
     <Content Include="Views\UserOpenAnswer\Details.cshtml" />
     <Content Include="Views\LessonSubject\CreateFromExisting.cshtml" />
     <Content Include="Views\Test\Taken.cshtml" />
+    <Content Include="Views\Shared\_DeleteDialog.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
