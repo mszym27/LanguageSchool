@@ -290,6 +290,16 @@
           <Property Name="ENName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PLName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserClosedAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="TestClosedQuestionId" Type="int" Nullable="false" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserOpenAnswers">
           <Key>
             <PropertyRef Name="Id" />
@@ -350,7 +360,7 @@
           <Property Name="DeletionDate" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
-          <Property Name="Points" Type="int" />
+          <Property Name="Points" Type="int" Nullable="false" />
           <Property Name="IsMarked" Type="bit" Nullable="false" />
           <Property Name="MarkId" Type="int" Nullable="false" />
         </EntityType>
@@ -690,6 +700,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserClosedAnswers_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
+          <End Role="UserClosedAnswers" Type="Self.UserClosedAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswers">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_TestClosedQuestions">
+          <End Role="TestClosedQuestions" Type="Self.TestClosedQuestions" Multiplicity="1" />
+          <End Role="UserClosedAnswers" Type="Self.UserClosedAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestClosedQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswers">
+              <PropertyRef Name="TestClosedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="UserClosedAnswers" Type="Self.UserClosedAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswers">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserClosedAnswers" Type="Self.UserClosedAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserData_UserLoginData">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserData" Type="Self.UserData" Multiplicity="*" />
@@ -878,6 +936,7 @@
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="TestsLessonSubjects" EntityType="Self.TestsLessonSubjects" Schema="Tests" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="UserClosedAnswers" EntityType="Self.UserClosedAnswers" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswers" Schema="Users" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UsersGroups" EntityType="Self.UsersGroups" Schema="Users" store:Type="Tables" />
@@ -994,6 +1053,22 @@
           <AssociationSet Name="FK_TestsLessonSubjects_Tests" Association="Self.FK_TestsLessonSubjects_Tests">
             <End Role="Tests" EntitySet="Tests" />
             <End Role="TestsLessonSubjects" EntitySet="TestsLessonSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_Answers" Association="Self.FK_UserClosedAnswers_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="UserClosedAnswers" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_TestClosedQuestions" Association="Self.FK_UserClosedAnswers_TestClosedQuestions">
+            <End Role="TestClosedQuestions" EntitySet="TestClosedQuestions" />
+            <End Role="UserClosedAnswers" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_Tests" Association="Self.FK_UserClosedAnswers_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="UserClosedAnswers" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_Users" Association="Self.FK_UserClosedAnswers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClosedAnswers" EntitySet="UserClosedAnswers" />
           </AssociationSet>
           <AssociationSet Name="FK_UserData_UserLoginData" Association="Self.FK_UserData_UserLoginData">
             <End Role="Users" EntitySet="Users" />
@@ -1172,6 +1247,7 @@
           <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ClosedQuestion" Relationship="Self.FK_Answers_ClosedQuestions" FromRole="Answers" ToRole="ClosedQuestions" />
           <NavigationProperty Name="TestAnswers" Relationship="LanguageSchoolModel.FK_TestAnswers_Answers" FromRole="Answer" ToRole="TestAnswer" />
+          <NavigationProperty Name="UserClosedAnswers" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Answers" FromRole="Answer" ToRole="UserClosedAnswer" />
         </EntityType>
         <EntityType Name="ClosedQuestion">
           <Key>
@@ -1231,6 +1307,7 @@
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_Tests_GroupId" FromRole="Test" ToRole="Group" />
           <NavigationProperty Name="TestClosedQuestions" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_Tests" FromRole="Test" ToRole="TestClosedQuestion" />
           <NavigationProperty Name="TestOpenQuestions" Relationship="LanguageSchoolModel.FK_TestOpenQuestions_Tests" FromRole="Test" ToRole="TestOpenQuestion" />
+          <NavigationProperty Name="UserClosedAnswers" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Tests" FromRole="Test" ToRole="UserClosedAnswer" />
         </EntityType>
         <EntityType Name="TestsLessonSubject">
           <Key>
@@ -1288,8 +1365,9 @@
           <NavigationProperty Name="UsersMessages" Relationship="LanguageSchoolModel.FK_UsersMessages_Users" FromRole="User" ToRole="UsersMessage" />
           <NavigationProperty Name="UsersGroups" Relationship="LanguageSchoolModel.FK_UsersGroups_Users" FromRole="User" ToRole="UsersGroup" />
           <NavigationProperty Name="Messages" Relationship="LanguageSchoolModel.FK_Messages_Users" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="UserClosedAnswers" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Users" FromRole="User" ToRole="UserClosedAnswer" />
         </EntityType>
-        <EntityType Name="UsersTests">
+        <EntityType Name="UserTest">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1299,7 +1377,7 @@
           <Property Name="DeletionDate" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
-          <Property Name="Points" Type="Int32" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="IsMarked" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Self.FK_UsersTests_Tests" FromRole="UsersTests" ToRole="Tests" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersTests_Users" FromRole="UsersTests" ToRole="Users" />
@@ -1476,7 +1554,7 @@
         </Association>
         <Association Name="FK_UsersTests_Tests">
           <End Role="Tests" Type="Self.Test" Multiplicity="1" />
-          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UserTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tests">
               <PropertyRef Name="Id" />
@@ -1512,7 +1590,7 @@
         </Association>
         <Association Name="FK_UsersTests_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UsersTests" Type="LanguageSchoolModel.UsersTests" Multiplicity="*" />
+          <End Role="UsersTests" Type="LanguageSchoolModel.UserTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -1537,7 +1615,7 @@
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswer" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="UsersTests1" EntityType="LanguageSchoolModel.UsersTests" />
+          <EntitySet Name="UserTests" EntityType="LanguageSchoolModel.UserTest" />
           <AssociationSet Name="FK_ContactRequests_Courses" Association="Self.FK_ContactRequests_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="ContactRequests" EntitySet="ContactRequests" />
@@ -1596,7 +1674,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Tests" Association="Self.FK_UsersTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
-            <End Role="UsersTests" EntitySet="UsersTests1" />
+            <End Role="UsersTests" EntitySet="UserTests" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
@@ -1608,7 +1686,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Users" Association="Self.FK_UsersTests_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UsersTests" EntitySet="UsersTests1" />
+            <End Role="UsersTests" EntitySet="UserTests" />
           </AssociationSet>
           <EntitySet Name="UserMessages" EntityType="LanguageSchoolModel.UserMessage" />
           <AssociationSet Name="FK_UsersMessages_Users" Association="LanguageSchoolModel.FK_UsersMessages_Users">
@@ -1729,7 +1807,24 @@
           <EntitySet Name="Marks" EntityType="LanguageSchoolModel.Mark" />
           <AssociationSet Name="FK_UsersTests_Marks" Association="LanguageSchoolModel.FK_UsersTests_Marks">
             <End Role="Mark" EntitySet="Marks" />
-            <End Role="UsersTests" EntitySet="UsersTests1" />
+            <End Role="UsersTests" EntitySet="UserTests" />
+          </AssociationSet>
+          <EntitySet Name="UserClosedAnswers" EntityType="LanguageSchoolModel.UserClosedAnswer" />
+          <AssociationSet Name="FK_UserClosedAnswers_Answers" Association="LanguageSchoolModel.FK_UserClosedAnswers_Answers">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="UserClosedAnswer" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_TestClosedQuestions" Association="LanguageSchoolModel.FK_UserClosedAnswers_TestClosedQuestions">
+            <End Role="TestClosedQuestion" EntitySet="TestClosedQuestions" />
+            <End Role="UserClosedAnswer" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_Tests" Association="LanguageSchoolModel.FK_UserClosedAnswers_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="UserClosedAnswer" EntitySet="UserClosedAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClosedAnswers_Users" Association="LanguageSchoolModel.FK_UserClosedAnswers_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserClosedAnswer" EntitySet="UserClosedAnswers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserMessage">
@@ -2065,6 +2160,7 @@
           <NavigationProperty Name="ClosedQuestion" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_ClosedQuestions" FromRole="TestClosedQuestion" ToRole="ClosedQuestion" />
           <NavigationProperty Name="Test" Relationship="LanguageSchoolModel.FK_TestClosedQuestions_Tests" FromRole="TestClosedQuestion" ToRole="Test" />
           <NavigationProperty Name="TestAnswers" Relationship="LanguageSchoolModel.FK_TestAnswers_Tests" FromRole="TestClosedQuestion" ToRole="TestAnswer" />
+          <NavigationProperty Name="UserClosedAnswers" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_TestClosedQuestions" FromRole="TestClosedQuestion" ToRole="UserClosedAnswer" />
         </EntityType>
         <EntityType Name="TestOpenQuestion">
           <Key>
@@ -2169,13 +2265,75 @@
         </EntityType>
         <Association Name="FK_UsersTests_Marks">
           <End Type="LanguageSchoolModel.Mark" Role="Mark" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersTests" Role="UsersTests" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserTest" Role="UsersTests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Mark">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UsersTests">
               <PropertyRef Name="MarkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserClosedAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="TestClosedQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answer" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Answers" FromRole="UserClosedAnswer" ToRole="Answer" />
+          <NavigationProperty Name="TestClosedQuestion" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_TestClosedQuestions" FromRole="UserClosedAnswer" ToRole="TestClosedQuestion" />
+          <NavigationProperty Name="Test" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Tests" FromRole="UserClosedAnswer" ToRole="Test" />
+          <NavigationProperty Name="User" Relationship="LanguageSchoolModel.FK_UserClosedAnswers_Users" FromRole="UserClosedAnswer" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserClosedAnswers_Answers">
+          <End Type="LanguageSchoolModel.Answer" Role="Answer" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UserClosedAnswer" Role="UserClosedAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswer">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_TestClosedQuestions">
+          <End Type="LanguageSchoolModel.TestClosedQuestion" Role="TestClosedQuestion" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UserClosedAnswer" Role="UserClosedAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestClosedQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswer">
+              <PropertyRef Name="TestClosedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_Tests">
+          <End Type="LanguageSchoolModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UserClosedAnswer" Role="UserClosedAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswer">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClosedAnswers_Users">
+          <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="1" />
+          <End Type="LanguageSchoolModel.UserClosedAnswer" Role="UserClosedAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClosedAnswer">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2392,8 +2550,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsersTests1">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersTests">
+          <EntitySetMapping Name="UserTests">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserTest">
               <MappingFragment StoreEntitySet="UsersTests">
                 <ScalarProperty Name="MarkId" ColumnName="MarkId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2575,6 +2733,17 @@
               <MappingFragment StoreEntitySet="Marks">
                 <ScalarProperty Name="ENName" ColumnName="ENName" />
                 <ScalarProperty Name="PLName" ColumnName="PLName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClosedAnswers">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserClosedAnswer">
+              <MappingFragment StoreEntitySet="UserClosedAnswers">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="TestClosedQuestionId" ColumnName="TestClosedQuestionId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

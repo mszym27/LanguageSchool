@@ -41,7 +41,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UsersTests> UsersTests1 { get; set; }
+        public virtual DbSet<UserTest> UserTests { get; set; }
         public virtual DbSet<UserMessage> UserMessages { get; set; }
         public virtual DbSet<DayOfWeek> DayOfWeeks { get; set; }
         public virtual DbSet<Holiday> Holidays { get; set; }
@@ -56,6 +56,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<TestOpenQuestion> TestOpenQuestions { get; set; }
         public virtual DbSet<TestAnswer> TestAnswers { get; set; }
         public virtual DbSet<Mark> Marks { get; set; }
+        public virtual DbSet<UserClosedAnswer> UserClosedAnswers { get; set; }
     
         public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
         {

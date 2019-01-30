@@ -21,6 +21,13 @@ namespace LanguageSchool.Controllers
 
             var groupViewModel = new GroupViewModel(group);
 
+            var student = GetLoggedUser();
+
+            foreach(var userTest in student.UsersTests.OrderByDescending(ut => ut.CreationDate))
+            {
+                groupViewModel.TakenTests.Add(new UserTestViewModel(userTest));
+            }
+
             return View(groupViewModel);
         }
 

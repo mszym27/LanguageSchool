@@ -12,19 +12,20 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Mark
+    public partial class UserTest
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Mark()
-        {
-            this.UsersTests = new HashSet<UserTest>();
-        }
-    
         public int Id { get; set; }
-        public string PLName { get; set; }
-        public string ENName { get; set; }
+        public bool IsDeleted { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public Nullable<System.DateTime> DeletionDate { get; set; }
+        public int UserId { get; set; }
+        public int TestId { get; set; }
+        public int Points { get; set; }
+        public bool IsMarked { get; set; }
+        public int MarkId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserTest> UsersTests { get; set; }
+        public virtual Test Test { get; set; }
+        public virtual User User { get; set; }
+        public virtual Mark Mark { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace LanguageSchool.Models
         public TestClosedQuestion()
         {
             this.TestAnswers = new HashSet<TestAnswer>();
+            this.UserClosedAnswers = new HashSet<UserClosedAnswer>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace LanguageSchool.Models
         public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserClosedAnswer> UserClosedAnswers { get; set; }
     }
 }

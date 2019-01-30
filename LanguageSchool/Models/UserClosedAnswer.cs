@@ -12,20 +12,17 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersTests
+    public partial class UserClosedAnswer
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public Nullable<System.DateTime> DeletionDate { get; set; }
         public int UserId { get; set; }
         public int TestId { get; set; }
-        public Nullable<int> Points { get; set; }
-        public bool IsMarked { get; set; }
-        public int MarkId { get; set; }
+        public int TestClosedQuestionId { get; set; }
+        public int AnswerId { get; set; }
     
+        public virtual Answer Answer { get; set; }
+        public virtual TestClosedQuestion TestClosedQuestion { get; set; }
         public virtual Test Test { get; set; }
         public virtual User User { get; set; }
-        public virtual Mark Mark { get; set; }
     }
 }

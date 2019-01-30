@@ -9,18 +9,20 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class TimeTableViewModel
     {
+        public DateTime StartOfWeek { get; set; }
+        public DateTime EndOfWeek { get; set; }
         public bool IsTeacher { get; set; }
-
+  
         public List<GroupTime> Times { get; set; }
 
         public TimeTableViewModel(User user)
         {
             IsTeacher = (user.RoleId == (int)Consts.Roles.Teacher);
 
-            var startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Monday);
-            var endOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Saturday);
+            StartOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Monday);
+            EndOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)System.DayOfWeek.Saturday);
 
-            var thisWeekUserGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && !(ug.Group.EndDate < startOfWeek) && !(ug.Group.StartDate > endOfWeek));
+            var thisWeekUserGroups = user.UsersGroups.Where(ug => !ug.IsDeleted && !(ug.Group.EndDate < StartOfWeek) && !(ug.Group.StartDate > EndOfWeek));
 
             Times = new List<GroupTime>();
 

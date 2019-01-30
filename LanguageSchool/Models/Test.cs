@@ -21,9 +21,10 @@ namespace LanguageSchool.Models
             this.EntryTests = new HashSet<EntryTest>();
             this.TestsLessonSubjects = new HashSet<TestsLessonSubject>();
             this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
-            this.UsersTests = new HashSet<UsersTests>();
+            this.UsersTests = new HashSet<UserTest>();
             this.TestClosedQuestions = new HashSet<TestClosedQuestion>();
             this.TestOpenQuestions = new HashSet<TestOpenQuestion>();
+            this.UserClosedAnswers = new HashSet<UserClosedAnswer>();
         }
     
         public int Id { get; set; }
@@ -50,11 +51,13 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersTests> UsersTests { get; set; }
+        public virtual ICollection<UserTest> UsersTests { get; set; }
         public virtual Group Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestClosedQuestion> TestClosedQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestOpenQuestion> TestOpenQuestions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserClosedAnswer> UserClosedAnswers { get; set; }
     }
 }

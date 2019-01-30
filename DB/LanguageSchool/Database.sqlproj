@@ -116,6 +116,7 @@
     <Build Include="Tests\Tables\TestClosedQuestions.sql" />
     <Build Include="Tests\Tables\TestAnswers.sql" />
     <Build Include="Administration\Tables\Marks.sql" />
+    <Build Include="Users\Tables\UserClosedAnswers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />

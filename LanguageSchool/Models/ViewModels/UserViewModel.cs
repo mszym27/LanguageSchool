@@ -12,7 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public string EmailAdress { get; set; }
         public string PublicPhoneNumber { get; set; }
         public bool IsMarked { get; set; }
-        public List<UsersTests> UserTests { get; set; }
+        public List<UserTest> UserTests { get; set; }
 
         public UserViewModel() { }
 

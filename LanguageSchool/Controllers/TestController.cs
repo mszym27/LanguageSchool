@@ -152,6 +152,21 @@ namespace LanguageSchool.Controllers
             return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
         }
 
+        [Route("Test/Taken/{testId}")]
+        public ActionResult Taken(int testId)
+        {
+            var test = UnitOfWork.TestRepository.GetById(testId);
+
+            var testViewModel = new TestViewModel(test);
+
+            foreach (var question in testViewModel.ClosedQuestions)
+            {
+                Shuffle(question.Answers);
+            }
+
+            return View(testViewModel);
+        }
+
         [HttpGet]
         [Route("Test/Take/{testId}")]
         public ActionResult Take(int testId)
@@ -177,7 +192,7 @@ namespace LanguageSchool.Controllers
                 var student = GetLoggedUser();
                 var takenTest = UnitOfWork.TestRepository.GetById(testViewModel.Id);
 
-                var userTest = new UsersTests();
+                var userTest = new UserTest();
 
                 var now = DateTime.Now;
 
@@ -204,6 +219,18 @@ namespace LanguageSchool.Controllers
                                 .OrderBy(a => a.AnswerId)
                                 .Select(a => a.AnswerId);
 
+                            foreach(var id in chosenAnswerIds)
+                            {
+                                student.UserClosedAnswers.Add(
+                                    new UserClosedAnswer()
+                                    {
+                                        TestId = testViewModel.Id,
+                                        TestClosedQuestionId = question.Id,
+                                        AnswerId = (int)question.ChosenAnswerId
+                                    }
+                                );
+                            }
+
                             if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
                             { 
                                 userTest.Points += question.Points;
@@ -211,7 +238,16 @@ namespace LanguageSchool.Controllers
                         }
                         else
                         {
-                            if(correctAnswerIds.Contains((int)question.ChosenAnswerId))
+                            student.UserClosedAnswers.Add(
+                                new UserClosedAnswer()
+                                {
+                                    TestId = testViewModel.Id,
+                                    TestClosedQuestionId = question.Id,
+                                    AnswerId = (int)question.ChosenAnswerId
+                                }
+                            );
+
+                            if (correctAnswerIds.Contains((int)question.ChosenAnswerId))
                             {
                                 userTest.Points += question.Points;
                             }
