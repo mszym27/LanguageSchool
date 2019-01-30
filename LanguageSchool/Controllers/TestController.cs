@@ -187,8 +187,8 @@ namespace LanguageSchool.Controllers
         [Route("Test/Take/{testId}")]
         public ActionResult Take(TestViewModel testViewModel)
         {
-            try
-            {
+            //try
+            //{
                 var student = GetLoggedUser();
                 var takenTest = UnitOfWork.TestRepository.GetById(testViewModel.Id);
 
@@ -205,6 +205,8 @@ namespace LanguageSchool.Controllers
                 {
                     if(question.ChosenAnswerId != null || question.Answers.Where(a => a.IsMarked).Any())
                     {
+                        var testQuestion = takenTest.TestClosedQuestions.Where(q => q.QuestionId == question.Id).First();
+
                         var correctAnswerIds = takenTest.TestClosedQuestions
                             .Where(q => q.QuestionId == question.Id)
                             .First()
@@ -225,8 +227,8 @@ namespace LanguageSchool.Controllers
                                     new UserClosedAnswer()
                                     {
                                         TestId = testViewModel.Id,
-                                        TestClosedQuestionId = question.Id,
-                                        AnswerId = (int)question.ChosenAnswerId
+                                        TestClosedQuestionId = testQuestion.Id,
+                                        AnswerId = id
                                     }
                                 );
                             }
@@ -242,7 +244,7 @@ namespace LanguageSchool.Controllers
                                 new UserClosedAnswer()
                                 {
                                     TestId = testViewModel.Id,
-                                    TestClosedQuestionId = question.Id,
+                                    TestClosedQuestionId = testQuestion.Id,
                                     AnswerId = (int)question.ChosenAnswerId
                                 }
                             );
@@ -299,15 +301,15 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel(userAlertType, "Test został zakończony", userAlertContents);
 
                 return RedirectToAction("LessonSubjects", "LessonSubject", new { id = testViewModel.GroupId });
-            }
-            catch (Exception ex)
-            {
-                var errorLogGuid = LogException(ex);
+            //}
+            //catch (Exception ex)
+            //{
+            //    var errorLogGuid = LogException(ex);
 
-                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+            //    TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return View(testViewModel);
-            }
+            //    return View(testViewModel);
+            //}
         }
 
         private void Shuffle(List<AnswerViewModel> answers)

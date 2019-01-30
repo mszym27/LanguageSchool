@@ -13,7 +13,7 @@ namespace LanguageSchool.Models.ViewModels
         public int UserId { get; set; }
         public int TestId { get; set; }
         public int QuestionId { get; set; }
-        public int? Points { get; set; }
+        public int Points { get; set; }
         public int PointsAwarded { get; set; }
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
@@ -33,7 +33,8 @@ namespace LanguageSchool.Models.ViewModels
             UserId = answer.UserId;
             TestId = answer.TestId;
             QuestionId = answer.OpenQuestionId;
-            Points = answer.Points == null ? 0 : answer.Points;
+            PointsAwarded = answer.Points;
+            Points = answer.OpenQuestion.Points;
             Content = answer.Content;
         }
     }

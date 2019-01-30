@@ -312,7 +312,7 @@
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="OpenQuestionId" Type="int" Nullable="false" />
           <Property Name="Content" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Points" Type="int" />
+          <Property Name="Points" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Users">
@@ -1340,7 +1340,7 @@
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <Property Name="OpenQuestionId" Type="Int32" Nullable="false" />
           <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="Points" Type="Int32" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OpenQuestion" Relationship="Self.FK_UsersOpenAnswers_OpenQuestions" FromRole="UserOpenAnswers" ToRole="OpenQuestions" />
           <NavigationProperty Name="Test" Relationship="Self.FK_UserOpenAnswers_Tests" FromRole="UserOpenAnswers" ToRole="Tests" />

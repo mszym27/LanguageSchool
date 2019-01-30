@@ -56,14 +56,21 @@ namespace LanguageSchool.Controllers
 
                 userAnswer.Points = answerVM.PointsAwarded;
                 userAnswer.Comment = answerVM.Comment;
+                userAnswer.IsMarked = true;
 
-                var test = user.UsersTests.Where(t => t.TestId == answerVM.TestId).First();
+                var userTest = user.UsersTests.Where(t => t.TestId == answerVM.TestId).First();
 
-                test.Points += answerVM.PointsAwarded;
+                userTest.Points += answerVM.PointsAwarded;
 
-                if(!user.UserOpenAnswers.Where(a => a.TestId == test.Id && !a.IsMarked).Any())
+                double percentageGoten = GradeTest(userTest.Points, userTest.Test.Points);
+
+                var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
+
+                userTest.Mark = mark;
+
+                if (!user.UserOpenAnswers.Where(a => a.TestId == userTest.Id && !a.IsMarked).Any())
                 {
-                    test.IsMarked = true;
+                    userTest.IsMarked = true;
                 }
 
                 UnitOfWork.Save();
@@ -172,5 +179,10 @@ namespace LanguageSchool.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
+
+        private double GradeTest(int obtainedPoints, int maxPoints)
+        {
+            return 100 * ((double)obtainedPoints / maxPoints);
+        }
     }
 }
