@@ -246,3 +246,6 @@ ModelManifest.xml
 *.config
 /Reports/Reports.rptproj.rsuser
 /Reports/Reports.rptproj.bak
+/DB/LanguageSchool/LanguageSchool.scmp
+/LanguageSchool/Web.config
+/Reports/Reports.rptproj
