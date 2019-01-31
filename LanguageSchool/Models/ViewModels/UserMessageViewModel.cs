@@ -19,8 +19,6 @@ namespace LanguageSchool.Models.ViewModels
 
         public SelectList MessageTypes { get; set; }
         public int MessageTypeId { get; set; }
-        public SelectList Users { get; set; }
-        public int UserId { get; set; }
         public SelectList Groups { get; set; }
         public int GroupId { get; set; }
         public SelectList Courses { get; set; }

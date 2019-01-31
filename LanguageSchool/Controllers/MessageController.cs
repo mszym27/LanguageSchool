@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.SendMessageViewModels;
 using LanguageSchool.DAL;
 
 namespace LanguageSchool.Controllers
@@ -84,39 +85,74 @@ namespace LanguageSchool.Controllers
             return RedirectToAction("Index");
         }
 
-        //// GET: Message
-        ////[Authorize(Roles = "Secretary, Administrator")]
-        //// GET: Message/Create
-        //[Route("Message/Create/")]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        [Authorize(Roles = "Secretary, Teacher")]
+        [HttpGet]
+        [Route("Message/SendToUser/{userId}")]
+        public ActionResult SendToUser(int userId)
+        {
+            var user = UnitOfWork.UserRepository.GetById(userId);
+
+            return View(new SendToUserVM(user));
+        }
+
+        [Authorize(Roles = "Secretary, Teacher")]
+        [HttpPost]
+        [Route("Message/SendToUser/{userId}")]
+        public ActionResult SendToUser(SendToUserVM messageToSend)
+        {
+            try
+            {
+                var user = UnitOfWork.UserRepository.GetById(messageToSend.UserId);
+
+                Message message = new Message();
+
+                message.MessageTypeId = (int)Consts.MessageTypes.ToUser;
+                message.CreationDate = DateTime.Now;
+
+                message.Header = messageToSend.Topic;
+                message.Contents = messageToSend.Contents;
+                message.IsSystem = messageToSend.IsSystem;
+
+                UserMessage userMessage;
+
+                userMessage = new UserMessage() {
+                    User = user,
+                    Message = message,
+                };
+
+                user.UsersMessages.Add(userMessage);
+
+                UnitOfWork.Save();
+
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Komunikat został wysłany pomyślnie", "proszę czekać na ewentualny kontakt ze strony odbiorcy.");
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(messageToSend);
+            }
+        }
 
         [Authorize(Roles = "Secretary")]
         [HttpGet]
-        [Route("Message/Create/")]
-        public ActionResult Create(int? userId)
+        [Route("Message/Send/")]
+        public ActionResult Send()
         {
             UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
 
-            userMessageViewModel.MessageTypes = new SelectList(UnitOfWork.MessageTypeRepository.Get(),
+            var types = UnitOfWork.MessageTypeRepository.Get(
+                t => t.Id != (int)Consts.MessageTypes.ToUser
+                    && t.Id != (int)Consts.MessageTypes.StudentWelcome
+            );
+
+            userMessageViewModel.MessageTypes = new SelectList(types,
                                          "Id",
                                          "Name");
-
-            SelectList usersSelectList;
-
-            if (userId != null)
-            {
-                var selectedUser = UnitOfWork.UserRepository.GetById(userId);
-                usersSelectList = PopulateList.AllUsers(selectedUser);
-            }
-            else
-            {
-                usersSelectList = PopulateList.AllUsers();
-            }
-
-            userMessageViewModel.Users = usersSelectList;
 
             userMessageViewModel.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
@@ -135,8 +171,8 @@ namespace LanguageSchool.Controllers
 
         [Authorize(Roles = "Secretary")]
         [HttpPost]
-        [Route("Message/Create")]
-        public ActionResult Create(UserMessageViewModel uMVM)
+        [Route("Message/Send")]
+        public ActionResult Send(UserMessageViewModel uMVM)
         {
             try
             {
@@ -153,14 +189,6 @@ namespace LanguageSchool.Controllers
 
                 switch (uMVM.MessageTypeId)
                 {
-                    case (int)Consts.MessageTypes.ToUser:
-                        message.UserId = uMVM.UserId;
-
-                        userMessage = new UserMessage() { UserId = uMVM.UserId };
-
-                        message.UsersMessages.Add(userMessage);
-
-                        break;
                     case (int)Consts.MessageTypes.ToGroup:
                         message.GroupId = uMVM.GroupId;
 
@@ -209,7 +237,7 @@ namespace LanguageSchool.Controllers
                 UnitOfWork.MessageRepository.Insert(message);
                 UnitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel(Consts.Success, "Wiadomość wysłana pomyślnie", "proszę czekać na ewentualny kontakt ze strony odbiorcy/ów");
+                TempData["Alert"] = new AlertViewModel(Consts.Success, "Komunikat został wysłany pomyślnie", "proszę czekać na ewentualny kontakt ze strony odbiorców");
 
                 return RedirectToAction("Index", "Home");
             }

@@ -82,14 +82,7 @@ namespace LanguageSchool
                         new MenuViewModel { ShownName = "Utwórz użytkownika", ControllerName = "UserData", ActionName = "Create" }
                     }
                 },
-                new MenuViewModel { ShownName = "Komunikaty", RoleName = "Secretary",
-                    SubMenu = new List<MenuViewModel>()
-                    {
-                        new MenuViewModel { ShownName = "Moje komunikaty", ControllerName = "Message", ActionName = "Index" },
-                        new MenuViewModel { ShownName = "Wyślij komunikat", ControllerName = "Message", ActionName = "Create" }
-                    }
-                },
-                new MenuViewModel { ShownName = "Administracja", RoleName = "Secretary" }
+                new MenuViewModel { ShownName = "Wyślij komunikat masowy", RoleName = "Secretary", ControllerName = "Message", ActionName = "Send" }
             }
         );
     }

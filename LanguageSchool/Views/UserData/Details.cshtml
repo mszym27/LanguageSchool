@@ -144,7 +144,7 @@
                     <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Zapisz do grupy</button>
@@ -159,7 +159,7 @@
                     <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
                 </div>
             }
         </div>

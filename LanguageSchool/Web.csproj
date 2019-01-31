@@ -336,6 +336,7 @@
     <Compile Include="Models\UserTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\SendMessageViewModels\SendToUserVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentAwaitingTestVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentGroupVM.cs" />
     <Compile Include="Models\ViewModels\TakenTestViewModels\ChosenAnswerVM.cs" />
@@ -464,7 +465,7 @@
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
-    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Send.cshtml" />
     <Content Include="Views\UserData\Create.cshtml" />
     <Content Include="Views\UserData\Delete.cshtml" />
     <Content Include="Views\UserData\Details.cshtml" />
@@ -520,6 +521,7 @@
     <Content Include="Views\Test\Taken.cshtml" />
     <Content Include="Views\Shared\_DeleteDialog.cshtml" />
     <Content Include="Views\Group\StudentDetails.cshtml" />
+    <Content Include="Views\Message\SendToUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

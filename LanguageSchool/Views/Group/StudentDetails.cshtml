@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-md-2 col-md-offset-9">
-            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserMessage", new { userId = @Model.StudentId })'">Wyślij komunikat</button>
+            <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.StudentId })'">Wyślij komunikat</button>
         </div>
     </div>
 
