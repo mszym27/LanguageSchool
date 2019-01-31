@@ -80,14 +80,16 @@
                 </tr>
                 @foreach (var student in Model.Students)
                 {
+                    var thisUserGroup = @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First();
+
                     <tr>
                         <td>
-                            @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First().CreationDate.ToString("yyyy/MM/dd")
+                            @thisUserGroup.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
                             @if (student.UserTests.Where(t => !t.IsMarked).Any())
                             {
-                                @Html.ActionLink(student.Fullname, "Index", "UserOpenAnswer", new { userId = student.Id }, null)
+                                @Html.ActionLink(student.Fullname, "StudentDetails", "Group", new { userGroupId = thisUserGroup.Id }, null)
                             }
                             else
                             {
