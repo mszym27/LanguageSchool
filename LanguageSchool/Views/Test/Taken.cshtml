@@ -5,112 +5,110 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "test" }))
-{
-    <div class="container">
+<div class="container">
+    @Html.Partial("_PartHeader", "Dane testu")
+    <div class="row">
+        <div class="bordered col-md-12">
+            <div class="col-md-4">
+                <label class="col-md-offset-2">
+                    Nazwa testu:
+                </label>
+
+                @Model.Name
+            </div>
+            <div class="col-md-4">
+                <label>
+                    Komentarz do testu:
+                </label>
+
+                @Model.Comment
+            </div>    
+                
+            @{
+                var color = "color:";
+                color += Model.IsMarked ? "black" : "gray";
+            }
+
+            <div class="col-md-4" style="@color">
+                <label>
+                    Ocena z testu:
+                </label>
+
+                @Model.Mark
+            </div>
+        </div>
+    </div>
+    @if (Model.ClosedQuestions.Any())
+    {
+        @Html.Partial("_PartHeader", "Pytania zamknięte")
         <div class="row">
             <div class="bordered col-md-12">
-                <div class="col-md-4">
-                    <label class="col-md-offset-2">
-                        Nazwa testu:
-                    </label>
+                <div class="form-group col-md-12">
+                    <ol>
+                        @foreach (var question in Model.ClosedQuestions)
+                        {
+                            <li>
+                                @question.Contents
+                                <label style="float:right">@question.Points</label>
+                                <ul>
+                                    @foreach (var answer in question.ChosenAnswers)
+                                    {
+                                        var style = "color:forestgreen;";
 
-                    @Model.Name
-                </div>
-                <div class="col-md-4">
-                    <label>
-                        Komentarz do testu:
-                    </label>
+                                        if (!answer.IsCorrect)
+                                        {
+                                            style = "color:darkred;";
+                                        }
 
-                    @Model.Comment
-                </div>    
-                
-                @{
-                    var color = "color:";
-                    color += Model.IsMarked ? "black" : "gray";
-                }
-
-                <div class="col-md-4" style="@color">
-                    <label>
-                        Ocena z testu:
-                    </label>
-
-                    @Model.Mark
+                                        <li style="@style">
+                                            @answer.Contents
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ol>
                 </div>
             </div>
         </div>
-        @if (Model.ClosedQuestions.Any())
-        {
-            Html.RenderPartial("_PartHeader", "Pytania zamknięte");
-            <div class="row">
-                <div class="bordered col-md-12">
-                    <div class="form-group col-md-12">
-                        <ol>
-                            @foreach (var question in Model.ClosedQuestions)
-                            {
-                                <li>
-                                    @question.Contents
-                                    <label style="float:right">@question.Points</label>
-                                    <ul>
-                                        @foreach (var answer in question.ChosenAnswers)
-                                        {
-                                            var style = "color:forestgreen;";
+    }
 
-                                            if (answer.IsCorrect)
-                                            {
-                                                style = "color:darkred;";
-                                            }
-
-                                            <li style="@style">
-                                                @answer.Contents
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
-                            }
-                        </ol>
+    @if (Model.OpenQuestions.Any())
+    {
+        @Html.Partial("_PartHeader", "Pytania otwarte")
+        <div class="row">
+            <div class="bordered col-md-12">
+                @foreach (var question in Model.OpenQuestions)
+                {
+                    <div class="row">
+                        <div class="control-label col-md-12">
+                            @question.PointsAwarded / <strong>@question.Points</strong>
+                        </div>
+                        <div class="col-md-12">
+                            @question.Answer
+                        </div>
+                        <div class="col-md-12">
+                            @question.Comment
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-
-        @if (Model.OpenQuestions.Any())
-        {
-            Html.RenderPartial("_PartHeader", "Pytania otwarte");
-            <div class="row">
-                <div class="bordered col-md-12">
-                    @foreach (var question in Model.OpenQuestions)
-                    {
-                        <div class="row">
-                            <div class="control-label col-md-12">
-                                @question.PointsAwarded / <strong>@question.Points</strong>
-                            </div>
-                            <div class="col-md-12">
-                                @question.Answer
-                            </div>
-                            <div class="col-md-12">
-                                @question.Comment
-                            </div>
+                    <div class="row">
+                        <div class="control-label col-md-12">
+                            <strong>@question.Question</strong>
                         </div>
-                        <div class="row">
-                            <div class="control-label col-md-12">
-                                <strong>@question.Question</strong>
-                            </div>
-                            <div class="col-md-12">
-                                @question.Answer
-                            </div>
-                            <div class="col-md-12">
-                                @question.Comment
-                            </div>
+                        <div class="col-md-12">
+                            @question.Answer
                         </div>
+                        <div class="col-md-12">
+                            @question.Comment
+                        </div>
+                    </div>
 
-                        <p/>
-                    }
-                </div>
+                    <p/>
+                }
             </div>
-        }
-    </div>
-}
+        </div>
+    }
+</div>
 
 <style type="text/css">
     div.bordered {
