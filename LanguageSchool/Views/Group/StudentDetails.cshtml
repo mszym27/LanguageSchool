@@ -30,13 +30,13 @@
                     </th>
                 </tr>
                 @foreach (var test in Model.TakenTests)
-            {
+                {
                     <tr>
                         <td>
                             @test.CreationDate
                         </td>
                         <td>
-                            @test.Name
+                            @Html.ActionLink(test.Name, "Taken", "Test", new { Id = test.UserTestId }, null)
                         </td>
                         <td>
                             @test.Comment
