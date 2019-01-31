@@ -338,6 +338,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\DeleteDialogViewModel.cs" />
     <Compile Include="Models\ViewModels\ExistingLessonSubjectsVM.cs" />
+    <Compile Include="Models\ViewModels\GroupStudentVM.cs" />
     <Compile Include="Models\ViewModels\UserTestViewModel.cs" />
     <Compile Include="Models\ViewModels\UserOpenAnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\OpenQuestionViewModel.cs" />
