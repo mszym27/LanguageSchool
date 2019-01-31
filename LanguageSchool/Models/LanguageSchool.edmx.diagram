@@ -34,8 +34,7 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_Answers_ClosedQuestions" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_OpenQuestions" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_TestsLessonSubjects_Tests" ManuallyRouted="false" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_UserOpenAnswers_Tests" ManuallyRouted="false" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Tests" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="LanguageSchoolModel.FK_UsersTests_Tests" />
         <AssociationConnector Association="LanguageSchoolModel.FK_Users_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersOpenAnswers_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Users" ManuallyRouted="false" />
@@ -80,6 +79,8 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_TestClosedQuestions" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_Tests" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_Users" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_GroupTimes_Groups1" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UserOpenAnswers_UsersTests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

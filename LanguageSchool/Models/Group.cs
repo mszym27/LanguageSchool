@@ -22,6 +22,7 @@ namespace LanguageSchool.Models
             this.Messages = new HashSet<Message>();
             this.LessonSubjects = new HashSet<LessonSubject>();
             this.Tests = new HashSet<Test>();
+            this.UsersTests = new HashSet<UserTest>();
         }
     
         public int Id { get; set; }
@@ -45,5 +46,7 @@ namespace LanguageSchool.Models
         public virtual ICollection<LessonSubject> LessonSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserTest> UsersTests { get; set; }
     }
 }

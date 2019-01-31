@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.StudentGroupViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -249,6 +250,17 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("FullDetails", "Group", new { id = group.Id });
             }
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [Route("Group/StudentDetails/{id}")]
+        public ActionResult StudentDetails(int userGroupId)
+        {
+            var userGroup = UnitOfWork.UserGroupRepository.GetById(userGroupId);
+
+            var groupViewModel = new StudentGroupVM(userGroup);
+
+            return View(groupViewModel);
         }
 
         //// POST: Group/Create

@@ -1,0 +1,108 @@
+﻿@model LanguageSchool.Models.ViewModels.StudentGroupViewModels.StudentGroupVM
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @Html.Partial("_PartHeader", Model.StudentName)
+
+    @Html.Partial("_PartHeader", "Testy ocenione")
+    <div class="row bordered">
+        <table class="col-md-12 table table-striped table-bordered">
+            <tr>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Komentarz
+                </th>
+                <th>
+                    Uzyskane punkty
+                </th>
+                <th>
+                    Ocena
+                </th>
+            </tr>
+            @foreach (var test in Model.TakenTests)
+            {
+                <tr>
+                    <td>
+                        @test.CreationDate
+                    </td>
+                    <td>
+                        @test.Name
+                    </td>
+                    <td>
+                        @test.Comment
+                    </td>
+                    <td>
+                        @test.PointsAwarded / @test.Points
+                    </td>
+                    <td>
+                        @test.Mark
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    @Html.Partial("_PartHeader", "Pytania otwarte oczekujące na ocenę")
+    @foreach (var test in Model.AwaitingMark)
+    { 
+        <div class="row bordered">
+            <table class="col-md-12 table table-striped table-bordered">
+                <tr>
+                    <th>
+                        Treść pytania
+                    </th>
+                    <th>
+                        Udzielona odpowiedź
+                    </th>
+                    <th>
+                        Punkty do uzyskania
+                    </th>
+                    <th>
+                        Komentarz
+                    </th>
+                </tr>
+
+                @foreach (var item in test.AnswersAwaitingMark)
+                    {
+                        var shownContent = item.Content;
+
+                        if (item.Content.Length > 30)
+                        {
+                            shownContent = item.Content.Substring(0, 30) + "...";
+                        }
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpenQuestion.Contents)
+                            </td>
+                            <td>
+                                @Html.ActionLink(shownContent, "Grade", new { Id = item.Id })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpenQuestion.Points)
+                            </td>
+                            @if (item.Comment != null)
+                            {
+                                <td>
+                                    @item.Comment
+                                </td>
+                            }
+                            else
+                            {
+                                <td align="center"> - </td>
+                            }
+                        </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

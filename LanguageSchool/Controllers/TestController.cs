@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.TakenTestViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -152,17 +153,12 @@ namespace LanguageSchool.Controllers
             return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
         }
 
-        [Route("Test/Taken/{testId}")]
-        public ActionResult Taken(int testId)
+        [Route("Test/Taken/{userTestId}")]
+        public ActionResult Taken(int userTestId)
         {
-            var test = UnitOfWork.TestRepository.GetById(testId);
+            var userTest = UnitOfWork.UserTestRepository.GetById(userTestId);
 
-            var testViewModel = new TestViewModel(test);
-
-            foreach (var question in testViewModel.ClosedQuestions)
-            {
-                Shuffle(question.Answers);
-            }
+            var testViewModel = new TakenTestVM(userTest);
 
             return View(testViewModel);
         }

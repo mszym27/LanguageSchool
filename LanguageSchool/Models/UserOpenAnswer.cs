@@ -24,9 +24,10 @@ namespace LanguageSchool.Models
         public int Points { get; set; }
         public string Comment { get; set; }
         public bool IsMarked { get; set; }
+        public int UserTestId { get; set; }
     
         public virtual OpenQuestion OpenQuestion { get; set; }
-        public virtual Test Test { get; set; }
         public virtual User User { get; set; }
+        public virtual UserTest UserTest { get; set; }
     }
 }

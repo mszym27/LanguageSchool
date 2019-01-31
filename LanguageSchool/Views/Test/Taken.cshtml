@@ -1,6 +1,4 @@
-﻿@using LanguageSchool.Models.ViewModels
-
-@model LanguageSchool.Models.ViewModels.TestViewModel
+﻿@model LanguageSchool.Models.ViewModels.TakenTestViewModels.TakenTestVM
 
 @{
     ViewBag.Title = "TakeTest";
@@ -10,61 +8,61 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "test" }))
 {
     <div class="container">
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.GroupId)
-        @Html.HiddenFor(model => model.Points)
+        <div class="row">
+            <div class="bordered col-md-12">
+                <div class="col-md-4">
+                    <label class="col-md-offset-2">
+                        Nazwa testu:
+                    </label>
 
+                    @Model.Name
+                </div>
+                <div class="col-md-4">
+                    <label>
+                        Komentarz do testu:
+                    </label>
+
+                    @Model.Comment
+                </div>    
+                
+                @{
+                    var color = "color:";
+                    color += Model.IsMarked ? "black" : "gray";
+                }
+
+                <div class="col-md-4" style="@color">
+                    <label>
+                        Ocena z testu:
+                    </label>
+
+                    @Model.Mark
+                </div>
+            </div>
+        </div>
         @if (Model.ClosedQuestions.Any())
         {
             Html.RenderPartial("_PartHeader", "Pytania zamknięte");
-            <div class="modal fade" id="confirmation" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Pozostały pytania bez odpowiedzi</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>W teście niektóre pytania zamknięte pozostały bez zaznaczonych odpowiedzi. Czy jesteś pewien że chcesz go zakończyć?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                            <button type="submit" class="btn btn-danger">Zakończ test</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="closedQuestions">
+            <div class="row">
                 <div class="bordered col-md-12">
                     <div class="form-group col-md-12">
                         <ol>
-                            @for (int i = 0; i < Model.ClosedQuestions.Count; i++)
+                            @foreach (var question in Model.ClosedQuestions)
                             {
-                                @Html.HiddenFor(model => model.ClosedQuestions[i].Id);
-                                @Html.HiddenFor(model => Model.ClosedQuestions[i].Points);
-                                @Html.HiddenFor(model => Model.ClosedQuestions[i].IsMultichoice);
-                                @Html.HiddenFor(model => model.ClosedQuestions[i].Contents);
-
                                 <li>
-                                    @Model.ClosedQuestions[i].Contents
-
-                                    <ul type="a">
-                                        @for (int j = 0; j < Model.ClosedQuestions[i].Answers.Count; j++)
+                                    @question.Contents
+                                    <label style="float:right">@question.Points</label>
+                                    <ul>
+                                        @foreach (var answer in question.ChosenAnswers)
                                         {
-                                            <li>
-                                                @Model.ClosedQuestions[i].Answers[j].Answer
+                                            var style = "color:forestgreen;";
 
-                                                @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].AnswerId)
-                                                @Html.HiddenFor(model => Model.ClosedQuestions[i].Answers[j].Answer)
+                                            if (answer.IsCorrect)
+                                            {
+                                                style = "color:darkred;";
+                                            }
 
-                                                @if (Model.ClosedQuestions[i].IsMultichoice)
-                                                {
-                                                    @Html.CheckBoxFor(model => model.ClosedQuestions[i].Answers[j].IsMarked, new { @style = "float:right" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.RadioButtonFor(model => model.ClosedQuestions[i].ChosenAnswerId, Model.ClosedQuestions[i].Answers[j].AnswerId, new { @style = "float:right" })
-                                                }
+                                            <li style="@style">
+                                                @answer.Contents
                                             </li>
                                         }
                                     </ul>
@@ -81,15 +79,28 @@
             Html.RenderPartial("_PartHeader", "Pytania otwarte");
             <div class="row">
                 <div class="bordered col-md-12">
-                    @for (int i = 0; i < Model.OpenQuestions.Count; i++)
+                    @foreach (var question in Model.OpenQuestions)
                     {
-                        <div class="form-group">                            
-                            @Html.HiddenFor(model => model.OpenQuestions[i].Id)
+                        <div class="row">
                             <div class="control-label col-md-12">
-                                <strong>@(i + 1). @Model.OpenQuestions[i].Contents</strong>
+                                @question.PointsAwarded / <strong>@question.Points</strong>
                             </div>
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.OpenQuestions[i].Answer, new { htmlAttributes = new { @class = "widetextarea form-control", @style = "width:1050px;height:150px" } })
+                                @question.Answer
+                            </div>
+                            <div class="col-md-12">
+                                @question.Comment
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="control-label col-md-12">
+                                <strong>@question.Question</strong>
+                            </div>
+                            <div class="col-md-12">
+                                @question.Answer
+                            </div>
+                            <div class="col-md-12">
+                                @question.Comment
                             </div>
                         </div>
 
@@ -98,63 +109,8 @@
                 </div>
             </div>
         }
-        <div class="row">
-            <div class="col-md-3 col-md-offset-9">
-                <input type="button" onclick = "EndTest()" value="Zakończ test" class="btn btn-block btn-default" />
-            </div>
-        </div>
     </div>
 }
-
-
-<script>
-    function EndTest()
-    {
-        var closedQuestions = document.getElementById("closedQuestions");
-
-        var inputs = closedQuestions.getElementsByTagName("input");
-
-        var i;
-
-        var prevQuestionNumber = -1,
-            questionNumber = 0,
-            wasChecked = true;
-
-        for (i = 0; i < inputs.length; i++) {
-            if (inputs[i].type != 'hidden') {
-                var answerName = inputs[i].getAttribute("name");
-
-                questionNumber = parseInt(answerName.match(/\d+/), 10)
-
-                debugger;
-
-                var isChecked = inputs[i].checked;
-
-                if (questionNumber != prevQuestionNumber) {
-                    if (!wasChecked) {
-                        break;
-                    }
-                    else {
-                        prevQuestionNumber = questionNumber;
-
-                        wasChecked = false;
-                    }
-                }
-
-                if (isChecked) {
-                    wasChecked = true;
-                }
-            }
-        }
-        
-        if (!wasChecked) {
-            $("#confirmation").modal();
-        }
-        else {
-            document.getElementById("test").submit();
-        }
-    }
-</script>
 
 <style type="text/css">
     div.bordered {
