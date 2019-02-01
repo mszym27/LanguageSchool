@@ -81,24 +81,21 @@
                 @foreach (var question in Model.OpenQuestions)
                 {
                     <div class="row">
-                        <div class="control-label col-md-12">
+                        <div class="control-label col-md-10">
+                            <strong>@question.Question</strong>
+                        </div>
+                        <div class="control-label col-md-2" style="float:right">
                             @question.PointsAwarded / <strong>@question.Points</strong>
-                        </div>
-                        <div class="col-md-12">
-                            @question.Answer
-                        </div>
-                        <div class="col-md-12">
-                            @question.Comment
                         </div>
                     </div>
                     <div class="row">
-                        <div class="control-label col-md-12">
-                            <strong>@question.Question</strong>
-                        </div>
                         <div class="col-md-12">
                             @question.Answer
                         </div>
-                        <div class="col-md-12">
+                        <div class="control-label col-md-2">
+                            <strong>Komentarz</strong>
+                        </div>
+                        <div class="col-md-10">
                             @question.Comment
                         </div>
                     </div>
