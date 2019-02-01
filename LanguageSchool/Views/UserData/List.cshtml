@@ -238,14 +238,27 @@
     window.onload = DisableButton();
 
     function ResetForms() {
-        // toDo
+        var current = new Date();
+        var currentYear = current.getFullYear();
+        var currentMonth = current.getMonth();
 
-        //daty
+        var firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+
+        //daty - todo
 
         var creationDateFrom = document.getElementById("creationDateFrom");
         var creationDateTo = document.getElementById("creationDateTo");
+
+        creationDateFrom.value = firstDayOfMonth.toISOString().substring(0, 10);
+        creationDateTo.value = current.toISOString().substring(0, 10);
+
+        //godziny
+
         var preferredHoursFrom = document.getElementById("preferredHoursFrom");
         var preferredHoursTo = document.getElementById("preferredHoursTo");
+
+        preferredHoursFrom.value = 8;
+        preferredHoursTo.value = (now.getHours() + 1);
 
         //dropdown
 
