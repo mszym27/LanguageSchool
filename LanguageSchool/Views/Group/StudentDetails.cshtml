@@ -88,7 +88,7 @@
                                 @Html.DisplayFor(modelItem => item.OpenQuestion.Contents)
                             </td>
                             <td>
-                                @Html.ActionLink(shownContent, "Grade", new { Id = item.Id })
+                                @Html.ActionLink(shownContent, "Mark", "UserOpenAnswer", new { Id = item.Id }, null)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OpenQuestion.Points)

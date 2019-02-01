@@ -31,8 +31,8 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
-        [Route("Grade/{id}")]
-        public ActionResult Grade(int id)
+        [Route("Mark/{id}")]
+        public ActionResult Mark(int id)
         {
             var answer = UnitOfWork.UserOpenAnswerRepository.GetById(id);
 
@@ -45,8 +45,8 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
-        [Route("Grade/{id}")]
-        public ActionResult Grade(UserOpenAnswerViewModel answerVM)
+        [Route("Mark/{id}")]
+        public ActionResult Mark(UserOpenAnswerViewModel answerVM)
         {
             try
             {
