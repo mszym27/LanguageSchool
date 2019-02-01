@@ -20,7 +20,7 @@
                     @Html.Label("Utworzono od:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-2">
-                    @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:80px" })
+                    @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
                 </div>
                 <div class="col-md-1">
                     @Html.Label("Nazwa:", new { style = "float:right" })
@@ -34,10 +34,10 @@
                 </div>
                 <div class="col-md-2">
                     <font color="gray">
-                        dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "disableButton()" })
+                        dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "DisableButton()" })
                     </font>
                     <font color="red">
-                        prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "disableButton()" })
+                        prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "DisableButton()" })
                     </font>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     @Html.Label("Utworzono do:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-2">
-                    @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "disableButton()", @class = "textarea", @style = "width:80px" })
+                    @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
                 </div>
                 <div class="col-md-1">
                     @Html.Label("Email:", new { @style = "float:right" })
@@ -70,9 +70,9 @@
                     @Html.Label("Godziny:", new { @style = "float:right" })
                 </div>
                 <div class="col-md-2">
-                    @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                    @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
                     -
-                    @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "disableButton()", @class = "textarea", @style = "width:30px" })
+                    @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
                 </div>
                 <div class="col-md-1">
                     @Html.Label("Ulica:", new { @style = "float:right" })
@@ -134,7 +134,7 @@
             </div>*@
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default" type="reset">Przywróć</button>
+            <button class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
         </div>
         <div class="col-md-1">
             <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
@@ -235,9 +235,50 @@
     </div>
 
 <script>
-    window.onload = disableButton();
+    window.onload = DisableButton();
 
-    function disableButton() {
+    function ResetForms() {
+        // toDo
+
+        //daty
+
+        var creationDateFrom = document.getElementById("creationDateFrom");
+        var creationDateTo = document.getElementById("creationDateTo");
+        var preferredHoursFrom = document.getElementById("preferredHoursFrom");
+        var preferredHoursTo = document.getElementById("preferredHoursTo");
+
+        //dropdown
+
+        var RoleId = document.getElementById("RoleId");
+        var CourseId = document.getElementById("CourseId");
+
+        RoleId.value = null;
+        CourseId.value = null;
+
+        //filtry tekstowe
+
+        var fullName = document.getElementById("fullName");
+        var emailAdress = document.getElementById("emailAdress");
+        var city = document.getElementById("city");
+        var street = document.getElementById("street");
+        var phoneNumber = document.getElementById("phoneNumber");
+
+        fullName.value = "";
+        emailAdress.value = "";
+        city.value = "";
+        street.value = "";
+        phoneNumber.value = "";
+
+        // bity
+
+        var showUserData = document.getElementById("showUserData");
+        var showContactRequests = document.getElementById("showContactRequests");
+
+        showUserData.value = false;
+        showContactRequests.value = true;
+    }
+
+    function DisableButton() {
         var showUserData = document.getElementById("showUserData");
         var showContactRequests = document.getElementById("showContactRequests");
         var preferredHoursFrom = document.getElementById("preferredHoursFrom");
