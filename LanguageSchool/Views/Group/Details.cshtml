@@ -80,6 +80,13 @@
                 </tr>
                 @foreach (var student in Model.Students)
                 {
+                    var color = "";
+
+                    if (student.UserTests.Where(t => !t.IsMarked && t.GroupId == Model.GroupId).Any())
+                    {
+                        color = "color: red";
+                    }
+
                     var thisUserGroup = @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First();
 
                     <tr>
@@ -87,14 +94,7 @@
                             @thisUserGroup.CreationDate.ToString("yyyy/MM/dd")
                         </td>
                         <td>
-                            @if (student.UserTests.Where(t => !t.IsMarked).Any())
-                            {
-                                @Html.ActionLink(student.Fullname, "StudentDetails", "Group", new { userGroupId = thisUserGroup.Id }, null)
-                            }
-                            else
-                            {
-                                @student.Fullname
-                            }
+                            @Html.ActionLink(student.Fullname, "StudentDetails", "Group", new { userGroupId = thisUserGroup.Id }, htmlAttributes: new { style = color })
                         </td>
                         <td>
                             @student.EmailAdress
