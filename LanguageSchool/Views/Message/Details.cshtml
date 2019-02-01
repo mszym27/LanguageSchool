@@ -1,4 +1,6 @@
-﻿@model LanguageSchool.Models.ViewModels.UserMessageViewModel
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.ViewModels.UserMessageViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -47,30 +49,11 @@
         {
             <div class="row col-md-12">
                 <div class="col-md-2 col-md-offset-10">
-                    <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#myModal">Usuń</button>
-                </div>
-            </div>
-        }
-
-        @using (Html.BeginForm())
-        {
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Potwierdź usunięcie</h4>
-                        </div>
-                        <div class="modal-body">
-                            Czy na pewno chcesz usunąć tę wiadomość?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                            <input type="submit" value="Usuń" class="btn btn-danger" />
-                        </div>
-                    </div>
+                    <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>
                 </div>
             </div>
         }
     </div>
 </div>
+
+@Html.Partial("_DeleteDialog", new DeleteDialogViewModel(Model.Id, "Czy jesteś pewien że chcesz usunąć ten komunikat?", "Message"))

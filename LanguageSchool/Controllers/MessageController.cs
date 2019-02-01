@@ -48,7 +48,7 @@ namespace LanguageSchool.Controllers
             return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
-        [HttpGet]
+        [Authorize]
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
         {
@@ -70,19 +70,6 @@ namespace LanguageSchool.Controllers
             var userMessageViewModel = new UserMessageViewModel(userMessage);
 
             return View(userMessageViewModel);
-        }
-
-        [HttpPost]
-        [Route("Message/{userMessageId}")]
-        public ActionResult Details(int userMessageId)
-        {
-            var userMessage = UnitOfWork.UserMessageRepository.GetById(userMessageId);
-
-            userMessage.IsDeleted = true;
-            UnitOfWork.UserMessageRepository.Update(userMessage);
-            UnitOfWork.Save();
-
-            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Secretary, Teacher")]
@@ -272,6 +259,21 @@ namespace LanguageSchool.Controllers
             }
 
             return userMessages;
+        }
+
+        [Authorize]
+        [Route("Message/Delete/{Id}")]
+        public ActionResult Delete(int Id)
+        {
+            var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
+
+            userMessage.IsDeleted = true;
+
+            UnitOfWork.UserMessageRepository.Update(userMessage);
+
+            UnitOfWork.Save();
+
+            return RedirectToAction("Index");
         }
 
         //// GET: Message
