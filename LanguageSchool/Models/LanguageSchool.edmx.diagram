@@ -79,7 +79,7 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_TestClosedQuestions" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_Tests" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_Users" />
-        <AssociationConnector Association="LanguageSchoolModel.FK_GroupTimes_Groups1" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Groups" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserOpenAnswers_UsersTests" />
       </Diagram>
     </edmx:Diagrams>

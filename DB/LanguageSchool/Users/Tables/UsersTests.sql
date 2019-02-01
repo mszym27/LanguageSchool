@@ -10,7 +10,7 @@
     [MarkId]       INT      NOT NULL,
     [GroupId]      INT      NOT NULL,
     CONSTRAINT [PK_UsersTests] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_GroupTimes_Groups] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id]),
+    CONSTRAINT [FK_UsersTests_Groups] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id]),
     CONSTRAINT [FK_UsersTests_Marks] FOREIGN KEY ([MarkId]) REFERENCES [Administration].[Marks] ([Id]),
     CONSTRAINT [FK_UsersTests_Tests] FOREIGN KEY ([TestId]) REFERENCES [Tests].[Tests] ([Id]),
     CONSTRAINT [FK_UsersTests_Users] FOREIGN KEY ([UserId]) REFERENCES [Users].[Users] ([Id])

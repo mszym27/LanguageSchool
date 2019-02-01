@@ -11,7 +11,7 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int TestId { get; set; }
+        public int UserTestId { get; set; }
         public int QuestionId { get; set; }
         public int Points { get; set; }
         public int PointsAwarded { get; set; }
@@ -31,7 +31,7 @@ namespace LanguageSchool.Models.ViewModels
         {
             Id = answer.Id;
             UserId = answer.UserId;
-            TestId = answer.TestId;
+            UserTestId = answer.UserTestId;
             QuestionId = answer.OpenQuestionId;
             PointsAwarded = answer.Points;
             Points = answer.OpenQuestion.Points;

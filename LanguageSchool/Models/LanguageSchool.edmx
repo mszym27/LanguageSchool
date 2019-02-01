@@ -485,18 +485,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GroupTimes_Groups1">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
-          <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Groups">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsersTests">
-              <PropertyRef Name="GroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LessonSubjects_Groups">
           <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
           <End Role="LessonSubjects" Type="Self.LessonSubjects" Multiplicity="*" />
@@ -869,6 +857,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsersTests_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersTests">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersTests_Marks">
           <End Role="Marks" Type="Self.Marks" Multiplicity="1" />
           <End Role="UsersTests" Type="Self.UsersTests" Multiplicity="*" />
@@ -995,10 +995,6 @@
             <End Role="Groups" EntitySet="Groups" />
             <End Role="GroupTimes" EntitySet="GroupTimes" />
           </AssociationSet>
-          <AssociationSet Name="FK_GroupTimes_Groups1" Association="Self.FK_GroupTimes_Groups1">
-            <End Role="Groups" EntitySet="Groups" />
-            <End Role="UsersTests" EntitySet="UsersTests" />
-          </AssociationSet>
           <AssociationSet Name="FK_LessonSubjects_Groups" Association="Self.FK_LessonSubjects_Groups">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="LessonSubjects" EntitySet="LessonSubjects" />
@@ -1122,6 +1118,10 @@
           <AssociationSet Name="FK_UsersOpenAnswers_Users" Association="Self.FK_UsersOpenAnswers_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserOpenAnswers" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersTests_Groups" Association="Self.FK_UsersTests_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UsersTests" EntitySet="UsersTests" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersTests_Marks" Association="Self.FK_UsersTests_Marks">
             <End Role="Marks" EntitySet="Marks" />
@@ -1400,7 +1400,7 @@
           <Property Name="MarkId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Mark" Relationship="LanguageSchoolModel.FK_UsersTests_Marks" FromRole="UsersTests" ToRole="Mark" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups1" FromRole="UserTest" ToRole="Group" />
+          <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_UsersTests_Groups" FromRole="UserTest" ToRole="Group" />
           <NavigationProperty Name="UserOpenAnswers" Relationship="LanguageSchoolModel.FK_UserOpenAnswers_UsersTests" FromRole="UserTest" ToRole="UserOpenAnswer" />
         </EntityType>
         <Association Name="FK_ContactRequests_Courses">
@@ -1829,7 +1829,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserClosedAnswer" EntitySet="UserClosedAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK_GroupTimes_Groups1" Association="LanguageSchoolModel.FK_GroupTimes_Groups1">
+          <AssociationSet Name="FK_GroupTimes_Groups1" Association="LanguageSchoolModel.FK_UsersTests_Groups">
             <End Role="Group" EntitySet="Groups" />
             <End Role="UserTest" EntitySet="UserTests" />
           </AssociationSet>
@@ -1963,7 +1963,7 @@
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="LessonSubjects" Relationship="LanguageSchoolModel.FK_LessonSubjects_Groups" FromRole="Group" ToRole="LessonSubject" />
           <NavigationProperty Name="Tests" Relationship="LanguageSchoolModel.FK_Tests_GroupId" FromRole="Group" ToRole="Test" />
-          <NavigationProperty Name="UsersTests" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups1" FromRole="Group" ToRole="UserTest" />
+          <NavigationProperty Name="UsersTests" Relationship="LanguageSchoolModel.FK_UsersTests_Groups" FromRole="Group" ToRole="UserTest" />
         </EntityType>
         <EntityType Name="GroupTime">
           <Key>
@@ -2349,7 +2349,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GroupTimes_Groups1">
+        <Association Name="FK_UsersTests_Groups">
           <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
           <End Type="LanguageSchoolModel.UserTest" Role="UserTest" Multiplicity="*" />
           <ReferentialConstraint>

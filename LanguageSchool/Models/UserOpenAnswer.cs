@@ -18,7 +18,6 @@ namespace LanguageSchool.Models
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int UserId { get; set; }
-        public int TestId { get; set; }
         public int OpenQuestionId { get; set; }
         public string Content { get; set; }
         public int Points { get; set; }

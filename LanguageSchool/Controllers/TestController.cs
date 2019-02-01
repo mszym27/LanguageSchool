@@ -194,6 +194,7 @@ namespace LanguageSchool.Controllers
 
                 userTest.CreationDate = now;
                 userTest.TestId = testViewModel.Id;
+                userTest.GroupId = testViewModel.GroupId;
                 userTest.UserId = student.Id;
                 userTest.Points = 0;
 
@@ -263,6 +264,8 @@ namespace LanguageSchool.Controllers
 
                 string userAlertType = Consts.Info;
 
+                userTest.UserOpenAnswers = new List<UserOpenAnswer>();
+
                 if (testViewModel.OpenQuestions != null
                     && testViewModel.OpenQuestions.Where(q => q.Answer != null).Any())
                 {
@@ -271,11 +274,11 @@ namespace LanguageSchool.Controllers
                         var answer = new UserOpenAnswer();
 
                         answer.CreationDate = now;
-                        answer.TestId = testViewModel.Id;
                         answer.OpenQuestionId = question.Id;
+                        answer.UserId = student.Id;
                         answer.Content = question.Answer;
 
-                        student.UserOpenAnswers.Add(answer);
+                        userTest.UserOpenAnswers.Add(answer);
                     }
 
                     userAlertContents += "Czekaj aż prowadzący sprawdzi część otwartą testu - ocena może wtedy ulec zmianie.";

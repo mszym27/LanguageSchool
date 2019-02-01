@@ -58,7 +58,7 @@ namespace LanguageSchool.Controllers
                 userAnswer.Comment = answerVM.Comment;
                 userAnswer.IsMarked = true;
 
-                var userTest = user.UsersTests.Where(t => t.TestId == answerVM.TestId).First();
+                var userTest = user.UsersTests.Where(t => t.Id == answerVM.UserTestId).First();
 
                 userTest.Points += answerVM.PointsAwarded;
 
@@ -68,14 +68,14 @@ namespace LanguageSchool.Controllers
 
                 userTest.Mark = mark;
 
-                if (!user.UserOpenAnswers.Where(a => a.TestId == userTest.Id && !a.IsMarked).Any())
+                if (!user.UserOpenAnswers.Where(a => a.UserTestId == userTest.Id && !a.IsMarked).Any())
                 {
                     userTest.IsMarked = true;
                 }
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Taken", "Test", new { id = answerVM.TestId });
+                return RedirectToAction("Taken", "Test", new { id = answerVM.UserTestId });
             }
             catch (Exception ex)
             {
