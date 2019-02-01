@@ -212,6 +212,45 @@ namespace LanguageSchool.Controllers
             }
         }
 
+        [Route("LessonSubject/Delete/{id}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
+
+                lessonSubject.IsDeleted = true;
+
+                foreach (var material in lessonSubject.Materials)
+                {
+                    material.IsDeleted = true;
+                }
+
+                foreach (var question in lessonSubject.ClosedQuestions)
+                {
+                    question.IsDeleted = true;
+                }
+
+                foreach (var question in lessonSubject.OpenQuestions)
+                {
+                    question.IsDeleted = true;
+                }
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         //// GET: LessonSubject/Edit/5
         //public ActionResult Edit(int? id)
         //{

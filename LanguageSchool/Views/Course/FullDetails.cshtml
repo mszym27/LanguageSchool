@@ -142,4 +142,10 @@
     }
 </div>
 
-@Html.Partial("_DeleteDialog", new DeleteDialogViewModel(Model.Id, "Czy jesteś pewien że chcesz usunąć ten kurs? Jego uczestnicy utracą do niego dostęp.", "Course"))
+@Html.Partial("_DeleteDialog",
+    new DeleteDialogViewModel (
+        Model.Id,
+        "Course",
+        "Czy na pewno chcesz usunąć ten kurs? Spowoduje to usunięcie wszystkich jego grup oraz przypisanych do nich treści. Jego uczestnicy utracą do niego dostęp."
+    )
+)

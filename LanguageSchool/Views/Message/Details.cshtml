@@ -56,4 +56,10 @@
     </div>
 </div>
 
-@Html.Partial("_DeleteDialog", new DeleteDialogViewModel(Model.Id, "Czy jesteś pewien że chcesz usunąć ten komunikat?", "Message"))
+@Html.Partial("_DeleteDialog",
+    new DeleteDialogViewModel(
+        Model.Id,
+        "Message",
+        "Czy jesteś pewien że chcesz usunąć ten komunikat?"
+    )
+)

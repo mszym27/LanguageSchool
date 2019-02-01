@@ -267,9 +267,39 @@ namespace LanguageSchool.Controllers
 
                 course.IsDeleted = true;
 
+                foreach(var group in course.Groups)
+                {
+                    group.IsDeleted = true;
+
+                    foreach (var student in group.UsersGroups)
+                    {
+                        student.IsDeleted = true;
+                    }
+
+                    foreach (var subject in group.LessonSubjects)
+                    {
+                        subject.IsDeleted = true;
+
+                        foreach (var material in subject.Materials)
+                        {
+                            material.IsDeleted = true;
+                        }
+
+                        foreach (var question in subject.ClosedQuestions)
+                        {
+                            question.IsDeleted = true;
+                        }
+
+                        foreach (var question in subject.OpenQuestions)
+                        {
+                            question.IsDeleted = true;
+                        }
+                    }
+                }
+
                 UnitOfWork.Save();
 
-                return RedirectToAction("List");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
@@ -277,7 +307,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return RedirectToAction("List");
+                return RedirectToAction("Index", "Home");
             }
         }
 

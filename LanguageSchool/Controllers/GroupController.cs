@@ -263,6 +263,60 @@ namespace LanguageSchool.Controllers
             return View(groupViewModel);
         }
 
+        [Route("Group/Delete/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var group = UnitOfWork.GroupRepository.GetById(id);
+
+                if (group == null)
+                {
+                    return HttpNotFound();
+                }
+
+                group.IsDeleted = true;
+
+                foreach (var student in group.UsersGroups)
+                {
+                    student.IsDeleted = true;
+                }
+
+                foreach (var subject in group.LessonSubjects)
+                {
+                    subject.IsDeleted = true;
+
+                    foreach (var material in subject.Materials)
+                    {
+                        material.IsDeleted = true;
+                    }
+
+                    foreach (var question in subject.ClosedQuestions)
+                    {
+                        question.IsDeleted = true;
+                    }
+
+                    foreach (var question in subject.OpenQuestions)
+                    {
+                        question.IsDeleted = true;
+                    }
+                }
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         //// POST: Group/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -312,32 +366,6 @@ namespace LanguageSchool.Controllers
         //    }
         //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", group.CourseId);
         //    return View(group);
-        //}
-
-        //// GET: Group/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Group group = db.Groups.Find(id);
-        //    if (group == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(group);
-        //}
-
-        //// POST: Group/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Group group = db.Groups.Find(id);
-        //    db.Groups.Remove(group);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
         //}
     }
 }

@@ -12,7 +12,7 @@ namespace LanguageSchool.Models.ViewModels
         public string Dialog { get; set; }
         public string ControllerName { get; set; }
 
-        public DeleteDialogViewModel(int Id, string Dialog, string ControllerName)
+        public DeleteDialogViewModel(int Id, string ControllerName, string Dialog)
         {
             this.Id = Id;
             this.Dialog = Dialog;

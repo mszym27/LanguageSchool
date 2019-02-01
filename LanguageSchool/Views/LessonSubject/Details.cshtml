@@ -1,4 +1,6 @@
-﻿@model LanguageSchool.Models.LessonSubject
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.LessonSubject
 
 @{
     ViewBag.Title = "Details";
@@ -59,7 +61,7 @@
                 <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "LessonSubject")'">Edytuj</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "LessonSubject")'">Usuń</button>
+                <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>
             </div>
             <div class="col-md-4">
                 <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Upload", "Material", new { lessonSubjectId = Model.Id })'">Udostępnij materiały</button>
@@ -110,3 +112,11 @@
         </div>
     }
 </div>
+
+@Html.Partial("_DeleteDialog",
+    new DeleteDialogViewModel(
+        Model.Id,
+        "LessonSubject",
+        "Czy na pewno chcesz usunąć ten temat? Pozostali prowadzący przypisani do kursu utracą przez to możliwość korzystania z przypisanych do niego materiałów i pytań."
+    )
+)

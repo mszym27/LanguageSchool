@@ -1,4 +1,6 @@
-﻿@model LanguageSchool.Models.UserData
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.UserData
 
 @{
     ViewBag.Title = "Details";
@@ -141,7 +143,7 @@
                     <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
+                    <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
@@ -156,7 +158,7 @@
                     <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-block btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "User", new { id = @Model.Id })'">Usuń</button>
+                    <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
@@ -180,3 +182,11 @@
         }
     }
 </script>
+
+@Html.Partial("_DeleteDialog",
+    new DeleteDialogViewModel(
+        Model.Id,
+        "User",
+        "Czy na pewno chcesz usunąć tego użytkownika? Utraci on przez to dostęp do systemu."
+    )
+)
