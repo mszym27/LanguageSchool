@@ -90,22 +90,32 @@
                     </tr>
                     @foreach (var item in Model.Materials)
                     {
+                        var modalId = "deleteMaterialDialog";
+
                         <tr>
                             <td>
                                 @item.CreationDate.ToString("yyy/MM/dd")
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Name)
+                                <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </a>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Comment)
                             </td>
-                            <td>
-                                <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
-                                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                </a>
+                            <td style="width:30px">
+                                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#@modalId">Usuń</button>
                             </td>
                         </tr>
+                        @Html.Partial("_DeleteDialog",
+                            new DeleteDialogViewModel(
+                                item.Id,
+                                "Material",
+                                "Czy na pewno chcesz usunąć udostępnione materiały? Pamiętaj że po miesiącu od daty usunięcia staną się one niemożliwe do przywrócenia.",
+                                modalId
+                            )
+                        )
                     }
                 </table>
             </div>
