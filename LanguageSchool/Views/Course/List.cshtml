@@ -12,13 +12,13 @@
             <div class="col-xs-3">
                 @Html.Label("Kursy:")
                 <font color="gray">
-                    aktywne @Html.CheckBox("showActivated", (bool)ViewBag.showActivated)
-                    nieaktywne @Html.CheckBox("showDeactivated", (bool)ViewBag.showDeactivated)
+                    aktywne @Html.CheckBox("showActivated", (bool)ViewBag.showActivated, new { @id = "showActivated" })
+                    nieaktywne @Html.CheckBox("showDeactivated", (bool)ViewBag.showDeactivated, new { @id = "showDeactivated" })
                 </font>
             </div>
             <div class="col-xs-9">
                 @Html.Label("Szukana w tabeli fraza:")
-                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @class = "widetextarea", @style = "width:620px",
+                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @id = "searchString", @class = "widetextarea", @style = "width:620px",
                     placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"})
             </div>
         </div>
@@ -40,7 +40,7 @@
             ))
             </div>
             <div class="col-xs-1">
-                <button class="btn btn-default" type="reset">Przywróć</button>
+                <button class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
             </div>
             <div class="col-xs-1" style="float:right">
                 <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
@@ -167,3 +167,15 @@
         </table>
     </div>
 </div>
+
+<script>
+    function ResetForms() {
+        var search = document.getElementById("searchString");
+        var showActivated = document.getElementById("showActivated");
+        var showDeactivated = document.getElementById("showDeactivated");
+
+        search.value = "";
+        showActivated.value = true;
+        showDeactivated.value = false;
+    }
+</script>
