@@ -7,7 +7,7 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; set; }
         public string CreationDate { get; set; }
-        public List<UsersGroup> UserGroups { get; set; }
+        public List<UserGroup> UserGroups { get; set; }
         public string Fullname { get; set; }
         public string EmailAdress { get; set; }
         public string PublicPhoneNumber { get; set; }

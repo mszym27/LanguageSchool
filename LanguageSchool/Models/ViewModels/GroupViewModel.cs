@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 
+using LanguageSchool.Models.ViewModels.GroupDetailsViewModels;
+
 namespace LanguageSchool.Models.ViewModels
 {
     public class GroupViewModel
@@ -31,7 +33,7 @@ namespace LanguageSchool.Models.ViewModels
         public List<List<bool?>> TeacherTimetable { get; set; }
         public List<List<GroupTimeViewModel>> TeacherExistingTimetable { get; set; }
 
-        public List<UserViewModel> Students { get; set; }
+        public List<StudentVM> Students { get; set; }
         public List<LessonSubject> LessonSubjects { get; set; }
         public List<GroupTime> Hours { get; set; }
 
@@ -54,10 +56,10 @@ namespace LanguageSchool.Models.ViewModels
 
             Teacher = new UserViewModel(assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User);
 
-            Students = new List<UserViewModel>();
+            Students = new List<StudentVM>();
 
             foreach (var userGroup in assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Student))
-                Students.Add(new UserViewModel(userGroup.User));
+                Students.Add(new StudentVM(userGroup));
 
             Hours = new List<GroupTime>();
 

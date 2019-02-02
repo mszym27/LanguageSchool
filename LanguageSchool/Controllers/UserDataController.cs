@@ -200,7 +200,8 @@ namespace LanguageSchool.Controllers
         {
             var student = UnitOfWork.UserRepository.Get(u => u.UserData.Where(ud => ud.Id == id).Any()).FirstOrDefault();
 
-            student.UsersGroups.Add(new UsersGroup {
+            student.UsersGroups.Add(new UserGroup
+            {
                 CreationDate = DateTime.Now,
                 GroupId = Int32.Parse(submit)
             });

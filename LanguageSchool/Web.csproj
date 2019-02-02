@@ -324,18 +324,19 @@
     <Compile Include="Models\UserData.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserGroup.cs">
+      <DependentUpon>LanguageSchool.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserMessage.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserOpenAnswer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UsersGroup.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\GroupDetailsViewModels\StudentVM.cs" />
     <Compile Include="Models\ViewModels\SendMessageViewModels\SendToUserVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentAwaitingTestVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentGroupVM.cs" />

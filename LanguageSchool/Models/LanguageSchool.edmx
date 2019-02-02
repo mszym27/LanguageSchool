@@ -1708,7 +1708,7 @@
           <EntitySet Name="MessageTypes" EntityType="LanguageSchoolModel.MessageType" />
           <EntitySet Name="Groups" EntityType="LanguageSchoolModel.Group" />
           <EntitySet Name="GroupTimes" EntityType="LanguageSchoolModel.GroupTime" />
-          <EntitySet Name="UsersGroups" EntityType="LanguageSchoolModel.UsersGroup" />
+          <EntitySet Name="UserGroups" EntityType="LanguageSchoolModel.UserGroup" />
           <AssociationSet Name="FK_GroupTimes_DaysOfWeek" Association="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek">
             <End Role="DaysOfWeek" EntitySet="DayOfWeeks" />
             <End Role="GroupTime" EntitySet="GroupTimes" />
@@ -1731,11 +1731,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_UsersGroups_Groups" Association="LanguageSchoolModel.FK_UsersGroups_Groups">
             <End Role="Group" EntitySet="Groups" />
-            <End Role="UsersGroup" EntitySet="UsersGroups" />
+            <End Role="UsersGroup" EntitySet="UserGroups" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersGroups_Users" Association="LanguageSchoolModel.FK_UsersGroups_Users">
             <End Role="User" EntitySet="Users" />
-            <End Role="UsersGroup" EntitySet="UsersGroups" />
+            <End Role="UsersGroup" EntitySet="UserGroups" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_Courses" Association="LanguageSchoolModel.FK_Messages_Courses">
             <End Role="Course" EntitySet="Courses" />
@@ -1981,7 +1981,7 @@
           <NavigationProperty Name="DayOfWeek" Relationship="LanguageSchoolModel.FK_GroupTimes_DaysOfWeek" FromRole="GroupTime" ToRole="DaysOfWeek" />
           <NavigationProperty Name="Group" Relationship="LanguageSchoolModel.FK_GroupTimes_Groups" FromRole="GroupTime" ToRole="Group" />
         </EntityType>
-        <EntityType Name="UsersGroup">
+        <EntityType Name="UserGroup">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -2056,7 +2056,7 @@
         </Association>
         <Association Name="FK_UsersGroups_Groups">
           <End Type="LanguageSchoolModel.Group" Role="Group" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersGroup" Role="UsersGroup" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserGroup" Role="UsersGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
               <PropertyRef Name="Id" />
@@ -2068,7 +2068,7 @@
         </Association>
         <Association Name="FK_UsersGroups_Users">
           <End Type="LanguageSchoolModel.User" Role="User" Multiplicity="1" />
-          <End Type="LanguageSchoolModel.UsersGroup" Role="UsersGroup" Multiplicity="*" />
+          <End Type="LanguageSchoolModel.UserGroup" Role="UsersGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -2710,8 +2710,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsersGroups">
-            <EntityTypeMapping TypeName="LanguageSchoolModel.UsersGroup">
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="LanguageSchoolModel.UserGroup">
               <MappingFragment StoreEntitySet="UsersGroups">
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

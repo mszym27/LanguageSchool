@@ -17,7 +17,7 @@ namespace LanguageSchool.Models.ViewModels.StudentGroupViewModels
         public List<UserTestViewModel> TakenTests { get; }
         public List<StudentAwaitingTestVM> AwaitingMark { get; }
 
-        public StudentGroupVM(UsersGroup userGroup)
+        public StudentGroupVM(UserGroup userGroup)
         {
             var group = userGroup.Group;
             var student = userGroup.User;

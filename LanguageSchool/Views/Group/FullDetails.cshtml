@@ -102,16 +102,41 @@
                         <th>
                             Student
                         </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Numer telefonu
+                        </th>
                     </tr>
                     @foreach (var student in Model.Students)
                     {
-                        <tr>
-                            <td>
-                                @student.CreationDate
+                        var modalId = "deleteStudentDialog";
+
+                        <tr style="height:15px">
+                            <td style="vertical-align:middle">
+                                @student.EnrollmentDate
                             </td>
-                            <td>
-                                @student.Fullname
+                            <td style="vertical-align:middle">
+                                @Html.ActionLink(student.Fullname, "Details", "UserData", new { id = student.UserId }, null)
                             </td>
+                            <td style="vertical-align:middle">
+                                @student.EmailAdress
+                            </td>
+                            <td style="vertical-align:middle">
+                                @student.PublicPhoneNumber
+                            </td>
+                            <td style="width:30px">
+                                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#@modalId">Usuń</button>
+                            </td>
+                            @Html.Partial("_DeleteDialog",
+                                new DeleteDialogViewModel(
+                                        student.UserGroupId,
+                                        "Material",
+                                        "Czy na pewno chcesz usunąć tego uczestnika z grupy?",
+                                        modalId
+                                    )
+                                )
                         </tr>
                     }
                 </table>

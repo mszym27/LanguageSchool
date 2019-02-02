@@ -12,7 +12,7 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersGroup
+    public partial class UserGroup
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }

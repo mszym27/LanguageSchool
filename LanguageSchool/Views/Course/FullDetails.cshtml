@@ -122,8 +122,8 @@
                         </th>
                     </tr>
                     @foreach (var group in Model.Groups)
-                {
-                    var teacher = group.UsersGroups.Where(ug => !ug.IsDeleted && ug.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User;
+                    {
+                        var teacher = group.UsersGroups.Where(ug => !ug.IsDeleted && ug.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User;
                         <tr>
                             <td>
                                 @group.CreationDate.ToString("yyyy/MM/dd")

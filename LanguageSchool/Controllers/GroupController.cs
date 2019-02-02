@@ -121,7 +121,7 @@ namespace LanguageSchool.Controllers
                 {
                     var user = UnitOfWork.UserRepository.GetById(userViewModel.Id);
 
-                    group.UsersGroups.Add(new UsersGroup()
+                    group.UsersGroups.Add(new UserGroup()
                     {
                         CreationDate = DateTime.Now,
                         User = user
@@ -178,7 +178,7 @@ namespace LanguageSchool.Controllers
                     IsActive = true
                 };
 
-                group.UsersGroups.Add(new UsersGroup
+                group.UsersGroups.Add(new UserGroup
                 {
                     CreationDate = now,
                     UserId = groupViewModel.Teacher.Id
@@ -302,6 +302,35 @@ namespace LanguageSchool.Controllers
                         question.IsDeleted = true;
                     }
                 }
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [Route("Group/DeleteStudent/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult DeleteStudent(int id)
+        {
+            try
+            {
+                var userGroup = UnitOfWork.UserGroupRepository.GetById(id);
+
+                if (userGroup == null)
+                {
+                    return HttpNotFound();
+                }
+
+                userGroup.IsDeleted = true;
 
                 UnitOfWork.Save();
 

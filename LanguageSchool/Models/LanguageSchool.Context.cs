@@ -51,7 +51,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<MessageType> MessageTypes { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupTime> GroupTimes { get; set; }
-        public virtual DbSet<UsersGroup> UsersGroups { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<TestClosedQuestion> TestClosedQuestions { get; set; }
         public virtual DbSet<TestOpenQuestion> TestOpenQuestions { get; set; }
         public virtual DbSet<TestAnswer> TestAnswers { get; set; }

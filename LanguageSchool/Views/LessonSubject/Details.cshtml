@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    @if (Model.Materials.Any())
+    @if (Model.Materials.Where(m => !m.IsDeleted).Any())
     {
         Html.RenderPartial("_PartHeader", "Materiały udostępnione dla tematu");
         <div class="row">
@@ -88,7 +88,7 @@
                             Komentarz
                         </th>
                     </tr>
-                    @foreach (var item in Model.Materials)
+                    @foreach (var item in Model.Materials.Where(m => !m.IsDeleted))
                     {
                         var modalId = "deleteMaterialDialog";
 
