@@ -1,4 +1,6 @@
-﻿@model LanguageSchool.Models.ViewModels.SubjectsQuestionsViewModel
+﻿@using LanguageSchool.Models.ViewModels
+
+@model LanguageSchool.Models.ViewModels.SubjectsQuestionsViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -24,16 +26,30 @@
 
                 @foreach (var openQuestion in Model.OpenQuestions)
                 {
+                    var modalId = "deleteOpenQuestion";
+
                     <tr>
-                        <td>
+                        <td style="vertical-align: middle">
                             @openQuestion.CreationDate.ToString("yyyy/MM/dd")
                         </td>
-                        <td>
+                        <td style="vertical-align: middle">
                             @Html.DisplayFor(cq => openQuestion.Contents)
                         </td>
-                        <td>
+                        <td style="vertical-align: middle">
                             @Html.DisplayFor(cq => openQuestion.Points)
                         </td>
+                        <td style="width:30px">
+                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#@modalId">Usuń</button>
+                        </td>
+                        @Html.Partial("_DeleteDialog",
+                            new DeleteDialogViewModel(
+                                openQuestion.Id,
+                                "Question",
+                                "DeleteOpen",
+                                "Czy na pewno chcesz usunąć to pytanie? Zostanie ono usunięte ze wszystkich testów do których zostało przypisane, co może spowodować zmiany w ocenach. Może to również poskutkować usunięciem testów.",
+                                modalId
+                            )
+                        )
                     </tr>
                 }
             </table>
@@ -69,6 +85,8 @@
                 @foreach (var closedQuestion in Model.ClosedQuestions)
                 {
                     var questionAnswers = closedQuestion.Answers.Where(a => !a.IsDeleted).ToList();
+
+                    var modalId = "deleteClosedQuestion";
 
                     var multichoice = "nie";
 
@@ -109,6 +127,18 @@
                                 }
                             </ul>
                         </td>
+                        <td style="width:30px">
+                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#@modalId">Usuń</button>
+                        </td>
+                        @Html.Partial("_DeleteDialog",
+                            new DeleteDialogViewModel(
+                                closedQuestion.Id,
+                                "Question",
+                                "DeleteClosed",
+                                "Czy na pewno chcesz usunąć to pytanie? Zostanie ono usunięte ze wszystkich testów do których zostało przypisane, co może spowodować zmiany w ocenach. Może to również poskutkować usunięciem testów.",
+                                modalId
+                            )
+                        )
                     </tr>
                 }
             </table>

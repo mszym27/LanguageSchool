@@ -218,6 +218,11 @@ namespace LanguageSchool.Controllers
                                 .OrderBy(a => a.AnswerId)
                                 .Select(a => a.AnswerId);
 
+                            if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
+                            { 
+                                userTest.Points += question.Points;
+                            }
+
                             foreach(var id in chosenAnswerIds)
                             {
                                 student.UserClosedAnswers.Add(
@@ -225,31 +230,26 @@ namespace LanguageSchool.Controllers
                                     {
                                         TestId = testViewModel.Id,
                                         TestClosedQuestionId = testQuestion.Id,
-                                        AnswerId = id
+                                        AnswerId = id,
                                     }
                                 );
-                            }
-
-                            if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
-                            { 
-                                userTest.Points += question.Points;
                             }
                         }
                         else
                         {
+                            if (correctAnswerIds.Contains((int)question.ChosenAnswerId))
+                            {
+                                userTest.Points += question.Points;
+                            }
+
                             student.UserClosedAnswers.Add(
                                 new UserClosedAnswer()
                                 {
                                     TestId = testViewModel.Id,
                                     TestClosedQuestionId = testQuestion.Id,
-                                    AnswerId = (int)question.ChosenAnswerId
+                                    AnswerId = (int)question.ChosenAnswerId,
                                 }
                             );
-
-                            if (correctAnswerIds.Contains((int)question.ChosenAnswerId))
-                            {
-                                userTest.Points += question.Points;
-                            }
                         }
                     }
                 }

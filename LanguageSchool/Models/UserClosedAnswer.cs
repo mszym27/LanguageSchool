@@ -19,10 +19,12 @@ namespace LanguageSchool.Models
         public int TestId { get; set; }
         public int TestClosedQuestionId { get; set; }
         public int AnswerId { get; set; }
+        public int UserTestId { get; set; }
     
         public virtual Answer Answer { get; set; }
         public virtual TestClosedQuestion TestClosedQuestion { get; set; }
         public virtual Test Test { get; set; }
         public virtual User User { get; set; }
+        public virtual UserTest UsersTest { get; set; }
     }
 }

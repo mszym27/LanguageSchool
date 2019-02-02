@@ -81,6 +81,7 @@
         <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_Users" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UsersTests_Groups" />
         <AssociationConnector Association="LanguageSchoolModel.FK_UserOpenAnswers_UsersTests" />
+        <AssociationConnector Association="LanguageSchoolModel.FK_UserClosedAnswers_UsersTests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

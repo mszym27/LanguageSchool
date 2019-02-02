@@ -82,19 +82,17 @@
                 {
                     var color = "";
 
-                    if (student.UserTests.Where(t => !t.IsMarked && t.GroupId == Model.GroupId).Any())
+                    if (student.AwaitsMark)
                     {
                         color = "color: red";
                     }
 
-                    var thisUserGroup = @student.UserGroups.Where(ug => ug.GroupId == Model.GroupId).First();
-
                     <tr>
                         <td>
-                            @thisUserGroup.CreationDate.ToString("yyyy/MM/dd")
+                            @student.EnrollmentDate
                         </td>
                         <td>
-                            @Html.ActionLink(student.Fullname, "StudentDetails", "Group", new { userGroupId = thisUserGroup.Id }, htmlAttributes: new { style = color })
+                            @Html.ActionLink(student.Fullname, "StudentDetails", "Group", new { userGroupId = student.UserGroupId }, htmlAttributes: new { style = color })
                         </td>
                         <td>
                             @student.EmailAdress

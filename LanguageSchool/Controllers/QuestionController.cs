@@ -69,6 +69,177 @@ namespace LanguageSchool.Controllers
             return View(closedQuestion);
         }
 
+        [Route("Questions/DeleteClosed/{id}")]
+        public ActionResult DeleteClosed(int id)
+        {
+            try
+            {
+                var now = DateTime.Now;
+                var closedQuestion = UnitOfWork.ClosedQuestionRepository.GetById(id);
+
+                closedQuestion.IsDeleted = true;
+                closedQuestion.DeletionDate = now;
+
+                foreach(var testQuestion in closedQuestion.TestClosedQuestions)
+                {
+                    testQuestion.IsDeleted = true;
+                    testQuestion.DeletionDate = now;
+
+                    var test = testQuestion.Test;
+
+                    var questionSubject = closedQuestion.LessonSubject;
+
+                    var testSubject = test.TestsLessonSubjects.Where(ls => ls.LessonSubjectId == questionSubject.Id).First();
+
+                    if (!test.TestClosedQuestions.Where(q => !q.IsDeleted && q.ClosedQuestion.LessonSubjectId == questionSubject.Id).Any())
+                    {
+                        testSubject.IsDeleted = true;
+                        testSubject.DeletionDate = now;
+                    }
+
+                    test.Points = test.Points - closedQuestion.Points;
+
+                    var correctAnswerIds = test.TestClosedQuestions
+                        .Where(q => q.QuestionId == closedQuestion.Id)
+                        .First()
+                        .TestAnswers.Where(a => a.Answer.IsCorrect)
+                        .OrderBy(a => a.AnswerId)
+                        .Select(a => a.AnswerId);
+
+
+                    test.NumberOfClosedQuestions--;
+
+                    if (test.NumberOfClosedQuestions == 0)
+                    {
+                        test.IsDeleted = true;
+                        test.DeletionDate = now;
+
+                        foreach (var userTest in test.UsersTests)
+                        {
+                            userTest.IsDeleted = true;
+                            userTest.DeletionDate = now;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var userTest in test.UsersTests)
+                        {
+                            var userAnswers = userTest.UserClosedAnswers
+                                .Where(a => a.TestClosedQuestion.QuestionId == closedQuestion.Id)
+                                .OrderBy(a => a.AnswerId)
+                                .Select(a => a.AnswerId);
+
+                            if (correctAnswerIds.SequenceEqual(userAnswers))
+                            {
+                                userTest.Points = userTest.Points - closedQuestion.Points;
+                            }
+
+                            double percentageGoten = GradeTest((int)userTest.Points, test.Points);
+
+                            var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
+
+                            userTest.Mark = mark;
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", new { id = closedQuestion.LessonSubjectId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [Route("Questions/DeleteOpen/{id}")]
+        public ActionResult DeleteOpen(int id)
+        {
+            try
+            {
+                var now = DateTime.Now;
+                var openQuestion = UnitOfWork.OpenQuestionRepository.GetById(id);
+
+                openQuestion.IsDeleted = true;
+                openQuestion.DeletionDate = now;
+
+                foreach (var testQuestion in openQuestion.TestOpenQuestions)
+                {
+                    testQuestion.IsDeleted = true;
+                    testQuestion.DeletionDate = now;
+
+                    var test = testQuestion.Test;
+
+                    var questionSubject = openQuestion.LessonSubject;
+
+                    var testSubject = test.TestsLessonSubjects.Where(ls => ls.LessonSubjectId == questionSubject.Id).First();
+
+                    if (!test.TestOpenQuestions.Where(q => !q.IsDeleted && q.OpenQuestion.LessonSubjectId == questionSubject.Id).Any())
+                    {
+                        testSubject.IsDeleted = true;
+                        testSubject.DeletionDate = now;
+                    }
+
+                    test.Points = test.Points - openQuestion.Points;
+
+                    test.NumberOfClosedQuestions--;
+
+                    if (test.NumberOfClosedQuestions == 0)
+                    {
+                        test.IsDeleted = true;
+                        test.DeletionDate = now;
+
+                        foreach (var userTest in test.UsersTests)
+                        {
+                            userTest.IsDeleted = true;
+                            userTest.DeletionDate = now;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var userTest in test.UsersTests)
+                        {
+                            var userAnswer = userTest.UserOpenAnswers
+                                .Where(a => a.OpenQuestionId == openQuestion.Id)
+                                .FirstOrDefault();
+
+                            if (userAnswer != null)
+                            {
+                                if (userAnswer.IsMarked)
+                                {
+                                    userTest.Points = userTest.Points - openQuestion.Points;
+                                }
+
+                                if (!userTest.IsMarked && !userTest.UserOpenAnswers.Where(a => !a.IsMarked && a.OpenQuestionId != openQuestion.Id).Any())
+                                {
+                                    userTest.Points = userTest.Points - openQuestion.Points;
+                                }
+                            }
+
+                            double percentageGoten = GradeTest((int)userTest.Points, test.Points);
+
+                            var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
+
+                            userTest.Mark = mark;
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", new { id = openQuestion.LessonSubjectId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         [HttpGet]
         [Route("Questions/AddAnswers/{lessonSubjectId}")]
         public ActionResult AddAnswers(ClosedQuestionViewModel closedQuestion)
@@ -131,81 +302,9 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        //// POST: Question/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,LessonSubjectId,Contents,NumberOfPossibleAnswers,IsMultichoice,Points")] ClosedQuestion closedQuestion)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.ClosedQuestions.Add(closedQuestion);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.LessonSubjectId = new SelectList(db.LessonSubjects, "Id", "Name", closedQuestion.LessonSubjectId);
-        //    return View(closedQuestion);
-        //}
-
-        //// GET: Question/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ClosedQuestion closedQuestion = db.ClosedQuestions.Find(id);
-        //    if (closedQuestion == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.LessonSubjectId = new SelectList(db.LessonSubjects, "Id", "Name", closedQuestion.LessonSubjectId);
-        //    return View(closedQuestion);
-        //}
-
-        //// POST: Question/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,LessonSubjectId,Contents,NumberOfPossibleAnswers,IsMultichoice,Points")] ClosedQuestion closedQuestion)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(closedQuestion).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.LessonSubjectId = new SelectList(db.LessonSubjects, "Id", "Name", closedQuestion.LessonSubjectId);
-        //    return View(closedQuestion);
-        //}
-
-        //// GET: Question/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ClosedQuestion closedQuestion = db.ClosedQuestions.Find(id);
-        //    if (closedQuestion == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(closedQuestion);
-        //}
-
-        //// POST: Question/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    ClosedQuestion closedQuestion = db.ClosedQuestions.Find(id);
-        //    db.ClosedQuestions.Remove(closedQuestion);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        private double GradeTest(int obtainedPoints, int maxPoints)
+        {
+            return 100 * ((double)obtainedPoints / maxPoints);
+        }
     }
 }

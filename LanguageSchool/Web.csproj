@@ -496,7 +496,6 @@
     <Content Include="Views\LessonSubject\LessonSubjects.cshtml" />
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Question\CreateOpen.cshtml" />
-    <Content Include="Views\Question\Delete.cshtml" />
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
