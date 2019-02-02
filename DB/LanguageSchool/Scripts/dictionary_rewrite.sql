@@ -1,4 +1,8 @@
-﻿ALTER TABLE Administration.[Messages] DROP CONSTRAINT FK_Messages_Roles ;
+﻿DROP TABLE [Administration].[Holidays]
+DROP TABLE [Users].[WorkTimes]
+GO
+
+ALTER TABLE Administration.[Messages] DROP CONSTRAINT FK_Messages_Roles ;
 ALTER TABLE Administration.[Messages] DROP CONSTRAINT FK_Messages_MessageTypes ;
 ALTER TABLE Users.Users DROP CONSTRAINT FK_Users_Roles ;
 ALTER TABLE Courses.Courses DROP CONSTRAINT FK_Courses_LanguageProficencies ;
