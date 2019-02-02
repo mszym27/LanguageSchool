@@ -124,5 +124,7 @@
     <None Include="Scripts\TestData.sql" />
     <None Include="Scripts\courses_add.sql" />
     <None Include="Scripts\clear_groups.sql" />
+    <None Include="Scripts\dictionary_rewrite.sql" />
+    <None Include="Scripts\adddefaults.sql" />
   </ItemGroup>
 </Project>
