@@ -131,12 +131,13 @@
                             </td>
                             @Html.Partial("_DeleteDialog",
                                 new DeleteDialogViewModel(
-                                        student.UserGroupId,
-                                        "Material",
-                                        "Czy na pewno chcesz usunąć tego uczestnika z grupy?",
-                                        modalId
-                                    )
+                                    student.UserGroupId,
+                                    "Group",
+                                    "DeleteStudent",
+                                    "Czy na pewno chcesz usunąć tego uczestnika z grupy?",
+                                    modalId
                                 )
+                            )
                         </tr>
                     }
                 </table>

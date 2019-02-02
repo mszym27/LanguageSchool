@@ -269,6 +269,8 @@ namespace LanguageSchool.Controllers
         {
             try
             {
+                var now = DateTime.Now;
+
                 var group = UnitOfWork.GroupRepository.GetById(id);
 
                 if (group == null)
@@ -277,35 +279,41 @@ namespace LanguageSchool.Controllers
                 }
 
                 group.IsDeleted = true;
+                group.DeletionDate = now;
 
                 foreach (var student in group.UsersGroups)
                 {
                     student.IsDeleted = true;
+                    student.DeletionDate = now;
                 }
 
                 foreach (var subject in group.LessonSubjects)
                 {
                     subject.IsDeleted = true;
+                    subject.DeletionDate = now;
 
                     foreach (var material in subject.Materials)
                     {
                         material.IsDeleted = true;
+                        material.DeletionDate = now;
                     }
 
                     foreach (var question in subject.ClosedQuestions)
                     {
                         question.IsDeleted = true;
+                        question.DeletionDate = now;
                     }
 
                     foreach (var question in subject.OpenQuestions)
                     {
                         question.IsDeleted = true;
+                        question.DeletionDate = now;
                     }
                 }
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("FullDetails", "Course", new { id = group.CourseId });
             }
             catch (Exception ex)
             {
@@ -323,6 +331,8 @@ namespace LanguageSchool.Controllers
         {
             try
             {
+                var now = DateTime.Now;
+
                 var userGroup = UnitOfWork.UserGroupRepository.GetById(id);
 
                 if (userGroup == null)
@@ -331,10 +341,11 @@ namespace LanguageSchool.Controllers
                 }
 
                 userGroup.IsDeleted = true;
+                userGroup.DeletionDate = now;
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("FullDetails", new { id = userGroup.GroupId });
             }
             catch (Exception ex)
             {

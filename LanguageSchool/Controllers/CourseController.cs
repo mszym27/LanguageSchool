@@ -258,6 +258,8 @@ namespace LanguageSchool.Controllers
         {
             try
             {
+                var now = DateTime.Now;
+
                 var course = UnitOfWork.CourseRepository.GetById(id);
 
                 if (course == null)
@@ -270,29 +272,35 @@ namespace LanguageSchool.Controllers
                 foreach(var group in course.Groups)
                 {
                     group.IsDeleted = true;
+                    group.DeletionDate = now;
 
                     foreach (var student in group.UsersGroups)
                     {
                         student.IsDeleted = true;
+                        student.DeletionDate = now;
                     }
 
                     foreach (var subject in group.LessonSubjects)
                     {
                         subject.IsDeleted = true;
+                        subject.DeletionDate = now;
 
                         foreach (var material in subject.Materials)
                         {
                             material.IsDeleted = true;
+                            material.DeletionDate = now;
                         }
 
                         foreach (var question in subject.ClosedQuestions)
                         {
                             question.IsDeleted = true;
+                            question.DeletionDate = now;
                         }
 
                         foreach (var question in subject.OpenQuestions)
                         {
                             question.IsDeleted = true;
+                            question.DeletionDate = now;
                         }
                     }
                 }

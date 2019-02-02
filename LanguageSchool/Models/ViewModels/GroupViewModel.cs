@@ -59,7 +59,9 @@ namespace LanguageSchool.Models.ViewModels
             Students = new List<StudentVM>();
 
             foreach (var userGroup in assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Student))
+            {
                 Students.Add(new StudentVM(userGroup));
+            }
 
             Hours = new List<GroupTime>();
 

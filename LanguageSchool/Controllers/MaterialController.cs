@@ -73,6 +73,8 @@ namespace LanguageSchool.Controllers
         {
             try
             {
+                var now = DateTime.Now;
+
                 var material = UnitOfWork.MaterialRepository.GetById(id);
 
                 if (material == null)
@@ -81,10 +83,11 @@ namespace LanguageSchool.Controllers
                 }
 
                 material.IsDeleted = true;
+                material.DeletionDate = now;
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Group", new { id = material.LessonSubjectId });
             }
             catch (Exception ex)
             {

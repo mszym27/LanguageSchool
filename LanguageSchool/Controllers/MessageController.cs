@@ -265,15 +265,29 @@ namespace LanguageSchool.Controllers
         [Route("Message/Delete/{Id}")]
         public ActionResult Delete(int Id)
         {
-            var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
+            try
+            {
+                var now = DateTime.Now;
 
-            userMessage.IsDeleted = true;
+                var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
 
-            UnitOfWork.UserMessageRepository.Update(userMessage);
+                userMessage.IsDeleted = true;
+                userMessage.DeletionDate = now;
 
-            UnitOfWork.Save();
+                UnitOfWork.UserMessageRepository.Update(userMessage);
 
-            return RedirectToAction("Index");
+                UnitOfWork.Save();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //// GET: Message

@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                <button class="btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", Model.ControllerName, new { id = Model.Id })'">Usuń</button>
+                <button class="btn btn-danger" type="button" onclick="location.href='@Url.Action(Model.ActionName, Model.ControllerName, new { id = Model.Id })'">Usuń</button>
             </div>
         </div>
     </div>

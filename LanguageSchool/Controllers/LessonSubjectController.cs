@@ -218,28 +218,34 @@ namespace LanguageSchool.Controllers
         {
             try
             {
+                var now = DateTime.Now;
+
                 var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
 
                 lessonSubject.IsDeleted = true;
+                lessonSubject.DeletionDate = now;
 
                 foreach (var material in lessonSubject.Materials)
                 {
                     material.IsDeleted = true;
+                    material.DeletionDate = now;
                 }
 
                 foreach (var question in lessonSubject.ClosedQuestions)
                 {
                     question.IsDeleted = true;
+                    question.DeletionDate = now;
                 }
 
                 foreach (var question in lessonSubject.OpenQuestions)
                 {
                     question.IsDeleted = true;
+                    question.DeletionDate = now;
                 }
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Group", new { id = lessonSubject.GroupId } );
             }
             catch (Exception ex)
             {
