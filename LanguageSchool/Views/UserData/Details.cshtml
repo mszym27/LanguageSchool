@@ -185,8 +185,8 @@
 
 @Html.Partial("_DeleteDialog",
     new DeleteDialogViewModel(
-        Model.Id,
+        Model.UserId,
         "User",
-        "Czy na pewno chcesz usunąć tego użytkownika? Utraci on przez to dostęp do systemu."
+        "Czy na pewno chcesz usunąć tego użytkownika? Utraci on przez to dostęp do systemu. W przypadku jeśli jest prowadzącym grup konieczne może się też okazać przypisanie im nowego nauczyciela."
     )
 )

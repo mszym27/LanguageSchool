@@ -1,7 +1,4 @@
-﻿IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 1)
-	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (1,'Admin','Administrator')
-
-IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 2)
+﻿IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 2)
 	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (2,'Secretary','Sekretariat')
 
 IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 3)
@@ -431,7 +428,6 @@ IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 4)
 
 GO
 
-UPDATE [Users].[Users] SET [Password] = N'uBmnT9Q+rFZkSOwOBRNFOQ==' WHERE [Login] = N'techAdmin'
 UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
 UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
 UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'S_MS_0001'

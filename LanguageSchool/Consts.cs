@@ -59,15 +59,7 @@ namespace LanguageSchool
         public static List<MenuViewModel> menus = (
             new List<MenuViewModel>()
             {
-                // Administrator
-                new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", ActionName = "FullList", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Testy", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Materiały", ControllerName = "Test", ActionName = "FullList", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Dane kontaktowe", ControllerName = "Users", ActionName = "FullList", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Komunikaty", ControllerName = "Message", ActionName = "FullList", RoleName = "Administrator" },
-                new MenuViewModel { ShownName = "Zapisy", ControllerName = "UserData", ActionName = "FullList", RoleName = "Administrator" },
-
-                //Sekretariat
+               //Sekretariat
                 new MenuViewModel { ShownName = "Kursy", ControllerName = "Course", RoleName = "Secretary",
                     SubMenu = new List<MenuViewModel>()
                     {

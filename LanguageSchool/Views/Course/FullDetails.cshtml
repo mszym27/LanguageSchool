@@ -121,7 +121,7 @@
                             Prowadzący
                         </th>
                     </tr>
-                    @foreach (var group in Model.Groups)
+                    @foreach (var group in Model.Groups.Where(g => !g.IsDeleted))
                     {
                         var teacher = group.UsersGroups.Where(ug => !ug.IsDeleted && ug.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User;
                         <tr>
