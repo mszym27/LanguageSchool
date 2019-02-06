@@ -97,7 +97,7 @@
                                 @item.CreationDate.ToString("yyy/MM/dd")
                             </td>
                             <td>
-                                <a href="@Url.Action("Download", "Material", new { id = item.Id })" style="color:black">
+                                <a href="@Url.Action("Download", "Material", new { id = item.Id })">
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </a>
                             </td>
