@@ -65,24 +65,6 @@
                                     var style = "font-size: 10px;";
                                     var show = true;
 
-                                    int color = 0;
-
-                                    foreach (var character in current.Group.Course.Name)
-                                    {
-                                        color += (int)character;
-                                    }
-
-                                    color *= current.Group.CourseId;
-
-                                    string hexColor = color.ToString("X6"); // int.Parse(color, System.Globalization.NumberStyles.HexNumber);
-
-                                    //foreach (var character in current.Group.Name)
-                                    //{
-                                    //    color += (int)character;
-                                    //}
-
-                                    //color *= current.Group.Id;
-
                                     if ((i + 8) > current.StartTime)
                                     {
                                         style += "border-top-style: none;";
@@ -94,10 +76,90 @@
                                         style += "border-bottom-style: none;";
                                     }
 
+                                    var courseName = current.Group.Course.Name;
+                                    var groupName = current.Group.Name;
+
+                                    var color = 0;
+                                    var lightness = 0.0;
+
+                                    for(int k = 1; k <= courseName.Length; k++)
+                                    {
+                                        color += k * (int)courseName[k - 1];
+                                    }
+
+                                    for (int k = 1; k <= groupName.Length; k++)
+                                    {
+                                        lightness += k * (int)groupName[k - 1];
+                                    }
+
+                                    lightness = (30 + Math.Sqrt(lightness)) / 100;
+
+                                    string hexColor = color.ToString("X6"); // int.Parse(color, System.Globalization.NumberStyles.HexNumber);
+
+                                    double red = Convert.ToInt32(hexColor.Substring(0, 2), 16);
+                                    double green = Convert.ToInt32(hexColor.Substring(2, 2), 16);
+                                    double blue = Convert.ToInt32(hexColor.Substring(4, 2), 16);
+
+                                    var rgbColor = System.Drawing.Color.FromArgb((int)red, (int)green, (int)blue);
+
+                                    var hue = rgbColor.GetHue();
+                                    var saturation = rgbColor.GetSaturation();
+
+                                    var val = (lightness <= 0.5) ? (lightness * (1.0 + saturation)) : (lightness + saturation - lightness * saturation);
+
+                                    double part;
+                                    double sv;
+                                    int sextant;
+                                    double fract, vsf, mid1, mid2;
+
+                                    part = lightness + lightness - val;
+                                    sv = (val - part) / val;
+                                    sextant = (int)hue / 60;
+                                    fract = hue - (sextant * 60);
+                                    vsf = val * sv * fract;
+                                    mid1 = part + vsf;
+                                    mid2 = val - vsf;
+
+                                    switch (sextant)
+                                    {
+                                        case 0:
+                                            red = val;
+                                            green = mid1;
+                                            blue = part;
+                                            break;
+                                        case 1:
+                                            red = mid2;
+                                            green = val;
+                                            blue = part;
+                                            break;
+                                        case 2:
+                                            red = part;
+                                            green = val;
+                                            blue = mid1;
+                                            break;
+                                        case 3:
+                                            red = part;
+                                            green = mid2;
+                                            blue = val;
+                                            break;
+                                        case 4:
+                                            red = mid1;
+                                            green = part;
+                                            blue = val;
+                                            break;
+                                        case 5:
+                                            red = val;
+                                            green = part;
+                                            blue = mid2;
+                                            break;
+                                    }
+
+                                    hexColor = ((int)red).ToString("X") + ((int)green).ToString("X") + ((int)blue).ToString("X");
+
                                     if (Model.Times.Where(
-                                        gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
-                                        && (i + 8) == (current.StartTime + 1)
-                                    )
+                                            gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
+                                            && (i + 8) == (current.StartTime + 1)
+                                        )
                                     {
                                         show = true;
                                     }
@@ -106,16 +168,26 @@
                                         <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
                                             @if (show)
                                             {
-                                                string shown = current.Group.Course.Name;
+                                        //string shown = current.Group.Course.Name;
 
-                                                if (Model.IsTeacher)
-                                                {
-                                                    shown = current.Group.Name;
-                                                }
+                                        //if (Model.IsTeacher)
+                                        //{
+                                        //    shown = current.Group.Name;
+                                        //}
 
-                                                <p><strong>@shown</strong></p>
+                                                @*<p><strong>@shown</strong></p>
                                                 <p>@hexColor</p>
-                                                <p>@color</p>
+                                                <p>@rgbColor</p>
+                                                <p>@rgbColor.GetHue()</p>
+                                                <p>@saturation</p>
+                                                <p>@rgbColor.GetBrightness();</p>
+                                                <p>@lightness;</p>*@
+                                                <p>@courseName</p>
+                                                <p>@groupName</p>
+                                                <p>@red</p>
+                                                <p>@green</p>
+                                                <p>@blue</p>
+                                                <p>@sextant</p>
                                             }
                                         </a>
                                     </td>
