@@ -8,9 +8,11 @@
     [EndTime]      INT      NOT NULL,
     [DayOfWeekId]  INT      NOT NULL,
     CONSTRAINT [PK_GroupTimes] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_GroupTimes_DaysOfWeek] FOREIGN KEY ([DayOfWeekId]) REFERENCES [Administration].[DictionaryItems] ([Id]),
+    CONSTRAINT [FK_GroupTimes_DictionaryItems] FOREIGN KEY ([DayOfWeekId]) REFERENCES [Administration].[DictionaryItems] ([Id]),
     CONSTRAINT [FK_GroupTimes_Groups] FOREIGN KEY ([GroupId]) REFERENCES [Courses].[Groups] ([Id])
 );
+
+
 
 
 

@@ -17,20 +17,19 @@ namespace LanguageSchool
 
         public enum Roles
         {
-            Admin = 1,
-            Secretary = 2,
-            Teacher = 3,
-            Student = 4
+            Secretary = 1001,
+            Teacher = 1002,
+            Student = 1003
         }
 
         public enum MessageTypes
         {
-            ToUser = 1,
-            ToGroup = 2,
-            ToCourse = 3,
-            ToRole = 4,
-            ToAll = 5,
-            StudentWelcome = 6
+            ToUser = 2001,
+            ToGroup = 2002,
+            ToCourse = 2003,
+            ToRole = 2004,
+            ToAll = 2005,
+            StudentWelcome = 2006
         }
 
         public static Dictionary<double, int> Grades = new Dictionary<double, int>() {

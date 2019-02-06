@@ -7,8 +7,10 @@
     [Password]     NVARCHAR (100) NOT NULL,
     [RoleId]       INT            NOT NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Users_Roles] FOREIGN KEY ([RoleId]) REFERENCES [Administration].[DictionaryItems] ([Id])
+    CONSTRAINT [FK_Users_DictionaryItems] FOREIGN KEY ([RoleId]) REFERENCES [Administration].[DictionaryItems] ([Id])
 );
+
+
 
 
 
