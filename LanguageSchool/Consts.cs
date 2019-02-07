@@ -66,6 +66,17 @@ namespace LanguageSchool
             { 100, 3006 } //celujący
         };
 
+        public enum DaysOfWeek
+        {
+            Monday = 5001,
+            Tuesday = 5005,
+            Wednesday = 5003,
+            Thursday = 5004,
+            Friday = 5005,
+            Saturday = 5006,
+            Sunday = 5007
+        }
+
         public static readonly int FailingPercentage = 40;
 
         public static int GetGrade(double percentage)

@@ -15,6 +15,7 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="container">
     <div class="row">
         <div class="bordered col-md-12">
@@ -53,9 +54,9 @@
                             <td style="padding-top: 25px; padding-bottom: 25px;">
                                 @currentHour - @nextHour
                             </td>
-                            @for (int j = 0; j < 7; j++)
+                            @for (int j = (int)Consts.DaysOfWeek.Monday; j <= (int)Consts.DaysOfWeek.Sunday; j++)
                             {
-                                GroupTime current = Model.Times.Where(gt => (gt.DayOfWeekId == (j + 1)) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
+                                GroupTime current = Model.Times.Where(gt => (gt.DayOfWeekId == j) && !(gt.EndTime < i + 8) && !(gt.StartTime > i + 8)).FirstOrDefault();
                                 if (current == null)
                                 {
                                     <td></td>
