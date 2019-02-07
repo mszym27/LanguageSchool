@@ -49,7 +49,7 @@ namespace LanguageSchool.Models.ViewModels
             EndDate = course.EndDate;
             NumberOfHours = course.NumberOfHours;
             LanguageProficencyId = course.LanguageProficencyId;
-            LanguageProficency = course.LanguageProficency.Name;
+            LanguageProficency = course.LanguageProficency.PLName;
             IsActive = course.IsActive;
 
             if(course.Description != null)

@@ -26,7 +26,6 @@ namespace LanguageSchool.Controllers
 
                 switch (loggedUser.Role.Id)
                 {
-                    case ((int) Consts.Roles.Admin): return RedirectToAction("FullList", "Course");
                     case ((int) Consts.Roles.Secretary): return RedirectToAction("List", "Course");
                     case ((int)Consts.Roles.Teacher): return RedirectToAction("Timetable", "User");
                     case ((int)Consts.Roles.Student): return RedirectToAction("Timetable", "User");

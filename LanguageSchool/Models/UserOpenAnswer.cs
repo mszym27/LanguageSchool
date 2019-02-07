@@ -16,17 +16,18 @@ namespace LanguageSchool.Models
     {
         public int Id { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int UserId { get; set; }
-        public int OpenQuestionId { get; set; }
+        public bool IsMarked { get; set; }
         public string Content { get; set; }
         public int Points { get; set; }
         public string Comment { get; set; }
-        public bool IsMarked { get; set; }
+        public int UserId { get; set; }
         public int UserTestId { get; set; }
+        public int OpenQuestionId { get; set; }
     
         public virtual OpenQuestion OpenQuestion { get; set; }
+        public virtual UserTest UsersTest { get; set; }
         public virtual User User { get; set; }
-        public virtual UserTest UserTest { get; set; }
     }
 }

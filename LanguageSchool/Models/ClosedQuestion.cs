@@ -22,14 +22,14 @@ namespace LanguageSchool.Models
         }
     
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public Nullable<int> LessonSubjectId { get; set; }
         public string Contents { get; set; }
         public int NumberOfPossibleAnswers { get; set; }
         public bool IsMultichoice { get; set; }
         public int Points { get; set; }
+        public int LessonSubjectId { get; set; }
     
         public virtual LessonSubject LessonSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

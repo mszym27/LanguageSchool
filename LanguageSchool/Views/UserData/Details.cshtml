@@ -140,7 +140,7 @@
             @if (Model.User.RoleId == (int)Consts.Roles.Student)
             {
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
+                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.UserId })'">Edytuj</button>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>
@@ -149,13 +149,13 @@
                     <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("SendToUser", "Message", new { userId = @Model.UserId })'">Wyślij komunikat</button>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.Id })'">Zapisz do grupy</button>
+                    <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("AddGroups", "UserData", new { id = @Model.UserId })'">Zapisz do grupy</button>
                 </div>
             }
             else
             {
                 <div class="col-md-3 col-md-offset-2">
-                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.Id })'">Edytuj</button>
+                    <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "UserData", new { id = @Model.UserId })'">Edytuj</button>
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn-block btn-danger" type="button" data-toggle="modal" data-target="#deleteDialog">Usuń</button>

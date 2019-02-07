@@ -22,15 +22,15 @@ namespace LanguageSchool.Models
         }
     
         public int Id { get; set; }
-        public int TestId { get; set; }
-        public int QuestionId { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
     
         public virtual ClosedQuestion ClosedQuestion { get; set; }
-        public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
+        public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClosedAnswer> UserClosedAnswers { get; set; }
     }

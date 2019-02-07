@@ -20,7 +20,7 @@ namespace LanguageSchool.Models.ViewModels.GroupDetailsViewModels
             EnrollmentDate = userGroup.CreationDate.ToString("yyyy/MM/dd");
 
             var student = userGroup.User;
-            var studentData = student.UserData.First();
+            var studentData = student.UserData;
 
             Fullname = studentData.Name + " " + studentData.Surname + " (" + student.Login + ")";
             EmailAdress = studentData.EmailAdress;

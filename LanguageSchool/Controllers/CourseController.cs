@@ -56,7 +56,7 @@ namespace LanguageSchool.Controllers
                             c.Name.Contains(searchString) ||
                             c.Description.Contains(searchString) ||
                             c.NumberOfHours.Contains(searchString) ||
-                            c.LanguageProficency.Name.Contains(searchString)
+                            c.LanguageProficency.PLName.Contains(searchString)
                         )
                     )
                 )
@@ -127,9 +127,9 @@ namespace LanguageSchool.Controllers
         {
             var courseViewModel = new CourseViewModel();
 
-            courseViewModel.LanguageProficenciens = new SelectList(UnitOfWork.LanguageProficencyRepository.Get(),
-                                         "Id",
-                                         "Name");
+            courseViewModel.LanguageProficenciens = new SelectList(Consts.LanguageProficencyList,
+                                         "Key",
+                                         "Value");
 
             return View(courseViewModel);
         }
@@ -180,9 +180,9 @@ namespace LanguageSchool.Controllers
 
             CourseViewModel courseViewModel = new CourseViewModel(course);
 
-            courseViewModel.LanguageProficenciens = new SelectList(UnitOfWork.LanguageProficencyRepository.Get(),
-                                         "Id",
-                                         "Name");
+            courseViewModel.LanguageProficenciens = new SelectList(Consts.LanguageProficencyList,
+                                         "Key",
+                                         "Value");
 
             return View(courseViewModel);
         }
@@ -355,9 +355,9 @@ namespace LanguageSchool.Controllers
                     break;
                 case "proficencyLevel":
                     if (sortDirection == "asc")
-                        courses = courses.OrderBy(c => c.LanguageProficency.Name);
+                        courses = courses.OrderBy(c => c.LanguageProficency.PLName);
                     else
-                        courses = courses.OrderByDescending(c => c.LanguageProficency.Name);
+                        courses = courses.OrderByDescending(c => c.LanguageProficency.PLName);
                     break;
             }
 

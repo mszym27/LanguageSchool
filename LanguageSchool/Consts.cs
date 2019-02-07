@@ -22,6 +22,13 @@ namespace LanguageSchool
             Student = 1003
         }
 
+        public static Dictionary<int, string> RoleList = new Dictionary<int, string>
+        {
+            {1001, "Sekretariat"},
+            {1002, "Nauczyciel"},
+            {1003, "Student"},
+        };
+
         public enum MessageTypes
         {
             ToUser = 2001,
@@ -32,13 +39,31 @@ namespace LanguageSchool
             StudentWelcome = 2006
         }
 
+        public static Dictionary<int, string> MessageTypeList = new Dictionary<int, string>
+        {
+            {2002, "Do członków grupy"},
+            {2003, "Do uczestników kursu"},
+            {2004, "Do wszystkich użytkowników o roli"},
+            {2005, "Do wszystkich"},
+        };
+
+        public static Dictionary<int, string> LanguageProficencyList = new Dictionary<int, string>
+        {
+            {4001, "A1"},
+            {4002, "A2"},
+            {4003, "B1"},
+            {4004, "B2"},
+            {4005, "C1"},
+            {4006, "C2"},
+        };
+
         public static Dictionary<double, int> Grades = new Dictionary<double, int>() {
-            { 40, 1 },
-            { 55, 2 },
-            { 70, 3 },
-            { 85, 4 },
-            { 95, 5 },
-            { 100, 6 },
+            { 40, 3001 }, // niedostateczny
+            { 55, 3002 }, // dopuszczający
+            { 70, 3003 }, // dostateczny
+            { 85, 3004 }, // dobry
+            { 95, 3005 }, // bardzo dobry
+            { 100, 3006 } //celujący
         };
 
         public static readonly int FailingPercentage = 40;

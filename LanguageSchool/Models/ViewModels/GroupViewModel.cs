@@ -107,7 +107,7 @@ namespace LanguageSchool.Models.ViewModels
             {
                 foreach (var groupTime in userGroup.Group.GroupTimes)
                 {
-                    if (!groupTime.IsDeleted && groupTime.IsActive)
+                    if (!groupTime.IsDeleted)
                         groupTimes.Add(groupTime);
                 }
             }

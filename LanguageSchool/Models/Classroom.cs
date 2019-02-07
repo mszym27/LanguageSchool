@@ -12,19 +12,12 @@ namespace LanguageSchool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DayOfWeek
+    public partial class Classroom
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DayOfWeek()
-        {
-            this.GroupTimes = new HashSet<GroupTime>();
-        }
-    
         public int Id { get; set; }
-        public string PLName { get; set; }
-        public string ENName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GroupTime> GroupTimes { get; set; }
+        public string Identificator { get; set; }
+        public int NumberOfSeats { get; set; }
+        public bool IsDeleted { get; set; }
+        public Nullable<bool> DeletionDate { get; set; }
     }
 }

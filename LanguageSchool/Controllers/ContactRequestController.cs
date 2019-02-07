@@ -36,8 +36,6 @@ namespace LanguageSchool.Controllers
                 cr.PreferredHoursFrom = crvm.PreferredHoursFrom;
                 cr.PreferredHoursTo = crvm.PreferredHoursTo;
                 cr.CourseId = crvm.CourseId;
-                cr.EntryTestId = crvm.EntryTestId;
-                cr.Points = crvm.Points;
 
                 cr.IsAwaiting = true;
                 cr.CreationDate = DateTime.Now;

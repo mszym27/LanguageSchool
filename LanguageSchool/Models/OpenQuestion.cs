@@ -17,22 +17,22 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OpenQuestion()
         {
-            this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
             this.TestOpenQuestions = new HashSet<TestOpenQuestion>();
+            this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
         }
     
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int LessonSubjectId { get; set; }
         public string Contents { get; set; }
         public int Points { get; set; }
+        public int LessonSubjectId { get; set; }
     
         public virtual LessonSubject LessonSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestOpenQuestion> TestOpenQuestions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
     }
 }

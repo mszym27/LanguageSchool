@@ -215,7 +215,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactRequestController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\EntryTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageSchoolController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
@@ -231,7 +230,7 @@
     <Compile Include="Models\Answer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classrom.cs">
+    <Compile Include="Models\Classroom.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClosedQuestion.cs">
@@ -243,10 +242,7 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DayOfWeek.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EntryTest.cs">
+    <Compile Include="Models\DictionaryItem.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetContactInfoListItem.cs">
@@ -256,12 +252,6 @@
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GroupTime.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Holiday.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LanguageProficency.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LanguageSchool.Context.cs">
@@ -282,22 +272,13 @@
     <Compile Include="Models\LessonSubject.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Mark.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Material.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MessageType.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\OpenQuestion.cs">
-      <DependentUpon>LanguageSchool.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Role.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Test.cs">

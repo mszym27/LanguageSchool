@@ -14,11 +14,10 @@ namespace LanguageSchool.Models
     
     public partial class UserData
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string City { get; set; }

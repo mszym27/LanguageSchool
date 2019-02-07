@@ -132,14 +132,9 @@ namespace LanguageSchool.Controllers
         {
             UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
 
-            var types = UnitOfWork.MessageTypeRepository.Get(
-                t => t.Id != (int)Consts.MessageTypes.ToUser
-                    && t.Id != (int)Consts.MessageTypes.StudentWelcome
-            );
-
-            userMessageViewModel.MessageTypes = new SelectList(types,
-                                         "Id",
-                                         "Name");
+            userMessageViewModel.MessageTypes = new SelectList(Consts.MessageTypeList,
+                                         "Key",
+                                         "Value");
 
             userMessageViewModel.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => !g.IsDeleted),
                                          "Id",
@@ -149,9 +144,9 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
-            userMessageViewModel.Roles = new SelectList(UnitOfWork.RoleRepository.Get(),
-                                         "Id",
-                                         "PLName");
+            userMessageViewModel.Roles = new SelectList(Consts.RoleList,
+                                         "Key",
+                                         "Value");
 
             return View(userMessageViewModel);
         }
@@ -167,7 +162,7 @@ namespace LanguageSchool.Controllers
 
                 message.Header = uMVM.Topic;
                 message.Contents = uMVM.Contents;
-                message.MessageType = UnitOfWork.MessageTypeRepository.GetById(uMVM.MessageTypeId);
+                message.MessageTypeId = uMVM.MessageTypeId;
                 message.CreationDate = DateTime.Now;
                 message.IsSystem = uMVM.IsSystem;
                 message.UsersMessages = new List<UserMessage>();

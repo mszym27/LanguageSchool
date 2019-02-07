@@ -27,7 +27,7 @@ namespace LanguageSchool.Models.ViewModels
             Times = new List<GroupTime>();
 
             foreach (var userGroup in thisWeekUserGroups)
-                Times.AddRange(userGroup.Group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted));
+                Times.AddRange(userGroup.Group.GroupTimes.Where(gt => !gt.IsDeleted));
         }
     }
 }

@@ -83,7 +83,7 @@ namespace LanguageSchool.Controllers
                 {
                     var isAvaible = true;
 
-                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    foreach (var groupTime in group.GroupTimes.Where(gt => !gt.IsDeleted))
                     {
                         if(studentPotentiallyConflictingGroups.Where(ug => ug.Group.GroupTimes.Where(
                             gt => gt.DayOfWeekId == groupTime.DayOfWeekId && (
@@ -207,7 +207,6 @@ namespace LanguageSchool.Controllers
                             {
                                 groupTime = new GroupTime
                                 {
-                                    IsActive = true,
                                     CreationDate = now,
                                     DayOfWeekId = (i + 1),
                                     StartTime = j + 8,

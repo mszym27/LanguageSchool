@@ -136,9 +136,7 @@ namespace LanguageSchool.Controllers
 
                             double percentageGoten = GradeTest((int)userTest.Points, test.Points);
 
-                            var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
-
-                            userTest.Mark = mark;
+                            userTest.MarkId = Consts.GetGrade(percentageGoten);
                         }
                     }
                 }
@@ -221,9 +219,7 @@ namespace LanguageSchool.Controllers
 
                             double percentageGoten = GradeTest((int)userTest.Points, test.Points);
 
-                            var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
-
-                            userTest.Mark = mark;
+                            userTest.MarkId = Consts.GetGrade(percentageGoten);
                         }
                     }
                 }

@@ -15,14 +15,13 @@ namespace LanguageSchool.Models
     public partial class Material
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int LessonSubjectId { get; set; }
         public string Name { get; set; }
         public byte[] File { get; set; }
         public string Comment { get; set; }
-        public bool IsActive { get; set; }
     
         public virtual LessonSubject LessonSubject { get; set; }
     }

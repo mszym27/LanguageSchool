@@ -17,28 +17,28 @@ namespace LanguageSchool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserTest()
         {
-            this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
             this.UserClosedAnswers = new HashSet<UserClosedAnswer>();
+            this.UserOpenAnswers = new HashSet<UserOpenAnswer>();
         }
     
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
-        public int UserId { get; set; }
-        public int TestId { get; set; }
         public int Points { get; set; }
         public bool IsMarked { get; set; }
         public int MarkId { get; set; }
+        public int UserId { get; set; }
+        public int TestId { get; set; }
         public int GroupId { get; set; }
     
-        public virtual Test Test { get; set; }
-        public virtual User User { get; set; }
-        public virtual Mark Mark { get; set; }
+        public virtual DictionaryItem Mark { get; set; }
         public virtual Group Group { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
+        public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClosedAnswer> UserClosedAnswers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserOpenAnswer> UserOpenAnswers { get; set; }
+        public virtual User User { get; set; }
     }
 }

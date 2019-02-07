@@ -64,9 +64,7 @@ namespace LanguageSchool.Controllers
 
                 double percentageGoten = GradeTest(userTest.Points, userTest.Test.Points);
 
-                var mark = UnitOfWork.MarkRepository.GetById(Consts.GetGrade(percentageGoten));
-
-                userTest.Mark = mark;
+                userTest.MarkId = Consts.GetGrade(percentageGoten);
 
                 if (!user.UserOpenAnswers.Where(a => a.UserTestId == userTest.Id && !a.IsMarked).Any())
                 {

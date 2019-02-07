@@ -14,6 +14,7 @@ namespace LanguageSchool.Controllers
     [Authorize]
     public class UserController : LanguageSchoolController
     {
+        [Authorize(Roles = "Teacher,Student")]
         public ActionResult TimeTable()
         {
             var loggedUser = GetLoggedUser();
@@ -56,7 +57,7 @@ namespace LanguageSchool.Controllers
             {
                 user.IsDeleted = true;
 
-                var userData = user.UserData.First();
+                var userData = user.UserData;
 
                 userData.IsDeleted = true;
 

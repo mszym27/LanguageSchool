@@ -27,36 +27,30 @@ namespace LanguageSchool.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Classroom> Classrooms { get; set; }
+        public virtual DbSet<DictionaryItem> DictionaryItems { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<ContactRequest> ContactRequests { get; set; }
-        public virtual DbSet<UserData> UserData { get; set; }
+        public virtual DbSet<UserData> UserDatas { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<EntryTest> EntryTests { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<GroupTime> GroupTimes { get; set; }
         public virtual DbSet<LessonSubject> LessonSubjects { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<ClosedQuestion> ClosedQuestions { get; set; }
         public virtual DbSet<OpenQuestion> OpenQuestions { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
-        public virtual DbSet<TestsLessonSubject> TestsLessonSubjects { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserTest> UserTests { get; set; }
-        public virtual DbSet<UserMessage> UserMessages { get; set; }
-        public virtual DbSet<DayOfWeek> DayOfWeeks { get; set; }
-        public virtual DbSet<Holiday> Holidays { get; set; }
-        public virtual DbSet<LanguageProficency> LanguageProficencies { get; set; }
-        public virtual DbSet<Classrom> Classroms { get; set; }
-        public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<MessageType> MessageTypes { get; set; }
-        public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<GroupTime> GroupTimes { get; set; }
-        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<TestAnswer> TestAnswers { get; set; }
         public virtual DbSet<TestClosedQuestion> TestClosedQuestions { get; set; }
         public virtual DbSet<TestOpenQuestion> TestOpenQuestions { get; set; }
-        public virtual DbSet<TestAnswer> TestAnswers { get; set; }
-        public virtual DbSet<Mark> Marks { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<TestsLessonSubject> TestsLessonSubjects { get; set; }
         public virtual DbSet<UserClosedAnswer> UserClosedAnswers { get; set; }
+        public virtual DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<UserMessage> UserMessages { get; set; }
+        public virtual DbSet<UserTest> UserTests { get; set; }
     
         public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
         {

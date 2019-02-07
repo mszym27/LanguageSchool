@@ -84,9 +84,9 @@ namespace LanguageSchool.Controllers
                                          "Id",
                                          "Name");
 
-            ViewBag.Roles = new SelectList(UnitOfWork.RoleRepository.Get(r => r.Id != (int)Consts.Roles.Admin),
-                                         "Id",
-                                         "PLName");
+            ViewBag.Roles = new SelectList(Consts.RoleList,
+                                         "Key",
+                                         "Value");
 
             ViewBag.creationDateFrom = creationDateFrom;
             ViewBag.creationDateTo = creationDateTo;
@@ -111,10 +111,10 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpGet]
-        [Route("UserData/AddGroups/{id}")]
-        public ActionResult AddGroups(int id)
+        [Route("UserData/AddGroups/{userId}")]
+        public ActionResult AddGroups(int userId)
         {
-            var student = UnitOfWork.UserRepository.Get(u => u.UserData.Where(ud => ud.Id == id).Any()).FirstOrDefault();
+            var student = UnitOfWork.UserRepository.GetById(userId);
 
             if (student == null)
             {
@@ -146,7 +146,7 @@ namespace LanguageSchool.Controllers
                 {
                     var groupViewModel = new UsersGroupViewModel(group);
 
-                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    foreach (var groupTime in group.GroupTimes.Where(gt => !gt.IsDeleted))
                     {
                         var hour = new GroupTimeViewModel(groupTime);
 
@@ -159,7 +159,7 @@ namespace LanguageSchool.Controllers
                 {
                     var groupViewModel = new UsersGroupViewModel(group);
 
-                    foreach (var groupTime in group.GroupTimes.Where(gt => gt.IsActive && !gt.IsDeleted))
+                    foreach (var groupTime in group.GroupTimes.Where(gt => !gt.IsDeleted))
                     {
                         var hour = new GroupTimeViewModel(groupTime);
 
@@ -194,11 +194,12 @@ namespace LanguageSchool.Controllers
             return View(usersGroupViewModel);
         }
 
+        // todo
         [HttpPost]
-        [Route("UserData/AddGroups/{id}")]
-        public ActionResult AddGroups(int id, string submit)
+        [Route("UserData/AddGroups/{userId}")]
+        public ActionResult AddGroups(int userId, string submit)
         {
-            var student = UnitOfWork.UserRepository.Get(u => u.UserData.Where(ud => ud.Id == id).Any()).FirstOrDefault();
+            var student = UnitOfWork.UserRepository.GetById(userId);
 
             student.UsersGroups.Add(new UserGroup
             {
@@ -212,13 +213,15 @@ namespace LanguageSchool.Controllers
         }
 
         // GET: UserData/Details/5
-        public ActionResult Details(int? id)
+        [Route("UserData/Details/{Id}")]
+        public ActionResult Details(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserData userData = UnitOfWork.UserDataRepository.GetById(id);
+
+            UserData userData = UnitOfWork.UserDataRepository.GetById(Id);
 
             if (userData == null)
             {
@@ -253,9 +256,9 @@ namespace LanguageSchool.Controllers
         {
             UserDataViewModel userDataViewModel = new UserDataViewModel();
 
-            userDataViewModel.Roles = new SelectList(UnitOfWork.RoleRepository.Get(r => r.Id != (int)Consts.Roles.Admin).OrderByDescending(u => u.Id),
-                                         "Id",
-                                         "PLName");
+            userDataViewModel.Roles = new SelectList(Consts.RoleList,
+                                         "Key",
+                                         "Value");
 
             return View(userDataViewModel);
         }
@@ -286,7 +289,7 @@ namespace LanguageSchool.Controllers
                 userData.EmailAdress = udvm.EmailAdress;
                 userData.Comment = udvm.Comment;
 
-                var userRole = UnitOfWork.RoleRepository.GetById(udvm.RoleId);
+                var userRole = UnitOfWork.DictionaryItemRepository.GetById(udvm.RoleId);
 
                 if (udvm.OriginContactRequestId != null)
                 {
@@ -294,7 +297,7 @@ namespace LanguageSchool.Controllers
 
                     contactRequest.IsAwaiting = false;
 
-                    userRole = UnitOfWork.RoleRepository.GetById((int)Consts.Roles.Student);
+                    userRole = UnitOfWork.DictionaryItemRepository.GetById((int)Consts.Roles.Student);
                 }
 
                 User user = new User();
@@ -334,7 +337,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Konto zostało utworzone", "proszę przekazać użytkownikowi jego login i hasło");
 
-                return RedirectToAction("Details", "UserData", new { id = userData.Id });
+                return RedirectToAction("Details", "UserData", new { userId = userData.UserId });
             }
             catch(Exception ex)
             {

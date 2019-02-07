@@ -19,12 +19,11 @@ namespace LanguageSchool.Models
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
         public int GroupId { get; set; }
-        public int DayOfWeekId { get; set; }
         public int StartTime { get; set; }
         public int EndTime { get; set; }
-        public bool IsActive { get; set; }
+        public int DayOfWeekId { get; set; }
     
-        public virtual DayOfWeek DayOfWeek { get; set; }
+        public virtual DictionaryItem DayOfWeek { get; set; }
         public virtual Group Group { get; set; }
     }
 }

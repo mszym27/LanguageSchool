@@ -17,19 +17,16 @@ namespace LanguageSchool.Models
         public int Id { get; set; }
         public System.DateTime CreationDate { get; set; }
         public Nullable<System.DateTime> ModificationDate { get; set; }
-        public string PhoneNumber { get; set; }
-        public string EmailAdress { get; set; }
-        public string Comment { get; set; }
-        public bool IsAwaiting { get; set; }
-        public int CourseId { get; set; }
-        public Nullable<int> EntryTestId { get; set; }
-        public Nullable<int> Points { get; set; }
-        public int PreferredHoursFrom { get; set; }
-        public int PreferredHoursTo { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAdress { get; set; }
+        public int CourseId { get; set; }
+        public int PreferredHoursFrom { get; set; }
+        public int PreferredHoursTo { get; set; }
+        public string Comment { get; set; }
+        public bool IsAwaiting { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual Test Test { get; set; }
     }
 }

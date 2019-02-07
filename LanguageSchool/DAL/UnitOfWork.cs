@@ -21,21 +21,26 @@ namespace LanguageSchool.DAL
         private Repository<Group> groupRepository;
         private Repository<Course> courseRepository;
         private Repository<ContactRequest> contactRequestRepository;
-        private Repository<Role> roleRepository;
         private Repository<User> userRepository;
         private Repository<UserData> userDataRepository;
         private Repository<Message> messageRepository;
         private Repository<UserMessage> userMessageRepository;
-        private Repository<MessageType> messageTypeRepository;
-        private Repository<LanguageProficency> languageProficencyRepository;
         private Repository<ClosedQuestion> closedQuestionRepository;
         private Repository<OpenQuestion> openQuestionRepository;
         private Repository<Test> testRepository;
         private Repository<Answer> answerRepository;
         private Repository<UserOpenAnswer> userOpenAnswerRepository;
-        private Repository<Mark> markRepository;
         private Repository<UserTest> userTestRepository;
         private Repository<UserGroup> userGroupRepository;
+        private Repository<DictionaryItem> dictionaryItemRepository;
+
+        public Repository<DictionaryItem> DictionaryItemRepository
+        {
+            get
+            {
+                return this.dictionaryItemRepository ?? new Repository<DictionaryItem>(entities);
+            }
+        }
 
         public Repository<UserGroup> UserGroupRepository
         {
@@ -50,14 +55,6 @@ namespace LanguageSchool.DAL
             get
             {
                 return this.userTestRepository ?? new Repository<UserTest>(entities);
-            }
-        }
-
-        public Repository<Mark> MarkRepository
-        {
-            get
-            {
-                return this.markRepository ?? new Repository<Mark>(entities);
             }
         }
 
@@ -101,14 +98,6 @@ namespace LanguageSchool.DAL
             }
         }
 
-        public Repository<LanguageProficency> LanguageProficencyRepository
-        {
-            get
-            {
-                return this.languageProficencyRepository ?? new Repository<LanguageProficency>(entities);
-            }
-        }
-
         public Repository<LessonSubject> LessonSubjectRepository
         {
             get
@@ -149,14 +138,6 @@ namespace LanguageSchool.DAL
             }
         }
 
-        public Repository<Role> RoleRepository
-        {
-            get
-            {
-                return this.roleRepository ?? new Repository<Role>(entities);
-            }
-        }
-
         public Repository<User> UserRepository
         {
             get
@@ -170,14 +151,6 @@ namespace LanguageSchool.DAL
             get
             {
                 return this.userDataRepository ?? new Repository<UserData>(entities);
-            }
-        }
-
-        public Repository<MessageType> MessageTypeRepository
-        {
-            get
-            {
-                return this.messageTypeRepository ?? new Repository<MessageType>(entities);
             }
         }
 

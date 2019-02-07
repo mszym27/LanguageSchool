@@ -15,10 +15,10 @@ namespace LanguageSchool.Models
     public partial class TestOpenQuestion
     {
         public int Id { get; set; }
-        public int TestId { get; set; }
-        public int QuestionId { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletionDate { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
     
         public virtual OpenQuestion OpenQuestion { get; set; }
         public virtual Test Test { get; set; }

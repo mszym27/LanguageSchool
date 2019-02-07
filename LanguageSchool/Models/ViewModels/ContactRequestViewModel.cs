@@ -52,17 +52,6 @@ namespace LanguageSchool.Models.ViewModels
             PreferredHoursFrom = contactRequest.PreferredHoursFrom;
             PreferredHoursTo = contactRequest.PreferredHoursTo;
             Course = contactRequest.Course;
-
-            if (contactRequest.Test != null)
-            {
-                TakenTestName = contactRequest.Test.Name;
-                TotalScore = contactRequest.Points + "/" + contactRequest.Test.Points;
-            }
-            else
-            {
-                TakenTestName = "-";
-                TotalScore = "-";
-            }
         }
     }
 }

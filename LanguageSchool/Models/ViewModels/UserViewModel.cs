@@ -23,7 +23,7 @@ namespace LanguageSchool.Models.ViewModels
             UserGroups = user.UsersGroups.ToList();
             UserTests = user.UsersTests.ToList();
 
-            var userData = user.UserData.OfType<UserData>().FirstOrDefault();
+            var userData = user.UserData;
             Fullname = userData.Name + " " + userData.Surname + " (" + user.Login + ")";
             EmailAdress = userData.EmailAdress;
             PublicPhoneNumber = userData.PublicPhoneNumber;

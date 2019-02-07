@@ -22,7 +22,7 @@ namespace LanguageSchool.Models
         public bool HasBeenReceived { get; set; }
         public Nullable<System.DateTime> ReceivedDate { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Message Message { get; set; }
+        public virtual User User { get; set; }
     }
 }

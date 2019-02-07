@@ -21,6 +21,7 @@ namespace LanguageSchool.Models
         }
     
         public int Id { get; set; }
+        public System.DateTime CreationDate { get; set; }
         public string Header { get; set; }
         public string Contents { get; set; }
         public int MessageTypeId { get; set; }
@@ -28,15 +29,14 @@ namespace LanguageSchool.Models
         public Nullable<int> GroupId { get; set; }
         public Nullable<int> CourseId { get; set; }
         public Nullable<int> RoleId { get; set; }
-        public System.DateTime CreationDate { get; set; }
         public bool IsSystem { get; set; }
     
-        public virtual MessageType MessageType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserMessage> UsersMessages { get; set; }
+        public virtual DictionaryItem Role { get; set; }
+        public virtual DictionaryItem MessageType { get; set; }
         public virtual Course Course { get; set; }
         public virtual Group Group { get; set; }
-        public virtual Role Role { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserMessage> UsersMessages { get; set; }
     }
 }

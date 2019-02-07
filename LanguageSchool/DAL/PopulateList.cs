@@ -12,7 +12,7 @@ namespace LanguageSchool.DAL
 
         public static SelectList AllUsers(User selectedUser = null)
         {
-            var users = unitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId != (int)Consts.Roles.Admin);
+            var users = unitOfWork.UserRepository.Get(u => !u.IsDeleted);
 
             var usersViewModels = new List<UserViewModel>();
 

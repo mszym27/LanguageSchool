@@ -39,7 +39,6 @@ namespace LanguageSchool.Models.ViewModels
         {
             Id = test.Id;
             GroupId = test.GroupId;
-            CourseId = test.CourseId;
             CreationDate = test.CreationDate.ToString("yyyy-MM-dd");
             Name = test.Name;
             Comment = test.Comment == null? "-": test.Comment;

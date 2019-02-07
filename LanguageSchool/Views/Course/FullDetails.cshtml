@@ -23,7 +23,7 @@
                     <strong>Poziom</strong>
                 </div>
                 <div class="col-md-4">
-                    @Html.DisplayFor(model => model.LanguageProficency.Name)
+                    @Html.DisplayFor(model => model.LanguageProficency.PLName)
                 </div>
             </div>
 
@@ -132,7 +132,7 @@
                                 @Html.ActionLink(group.Name, "FullDetails", "Group", new { id = group.Id }, null)
                             </td>
                             <td>
-                                @teacher.UserData.FirstOrDefault().Name @teacher.UserData.FirstOrDefault().Surname (@teacher.Login)
+                                @teacher.UserData.Name @teacher.UserData.Surname (@teacher.Login) @*TODO*@
                             </td>
                         </tr>
                     }

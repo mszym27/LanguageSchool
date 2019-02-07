@@ -22,7 +22,7 @@ namespace LanguageSchool.Models.ViewModels.SendMessageViewModels
         {
             UserId = user.Id;
 
-            var userData = user.UserData.First();
+            var userData = user.UserData;
 
             UserName = userData.Name + " " + userData.Surname;
         }
