@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var toGroup = (int)Consts.MessageTypes.ToGroup;
+    var toCourse = (int)Consts.MessageTypes.ToCourse;
+    var toRole = (int)Consts.MessageTypes.ToRole;
+    var toAll = (int)Consts.MessageTypes.ToAll;
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -46,7 +53,7 @@
                             @Html.DropDownListFor(model => model.MessageTypeId, Model.MessageTypes, new { @id = "MessageType", @class = "form-control", @onchange = "MessageTypeChanged(this.value)" })
                         </div>
                     </div>
-                    <div id="2002" class="form-group" style="display: none">
+                    <div id="@toGroup" class="form-group" style="display: none">
                         <div class="control-label col-md-2">
                             <strong>Grupa</strong>
                         </div>
@@ -54,7 +61,7 @@
                             @Html.DropDownListFor(model => model.GroupId, Model.Groups, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div id="2003" class="form-group" style="display: none">
+                    <div id="@toCourse" class="form-group" style="display: none">
                         <div class="control-label col-md-2">
                             <strong>Kurs</strong>
                         </div>
@@ -62,7 +69,7 @@
                             @Html.DropDownListFor(model => model.CourseId, Model.Courses, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div id="2004" class="form-group" style="display: none">
+                    <div id="@toRole" class="form-group" style="display: none">
                         <div class="control-label col-md-2">
                             <strong>Rola</strong>
                         </div>
@@ -97,14 +104,14 @@
         function SendToAll() {
             var element = document.getElementById("MessageType");
 
-            element.value = 2005;
+            element.value = @toAll;
         }
 
         function MessageTypeChanged(Id) {
             var element;
             var i;
 
-            for (i = 2002; i <= 2004; i++) {
+            for (i = @toGroup; i <= @toRole; i++) {
                 element = document.getElementById(i);
 
                 element.style.display = "none";
