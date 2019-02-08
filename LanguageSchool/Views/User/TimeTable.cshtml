@@ -83,7 +83,7 @@
                                     var color = 0;
                                     var lightness = 0.0;
 
-                                    for(int k = 1; k <= courseName.Length; k++)
+                                    for (int k = 1; k <= courseName.Length; k++)
                                     {
                                         color += k * (int)courseName[k - 1];
                                     }
@@ -92,10 +92,6 @@
                                     {
                                         lightness += k * (int)groupName[k - 1];
                                     }
-
-                                    //lightness = (80 + Math.Sqrt(lightness)) / 1000;
-
-                                    lightness = 0.9;
 
                                     string hexColor = color.ToString("X6"); // int.Parse(color, System.Globalization.NumberStyles.HexNumber);
 
@@ -108,42 +104,48 @@
                                     var hue = rgbColor.GetHue();
                                     var saturation = rgbColor.GetSaturation();
 
+                                    lightness = (80 + Math.Sqrt(lightness)) / 1000;
+
                                     var chroma = (1 - Math.Abs(2 * lightness - 1)) * saturation;
-                                    var sextant = (int)(hue / 60);
+
+                                    var sextant = hue / 60;
                                     var x = chroma * (1 - Math.Abs((sextant % 2) - 1));
 
-                                    switch (sextant)
+                                    if (0 <= sextant && sextant <= 1)
                                     {
-                                        case 0:
-                                            red = chroma;
-                                            green = x;
-                                            blue = 0;
-                                            break;
-                                        case 1:
-                                            red = x;
-                                            green = chroma;
-                                            blue = 0;
-                                            break;
-                                        case 2:
-                                            red = 0;
-                                            green = chroma;
-                                            blue = x;
-                                            break;
-                                        case 3:
-                                            red = 0;
-                                            green = x;
-                                            blue = chroma;
-                                            break;
-                                        case 4:
-                                            red = x;
-                                            green = 0;
-                                            blue = chroma;
-                                            break;
-                                        default:
-                                            red = chroma;
-                                            green = 0;
-                                            blue = x;
-                                            break;
+                                        red = chroma;
+                                        green = x;
+                                        blue = 0;
+                                    }
+                                    else if (1 < sextant && sextant <= 2)
+                                    {
+                                        red = x;
+                                        green = chroma;
+                                        blue = 0;
+                                    }
+                                    else if (2 < sextant && sextant <= 3)
+                                    {
+                                        red = 0;
+                                        green = chroma;
+                                        blue = x;
+                                    }
+                                    else if (3 < sextant && sextant <= 4)
+                                    {
+                                        red = 0;
+                                        green = x;
+                                        blue = chroma;
+                                    }
+                                    else if (4 < sextant && sextant <= 5)
+                                    {
+                                        red = x;
+                                        green = 0;
+                                        blue = chroma;
+                                    }
+                                    else if (5 < sextant && sextant <= 6)
+                                    {
+                                        red = chroma;
+                                        green = 0;
+                                        blue = x;
                                     }
 
                                     var m = lightness - chroma / 2;
@@ -152,45 +154,39 @@
                                     green += m;
                                     blue += m;
 
+                                    red *= 255;
+                                    green *= 255;
+                                    blue *= 255;
+
                                     if (Model.Times.Where(
-                                            gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
-                                            && (i + 8) == (current.StartTime + 1)
-                                        )
+                                                        gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
+                                                        && (i + 8) == (current.StartTime + 1)
+                                                    )
                                     {
                                         show = true;
                                     }
 
-                                    <td align="center" bgcolor="rgb(@red%, @green%, @blue%)" style="@style">
-                                        @*<a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">*@
+
+                                    style += "background-color: #" + ((int)red).ToString("X2") + ((int)green).ToString("X2") + ((int)blue).ToString("X2") + ";";
+
+                                    <td align="center" style="@style">
+                                        <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
                                             @if (show)
                                             {
-                                        //string shown = current.Group.Course.Name;
+                                                string shown = current.Group.Course.Name;
 
-                                        //if (Model.IsTeacher)
-                                        //{
-                                        //    shown = current.Group.Name;
-                                        //}
+                                                if (Model.IsTeacher)
+                                                {
+                                                    shown = current.Group.Name;
+                                                }
 
-                                                @*<p><strong>@shown</strong></p>
-                                                <p>@hexColor</p>
-                                                <p>@rgbColor</p>
-                                                <p>@rgbColor.GetHue()</p>
-                                                <p>@rgbColor.GetBrightness();</p>*@
-                                                <p>@courseName</p>
-                                                <p>@groupName</p>
-                                                <p>hue: @hue</p>
-                                                <p>lightness: @lightness</p>
-                                                <p>saturation: @saturation</p>
-                                                <p>red: @red</p>
-                                                <p>green: @green</p>
-                                                <p>blue: @blue</p>
-                                               <p>@sextant</p>@**@
+                                                <p>@shown</p>
                                             }
-                                        @*</a>*@
+                                        </a>
                                     </td>
                                 }
                             }
-                    </tr>
+                        </tr>
                 }
             </table>
         </div>
