@@ -93,7 +93,9 @@
                                         lightness += k * (int)groupName[k - 1];
                                     }
 
-                                    lightness = (30 + Math.Sqrt(lightness)) / 100;
+                                    //lightness = (80 + Math.Sqrt(lightness)) / 1000;
+
+                                    lightness = 0.9;
 
                                     string hexColor = color.ToString("X6"); // int.Parse(color, System.Globalization.NumberStyles.HexNumber);
 
@@ -106,56 +108,49 @@
                                     var hue = rgbColor.GetHue();
                                     var saturation = rgbColor.GetSaturation();
 
-                                    var val = (lightness <= 0.5) ? (lightness * (1.0 + saturation)) : (lightness + saturation - lightness * saturation);
-
-                                    double part;
-                                    double sv;
-                                    int sextant;
-                                    double fract, vsf, mid1, mid2;
-
-                                    part = lightness + lightness - val;
-                                    sv = (val - part) / val;
-                                    sextant = (int)hue / 60;
-                                    fract = hue - (sextant * 60);
-                                    vsf = val * sv * fract;
-                                    mid1 = part + vsf;
-                                    mid2 = val - vsf;
+                                    var chroma = (1 - Math.Abs(2 * lightness - 1)) * saturation;
+                                    var sextant = (int)(hue / 60);
+                                    var x = chroma * (1 - Math.Abs((sextant % 2) - 1));
 
                                     switch (sextant)
                                     {
                                         case 0:
-                                            red = val;
-                                            green = mid1;
-                                            blue = part;
+                                            red = chroma;
+                                            green = x;
+                                            blue = 0;
                                             break;
                                         case 1:
-                                            red = mid2;
-                                            green = val;
-                                            blue = part;
+                                            red = x;
+                                            green = chroma;
+                                            blue = 0;
                                             break;
                                         case 2:
-                                            red = part;
-                                            green = val;
-                                            blue = mid1;
+                                            red = 0;
+                                            green = chroma;
+                                            blue = x;
                                             break;
                                         case 3:
-                                            red = part;
-                                            green = mid2;
-                                            blue = val;
+                                            red = 0;
+                                            green = x;
+                                            blue = chroma;
                                             break;
                                         case 4:
-                                            red = mid1;
-                                            green = part;
-                                            blue = val;
+                                            red = x;
+                                            green = 0;
+                                            blue = chroma;
                                             break;
-                                        case 5:
-                                            red = val;
-                                            green = part;
-                                            blue = mid2;
+                                        default:
+                                            red = chroma;
+                                            green = 0;
+                                            blue = x;
                                             break;
                                     }
 
-                                    hexColor = ((int)red).ToString("X") + ((int)green).ToString("X") + ((int)blue).ToString("X");
+                                    var m = lightness - chroma / 2;
+
+                                    red += m;
+                                    green += m;
+                                    blue += m;
 
                                     if (Model.Times.Where(
                                             gt => (gt.DayOfWeekId == current.DayOfWeekId) && gt.EndTime == current.StartTime).Any()
@@ -165,8 +160,8 @@
                                         show = true;
                                     }
 
-                                    <td align="center" bgcolor="@hexColor" style="@style">
-                                        <a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">
+                                    <td align="center" bgcolor="rgb(@red%, @green%, @blue%)" style="@style">
+                                        @*<a href="@Url.Action("View", "Group", new { id = current.Group.Id })" style="text-decoration:none; color:white">*@
                                             @if (show)
                                             {
                                         //string shown = current.Group.Course.Name;
@@ -180,17 +175,18 @@
                                                 <p>@hexColor</p>
                                                 <p>@rgbColor</p>
                                                 <p>@rgbColor.GetHue()</p>
-                                                <p>@saturation</p>
-                                                <p>@rgbColor.GetBrightness();</p>
-                                                <p>@lightness;</p>*@
+                                                <p>@rgbColor.GetBrightness();</p>*@
                                                 <p>@courseName</p>
                                                 <p>@groupName</p>
-                                                <p>@red</p>
-                                                <p>@green</p>
-                                                <p>@blue</p>
-                                                <p>@sextant</p>
+                                                <p>hue: @hue</p>
+                                                <p>lightness: @lightness</p>
+                                                <p>saturation: @saturation</p>
+                                                <p>red: @red</p>
+                                                <p>green: @green</p>
+                                                <p>blue: @blue</p>
+                                               <p>@sextant</p>@**@
                                             }
-                                        </a>
+                                        @*</a>*@
                                     </td>
                                 }
                             }
@@ -223,11 +219,11 @@
         overflow: hidden;
     }
 
-        td a {
-            display: block;
-            margin: -10em;
-            padding: 10em;
-        }
+    td a {
+        display: block;
+        margin: -10em;
+        padding: 10em;
+    }
 </style>
 
 @section Scripts {
