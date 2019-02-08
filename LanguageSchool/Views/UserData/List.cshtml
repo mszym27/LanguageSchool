@@ -14,99 +14,120 @@
     {
         DateTime now = DateTime.Now;
 
-        <div class="row thumbnail col-md-12">
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Utworzono od:", new { @style = "float:right" })
+        <div class="row">
+            <div class="bordered col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Utworzono od:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Nazwa:", new { style = "float:right" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBox("fullName", (string)ViewBag.fullName, new
+                   {
+                       @class = "textarea",
+                       @style = "width:300px",
+                       placeholder = "dane i prośby"
+                   }
+                        )
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Typ:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        <font color="gray">
+                            dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "DisableButton()" })
+                        </font>
+                        <font color="red">
+                            prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "DisableButton()" })
+                        </font>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
+                <p />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Utworzono do:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Email:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBox("emailAdress", (string)ViewBag.emailAdress, new
+               {
+                   @class = "textarea",
+                   @style = "width:200px",
+                   placeholder = "dane i prośby"
+               })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Miasto:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("city", (string)ViewBag.city, new
+               {
+                   @class = "textarea",
+                   @style = "width:120px",
+                   placeholder = "dane"
+               })
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    @Html.Label("Nazwa:", new { style = "float:right" })
+                <p />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Godziny:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
+                        -
+                        @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Ulica:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBox("street", (string)ViewBag.street, new
+               {
+                   @class = "textarea",
+                   @style = "width:300px",
+                   placeholder = "dane"
+               })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Telefon:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new
+               {
+                   @class = "textarea",
+                   @style = "width:120px",
+                   placeholder = "dane i prośby"
+               })
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    @Html.TextBox("fullName", (string)ViewBag.fullName, new { @class = "textarea", @style = "width:300px",
-                        placeholder = "dane i prośby" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Typ:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    <font color="gray">
-                        dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "DisableButton()" })
-                    </font>
-                    <font color="red">
-                        prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "DisableButton()" })
-                    </font>
-                </div>
-            </div>
-            <p />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Utworzono do:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
-                </div>
-                <div class="col-md-1">
-                    @Html.Label("Email:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-3">
-                    @Html.TextBox("emailAdress", (string)ViewBag.emailAdress, new { @class = "textarea", @style = "width:200px",
-                        placeholder = "dane i prośby" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Miasto:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBox("city", (string)ViewBag.city, new { @class = "textarea", @style = "width:120px",
-                        placeholder = "dane" })
-                </div>
-            </div>
-            <p />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Godziny:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
-                    -
-                    @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
-                </div>
-                <div class="col-md-1">
-                    @Html.Label("Ulica:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-3">
-                    @Html.TextBox("street", (string)ViewBag.street, new { @class = "textarea", @style = "width:300px",
-                        placeholder = "dane" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Telefon:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBox("phoneNumber", (string)ViewBag.phoneNumber, new { @class = "textarea", @style = "width:120px",
-                        placeholder = "dane i prośby" })
-                </div>
-            </div>
-            <p />
-            <div class="row">
-                <div class="col-md-offset-4 col-md-1">
-                    @Html.Label("Kurs:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-3">
-                    @Html.DropDownList("CourseId", (SelectList)ViewBag.Courses, "Wybierz kurs", new { @class = "form-control" })
-                </div>
-                <div class="col-md-offset-1 col-md-1">
-                    @Html.Label("Rola:", new { @style = "float:right" })
-                </div>
-                <div class="col-md-2">
-                    @Html.DropDownList("RoleId", (SelectList)ViewBag.Roles, "Wybierz rolę", new { @class = "form-control" })
+                <p />
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-1">
+                        @Html.Label("Kurs:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownList("CourseId", (SelectList)ViewBag.Courses, "Wybierz kurs", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-offset-1 col-md-1">
+                        @Html.Label("Rola:", new { @style = "float:right" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("RoleId", (SelectList)ViewBag.Roles, "Wybierz rolę", new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
     </div>
-
-    <p />
 
     <div class="row col-md-12">
         <div class="col-md-10">
@@ -141,11 +162,11 @@
         </div>
     </div>
 }
+
     @{bool hasUserData = Model.Where(m => m.IsContactRequest == 0).Any(); }
 
-    <p />
-
-        <div class="row thumbnail col-md-12">
+    <div class="row">
+        <div class="bordered col-md-12">
             <table class="table table-bordered">
                 <tr>
                     <th>
@@ -229,10 +250,10 @@
                         </td>
                     </tr>
                 }
-
             </table>
         </div>
     </div>
+</div>
 
 <script>
     window.onload = DisableButton();

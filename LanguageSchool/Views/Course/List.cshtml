@@ -8,26 +8,33 @@
 <div class="container-fluid">
     @using (Html.BeginForm())
     {
-        <div class="row thumbnail col-xs-12">
-            <div class="col-xs-3">
-                @Html.Label("Kursy:")
-                <font color="gray">
-                    aktywne @Html.CheckBox("showActivated", (bool)ViewBag.showActivated, new { @id = "showActivated" })
-                    nieaktywne @Html.CheckBox("showDeactivated", (bool)ViewBag.showDeactivated, new { @id = "showDeactivated" })
-                </font>
+        <div class="row">
+            <div class="bordered col-md-12">
+                <div class="col-md-3">
+                    @Html.Label("Kursy:")
+                    <font color="gray">
+                        aktywne @Html.CheckBox("showActivated", (bool)ViewBag.showActivated, new { @id = "showActivated" })
+                        nieaktywne @Html.CheckBox("showDeactivated", (bool)ViewBag.showDeactivated, new { @id = "showDeactivated" })
+                    </font>
+                </div>
+                <div class="col-md-9">
+                    @Html.Label("Szukana w tabeli fraza:")
+                    @Html.TextBox("searchString", (string)ViewBag.searchString, new
+                      {
+                          @id = "searchString",
+                          @class = "widetextarea",
+                          @style = "width:620px",
+                          placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"
+                      }
+                   )
+                </div>
             </div>
-            <div class="col-xs-9">
-                @Html.Label("Szukana w tabeli fraza:")
-                @Html.TextBox("searchString", (string)ViewBag.searchString, new { @id = "searchString", @class = "widetextarea", @style = "width:620px",
-                    placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"})
-            </div>
-        </div>
 
-        <p />
+            <p />
 
-        <div class="row col-xs-12">
-            <div class="col-xs-10">
-                @Html.PagedListPager(Model, page => Url.Action("List",
+            <div class="row col-md-12">
+                <div class="col-md-10">
+                    @Html.PagedListPager(Model, page => Url.Action("List",
                 new
                 {
                     sortColumn = ViewBag.sortColumn,
@@ -38,24 +45,27 @@
                     page
                 }
             ))
-            </div>
-            <div class="col-xs-1">
-                <button class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
-            </div>
-            <div class="col-xs-1" style="float:right">
-                <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
+                </div>
+                <div class="col-md-1" style="float:right">
+                    <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+                </div>
             </div>
         </div>
     }
 
     <p />
 
-    <div class="row thumbnail col-xs-12">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>
-                    @Html.ActionLink("Utworzono", "List",
-                        new {
+    <div class="row">
+        <div class="bordered col-md-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>
+                        @Html.ActionLink("Utworzono", "List",
+                        new
+                        {
                             showActivated = ViewBag.showActivated,
                             showDeactivated = ViewBag.showDeactivated,
                             searchString = ViewBag.searchString,
@@ -65,9 +75,9 @@
                         },
                         new { style = "text-decoration:none; color:black" }
                     )
-                </th>
-                <th>
-                    @Html.ActionLink("Nazwa kursu", "List",
+                    </th>
+                    <th>
+                        @Html.ActionLink("Nazwa kursu", "List",
                         new
                         {
                             showActivated = ViewBag.showActivated,
@@ -79,12 +89,12 @@
                         },
                         new { style = "text-decoration:none; color:black" }
                     )
-                </th>
-                <th>
-                    Opis
-                </th>
-                <th>
-                    @Html.ActionLink("Poziom", "List",
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th>
+                        @Html.ActionLink("Poziom", "List",
                         new
                         {
                             showActivated = ViewBag.showActivated,
@@ -96,9 +106,9 @@
                         },
                         new { style = "text-decoration:none; color:black" }
                     )
-                </th>
-                <th>
-                    @Html.ActionLink("Rozpoczęcie", "List",
+                    </th>
+                    <th>
+                        @Html.ActionLink("Rozpoczęcie", "List",
                         new
                         {
                             showActivated = ViewBag.showActivated,
@@ -110,9 +120,9 @@
                         },
                         new { style = "text-decoration:none; color:black" }
                     )
-                </th>
-                <th>
-                    @Html.ActionLink("Zakończenie", "List",
+                    </th>
+                    <th>
+                        @Html.ActionLink("Zakończenie", "List",
                         new
                         {
                             showActivated = ViewBag.showActivated,
@@ -124,47 +134,47 @@
                         },
                         new { style = "text-decoration:none; color:black" }
                     )
-                </th>
-                <th>
-                    Liczba godzin
-                </th>
-            </tr>
+                    </th>
+                    <th>
+                        Liczba godzin
+                    </th>
+                </tr>
 
-        @foreach (var item in Model)
-        {
-            var fontColor = "black";
+                @foreach (var item in Model)
+                {
+                    var fontColor = "black";
 
-            if (!item.IsActive)
-            {
-                fontColor = "silver";
-            }
+                    if (!item.IsActive)
+                    {
+                        fontColor = "silver";
+                    }
 
-            <tr style="color: @fontColor">
-                <td>
-                    @item.CreationDate.ToString("yyyy/MM/dd")
-                </td>
-                <td>
-                    @Html.ActionLink(item.Name, "FullDetails", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LanguageProficency.PLName)
-                </td>
-                <td>
-                    @item.StartDate.ToString("yyyy/MM/dd")
-                </td>
-                <td>
-                    @item.EndDate.ToString("yyyy/MM/dd")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfHours)
-                </td>
-            </tr>
-            }
-
-        </table>
+                    <tr style="color: @fontColor">
+                        <td>
+                            @item.CreationDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Name, "FullDetails", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LanguageProficency.PLName)
+                        </td>
+                        <td>
+                            @item.StartDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @item.EndDate.ToString("yyyy/MM/dd")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOfHours)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
 
