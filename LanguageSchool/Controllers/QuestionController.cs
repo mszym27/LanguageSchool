@@ -14,6 +14,7 @@ namespace LanguageSchool.Controllers
     public class QuestionController : LanguageSchoolController
     {
         [Route("Questions/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Index(int lessonSubjectId)
         {
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
@@ -25,6 +26,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Questions/CreateOpen/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult CreateOpen(int lessonSubjectId)
         {
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
@@ -36,6 +38,7 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("Questions/CreateOpen/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult CreateOpen(OpenQuestionViewModel openQuestionViewModel)
         {
             try
@@ -60,6 +63,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult CreateClosed(int lessonSubjectId)
         {
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
@@ -70,6 +74,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Questions/DeleteClosed/{id}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteClosed(int id)
         {
             try
@@ -154,6 +159,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Questions/DeleteOpen/{id}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteOpen(int id)
         {
             try
@@ -238,6 +244,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Questions/AddAnswers/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult AddAnswers(ClosedQuestionViewModel closedQuestion)
         {
             return View(closedQuestion);
@@ -245,6 +252,7 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult CreateClosed(ClosedQuestionViewModel closedQuestionViewModel, string submit)
         {
             try

@@ -32,8 +32,6 @@ namespace LanguageSchool.Models.ViewModels
         public Course Course { get; set; }
         public Nullable<int> EntryTestId { get; set; }
         public Nullable<int> Points { get; set; }
-        public string TakenTestName { get; set; }
-        public string TotalScore { get; set; }
 
         public ContactRequestViewModel()
         {

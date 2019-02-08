@@ -29,6 +29,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Group/Details/{id}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Details(int id)
         {
             var group = UnitOfWork.GroupRepository.GetById(id);
@@ -39,6 +40,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Group/FullDetails/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult FullDetails(int? id)
         {
             if (id == null)
@@ -60,6 +62,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Group/AddUsers/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult AddUsers(int id)
         {
             var group = UnitOfWork.GroupRepository.GetById(id);
@@ -111,6 +114,7 @@ namespace LanguageSchool.Controllers
 
         [HttpPost]
         [Route("Group/AddUsers/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult AddUsers(UsersGroupViewModel usersGroupViewModel)
         {
             var group = UnitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
@@ -136,6 +140,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Group/Create/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create(int id)
         {
             TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź dane nowej grupy", "wybierz prowadzącego oraz daty w których odbywać się będą zajęcia");
@@ -145,6 +150,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Group/PickHours/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult PickHours(GroupViewModel groupViewModel)
         {
             return View(groupViewModel);
@@ -153,6 +159,7 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [Route("Group/PickHours/{id}")]
         [Route("Group/Create/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
             var selectedTeacher = UnitOfWork.UserRepository.GetById(groupViewModel.UserId);
@@ -251,8 +258,8 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        [Authorize(Roles = "Teacher")]
         [Route("Group/StudentDetails/{id}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult StudentDetails(int userGroupId)
         {
             var userGroup = UnitOfWork.UserGroupRepository.GetById(userGroupId);
@@ -355,56 +362,5 @@ namespace LanguageSchool.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
-        //// POST: Group/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,CourseId,Name,IsActive")] Group group)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Groups.Add(group);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", group.CourseId);
-        //    return View(group);
-        //}
-
-        //// GET: Group/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Group group = db.Groups.Find(id);
-        //    if (group == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", group.CourseId);
-        //    return View(group);
-        //}
-
-        //// POST: Group/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,CourseId,Name,IsActive")] Group group)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(group).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", group.CourseId);
-        //    return View(group);
-        //}
     }
 }

@@ -10,7 +10,6 @@ namespace LanguageSchool.Controllers
 {
     public class HomeController : LanguageSchoolController
     {
-        // GET: Home
         public ActionResult Index()
         {
             var loggedUser = GetLoggedUser();

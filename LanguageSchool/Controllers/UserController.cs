@@ -24,7 +24,7 @@ namespace LanguageSchool.Controllers
             return View(model);
         }
 
-        // GET: User/Details/5
+        [Authorize(Roles = "Secretary")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,6 +39,7 @@ namespace LanguageSchool.Controllers
             return View(user);
         }
 
+        [Authorize(Roles = "Secretary")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

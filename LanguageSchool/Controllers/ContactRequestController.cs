@@ -54,6 +54,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("ContactRequest/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Details(int id)
         {
             var contactRequest = UnitOfWork.ContactRequestRepository.GetById(id);

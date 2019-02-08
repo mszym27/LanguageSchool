@@ -48,7 +48,6 @@ namespace LanguageSchool.Controllers
             return View(userMessagesViewModels.ToPagedList(page, 20));
         }
 
-        [Authorize]
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
         {
@@ -72,9 +71,9 @@ namespace LanguageSchool.Controllers
             return View(userMessageViewModel);
         }
 
-        [Authorize(Roles = "Secretary, Teacher")]
         [HttpGet]
         [Route("Message/SendToUser/{userId}")]
+        [Authorize(Roles = "Secretary, Teacher")]
         public ActionResult SendToUser(int userId)
         {
             var user = UnitOfWork.UserRepository.GetById(userId);
@@ -82,9 +81,9 @@ namespace LanguageSchool.Controllers
             return View(new SendToUserVM(user));
         }
 
-        [Authorize(Roles = "Secretary, Teacher")]
         [HttpPost]
         [Route("Message/SendToUser/{userId}")]
+        [Authorize(Roles = "Secretary, Teacher")]
         public ActionResult SendToUser(SendToUserVM messageToSend)
         {
             try
@@ -125,9 +124,9 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        [Authorize(Roles = "Secretary")]
         [HttpGet]
         [Route("Message/Send/")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Send()
         {
             UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
@@ -151,9 +150,9 @@ namespace LanguageSchool.Controllers
             return View(userMessageViewModel);
         }
 
-        [Authorize(Roles = "Secretary")]
         [HttpPost]
         [Route("Message/Send")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Send(UserMessageViewModel uMVM)
         {
             try
@@ -256,7 +255,6 @@ namespace LanguageSchool.Controllers
             return userMessages;
         }
 
-        [Authorize]
         [Route("Message/Delete/{Id}")]
         public ActionResult Delete(int Id)
         {

@@ -18,7 +18,7 @@ namespace LanguageSchool.Controllers
     public class UserDataController : LanguageSchoolController
     {
         // GET: UserData
-        // dla nauczycieli oraz studentow, ograniczone do ich grup
+        [Authorize(Roles = "Teacher")]
         public ActionResult Index()
         {
             var userDatas = UnitOfWork.UserDataRepository.Get(ud => !ud.IsDeleted);
@@ -26,7 +26,7 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("UserData/List/")]
-        [Authorize(Roles = "Secretary, Administrator")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult List(
                 Nullable<System.DateTime> creationDateFrom,
                 Nullable<System.DateTime> creationDateTo,
@@ -112,6 +112,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("UserData/AddGroups/{userId}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult AddGroups(int userId)
         {
             var student = UnitOfWork.UserRepository.GetById(userId);
@@ -197,6 +198,7 @@ namespace LanguageSchool.Controllers
         // todo
         [HttpPost]
         [Route("UserData/AddGroups/{userId}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult AddGroups(int userId, string submit)
         {
             var student = UnitOfWork.UserRepository.GetById(userId);
@@ -214,6 +216,7 @@ namespace LanguageSchool.Controllers
 
         // GET: UserData/Details/5
         [Route("UserData/Details/{Id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Details(int? Id)
         {
             if (Id == null)
@@ -235,7 +238,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("UserData/Create/{contactRequestId}")]
-        [Authorize(Roles = "Secretary, Administrator")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create(int contactRequestId)
         {
             var contactRequest = UnitOfWork.ContactRequestRepository.GetById(contactRequestId);
@@ -251,7 +254,7 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("UserData/Create")]
-        [Authorize(Roles = "Secretary, Administrator")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create()
         {
             UserDataViewModel userDataViewModel = new UserDataViewModel();
@@ -270,7 +273,7 @@ namespace LanguageSchool.Controllers
         [Route("UserData/Create")]
         [Route("UserData/Create/{Id}")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Secretary, Administrator")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Create(UserDataViewModel udvm)
         {
             //if (ModelState.IsValid)
@@ -348,64 +351,5 @@ namespace LanguageSchool.Controllers
                 return View(udvm);
             }
         }
-
-        //// GET: UserData/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    UserData userData = db.UserDatas.Find(id);
-        //    if (userData == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Login", userData.UserId);
-        //    return View(userData);
-        //}
-
-        //// POST: UserData/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,IsDeleted,CreationDate,DeletionDate,UserId,Name,Surname,City,Street,HouseNumber,HomeNumber,PublicPhoneNumber,PrivatePhoneNumber,EmailAdress,Comment")] UserData userData)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(userData).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Login", userData.UserId);
-        //    return View(userData);
-        //}
-
-        //// GET: UserData/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    UserData userData = db.UserDatas.Find(id);
-        //    if (userData == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(userData);
-        //}
-
-        //// POST: UserData/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    UserData userData = db.UserDatas.Find(id);
-        //    db.UserDatas.Remove(userData);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
     }
 }

@@ -40,8 +40,21 @@ namespace LanguageSchool.Controllers
             return View(CoursesViewModels.ToPagedList(page, 3));
         }
 
+        [Route("Course/{id}")]
+        public ActionResult Details(int id)
+        {
+            Course course = UnitOfWork.CourseRepository.GetById(id);
+
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(course);
+        }
+
         [Route("Course/List/")]
-        //[Authorize(Roles = "Secretary")] // do przywrocenia po nauczycielu
+        [Authorize(Roles = "Secretary")]
         public ActionResult List(
             string searchString, bool showActivated = true, bool showDeactivated = false,
             string sortColumn = "startDate", string sortDirection = "asc", int page = 1
@@ -92,20 +105,7 @@ namespace LanguageSchool.Controllers
 
             return View(courses.ToPagedList(page, pageSize));
         }
-
-        [Route("Course/{id}")]
-        public ActionResult Details(int id)
-        {
-            Course course = UnitOfWork.CourseRepository.GetById(id);
-
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(course);
-        }
-
+        
         [Route("Course/FullDetails/{id}")]
         [Authorize(Roles = "Secretary")]
         public ActionResult FullDetails(int id)

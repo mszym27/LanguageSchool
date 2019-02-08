@@ -16,13 +16,14 @@ namespace LanguageSchool.Controllers
     {
         // GET: Material
         [Route("Material/Index/{id}")]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int id)
         {
             var materials = UnitOfWork.MaterialRepository.Get(m => !m.IsDeleted && m.LessonSubjectId == id);
             return View(materials.ToList());
         }
 
-        [HttpGet]
+        [Authorize(Roles = "Teacher, Student")]
         public FileResult Download(int id)
         {
             var requestedMaterial = UnitOfWork.MaterialRepository.Get(m => !m.IsDeleted &&  m.Id == id).FirstOrDefault();
@@ -31,19 +32,17 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Material/Upload/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Upload(int lessonSubjectId)
         {
             return View(new MaterialViewModel() { LessonSubjectId = lessonSubjectId });
         }
 
-        [Route("Material/Upload/{lessonSubjectId}")]
-        // POST: Material/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Route("Material/Upload/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Upload([Bind(Include = "LessonSubjectId,Name,Comment,File")] MaterialViewModel materialViewModel)
-        {
+        { //todo
             var material = new Material();
 
             material.CreationDate = DateTime.Now;
