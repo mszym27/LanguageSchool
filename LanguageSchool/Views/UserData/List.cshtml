@@ -263,9 +263,11 @@
         var currentYear = current.getFullYear();
         var currentMonth = current.getMonth();
 
-        var firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+        var firstDayOfMonth = new Date(currentYear, currentMonth, 2);
 
         //daty - todo
+
+        debugger;
 
         var creationDateFrom = document.getElementById("creationDateFrom");
         var creationDateTo = document.getElementById("creationDateTo");
@@ -279,7 +281,7 @@
         var preferredHoursTo = document.getElementById("preferredHoursTo");
 
         preferredHoursFrom.value = 8;
-        preferredHoursTo.value = (now.getHours() + 1);
+        preferredHoursTo.value = (current.getHours() + 1);
 
         //dropdown
 
