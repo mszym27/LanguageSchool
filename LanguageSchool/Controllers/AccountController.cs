@@ -26,19 +26,18 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                // Verification.    
                 if (this.Request.IsAuthenticated)
                 {
-                    // Info.    
                     return this.RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception ex)
             {
-                // Info    
                 Console.Write(ex);
             }
-            // Info.    
+
+            ViewBag.ReturnUrl = returnUrl;
+
             return this.View();
         }
 
