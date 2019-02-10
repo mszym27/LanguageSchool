@@ -120,5 +120,6 @@
     <None Include="Scripts\dictionary_rewrite.sql" />
     <None Include="Scripts\adddefaults.sql" />
     <None Include="Scripts\new_init.sql" />
+    <None Include="Scripts\skrypt_aktualizacja.sql" />
   </ItemGroup>
 </Project>
