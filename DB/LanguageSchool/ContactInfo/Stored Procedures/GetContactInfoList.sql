@@ -204,7 +204,7 @@ EXECUTE sp_executesql @Query, @QueryParameters
 --	,temp.IsContactRequest
 --	,COUNT(1) OVER() AS TotalRowCount
 --FROM (
---	SELECT [UserData].[Id]
+--	SELECT [UserData].[UserId]
 --		,[UserData].[CreationDate]
 --		,[UserData].[Name] + ' ' + [UserData].[Surname] AS FullName
 --		,[UserData].[City]
