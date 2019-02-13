@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
 using LanguageSchool.Models.ViewModels.GroupViewModels;
@@ -294,7 +293,6 @@ namespace LanguageSchool.Controllers
                 group.Name = groupVM.Name;
                 group.StartDate = groupVM.StartDate;
                 group.EndDate = groupVM.EndDate;
-                group.IsActive = groupVM.IsActive;
 
                 UnitOfWork.GroupRepository.Update(group);
 

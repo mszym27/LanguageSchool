@@ -19,10 +19,8 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
-        public bool IsActive { get; set; }
 
         public SelectList Teachers { get; }
-        [Required(ErrorMessage = "Proszę wskazać nauczyciela")]
         public int TeacherId { get; set; }
 
         public GroupInputVM() { }
@@ -33,7 +31,6 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
             Name = group.Name;
             StartDate = group.StartDate;
             EndDate = group.EndDate;
-            IsActive = group.IsActive;
 
             Teachers = PopulateList.AllUsersInRole((int)Consts.Roles.Teacher);
         }

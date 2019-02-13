@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Edytuj dane kursu"); }
+        @Html.Partial("_PartHeader", "Edytuj dane kursu")
         <div class="row form-horizontal">
             <div class="bordered col-md-12">
                 <div class="row form-group">

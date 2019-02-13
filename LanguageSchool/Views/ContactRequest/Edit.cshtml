@@ -1,0 +1,99 @@
+﻿@model LanguageSchool.Models.ViewModels.ContactRequestViewModels.ContactRequestInputVM
+
+@{
+    ViewBag.Title = "Prośba o kontakt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ContactRequestId)
+
+    <div class="container">
+        @Html.Partial("_PartHeader", "Edytuj prośbę o kontakt")
+        <div class="row form-horizontal">
+            <div class="bordered col-md-12">
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Imię</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="control-label col-md-2">
+                        <strong>Nazwisko</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Adres email</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.EmailAdress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailAdress, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="control-label col-md-2">
+                        <strong>Telefon</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Godziny kontaktu od</strong>
+                    </div>
+                    <div class="col-md-1">
+                        @Html.EditorFor(model => model.PreferredHoursFrom, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreferredHoursFrom, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="control-label col-md-2 col-md-offset-3">
+                        <strong>Godziny kontaktu do</strong>
+                    </div>
+                    <div class="col-md-1">
+                        @Html.EditorFor(model => model.PreferredHoursTo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreferredHoursTo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="control-label col-md-2">
+                        <strong>Oczekująca</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsAwaiting)
+                            @Html.ValidationMessageFor(model => model.IsAwaiting, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="control-label col-md-2">
+                        <strong>Komentarz</strong>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <div class="col-md-2 col-md-offset-10">
+                <input type="submit" value="Zapisz zmiany" class="btn btn-block btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

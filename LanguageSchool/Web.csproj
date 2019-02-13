@@ -318,6 +318,7 @@
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\GroupDetailsViewModels\StudentVM.cs" />
+    <Compile Include="Models\ViewModels\ContactRequestViewModels\ContactRequestInputVM.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels\GroupInputVM.cs" />
     <Compile Include="Models\ViewModels\SendMessageViewModels\SendToUserVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentAwaitingTestVM.cs" />
@@ -505,6 +506,7 @@
     <Content Include="Views\Shared\_DeleteDialog.cshtml" />
     <Content Include="Views\Group\StudentDetails.cshtml" />
     <Content Include="Views\Message\SendToUser.cshtml" />
+    <Content Include="Views\ContactRequest\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
