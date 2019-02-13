@@ -47,9 +47,13 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Course");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(crvm);
             }
         }
 

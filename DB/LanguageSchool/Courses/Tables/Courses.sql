@@ -12,7 +12,6 @@
     [LanguageProficencyId] INT             NOT NULL,
     CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Courses_DictionaryItems] FOREIGN KEY ([LanguageProficencyId]) REFERENCES [Administration].[DictionaryItems] ([Id]),
-    CONSTRAINT [FK_Courses_LanguageProficencies] FOREIGN KEY ([LanguageProficencyId]) REFERENCES [Administration].[DictionaryItems] ([Id])
 );
 
 
