@@ -97,7 +97,6 @@
     <Build Include="Tests\Tables\TestsLessonSubjects.sql" />
     <Build Include="Users\Tables\UsersMessages.sql" />
     <Build Include="Security\Administration.sql" />
-    <Build Include="Users\Stored Procedures\GetUserTimetable.sql" />
     <Build Include="Users\Tables\UsersGroups.sql" />
     <Build Include="Courses\Tables\GroupTimes.sql" />
     <Build Include="Courses\Tables\Groups.sql" />
