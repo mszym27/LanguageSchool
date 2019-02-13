@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.GroupViewModels;
 using LanguageSchool.Models.ViewModels.StudentGroupViewModels;
 
 namespace LanguageSchool.Controllers
@@ -255,6 +257,56 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
 
                 return RedirectToAction("FullDetails", "Group", new { id = group.Id });
+            }
+        }
+
+        [HttpGet]
+        [Route("Group/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var group = UnitOfWork.GroupRepository.GetById(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var groupVM = new GroupInputVM(group);
+
+            return View(groupVM);
+        }
+
+        [HttpPost]
+        [Route("Group/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(GroupInputVM groupVM)
+        {
+            try
+            {
+                var group = UnitOfWork.GroupRepository.GetById(groupVM.GroupId);
+
+                group.Name = groupVM.Name;
+                group.StartDate = groupVM.StartDate;
+                group.EndDate = groupVM.EndDate;
+                group.IsActive = groupVM.IsActive;
+
+                UnitOfWork.GroupRepository.Update(group);
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("FullDetails", new { id = group.Id });
+            }
+            catch
+            {
+                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
+
+                return View(groupVM);
             }
         }
 

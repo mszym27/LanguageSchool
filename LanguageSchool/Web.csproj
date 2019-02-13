@@ -318,6 +318,7 @@
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\GroupDetailsViewModels\StudentVM.cs" />
+    <Compile Include="Models\ViewModels\GroupViewModels\GroupInputVM.cs" />
     <Compile Include="Models\ViewModels\SendMessageViewModels\SendToUserVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentAwaitingTestVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentGroupVM.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserVM.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\UserDataViewModel.cs" />
     <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />

@@ -20,7 +20,7 @@ namespace LanguageSchool.Models.ViewModels
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
                    ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string PhoneNumber { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Adres email ma nieprawidłowy format")]
         public string EmailAdress { get; set; }
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
