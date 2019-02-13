@@ -1,4 +1,4 @@
-﻿@model LanguageSchool.Models.ViewModels.ContactRequestViewModel
+﻿@model LanguageSchool.Models.ViewModels.ContactRequestViewModels.ContactRequestsDetailsVM
 
 @{
     ViewBag.Title = "Details";
@@ -6,22 +6,22 @@
 }
 
 <div class="container-fluid">
-    @{ Html.RenderPartial("_PartHeader", "Prośba o kontakt"); }
+    @Html.Partial("_PartHeader", "Prośba o kontakt")
     <div class="row">
         <div class="bordered col-md-12">
             <div class="row form-group">
                 <div class="control-label col-md-2">
-                    <strong>Imię i nazwisko</strong>
+                    <strong>Imię</strong>
                 </div>
                 <div class="col-md-4">
-                    @Html.DisplayFor(model => model.Fullname)
+                    @Html.DisplayFor(model => model.Name)
                 </div>
 
                 <div class="control-label col-md-2">
-                    <strong>Numer telefonu</strong>
+                    <strong>Nazwisko</strong>
                 </div>
                 <div class="col-md-4">
-                    <a href="tel:@Model.PhoneNumber.Replace("-", "")">@Model.PhoneNumber</a>
+                    @Html.DisplayFor(model => model.Surname)
                 </div>
             </div>
             <div class="row form-group">
@@ -33,22 +33,37 @@
                 </div>
 
                 <div class="control-label col-md-2">
-                    <strong>Kurs</strong>
+                    <strong>Data modyfikacji prośby</strong>
                 </div>
                 <div class="col-md-4">
-                    @Html.DisplayFor(model => model.Course.Name)
+                    @Html.DisplayFor(model => model.ModificationDate)
                 </div>
             </div>
             <div class="row form-group">
                 <div class="control-label col-md-2">
+                    <strong>Numer telefonu</strong>
+                </div>
+                <div class="col-md-4">
+                    <a href="tel:@Model.PhoneNumberContact">@Model.PhoneNumber</a>
+                </div>
+
+                <div class="control-label col-md-2">
                     <strong>Adres email</strong>
                 </div>
                 <div class="col-md-4">
-                    @{ string subject = "Prośba o kontakt - " + Model.Course.Name;
+                    @{ string subject = "Prośba o kontakt - " + Model.CourseName;
                         string body = "Dzień dobry,%0D%0A%0D%0A" +
-                            "Piszę w odpowiedzi na prośbę o kontakt złożoną w kwestii prowadzonego przez naszą szkołę szkolenia - " + Model.Course.Name + ".%0D%0A%0D%0A"; }
+                            "Piszę w odpowiedzi na prośbę o kontakt złożoną w kwestii prowadzonego przez naszą szkołę szkolenia. "; }
 
                     <a href="mailto:@Model.EmailAdress&subject=@subject&body=@body">@Model.EmailAdress</a>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="control-label col-md-2">
+                    <strong>Kurs</strong>
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.CourseName)
                 </div>
 
                 <div class="control-label col-md-2">
@@ -63,10 +78,10 @@
     <div class="row col-md-12">
         <div class="col-md-4 col-md-offset-8">
             <div class="col-md-6">
-                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.Id })'">Edytuj</button>
+                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("Edit", "ContactRequest", new { id = @Model.ContactRequestId })'">Edytuj</button>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData")/@Model.Id'">Utwórz użytkownika</button>
+                <button class="btn btn-block btn-primary" type="button" onclick="location.href='@Url.Action("Create", "UserData")/@Model.ContactRequestId'">Utwórz użytkownika</button>
             </div>
         </div>
     </div>

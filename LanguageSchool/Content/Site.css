@@ -49,7 +49,3 @@ div.bordered {
     border-radius: 5px;
     -moz-border-radius: 5px;
 }
-
-button.close {
-    color: white;
-}

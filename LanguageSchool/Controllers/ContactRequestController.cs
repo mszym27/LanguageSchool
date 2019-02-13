@@ -61,8 +61,13 @@ namespace LanguageSchool.Controllers
 
         [Route("ContactRequest/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var contactRequest = UnitOfWork.ContactRequestRepository.GetById(id);
 
             if (contactRequest == null)
@@ -70,12 +75,14 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            var contactRequestViewModel = new ContactRequestViewModel(contactRequest);
+            var contactRequestVM = new ContactRequestsDetailsVM(contactRequest);
 
-            return View(contactRequestViewModel);
+            return View(contactRequestVM);
         }
 
         [HttpGet]
+        [Route("ContactRequest/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +103,8 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
+        [Route("ContactRequest/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
         public ActionResult Edit(ContactRequestInputVM contactRequestVM)
         {
             try
@@ -117,9 +126,7 @@ namespace LanguageSchool.Controllers
 
                 UnitOfWork.Save();
 
-                TempData["Alert"] = new AlertViewModel(Consts.Success, "Wysłano pomyślnie", "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt");
-
-                return RedirectToAction("Index", "Course");
+                return RedirectToAction("Details", new { id = contactRequestVM.ContactRequestId });
             }
             catch (Exception ex)
             {

@@ -317,6 +317,7 @@
     <Compile Include="Models\UserTest.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\ContactRequestViewModels\ContactRequestsDetailsVM.cs" />
     <Compile Include="Models\ViewModels\GroupDetailsViewModels\StudentVM.cs" />
     <Compile Include="Models\ViewModels\ContactRequestViewModels\ContactRequestInputVM.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels\GroupInputVM.cs" />
