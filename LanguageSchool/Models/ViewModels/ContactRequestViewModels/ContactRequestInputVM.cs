@@ -28,8 +28,10 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
         public bool IsAwaiting { get; set; }
         public int CourseId { get; set; }
 
+        // Create
         public ContactRequestInputVM() { }
 
+        // Edit
         public ContactRequestInputVM(ContactRequest contactRequest)
         {
             ContactRequestId = contactRequest.Id;

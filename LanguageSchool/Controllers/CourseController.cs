@@ -7,6 +7,8 @@ using PagedList;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.CourseViewModels;
+using System.Net;
 
 namespace LanguageSchool.Controllers
 {
@@ -41,8 +43,13 @@ namespace LanguageSchool.Controllers
         }
 
         [Route("Course/{id}")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             Course course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
@@ -108,8 +115,13 @@ namespace LanguageSchool.Controllers
         
         [Route("Course/FullDetails/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult FullDetails(int id)
+        public ActionResult FullDetails(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             Course course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
@@ -117,7 +129,9 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            return View(course);
+            var courseVM = new CourseDetailsVM(course);
+
+            return View(courseVM);
         }
 
         [HttpGet]
@@ -125,31 +139,27 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create()
         {
-            var courseViewModel = new CourseViewModel();
+            var courseVM = new CourseInputVM();
 
-            courseViewModel.LanguageProficenciens = new SelectList(Consts.LanguageProficencyList,
-                                         "Key",
-                                         "Value");
-
-            return View(courseViewModel);
+            return View(courseVM);
         }
 
         [HttpPost]
         [Route("Course/Create/")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Create(CourseViewModel courseViewModel)
+        public ActionResult Create(CourseInputVM courseVM)
         {
             try
             {
                 Course course = new Course()
                 {
-                    Name = courseViewModel.Name,
-                    Description = courseViewModel.Description,
-                    LanguageProficencyId = courseViewModel.LanguageProficencyId,
-                    IsActive = courseViewModel.IsActive,
-                    StartDate = courseViewModel.StartDate,
-                    EndDate = courseViewModel.EndDate,
-                    NumberOfHours = courseViewModel.NumberOfHours,
+                    Name = courseVM.Name,
+                    Description = courseVM.Description,
+                    LanguageProficencyId = courseVM.LanguageProficencyId,
+                    IsActive = courseVM.IsActive,
+                    StartDate = courseVM.StartDate,
+                    EndDate = courseVM.EndDate,
+                    NumberOfHours = courseVM.NumberOfHours,
                     CreationDate = DateTime.Now
                 };
 
@@ -159,18 +169,25 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("FullDetails", new { id = course.Id });
             }
-            catch
+            catch (Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error,"Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
+                var errorLogGuid = LogException(ex);
 
-                return View(courseViewModel);
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(courseVM);
             }
         }
 
         [Route("Course/Edit/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var course = UnitOfWork.CourseRepository.GetById(id);
 
             if (course == null)
@@ -178,36 +195,27 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            CourseViewModel courseViewModel = new CourseViewModel(course);
+            var courseVM = new CourseInputVM(course);
 
-            courseViewModel.LanguageProficenciens = new SelectList(Consts.LanguageProficencyList,
-                                         "Key",
-                                         "Value");
-
-            return View(courseViewModel);
+            return View(courseVM);
         }
 
         [Route("Course/Edit/{id}")]
         [Authorize(Roles = "Secretary")]
         [HttpPost]
-        public ActionResult Edit(CourseViewModel courseViewModel)
+        public ActionResult Edit(CourseInputVM courseVM)
         {
             try
             {
-                var course = UnitOfWork.CourseRepository.GetById(courseViewModel.Id);
+                var course = UnitOfWork.CourseRepository.GetById(courseVM.CourseId);
 
-                if (course == null)
-                {
-                    return HttpNotFound();
-                }
-
-                course.Name = courseViewModel.Name;
-                course.Description = courseViewModel.Description;
-                course.LanguageProficencyId = courseViewModel.LanguageProficencyId;
-                course.IsActive = courseViewModel.IsActive;
-                course.StartDate = courseViewModel.StartDate;
-                course.EndDate = courseViewModel.EndDate;
-                course.NumberOfHours = courseViewModel.NumberOfHours;
+                course.Name = courseVM.Name;
+                course.Description = courseVM.Description;
+                course.LanguageProficencyId = courseVM.LanguageProficencyId;
+                course.IsActive = courseVM.IsActive;
+                course.StartDate = courseVM.StartDate;
+                course.EndDate = courseVM.EndDate;
+                course.NumberOfHours = courseVM.NumberOfHours;
 
                 UnitOfWork.CourseRepository.Update(course);
 
@@ -215,27 +223,34 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("FullDetails", new { id = course.Id });
             }
-            catch
+            catch (Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
+                var errorLogGuid = LogException(ex);
 
-                return View(courseViewModel);
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(courseVM);
             }
         }
 
         [Route("Course/DeActivate/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult DeActivate(int id)
+        public ActionResult DeActivate(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var course = UnitOfWork.CourseRepository.GetById(id);
+
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
             try
             {
-                var course = UnitOfWork.CourseRepository.GetById(id);
-
-                if (course == null)
-                {
-                    return HttpNotFound();
-                }
-
                 course.IsActive = !course.IsActive;
 
                 UnitOfWork.CourseRepository.Update(course);
@@ -244,9 +259,11 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("FullDetails", new { id = id });
             }
-            catch
+            catch (Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
                 return RedirectToAction("FullDetails", new { id = id });
             }
