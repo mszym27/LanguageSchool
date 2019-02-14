@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 
-using LanguageSchool.Models.ViewModels.GroupDetailsViewModels;
+using LanguageSchool.Models.ViewModels.GroupViewModels;
 
 namespace LanguageSchool.Models.ViewModels
 {

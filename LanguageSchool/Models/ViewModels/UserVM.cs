@@ -2,8 +2,8 @@
 {
     public class UserVM
     {
-        public int UserId { get; }
-        public string Fullname { get; }
+        public int UserId { get; protected set; }
+        public string Fullname { get; protected set; }
 
         public UserVM() { }
 

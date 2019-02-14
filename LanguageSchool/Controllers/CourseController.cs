@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
 using PagedList;
 
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
 using LanguageSchool.Models.ViewModels.CourseViewModels;
-using System.Net;
 
 namespace LanguageSchool.Controllers
 {
@@ -151,17 +150,16 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                Course course = new Course()
-                {
-                    Name = courseVM.Name,
-                    Description = courseVM.Description,
-                    LanguageProficencyId = courseVM.LanguageProficencyId,
-                    IsActive = courseVM.IsActive,
-                    StartDate = courseVM.StartDate,
-                    EndDate = courseVM.EndDate,
-                    NumberOfHours = courseVM.NumberOfHours,
-                    CreationDate = DateTime.Now
-                };
+                Course course = new Course();
+
+                course.Name = courseVM.Name;
+                course.Description = courseVM.Description;
+                course.LanguageProficencyId = courseVM.LanguageProficencyId;
+                course.IsActive = courseVM.IsActive;
+                course.StartDate = courseVM.StartDate;
+                course.EndDate = courseVM.EndDate;
+                course.NumberOfHours = courseVM.NumberOfHours;
+                course.CreationDate = DateTime.Now;
 
                 UnitOfWork.CourseRepository.Insert(course);
 
@@ -278,11 +276,6 @@ namespace LanguageSchool.Controllers
                 var now = DateTime.Now;
 
                 var course = UnitOfWork.CourseRepository.GetById(id);
-
-                if (course == null)
-                {
-                    return HttpNotFound();
-                }
 
                 course.IsDeleted = true;
 
