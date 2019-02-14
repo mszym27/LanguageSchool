@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 
-namespace LanguageSchool.Models.ViewModels.GroupDetailsViewModels
+namespace LanguageSchool.Models.ViewModels.GroupViewModels
 {
     public class StudentVM
     {

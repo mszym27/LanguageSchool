@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LanguageSchool.Models.ViewModels
+using LanguageSchool.DAL;
+
+namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
 {
-    public class ContactRequestViewModel
+    public class ContactRequestInputVM
     {
-        public int Id { get; set; }
-        public string CreationDate { get; set; }
+        public int ContactRequestId { get; set; }
         [Required(ErrorMessage = "Proszę podać imię")]
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Fullname { get; set; }
         [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Numer telefonu wymagany")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
@@ -28,26 +25,24 @@ namespace LanguageSchool.Models.ViewModels
         public int PreferredHoursFrom { get; set; }
         [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
         public int PreferredHoursTo { get; set; }
+        public bool IsAwaiting { get; set; }
         public int CourseId { get; set; }
-        public Course Course { get; set; }
 
-        public ContactRequestViewModel()
-        {
-            PreferredHoursFrom = 8;
-            PreferredHoursTo = 20;
-        }
+        // Create
+        public ContactRequestInputVM() { }
 
-        public ContactRequestViewModel(ContactRequest contactRequest)
+        // Edit
+        public ContactRequestInputVM(ContactRequest contactRequest)
         {
-            Id = contactRequest.Id;
-            Fullname = contactRequest.Name + " " + contactRequest.Surname;
-            CreationDate = contactRequest.CreationDate.ToString("yyyy-MM-dd");
+            ContactRequestId = contactRequest.Id;
+            Name = contactRequest.Name;
+            Surname = contactRequest.Surname;
             PhoneNumber = contactRequest.PhoneNumber;
             EmailAdress = contactRequest.EmailAdress;
             Comment = contactRequest.Comment;
             PreferredHoursFrom = contactRequest.PreferredHoursFrom;
             PreferredHoursTo = contactRequest.PreferredHoursTo;
-            Course = contactRequest.Course;
+            IsAwaiting = contactRequest.IsAwaiting;
         }
     }
 }

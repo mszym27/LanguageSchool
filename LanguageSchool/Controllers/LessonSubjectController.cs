@@ -174,7 +174,7 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            LessonSubject lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
 
             if (lessonSubject == null)
             {

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.GroupViewModels;
 using LanguageSchool.Models.ViewModels.StudentGroupViewModels;
 
 namespace LanguageSchool.Controllers
@@ -16,27 +17,42 @@ namespace LanguageSchool.Controllers
     public class GroupController : LanguageSchoolController
     {
         [Route("Group/View/{id}")]
-        public ActionResult View(int id)
+        public ActionResult View(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var loggedUser = GetLoggedUser();
 
             switch (loggedUser.Role.Id)
             {
                 case ((int)Consts.Roles.Teacher): return RedirectToAction("Details", "Group", id);
                 case ((int)Consts.Roles.Student): return RedirectToAction("LessonSubjects", "LessonSubject", id);
-                default: return View();
+                default: return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
 
         [Route("Group/Details/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var group = UnitOfWork.GroupRepository.GetById(id);
 
-            var groupViewModel = new GroupViewModel(group);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
 
-            return View(groupViewModel);
+            var groupVM = new TeacherGroupVM(group);
+
+            return View(groupVM);
         }
 
         [Route("Group/FullDetails/{id}")]
@@ -258,11 +274,72 @@ namespace LanguageSchool.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Group/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var group = UnitOfWork.GroupRepository.GetById(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var groupVM = new GroupInputVM(group);
+
+            return View(groupVM);
+        }
+
+        [HttpPost]
+        [Route("Group/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(GroupInputVM groupVM)
+        {
+            try
+            {
+                var group = UnitOfWork.GroupRepository.GetById(groupVM.GroupId);
+
+                group.Name = groupVM.Name;
+                group.StartDate = groupVM.StartDate;
+                group.EndDate = groupVM.EndDate;
+
+                UnitOfWork.GroupRepository.Update(group);
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("FullDetails", new { id = group.Id });
+            }
+            catch(Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(groupVM);
+            }
+        }
+
         [Route("Group/StudentDetails/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult StudentDetails(int userGroupId)
+        public ActionResult StudentDetails(int? userGroupId)
         {
+            if (userGroupId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var userGroup = UnitOfWork.UserGroupRepository.GetById(userGroupId);
+
+            if (userGroup == null)
+            {
+                return HttpNotFound();
+            }
 
             var groupViewModel = new StudentGroupVM(userGroup);
 
@@ -271,18 +348,18 @@ namespace LanguageSchool.Controllers
 
         [Route("Group/Delete/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;
 
                 var group = UnitOfWork.GroupRepository.GetById(id);
-
-                if (group == null)
-                {
-                    return HttpNotFound();
-                }
 
                 group.IsDeleted = true;
                 group.DeletionDate = now;
@@ -333,18 +410,18 @@ namespace LanguageSchool.Controllers
 
         [Route("Group/DeleteStudent/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult DeleteStudent(int id)
+        public ActionResult DeleteStudent(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;
 
                 var userGroup = UnitOfWork.UserGroupRepository.GetById(id);
-
-                if (userGroup == null)
-                {
-                    return HttpNotFound();
-                }
 
                 userGroup.IsDeleted = true;
                 userGroup.DeletionDate = now;

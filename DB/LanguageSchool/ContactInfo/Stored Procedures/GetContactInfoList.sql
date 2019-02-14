@@ -55,7 +55,7 @@ FROM ( '
 IF(@ShowUserData = 1)
 BEGIN
 	SET @Query += N'
-	SELECT [UserData].[Id]
+	SELECT [UserData].[UserId] AS Id
 		,[UserData].[CreationDate]
 		,[UserData].[Name] + '' '' + [UserData].[Surname] AS FullName
 		,[UserData].[City]

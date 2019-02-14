@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
+using LanguageSchool.Models.ViewModels.ContactRequestViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -47,16 +49,25 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Course");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(crvm);
             }
         }
 
         [Route("ContactRequest/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var contactRequest = UnitOfWork.ContactRequestRepository.GetById(id);
 
             if (contactRequest == null)
@@ -64,9 +75,67 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            var contactRequestViewModel = new ContactRequestViewModel(contactRequest);
+            var contactRequestVM = new ContactRequestsDetailsVM(contactRequest);
 
-            return View(contactRequestViewModel);
+            return View(contactRequestVM);
+        }
+
+        [HttpGet]
+        [Route("ContactRequest/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var contactRequest = UnitOfWork.ContactRequestRepository.GetById(id);
+
+            if (contactRequest == null)
+            {
+                return HttpNotFound();
+            }
+
+            var contactRequestVM = new ContactRequestInputVM(contactRequest);
+
+            return View(contactRequestVM);
+        }
+
+        [HttpPost]
+        [Route("ContactRequest/Edit/{id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(ContactRequestInputVM contactRequestVM)
+        {
+            try
+            {
+                var contactRequest = UnitOfWork.ContactRequestRepository.GetById(contactRequestVM.ContactRequestId);
+
+                contactRequest.Name = contactRequestVM.Name;
+                contactRequest.Surname = contactRequestVM.Surname;
+                contactRequest.PhoneNumber = contactRequestVM.PhoneNumber;
+                contactRequest.EmailAdress = contactRequestVM.EmailAdress;
+                contactRequest.Comment = contactRequestVM.Comment;
+                contactRequest.PreferredHoursFrom = contactRequestVM.PreferredHoursFrom;
+                contactRequest.PreferredHoursTo = contactRequestVM.PreferredHoursTo;
+                contactRequest.IsAwaiting = contactRequestVM.IsAwaiting;
+
+                contactRequest.ModificationDate = DateTime.Now;
+
+                UnitOfWork.ContactRequestRepository.Update(contactRequest);
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Details", new { id = contactRequestVM.ContactRequestId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(contactRequestVM);
+            }
         }
     }
 }

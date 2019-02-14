@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ContactInfo].[ContactRequests] (
+CREATE TABLE [ContactInfo].[ContactRequests] (
     [Id]                 INT             IDENTITY (1, 1) NOT NULL,
     [CreationDate]       DATETIME        CONSTRAINT [DF_ContactRequestsCreationDate] DEFAULT (getdate()) NOT NULL,
     [ModificationDate]   DATETIME        NULL,
@@ -42,8 +42,10 @@
 
 
 
+
+
 GO
-
-
-
+CREATE NONCLUSTERED INDEX [IX_ContactRequests_CreationDate_PreferredHours]
+    ON [ContactInfo].[ContactRequests]([CreationDate] DESC, [PreferredHoursFrom] ASC, [PreferredHoursTo] ASC)
+    INCLUDE([Id], [PhoneNumber], [EmailAdress], [Comment]) WHERE ([IsAwaiting]=(1));
 
