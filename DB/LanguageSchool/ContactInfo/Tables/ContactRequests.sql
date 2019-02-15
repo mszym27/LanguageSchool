@@ -2,7 +2,7 @@ CREATE TABLE [ContactInfo].[ContactRequests] (
     [Id]                 INT             IDENTITY (1, 1) NOT NULL,
     [CreationDate]       DATETIME        CONSTRAINT [DF_ContactRequestsCreationDate] DEFAULT (getdate()) NOT NULL,
     [ModificationDate]   DATETIME        NULL,
-    [Name]               VARCHAR (25)    NOT NULL,
+    [Name]               NVARCHAR (25)   NOT NULL,
     [Surname]            NVARCHAR (50)   NULL,
     [PhoneNumber]        VARCHAR (15)    NOT NULL,
     [EmailAdress]        VARCHAR (255)   NULL,
