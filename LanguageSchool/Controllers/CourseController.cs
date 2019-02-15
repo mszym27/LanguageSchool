@@ -159,7 +159,6 @@ namespace LanguageSchool.Controllers
                 course.StartDate = courseVM.StartDate;
                 course.EndDate = courseVM.EndDate;
                 course.NumberOfHours = courseVM.NumberOfHours;
-                course.CreationDate = DateTime.Now;
 
                 UnitOfWork.CourseRepository.Insert(course);
 

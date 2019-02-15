@@ -31,8 +31,6 @@ namespace LanguageSchool.Controllers
         {
             var test = new Test();
 
-            test.CreationDate = DateTime.Now;
-
             test.Name = testViewModel.Name;
             test.Comment = testViewModel.Comment;
             test.IsActive = testViewModel.IsActive;
@@ -171,9 +169,6 @@ namespace LanguageSchool.Controllers
 
                 var userTest = new UserTest();
 
-                var now = DateTime.Now;
-
-                userTest.CreationDate = now;
                 userTest.TestId = testViewModel.Id;
                 userTest.GroupId = testViewModel.GroupId;
                 userTest.UserId = student.Id;
@@ -254,7 +249,6 @@ namespace LanguageSchool.Controllers
                     {
                         var answer = new UserOpenAnswer();
 
-                        answer.CreationDate = now;
                         answer.OpenQuestionId = question.Id;
                         answer.UserId = student.Id;
                         answer.Content = question.Answer;

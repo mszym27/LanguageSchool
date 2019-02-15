@@ -40,7 +40,6 @@ namespace LanguageSchool.Controllers
                 contactRequest.CourseId = contactRequestVM.CourseId;
 
                 contactRequest.IsAwaiting = true;
-                contactRequest.CreationDate = DateTime.Now;
 
                 UnitOfWork.ContactRequestRepository.Insert(contactRequest);
                 UnitOfWork.Save();

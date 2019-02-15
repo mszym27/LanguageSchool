@@ -45,8 +45,6 @@ namespace LanguageSchool.Controllers
         { //todo
             var material = new Material();
 
-            material.CreationDate = DateTime.Now;
-
             material.LessonSubjectId = materialViewModel.LessonSubjectId;
             material.Name = materialViewModel.Name;
             material.Comment = materialViewModel.Comment;

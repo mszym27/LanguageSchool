@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cea6ea76446a40929247fcc664d940bc" Name="Diagram1" ZoomLevel="32">
+      <Diagram DiagramId="cea6ea76446a40929247fcc664d940bc" Name="Diagram1" ZoomLevel="65">
         <AssociationConnector Association="LanguageSchoolModel.FK_LessonSubjects_Courses" ManuallyRouted="false" />
         <EntityTypeShape EntityType="LanguageSchoolModel.Classroom" Width="1.5" PointX="13.5" PointY="28.75" FillColor="255, 192, 255" />
         <EntityTypeShape EntityType="LanguageSchoolModel.DictionaryItem" Width="4.75" PointX="17" PointY="28.875" FillColor="Green" />

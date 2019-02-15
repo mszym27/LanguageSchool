@@ -122,7 +122,6 @@ namespace LanguageSchool.Controllers
                 Message message = new Message();
 
                 message.MessageTypeId = (int)Consts.MessageTypes.ToUser;
-                message.CreationDate = DateTime.Now;
 
                 message.Header = messageToSendVM.Topic;
                 message.Contents = messageToSendVM.Contents;
@@ -175,7 +174,6 @@ namespace LanguageSchool.Controllers
                 message.Header = messageInputVM.Topic;
                 message.Contents = messageInputVM.Contents;
                 message.MessageTypeId = messageInputVM.MessageTypeId;
-                message.CreationDate = DateTime.Now;
                 message.IsSystem = messageInputVM.IsSystem;
                 message.UsersMessages = new List<UserMessage>();
 

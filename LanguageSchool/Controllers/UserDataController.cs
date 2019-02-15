@@ -205,7 +205,6 @@ namespace LanguageSchool.Controllers
 
             student.UsersGroups.Add(new UserGroup
             {
-                CreationDate = DateTime.Now,
                 GroupId = Int32.Parse(submit)
             });
 
@@ -306,9 +305,6 @@ namespace LanguageSchool.Controllers
                 User user = new User();
 
                 user.Role = userRole;
-
-                user.CreationDate = DateTime.Now;
-                userData.CreationDate = DateTime.Now;
 
                 user.Login = userRole.ENName[0] + "_" + userData.Name[0] + userData.Surname[0];
                 user.Password = Encryption.Encrypt(Membership.GeneratePassword(8, 3));

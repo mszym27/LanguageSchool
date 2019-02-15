@@ -48,7 +48,6 @@ namespace LanguageSchool.Controllers
                 openQuestion.LessonSubjectId = openQuestionViewModel.LessonSubjectId;
                 openQuestion.Points = openQuestionViewModel.Points;
                 openQuestion.Contents = openQuestionViewModel.Contents;
-                openQuestion.CreationDate = DateTime.Now;
 
                 UnitOfWork.OpenQuestionRepository.Insert(openQuestion);
                 UnitOfWork.Save();
@@ -261,7 +260,6 @@ namespace LanguageSchool.Controllers
                 {
                     var closedQuestion = new ClosedQuestion();
 
-                    closedQuestion.CreationDate = DateTime.Now;
                     closedQuestion.LessonSubjectId = closedQuestionViewModel.LessonSubjectId;
                     closedQuestion.Contents = closedQuestionViewModel.Contents;
                     closedQuestion.NumberOfPossibleAnswers = closedQuestionViewModel.NumberOfPossibleAnswers;
@@ -276,7 +274,6 @@ namespace LanguageSchool.Controllers
 
                         answer.AnswerContent = answerViewModel.Answer;
                         answer.IsCorrect = answerViewModel.IsCorrect;
-                        answer.CreationDate = DateTime.Now;
 
                         closedQuestion.Answers.Add(answer);
                     }

@@ -48,7 +48,6 @@ namespace LanguageSchool.Controllers
                     Name = lessonSubjectViewModel.Name,
                     Description = lessonSubjectViewModel.Description,
                     IsActive = lessonSubjectViewModel.IsActive,
-                    CreationDate = DateTime.Now
                 };
 
                 UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
@@ -87,8 +86,7 @@ namespace LanguageSchool.Controllers
                     GroupId = groupId,
                     Name = existingSubject.Name,
                     Description = existingSubject.Description,
-                    IsActive = false,
-                    CreationDate = DateTime.Now
+                    IsActive = false
                 };
 
                 lessonSubject.ClosedQuestions = new List<ClosedQuestion>();
@@ -101,7 +99,6 @@ namespace LanguageSchool.Controllers
                         NumberOfPossibleAnswers = existingQuestion.NumberOfPossibleAnswers,
                         IsMultichoice = existingQuestion.IsMultichoice,
                         Points = existingQuestion.Points,
-                        CreationDate = DateTime.Now
                     };
 
                     foreach (var existingAnswer in existingQuestion.Answers.Where(a => !a.IsDeleted))
@@ -109,8 +106,7 @@ namespace LanguageSchool.Controllers
                         var copiedAnswer = new Answer()
                         {
                             AnswerContent = existingAnswer.AnswerContent,
-                            IsCorrect = existingAnswer.IsCorrect,
-                            CreationDate = DateTime.Now
+                            IsCorrect = existingAnswer.IsCorrect
                         };
 
                         copiedQuestion.Answers.Add(copiedAnswer);
@@ -126,8 +122,7 @@ namespace LanguageSchool.Controllers
                     var copiedQuestion = new OpenQuestion()
                     {
                         Contents = existingQuestion.Contents,
-                        Points = existingQuestion.Points,
-                        CreationDate = DateTime.Now
+                        Points = existingQuestion.Points
                     };
 
                     lessonSubject.OpenQuestions.Add(copiedQuestion);
@@ -141,8 +136,7 @@ namespace LanguageSchool.Controllers
                     {
                         Name = existingMaterial.Name,
                         Comment = existingMaterial.Comment,
-                        File = existingMaterial.File,
-                        CreationDate = DateTime.Now
+                        File = existingMaterial.File
                     };
 
                     lessonSubject.Materials.Add(copiedMaterial);

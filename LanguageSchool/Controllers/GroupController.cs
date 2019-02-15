@@ -143,7 +143,6 @@ namespace LanguageSchool.Controllers
 
                     group.UsersGroups.Add(new UserGroup()
                     {
-                        CreationDate = DateTime.Now,
                         User = user
                     });
                 }
@@ -190,20 +189,16 @@ namespace LanguageSchool.Controllers
             }
             else
             {
-                var now = DateTime.Now;
-
                 var group = new Group {
                     CourseId = groupViewModel.CourseId,
                     Name = groupViewModel.Name,
                     StartDate = groupViewModel.StartDate,
                     EndDate = groupViewModel.EndDate,
-                    CreationDate = now,
                     IsActive = true
                 };
 
                 group.UsersGroups.Add(new UserGroup
                 {
-                    CreationDate = now,
                     UserId = groupViewModel.Teacher.Id
                 });
 
@@ -230,7 +225,6 @@ namespace LanguageSchool.Controllers
                             {
                                 groupTime = new GroupTime
                                 {
-                                    CreationDate = now,
                                     DayOfWeekId = (i + 1),
                                     StartTime = j + 8,
                                     EndTime = j + 8,
