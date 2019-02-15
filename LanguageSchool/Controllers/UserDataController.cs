@@ -265,9 +265,6 @@ namespace LanguageSchool.Controllers
             return View(userDataViewModel);
         }
 
-        // POST: UserData/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("UserData/Create")]
         [Route("UserData/Create/{Id}")]
@@ -336,7 +333,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Konto zostało utworzone", "proszę przekazać użytkownikowi jego login i hasło");
 
-                return RedirectToAction("Details", "UserData", new { userId = userData.UserId });
+                return RedirectToAction("Details", new { userId = userData.UserId });
             }
             catch(Exception ex)
             {
@@ -345,6 +342,63 @@ namespace LanguageSchool.Controllers
                 ViewBag.UserId = new SelectList(UnitOfWork.UserRepository.Get(u => !u.IsDeleted), "Id", "Login");
 
                 return View(udvm);
+            }
+        }
+
+        [HttpGet]
+        [Route("UserData/Edit/{Id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var userData = UnitOfWork.UserDataRepository.GetById(id);
+
+            if (userData == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userDataViewModel = new UserDataViewModel(userData);
+
+            return View(userDataViewModel);
+        }
+
+        [HttpPost]
+        [Route("UserData/Edit/{Id}")]
+        [Authorize(Roles = "Secretary")]
+        public ActionResult Edit(UserDataViewModel userDataViewModel)
+        {
+            try
+            {
+                var userData = UnitOfWork.UserDataRepository.GetById(userDataViewModel.UserId);
+
+                userData.Name = userDataViewModel.Name;
+                userData.Surname = userDataViewModel.Surname;
+                userData.City = userDataViewModel.City;
+                userData.Street = userDataViewModel.Street;
+                userData.HouseNumber = userDataViewModel.HouseNumber;
+                userData.HomeNumber = userDataViewModel.HomeNumber;
+                userData.PublicPhoneNumber = userDataViewModel.PublicPhoneNumber;
+                userData.PrivatePhoneNumber = userDataViewModel.PrivatePhoneNumber;
+                userData.EmailAdress = userDataViewModel.EmailAdress;
+                userData.Comment = userDataViewModel.Comment;
+
+                UnitOfWork.UserDataRepository.Update(userData);
+                UnitOfWork.Save();
+
+                return RedirectToAction("Details", new { userId = userDataViewModel.UserId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(userDataViewModel);
             }
         }
     }

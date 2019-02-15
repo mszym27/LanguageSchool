@@ -435,7 +435,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -447,10 +446,6 @@
     <Content Include="Views\Shared\_BackToCourses.cshtml" />
     <Content Include="Views\EntryTest\TakeTest.cshtml" />
     <Content Include="Views\Shared\_MenuItems.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLogo.cshtml" />
@@ -465,13 +460,10 @@
     <Content Include="Views\UserData\List.cshtml" />
     <Content Include="Views\ContactRequest\Details.cshtml" />
     <Content Include="Views\Material\Upload.cshtml" />
-    <Content Include="Views\Material\Details.cshtml" />
-    <Content Include="Views\Material\Edit.cshtml" />
     <Content Include="Views\Material\Index.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\FullDetails.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
-    <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Course\FullDetails.cshtml" />
     <Content Include="Views\Group\PickHours.cshtml" />
     <Content Include="Views\Group\AddUsers.cshtml" />
@@ -479,20 +471,15 @@
     <Content Include="Views\User\TimeTable.cshtml" />
     <Content Include="Views\LessonSubject\Create.cshtml" />
     <Content Include="Views\LessonSubject\Details.cshtml" />
-    <Content Include="Views\LessonSubject\Edit.cshtml" />
     <Content Include="Views\LessonSubject\LessonSubjects.cshtml" />
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Question\CreateOpen.cshtml" />
-    <Content Include="Views\Question\Details.cshtml" />
-    <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Question\CreateClosed.cshtml" />
-    <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\AddAnswers.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
     <Content Include="Views\Shared\_PartHeader.cshtml" />
     <Content Include="Views\Test\Take.cshtml" />
-    <Content Include="Views\Test\_PrepareAnswers.cshtml" />
     <Content Include="Views\UserOpenAnswer\Mark.cshtml" />
     <Content Include="Views\UserOpenAnswer\Details.cshtml" />
     <Content Include="Views\LessonSubject\CreateFromExisting.cshtml" />

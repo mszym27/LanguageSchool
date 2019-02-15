@@ -39,28 +39,9 @@ namespace LanguageSchool.Models.ViewModels
         public SelectList Groups { get; set; }
         public int GroupId { get; set; }
 
-        //public List<List<bool>> UserWorkHours;
+        public UserDataViewModel() { }
 
-        public List<List<bool>> UserWorkHours { get; set; }
-
-        public UserDataViewModel()
-        {
-            UserWorkHours = new List<List<bool>>();
-
-            for (int i = 0; i < 12; i++) // hours
-            {
-                UserWorkHours.Add(new List<bool>(7));
-
-                for (int j = 0; j < 7; j++) // days
-                {
-                    if (j < 5)
-                        UserWorkHours[i].Add(false);
-                    else
-                        UserWorkHours[i].Add(true); // wolne weekendy
-                }
-            }
-        }
-
+        // createFrom
         public UserDataViewModel(ContactRequest contactRequest)
         {
             OriginContactRequestId = contactRequest.Id;
@@ -70,20 +51,22 @@ namespace LanguageSchool.Models.ViewModels
             PrivatePhoneNumber = contactRequest.PhoneNumber;
             EmailAdress = contactRequest.EmailAdress;
             Course = contactRequest.Course;
+        }
 
-            //toDelete
-
-            UserWorkHours = new List<List<bool>>();
-
-            for (int i = 0; i < 12; i++) // hours
-            {
-                UserWorkHours.Add(new List<bool>(7));
-
-                for (int j = 0; j < 7; j++) // days
-                {
-                    UserWorkHours[i].Add(false);
-                }
-            }
+        // edit
+        public UserDataViewModel(UserData userData)
+        {
+            UserId = userData.UserId;
+            Name = userData.Name;
+            Surname = userData.Surname;
+            City = userData.City;
+            Street = userData.Street;
+            HouseNumber = userData.HouseNumber;
+            HomeNumber = userData.HomeNumber;
+            PublicPhoneNumber = userData.PublicPhoneNumber;
+            PrivatePhoneNumber = userData.PrivatePhoneNumber;
+            EmailAdress = userData.EmailAdress;
+            Comment = userData.Comment;
         }
     }
 }
