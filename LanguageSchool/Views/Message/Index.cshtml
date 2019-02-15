@@ -1,5 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<LanguageSchool.Models.ViewModels.UserMessageViewModel>
+@model PagedList.IPagedList<LanguageSchool.Models.ViewModels.MessageViewModels.UserMessageShortDetailsVM>
 
 @{
     ViewBag.Title = "Index";
@@ -48,7 +48,7 @@
                     @Html.DisplayFor(modelItem => item.ReceivedDate)
                 </td>
                 <td>
-                    @Html.ActionLink(item.Topic, "Details", new { userMessageId = item.Id })
+                    @Html.ActionLink(item.Topic, "Details", new { userMessageId = item.UserMessageId })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ShortenedContents)

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LanguageSchool.Models.ViewModels.SendMessageViewModels
+namespace LanguageSchool.Models.ViewModels.MessageViewModels
 {
-    public class SendToUserVM
+    public class SendToUserInputVM
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
@@ -16,9 +16,9 @@ namespace LanguageSchool.Models.ViewModels.SendMessageViewModels
         public string Contents { get; set; }
         public bool IsSystem { get; set; }
 
-        public SendToUserVM() { }
+        public SendToUserInputVM() { }
 
-        public SendToUserVM(User user)
+        public SendToUserInputVM(User user)
         {
             UserId = user.Id;
 

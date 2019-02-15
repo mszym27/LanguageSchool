@@ -23,8 +23,10 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         public SelectList Teachers { get; }
         public int TeacherId { get; set; }
 
+        // Create
         public GroupInputVM() { }
-
+        
+        // Edit
         public GroupInputVM(Group group)
         {
             GroupId = group.Id;

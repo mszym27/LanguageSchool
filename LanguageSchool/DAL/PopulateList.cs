@@ -10,6 +10,20 @@ namespace LanguageSchool.DAL
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
 
+        public static SelectList AllCourses()
+        {
+            return new SelectList(unitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+                "Id",
+                "Name");
+        }
+
+        public static SelectList AllGroups()
+        {
+            return new SelectList(unitOfWork.GroupRepository.Get(g => !g.IsDeleted),
+                "Id",
+                "Name");
+        }
+
         public static SelectList AllUsers(User selectedUser = null)
         {
             var users = unitOfWork.UserRepository.Get(u => !u.IsDeleted);
@@ -34,18 +48,6 @@ namespace LanguageSchool.DAL
             return new SelectList(usersViewModels, "Id", "Fullname");
         }
 
-        public static SelectList GetPageSizes()
-        {
-            List<SelectListItem> pages = Consts.pages.ConvertAll(a =>
-            {
-                return new SelectListItem()
-                {
-                    Text = a.ToString(),
-                    Value = a.ToString()
-                };
-            });
 
-            return new SelectList(pages);
-        }
     }
 }

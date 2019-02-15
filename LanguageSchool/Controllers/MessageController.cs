@@ -9,10 +9,10 @@ using System.Web.Mvc;
 using PagedList;
 using Microsoft.AspNet.Identity;
 
+using LanguageSchool.DAL;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
-using LanguageSchool.Models.ViewModels.SendMessageViewModels;
-using LanguageSchool.DAL;
+using LanguageSchool.Models.ViewModels.MessageViewModels;
 
 namespace LanguageSchool.Controllers
 {
@@ -23,7 +23,11 @@ namespace LanguageSchool.Controllers
         {
             var loggedUser = GetLoggedUser();
 
-            var userMessages = UnitOfWork.UserMessageRepository.Get(um => (um.UserId == loggedUser.Id && !um.IsDeleted)
+            var userMessages = UnitOfWork.UserMessageRepository.Get(
+                um => (
+                    !um.IsDeleted 
+                    && um.UserId == loggedUser.Id
+                )
                 , orderBy: q => q.OrderByDescending(d => d.Message.CreationDate)
             );
 
@@ -38,35 +42,50 @@ namespace LanguageSchool.Controllers
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
 
-            var userMessagesViewModels = new List<UserMessageViewModel>();
+            var userMessageShortDetailsVMs = userMessages
+                .Select(um => new UserMessageShortDetailsVM(um))
+                .ToPagedList(page, 20);
 
-            foreach (UserMessage um in userMessages)
-            {
-                userMessagesViewModels.Add(new UserMessageViewModel(um));
-            }
-
-            return View(userMessagesViewModels.ToPagedList(page, 20));
+            return View(userMessageShortDetailsVMs);
         }
 
         [Route("Message/{userMessageId}")]
         public ActionResult Details(int? userMessageId)
         {
-            var userMessage = GetLoggedUser().UsersMessages.Where(um => um.Id == userMessageId).FirstOrDefault();
-
-            if (userMessage == null)
+            if (userMessageId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!userMessage.HasBeenReceived)
+            var userMessage = GetLoggedUser().UsersMessages
+                .Where(um => um.Id == userMessageId)
+                .FirstOrDefault();
+
+            if (userMessage == null)
             {
-                userMessage.HasBeenReceived = true;
-                userMessage.ReceivedDate = DateTime.Today;
-                UnitOfWork.UserMessageRepository.Update(userMessage);
-                UnitOfWork.Save();
+                return HttpNotFound();
             }
 
-            var userMessageViewModel = new UserMessageViewModel(userMessage);
+            if (!userMessage.HasBeenReceived)
+            {
+                try
+                {
+                    userMessage.HasBeenReceived = true;
+                    userMessage.ReceivedDate = DateTime.Today;
+                    UnitOfWork.UserMessageRepository.Update(userMessage);
+                    UnitOfWork.Save();
+                }
+                catch (Exception ex)
+                {
+                    var errorLogGuid = LogException(ex);
+
+                    TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            var userMessageViewModel = new UserMessageDetailsVM(userMessage);
 
             return View(userMessageViewModel);
         }
@@ -74,30 +93,40 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Message/SendToUser/{userId}")]
         [Authorize(Roles = "Secretary, Teacher")]
-        public ActionResult SendToUser(int userId)
+        public ActionResult SendToUser(int? userId)
         {
+            if (userId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var user = UnitOfWork.UserRepository.GetById(userId);
 
-            return View(new SendToUserVM(user));
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(new SendToUserInputVM(user));
         }
 
         [HttpPost]
         [Route("Message/SendToUser/{userId}")]
         [Authorize(Roles = "Secretary, Teacher")]
-        public ActionResult SendToUser(SendToUserVM messageToSend)
+        public ActionResult SendToUser(SendToUserInputVM messageToSendVM)
         {
             try
             {
-                var user = UnitOfWork.UserRepository.GetById(messageToSend.UserId);
+                var user = UnitOfWork.UserRepository.GetById(messageToSendVM.UserId);
 
                 Message message = new Message();
 
                 message.MessageTypeId = (int)Consts.MessageTypes.ToUser;
                 message.CreationDate = DateTime.Now;
 
-                message.Header = messageToSend.Topic;
-                message.Contents = messageToSend.Contents;
-                message.IsSystem = messageToSend.IsSystem;
+                message.Header = messageToSendVM.Topic;
+                message.Contents = messageToSendVM.Contents;
+                message.IsSystem = messageToSendVM.IsSystem;
 
                 UserMessage userMessage;
 
@@ -120,7 +149,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return View(messageToSend);
+                return View(messageToSendVM);
             }
         }
 
@@ -129,51 +158,35 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Send()
         {
-            UserMessageViewModel userMessageViewModel = new UserMessageViewModel();
+            var messageInputVM = new MessageInputVM();
 
-            userMessageViewModel.MessageTypes = new SelectList(Consts.MessageTypeList,
-                                         "Key",
-                                         "Value");
-
-            userMessageViewModel.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => !g.IsDeleted),
-                                         "Id",
-                                         "Name");
-
-            userMessageViewModel.Courses = new SelectList(UnitOfWork.CourseRepository.Get(c => !c.IsDeleted),
-                                         "Id",
-                                         "Name");
-
-            userMessageViewModel.Roles = new SelectList(Consts.RoleList,
-                                         "Key",
-                                         "Value");
-
-            return View(userMessageViewModel);
+            return View(messageInputVM);
         }
 
         [HttpPost]
         [Route("Message/Send")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Send(UserMessageViewModel uMVM)
+        public ActionResult Send(MessageInputVM messageInputVM)
         {
             try
             {
-                Message message = new Message();
+                var message = new Message();
 
-                message.Header = uMVM.Topic;
-                message.Contents = uMVM.Contents;
-                message.MessageTypeId = uMVM.MessageTypeId;
+                message.Header = messageInputVM.Topic;
+                message.Contents = messageInputVM.Contents;
+                message.MessageTypeId = messageInputVM.MessageTypeId;
                 message.CreationDate = DateTime.Now;
-                message.IsSystem = uMVM.IsSystem;
+                message.IsSystem = messageInputVM.IsSystem;
                 message.UsersMessages = new List<UserMessage>();
 
                 UserMessage userMessage;
 
-                switch (uMVM.MessageTypeId)
+                switch (messageInputVM.MessageTypeId)
                 {
                     case (int)Consts.MessageTypes.ToGroup:
-                        message.GroupId = uMVM.GroupId;
+                        message.GroupId = messageInputVM.GroupId;
 
-                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == uMVM.GroupId).Any() && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.GroupId == messageInputVM.GroupId).Any() && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -182,9 +195,9 @@ namespace LanguageSchool.Controllers
 
                         break;
                     case (int)Consts.MessageTypes.ToCourse:
-                        message.CourseId = uMVM.CourseId;
+                        message.CourseId = messageInputVM.CourseId;
 
-                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == uMVM.CourseId).Any() && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.UsersGroups.Where(g => g.Group.CourseId == messageInputVM.CourseId).Any() && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -193,9 +206,9 @@ namespace LanguageSchool.Controllers
 
                         break;
                     case (int)Consts.MessageTypes.ToRole:
-                        message.RoleId = uMVM.RoleId;
+                        message.RoleId = messageInputVM.RoleId;
 
-                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.RoleId == uMVM.RoleId && !u.IsDeleted)))
+                        foreach (User u in UnitOfWork.UserRepository.Get(u => (u.RoleId == messageInputVM.RoleId && !u.IsDeleted)))
                         {
                             userMessage = new UserMessage() { User = u };
 
@@ -222,9 +235,41 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        
+        [Route("Message/Delete/{Id}")]
+        public ActionResult Delete(int Id)
+        {
+            try
+            {
+                var now = DateTime.Now;
+
+                var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
+
+                userMessage.IsDeleted = true;
+                userMessage.DeletionDate = now;
+
+                UnitOfWork.UserMessageRepository.Update(userMessage);
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -253,34 +298,6 @@ namespace LanguageSchool.Controllers
             }
 
             return userMessages;
-        }
-
-        [Route("Message/Delete/{Id}")]
-        public ActionResult Delete(int Id)
-        {
-            try
-            {
-                var now = DateTime.Now;
-
-                var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
-
-                userMessage.IsDeleted = true;
-                userMessage.DeletionDate = now;
-
-                UnitOfWork.UserMessageRepository.Update(userMessage);
-
-                UnitOfWork.Save();
-
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                var errorLogGuid = LogException(ex);
-
-                TempData["Alert"] = new AlertViewModel(errorLogGuid);
-
-                return RedirectToAction("Index", "Home");
-            }
         }
     }
 }

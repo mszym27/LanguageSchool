@@ -1,6 +1,6 @@
 ﻿@using LanguageSchool.Models.ViewModels
 
-@model LanguageSchool.Models.ViewModels.UserMessageViewModel
+@model LanguageSchool.Models.ViewModels.MessageViewModels.UserMessageDetailsVM
 
 @{
     ViewBag.Title = "Details";
@@ -58,7 +58,7 @@
 
 @Html.Partial("_DeleteDialog",
     new DeleteDialogViewModel(
-        Model.Id,
+        Model.UserMessageId,
         "Message",
         "Czy jesteś pewien że chcesz usunąć ten komunikat?"
     )

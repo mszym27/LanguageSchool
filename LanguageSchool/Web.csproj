@@ -325,7 +325,10 @@
     <Compile Include="Models\ViewModels\ContactRequestViewModels\ContactRequestInputVM.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels\TeacherGroupVM.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels\GroupInputVM.cs" />
-    <Compile Include="Models\ViewModels\SendMessageViewModels\SendToUserVM.cs" />
+    <Compile Include="Models\ViewModels\MessageViewModels\UserMessageDetailsVM.cs" />
+    <Compile Include="Models\ViewModels\MessageViewModels\UserMessageShortDetailsVM.cs" />
+    <Compile Include="Models\ViewModels\MessageViewModels\MessageInputVM.cs" />
+    <Compile Include="Models\ViewModels\MessageViewModels\SendToUserInputVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentAwaitingTestVM.cs" />
     <Compile Include="Models\ViewModels\StudentGroupViewModels\StudentGroupVM.cs" />
     <Compile Include="Models\ViewModels\TakenTestViewModels\ChosenAnswerVM.cs" />
@@ -354,7 +357,6 @@
     <Compile Include="Models\ViewModels\UserVM.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\UserDataViewModel.cs" />
-    <Compile Include="Models\ViewModels\UserMessageViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\TestViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModels\CourseViewModel.cs" />
@@ -448,7 +450,6 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Message\Delete.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLogo.cshtml" />
