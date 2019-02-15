@@ -29,7 +29,11 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
         public int CourseId { get; set; }
 
         // Create
-        public ContactRequestInputVM() { }
+        public ContactRequestInputVM()
+        {
+            PreferredHoursFrom = 8;
+            PreferredHoursTo = 20;
+        }
 
         // Edit
         public ContactRequestInputVM(ContactRequest contactRequest)

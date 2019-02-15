@@ -15,34 +15,34 @@ namespace LanguageSchool.Controllers
         // GET: ContactRequest/Create
         public ActionResult Create(int id)
         {
-            ContactRequestViewModel crvm = new ContactRequestViewModel();
+            var contactRequestVM = new ContactRequestInputVM();
 
-            crvm.CourseId = id;
+            contactRequestVM.CourseId = id;
 
-            return View(crvm);
+            return View(contactRequestVM);
         }
 
         // POST: ContactRequest/Create
         [HttpPost]
-        public ActionResult Create(ContactRequestViewModel crvm)
+        public ActionResult Create(ContactRequestInputVM contactRequestVM)
         {
             try
             {
-                ContactRequest cr = new ContactRequest();
+                ContactRequest contactRequest = new ContactRequest();
 
-                cr.Name = crvm.Name;
-                cr.Surname = crvm.Surname;
-                cr.PhoneNumber = crvm.PhoneNumber;
-                cr.EmailAdress = crvm.EmailAdress;
-                cr.Comment = crvm.Comment;
-                cr.PreferredHoursFrom = crvm.PreferredHoursFrom;
-                cr.PreferredHoursTo = crvm.PreferredHoursTo;
-                cr.CourseId = crvm.CourseId;
+                contactRequest.Name = contactRequestVM.Name;
+                contactRequest.Surname = contactRequestVM.Surname;
+                contactRequest.PhoneNumber = contactRequestVM.PhoneNumber;
+                contactRequest.EmailAdress = contactRequestVM.EmailAdress;
+                contactRequest.Comment = contactRequestVM.Comment;
+                contactRequest.PreferredHoursFrom = contactRequestVM.PreferredHoursFrom;
+                contactRequest.PreferredHoursTo = contactRequestVM.PreferredHoursTo;
+                contactRequest.CourseId = contactRequestVM.CourseId;
 
-                cr.IsAwaiting = true;
-                cr.CreationDate = DateTime.Now;
+                contactRequest.IsAwaiting = true;
+                contactRequest.CreationDate = DateTime.Now;
 
-                UnitOfWork.ContactRequestRepository.Insert(cr);
+                UnitOfWork.ContactRequestRepository.Insert(contactRequest);
                 UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Wysłano pomyślnie", "proszę czekać aż jeden z naszych pracowników odpowie na prośbę o kontakt");
@@ -55,7 +55,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return View(crvm);
+                return View(contactRequestVM);
             }
         }
 

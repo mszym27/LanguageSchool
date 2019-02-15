@@ -350,7 +350,6 @@
     <Compile Include="Models\ViewModels\ListParameters.cs" />
     <Compile Include="Models\ViewModels\AlertViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerViewModel.cs" />
-    <Compile Include="Models\ViewModels\ContactRequestViewModel.cs" />
     <Compile Include="Models\ViewModels\ClosedQuestionViewModel.cs" />
     <Compile Include="Models\ViewModels\UserVM.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
