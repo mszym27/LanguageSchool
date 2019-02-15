@@ -484,15 +484,6 @@
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
-    <Content Include="Views\ClosedQuestion\Delete.cshtml" />
-    <Content Include="Views\ClosedQuestion\Details.cshtml" />
-    <Content Include="Views\ClosedQuestion\Edit.cshtml" />
-    <Content Include="Views\ClosedQuestion\Index.cshtml" />
-    <Content Include="Views\OpenQuestion\Create.cshtml" />
-    <Content Include="Views\OpenQuestion\Delete.cshtml" />
-    <Content Include="Views\OpenQuestion\Details.cshtml" />
-    <Content Include="Views\OpenQuestion\Edit.cshtml" />
-    <Content Include="Views\OpenQuestion\Index.cshtml" />
     <Content Include="Views\Question\CreateClosed.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\AddAnswers.cshtml" />
