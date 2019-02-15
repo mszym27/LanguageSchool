@@ -50,7 +50,7 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            var groupVM = new TeacherGroupVM(group);
+            var groupVM = new TeacherGroupDetailsVM(group);
 
             return View(groupVM);
         }
@@ -71,7 +71,7 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            var groupViewModel = new GroupViewModel(group);
+            var groupViewModel = new SecretaryGroupDetailsVM(group);
 
             return View(groupViewModel);
         }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace LanguageSchool.Models.ViewModels.GroupViewModels
 {
-    public class TeacherGroupVM
+    public class TeacherGroupDetailsVM
     {
         public int GroupId { get; }
 
@@ -12,7 +12,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
 
         public List<Test> Tests { get; }
 
-        public TeacherGroupVM(Group group)
+        public TeacherGroupDetailsVM(Group group)
         {
             Students = group.UsersGroups
                 .Where(ug => !ug.IsDeleted)

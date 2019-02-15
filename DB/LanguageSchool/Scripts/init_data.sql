@@ -1,543 +1,290 @@
-﻿IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 2)
-	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (2,'Secretary','Sekretariat')
+﻿-- role
 
-IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 3)
-	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (3,'Teacher','Nauczyciel')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (1001, N'Secretary', N'Sekretariat')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (1002, N'Teacher', N'Nauczyciel')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (1003, N'Student', N'Student')
 
-IF NOT EXISTS(SELECT 1 FROM [Users].[Roles] WHERE Id = 4)
-	INSERT INTO [Users].[Roles] ([Id],[ENName],[PLName]) VALUES (4,'Student','Student')
+-- typy wiadomości
 
-GO
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2001, N'', N'Do konkretnego użytkownika')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2002, N'', N'Do członków grupy')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2003, N'', N'Do uczestników kursu')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2004, N'', N'Do wszystkich użytkowników o roli')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2005, N'', N'Do wszystkich')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (2006, N'', N'Wiadomość powitalna dla studentów')
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 1)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(1
-		,'A1'
-		,'początkujący'
-		,'beginner')
+-- oceny
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 2)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(2
-		,'A2'
-		,'niższy średnio zaawansowany'
-		,'elementary/pre-intermediate')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3001, '', N'niedostateczny')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3002, '', N'dopuszczający')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3003, '', N'dostateczny')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3004, '', N'dobry')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3005, '', N'bardzo dobry')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (3006, '', N'celujący')
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 3)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(3
-		,'B1'
-		,'średnio zaawansowany'
-		,'intermediate')
+-- poziomy zaawansowania kursów
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 4)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(4
-		,'B2'
-		,'wyższy średnio zaawansowany'
-		,'upper/post-intermediate')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4001, N'A1', N'A1', N'początkujący', N'beginner')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4002, N'A2', N'A2', N'niższy srednio zaawansowany', N'elementary/pre-intermediate')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4003, N'B1', N'B1', N'średnio zaawansowany', N'intermediate')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4004, N'B2', N'B2', N'wyższy srednio zaawansowany', N'upper/post-intermediate')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4005, N'C1', N'C1', N'zaawansowany', N'advanced')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName], [PLDescription], [ENDescription]) VALUES (4006, N'C2', N'C2', N'profesjonalny', N'nearly native-speaker level')
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 5)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(5
-		,'C1'
-		,'zaawansowany'
-		,'advanced')
+-- dni tygodnia
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[LanguageProficencies] WHERE Id = 6)
-	INSERT INTO [Administration].[LanguageProficencies]
-		([Id]
-		,[Name]
-		,[PLDescription]
-		,[ENDescription])
-	VALUES
-		(6
-		,'C2'
-		,'profesjonalny'
-		,'nearly native-speaker level')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5001, N'Monday', N'Poniedziałek')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5002, N'Tuesday', N'Wtorek')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5003, N'Wednesday', N'Środa')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5004, N'Thursday', N'Czwartek')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5005, N'Friday', N'Piątek')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5006, N'Saturday', N'Sobota')
+INSERT INTO [Administration].[DictionaryItems]([Id], [ENName], [PLName]) VALUES (5007, N'Sunday', N'Niedziela')
 
 GO
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 1)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(1
-		,N'niedostateczny'
-		,NULL)
+-- wiadomość powitalna
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 2)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(2
-		,N'dopuszczający'
-		,NULL)
-		
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 3)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(3
-		,N'dostateczny'
-		,NULL)
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 4)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(4
-		,N'dobry'
-		,NULL)
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 5)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(5
-		,N'bardzo dobry'
-		,NULL)
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Marks] WHERE Id = 6)
-	INSERT INTO [Administration].[Marks]
-		([Id]
-		,[PLName]
-		,[ENName])
-	VALUES
-		(6
-		,N'celujący'
-		,NULL)
-
-GO
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 1)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(1
-		,N'Poniedziałek'
-		,'Monday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 2)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(2
-		,'Wtorek'
-		,'Tuesday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 3)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(3
-		,N'Środa'
-		,'Wednesday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 4)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(4
-		,'Czwartek'
-		,'Thursday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 5)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(5
-		,N'Piątek'
-		,'Friday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 6)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(6
-		,'Sobota'
-		,'Saturday')
-
-IF NOT EXISTS (SELECT 1 FROM Administration.DaysOfWeek WHERE Id = 7)
-	INSERT INTO Administration.DaysOfWeek 
-		(Id
-		,PLName
-		,ENName)
-	VALUES 
-		(7
-		,'Niedziela'
-		,'Sunday')
-
-GO
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 1)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(1
-		,N'Do konkretnego użytkownika')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 2)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(2
-		,N'Do członków grupy')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 3)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(3
-		,N'Do uczestników kursu')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 4)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(4
-		,N'Do wszystkich użytkowników o roli')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 5)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(5
-		,N'Do wszystkich')
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[MessageTypes] WHERE Id = 6)
-	INSERT INTO [Administration].[MessageTypes]
-		([Id]
-		,[Name])
-	VALUES
-		(6
-		,N'Wiadomość powitalna dla studentów')
-
-GO
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Messages] WHERE [MessageTypeId] = 6)
 INSERT [Administration].[Messages] ([CreationDate], [Header], [Contents], [MessageTypeId], [UserId], [GroupId], [CourseId], [RoleId], [IsSystem]) 
 VALUES (GETDATE(), N'Witaj w szkole!', N'Miło nam Cię powitać w naszej szkole.
 W lewym górnym rogu tej strony zobaczysz logo. Od momentu w którym odczytałeś ten komunikat po kliknięciu na nie zostaniesz przeniesiony na podgląd swojego planu zajęć.
 Jeśli w przyszłości otrzymasz nowe komunikaty to po zalogowaniu automatycznie zobaczysz listę swoich wiadomości. Rozkład zajęć stanie się dla Ciebie z powrotem dostępny po tym jak zapoznasz się z treścią tych które otrzymałeś.
-Cały masz też możliwość zobaczenia historii komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 6, NULL, NULL, NULL, 4, 1)
+Cały masz też możliwość zobaczenia historii komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 2006, NULL, NULL, NULL, 1003, 1)
 
 GO
+
+-- przykładowi użytkownicy
 
 DECLARE @Now DATETIME = GETDATE()
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-24')
-	INSERT INTO [Administration].[Holidays]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Name]
-		,[Date]
-		,[IsActive])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'Wigilia'
-		,'2018-12-24'
-		,1)
+INSERT INTO [Users].[Users]
+	([IsDeleted]
+	,[CreationDate]
+	,[DeletionDate]
+	,[Login]
+	,[Password]
+	,[RoleId])
+VALUES
+	(0
+	,@Now
+	,NULL
+	,'BL\S_DL_00211'
+	,N'tnp38KG17HWhMRQcRf16tQ==' -- 456
+	,1001) -- Sekretariat
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-25')
-	INSERT INTO [Administration].[Holidays]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Name]
-		,[Date]
-		,[IsActive])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'Pierwszy dzień świąt'
-		,'2018-12-25'
-		,1)
+INSERT INTO [Users].[Users]
+	([IsDeleted]
+	,[CreationDate]
+	,[DeletionDate]
+	,[Login]
+	,[Password]
+	,[RoleId])
+VALUES
+	(0
+	,@Now
+	,NULL
+	,'BL\T_PP_00738'
+	,N'yMWW2EWUj09FY7Wd005AtQ==' -- 789
+	,1002) -- Nauczyciel
 
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2018-12-26')
-	INSERT INTO [Administration].[Holidays]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Name]
-		,[Date]
-		,[IsActive])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'Drugi dzień świąt'
-		,'2018-12-26'
-		,1)
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2019-01-01')
-	INSERT INTO [Administration].[Holidays]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Name]
-		,[Date]
-		,[IsActive])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'Nowy rok'
-		,'2019-01-01'
-		,1)
-
-IF NOT EXISTS(SELECT 1 FROM [Administration].[Holidays] WHERE [Date] = '2019-01-06')
-	INSERT INTO [Administration].[Holidays]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Name]
-		,[Date]
-		,[IsActive])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'Trzech króli'
-		,'2019-01-06'
-		,1)
+INSERT INTO [Users].[Users]
+	([IsDeleted]
+	,[CreationDate]
+	,[DeletionDate]
+	,[Login]
+	,[Password]
+	,[RoleId])
+VALUES
+	(0
+	,@Now
+	,NULL
+	,'S_HC_04636'
+	,N'W0AYXVFZdcO+2d32/7eIyw==' -- 012
+	,1003) -- Student
 
 GO
 
-DECLARE @Now DATETIME = GETDATE()
+DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'S_HC_04636')
 
-IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 1)
-	INSERT INTO [Users].[Users]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Login]
-		,[Password]
-		,[RoleId])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'BL\techAdmin'
-		,'123'
-		,1)
+INSERT INTO [ContactInfo].[UserData]
+	([IsDeleted]
+	,[CreationDate]
+	,[DeletionDate]
+	,[UserId]
+	,[Name]
+	,[Surname]
+	,[City]
+	,[Street]
+	,[HouseNumber]
+	,[HomeNumber]
+	,[PublicPhoneNumber]
+	,[PrivatePhoneNumber]
+	,[EmailAdress]
+	,[Comment])
+VALUES
+	(0
+	,GETDATE()
+	,NULL
+	,@userId
+	,N'Hubert'
+	,N'Cieślar'
+	,N'Łódź'
+	,N'Bednarskiego'
+	,N'82'
+	,N'21'
+	,'990-354-123'
+	,NULL
+	,N'hubert.cies2@poczta.onet.pl'
+	,N'Domyślnie obecny w systemie student')
 
-IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 2)
-	INSERT INTO [Users].[Users]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Login]
-		,[Password]
-		,[RoleId])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'BL\S_DL_00211'
-		,'456'
-		,2)
+SET @userId = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_PP_00738')
 
-IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 3)
-	INSERT INTO [Users].[Users]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Login]
-		,[Password]
-		,[RoleId])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'BL\T_LL_0001'
-		,'789'
-		,3)
-
-IF NOT EXISTS(SELECT 1 FROM [Users].[Users] WHERE RoleId = 4)
-	INSERT INTO [Users].[Users]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[Login]
-		,[Password]
-		,[RoleId])
-	VALUES
-		(0
-		,@Now
-		,NULL
-		,'S_MS_0001'
-		,'012'
-		,4)
-
-GO
-
-UPDATE [Users].[Users] SET [Password] = N'tnp38KG17HWhMRQcRf16tQ==' WHERE [Login] = N'BL\S_DL'
-UPDATE [Users].[Users] SET [Password] = N'yMWW2EWUj09FY7Wd005AtQ==' WHERE [Login] = N'BL\T_LL_0001'
-UPDATE [Users].[Users] SET [Password] = N'W0AYXVFZdcO+2d32/7eIyw==' WHERE [Login] = N'S_MS_0001'
+INSERT INTO [ContactInfo].[UserData]
+	([IsDeleted]
+	,[CreationDate]
+	,[DeletionDate]
+	,[UserId]
+	,[Name]
+	,[Surname]
+	,[City]
+	,[Street]
+	,[HouseNumber]
+	,[HomeNumber]
+	,[PublicPhoneNumber]
+	,[PrivatePhoneNumber]
+	,[EmailAdress]
+	,[Comment])
+VALUES
+	(0
+	,GETDATE()
+	,NULL
+	,@userId
+	,N'Przemysława'
+	,N'Pająk'
+	,NULL
+	,NULL
+	,NULL
+	,NULL
+	,'990-356-223'
+	,'990-314-157'
+	,N'przemyslawa.pajak33@gmail.com.pl'
+	,N'Domyślnie obecny w systemie nauczyciel')
 
 GO
 
-DECLARE @userId INT = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'S_MS_0001')
+-- kursy
 
-IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
-	INSERT INTO [ContactInfo].[UserData]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[UserId]
-		,[Name]
-		,[Surname]
-		,[City]
-		,[Street]
-		,[HouseNumber]
-		,[HomeNumber]
-		,[PublicPhoneNumber]
-		,[PrivatePhoneNumber]
-		,[EmailAdress]
-		,[Comment])
-	VALUES
-		(0
-		,GETDATE()
-		,NULL
-		,@userId
-		,N'Mikołaj'
-		,N'Szumigaj'
-		,NULL
-		,NULL
-		,NULL
-		,NULL
-		,'990-354-123'
-		,NULL
-		,NULL
-		,N'Domyślnie obecny w systemie student')
+INSERT INTO [Courses].[Courses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[Name]
+    ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
+    ,[LanguageProficencyId]
+	,EndDate
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,N'IT language for professionals'
+    ,N'Aimed at working proffesionals, offers an opportunity to learn and practice IT-specific terms. Structured in short, intensive lessons. Perfect for busy managers and key IT staff aimming to deepen their knowledge of the field language.'
+    ,'2019-01-06'
+	,'Six meetings - two hours every sunday evening'
+	,4006
+	,'2019-01-10'
+	,1)
 
-SET @userId = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\T_LL_0001')
+INSERT INTO [Courses].[Courses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[Name]
+    ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
+    ,[LanguageProficencyId]
+	,EndDate
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,N'Kurs przygotowujący do matury (I)'
+    ,N'Przygotowany z myślą o uczniach dopiero zaczynających naukę języka. Powstał z myślą o uzupełnieniu lekcji pobieranych w trakcie normalnej nauki. Umożliwia pratykowanie języka oraz pogłębienie wiedzy w mniejszych grupach. Kontynuowany w kolejnych semestrach.'
+    ,'2019-01-05'
+	,'8 - 12 w soboty'
+	,4001
+	,'2019-02-16'
+	,1)
 
-IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
-	INSERT INTO [ContactInfo].[UserData]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[UserId]
-		,[Name]
-		,[Surname]
-		,[City]
-		,[Street]
-		,[HouseNumber]
-		,[HomeNumber]
-		,[PublicPhoneNumber]
-		,[PrivatePhoneNumber]
-		,[EmailAdress]
-		,[Comment])
-	VALUES
-		(0
-		,GETDATE()
-		,NULL
-		,@userId
-		,N'Łukasz'
-		,N'Łączka'
-		,NULL
-		,NULL
-		,NULL
-		,NULL
-		,'990-354-123'
-		,NULL
-		,NULL
-		,N'Domyślnie obecny w systemie nauczyciel')
+INSERT INTO [Courses].[Courses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[Name]
+    ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
+    ,[LanguageProficencyId]
+	,EndDate
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,N'Kurs przygotowujący do matury (II)'
+    ,N'Kontynuacja wcześniejszego kursu. Osoby które zapisują się na ten bez przejścia poprzedniego będą musiały przejść test ze znajomości języka.'
+	,'2019-02-23'
+	,'8 - 12 w soboty'
+	,4002
+	,'2019-03-30'
+	,1)
 
-SET @userId = (SELECT Id FROM [Users].[Users] WHERE [Login] = N'BL\S_DL')
+INSERT INTO [Courses].[Courses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[Name]
+    ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
+    ,[LanguageProficencyId]
+	,EndDate
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,N'Kurs przygotowujący do matury (III)'
+    ,N'Kulminacja linii kursów przygotowujących oferowanych przez naszą szkołę. W ostatnim ich części uczniowie koncentrują się na rozwiązywaniu arkuszy maturalnych i przeprowadzaniu testów języka. Osoby zapisujące się od razu na ten kurs będą musiały uzyskać odpowiednią ocenę na wejściowym sprawdzianie.'
+    ,'2019-04-02'
+	,'10 - 14 w soboty'
+	,4003
+	,'2019-05-04'
+	,1)
 
-IF NOT EXISTS(SELECT Id FROM [ContactInfo].[UserData] WHERE UserId = @userId)
-	INSERT INTO [ContactInfo].[UserData]
-		([IsDeleted]
-		,[CreationDate]
-		,[DeletionDate]
-		,[UserId]
-		,[Name]
-		,[Surname]
-		,[City]
-		,[Street]
-		,[HouseNumber]
-		,[HomeNumber]
-		,[PublicPhoneNumber]
-		,[PrivatePhoneNumber]
-		,[EmailAdress]
-		,[Comment])
-	VALUES
-		(0
-		,GETDATE()
-		,NULL
-		,@userId
-		,N'Dominik'
-		,N'Lasocki'
-		,NULL
-		,NULL
-		,NULL
-		,NULL
-		,'990-354-123'
-		,NULL
-		,NULL
-		,N'Domyślnie obecny w systemie członek sekretariatu')
-
-GO
-
-UPDATE [Tests].[ClosedQuestions] SET [LessonSubjectId] = NULL -- TODO
-
-GO
+INSERT INTO [Courses].[Courses]
+    ([IsDeleted]
+    ,[CreationDate]
+    ,[DeletionDate]
+    ,[Name]
+    ,[Description]
+	,[StartDate]
+	,[NumberOfHours]
+    ,[LanguageProficencyId]
+	,EndDate
+    ,[IsActive])
+VALUES
+    (0
+    ,GETDATE()
+    ,NULL
+    ,N'Intensywny kurs przygotowujący do matury'
+    ,N'Skierowany do osób pragnących nabrać praktycznego doświadczenia w przechodzeniu testów maturalnych. Odbywa się pod okiem faktycznych egzaminatorów, celuje w jak najwierniejsze odwzorowanie warunków maturalnych.'
+    ,'2019-04-02'
+	,'Dwie godziny wieczorem w każdą sobotę i niedzielę'
+	,4004
+	,'2019-05-04'
+	,1)

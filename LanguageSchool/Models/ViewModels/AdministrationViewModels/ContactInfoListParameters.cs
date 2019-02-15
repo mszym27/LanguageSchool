@@ -9,6 +9,7 @@ namespace LanguageSchool.Models.ViewModels
 {
     public class ContactInfoListParameters : ListParameters
     {
+        //toDo
         public Nullable<int> pageSize;
 
         [DataType(DataType.Date)]

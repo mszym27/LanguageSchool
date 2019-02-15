@@ -25,7 +25,10 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
 
         // Create
         public GroupInputVM() { }
-        
+
+        //// Create - based on course
+        //public GroupInputVM() { }
+
         // Edit
         public GroupInputVM(Group group)
         {

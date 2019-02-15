@@ -44,7 +44,7 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel loginInfo, string returnUrl, bool RememberMe)
+        public ActionResult Login(LoginViewModel loginInfo, string returnUrl)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace LanguageSchool.Controllers
 
                 if (loginUser != null)
                 {
-                    this.LogUserIn(loginUser, RememberMe);
+                    this.LogUserIn(loginUser, loginInfo.RememberMe);
 
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
