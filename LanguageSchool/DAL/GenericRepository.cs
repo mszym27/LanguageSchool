@@ -21,13 +21,6 @@ namespace LanguageSchool.DAL
             this.dbSet = entities.Set<TEntity>();
         }
 
-        //public virtual IEnumerable<TEntity> GetAllActive(
-        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null
-        //)
-        //{
-        //    return this.Get(filter => (((TEntity)filter).IsActive == 1 ), orderBy, null);
-        //}
-
         public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -64,21 +57,6 @@ namespace LanguageSchool.DAL
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
-        }
-
-        public virtual void Delete(object id)
-        {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
-        }
-
-        public virtual void Delete(TEntity entityToDelete)
-        {
-            if (entities.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                dbSet.Attach(entityToDelete);
-            }
-            dbSet.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
