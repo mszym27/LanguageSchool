@@ -446,7 +446,6 @@
     <Content Include="Views\EntryTest\TakeTest.cshtml" />
     <Content Include="Views\Shared\_MenuItems.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
@@ -458,19 +457,16 @@
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Message\Send.cshtml" />
     <Content Include="Views\UserData\Create.cshtml" />
-    <Content Include="Views\UserData\Delete.cshtml" />
     <Content Include="Views\UserData\Details.cshtml" />
     <Content Include="Views\UserData\Edit.cshtml" />
     <Content Include="Views\UserData\Index.cshtml" />
     <Content Include="Views\UserData\List.cshtml" />
     <Content Include="Views\ContactRequest\Details.cshtml" />
     <Content Include="Views\Material\Upload.cshtml" />
-    <Content Include="Views\Material\Delete.cshtml" />
     <Content Include="Views\Material\Details.cshtml" />
     <Content Include="Views\Material\Edit.cshtml" />
     <Content Include="Views\Material\Index.cshtml" />
     <Content Include="Views\Group\Create.cshtml" />
-    <Content Include="Views\Group\Delete.cshtml" />
     <Content Include="Views\Group\FullDetails.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
@@ -480,7 +476,6 @@
     <Content Include="Views\UserData\AddGroups.cshtml" />
     <Content Include="Views\User\TimeTable.cshtml" />
     <Content Include="Views\LessonSubject\Create.cshtml" />
-    <Content Include="Views\LessonSubject\Delete.cshtml" />
     <Content Include="Views\LessonSubject\Details.cshtml" />
     <Content Include="Views\LessonSubject\Edit.cshtml" />
     <Content Include="Views\LessonSubject\LessonSubjects.cshtml" />
