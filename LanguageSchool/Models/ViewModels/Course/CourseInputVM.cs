@@ -16,6 +16,7 @@ namespace LanguageSchool.Models.ViewModels.CourseViewModels
         [Required(ErrorMessage = "Proszę podać datę zakończenia kursu")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DateLessThan("StartDate", ErrorMessage = "Data nie może być wcześniejsza od daty rozpoczęcia")]
         public DateTime EndDate { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
@@ -49,6 +50,8 @@ namespace LanguageSchool.Models.ViewModels.CourseViewModels
             NumberOfHours = course.NumberOfHours;
             IsActive = course.IsActive;
             LanguageProficencyId = course.LanguageProficencyId;
+
+            LanguageProficenciens = new SelectList(Consts.LanguageProficencyList, "Key", "Value");
         }
     }
 }

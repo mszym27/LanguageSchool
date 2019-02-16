@@ -15,17 +15,26 @@ namespace LanguageSchool.Models.ViewModels
         public int GroupId { get; set; }
         public string CourseNumberOfHours { get; set; }
         public string CourseName { get; set; }
+        [Required(ErrorMessage = "Podaj nazwę grupy")]
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
-        public SelectList Users { get; set; }
+        public SelectList Users
+        {
+            get { return PopulateList.AllUsersInRole((int)Consts.Roles.Teacher); }
+            set { }
+        }
+        [Required(ErrorMessage = "Wybierz prowadzącego")]
         public int UserId { get; set; }
 
+        [Required(ErrorMessage = "Podaj datę rozpoczęcia zajęć")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "Podaj datę zakończenia zajęć")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DateLessThan("StartDate", ErrorMessage = "Data nie może być wcześniejsza od daty rozpoczęcia")]
         public DateTime EndDate { get; set; }
 
         public UserViewModel Teacher { get; set; }

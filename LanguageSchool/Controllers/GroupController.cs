@@ -156,11 +156,25 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Group/Create/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Create(int id)
+        public ActionResult Create(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var course = UnitOfWork.CourseRepository.GetById(id);
+
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            var groupVM = new GroupViewModel(course);
+
             TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź dane nowej grupy", "wybierz prowadzącego oraz daty w których odbywać się będą zajęcia");
 
-            return View(new GroupViewModel(UnitOfWork.CourseRepository.GetById(id)));
+            return View(groupVM);
         }
 
         [HttpGet]
@@ -177,6 +191,11 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(groupViewModel);
+            }
+
             var selectedTeacher = UnitOfWork.UserRepository.GetById(groupViewModel.UserId);
 
             if (groupViewModel.TeacherTimetable == null)
@@ -225,7 +244,7 @@ namespace LanguageSchool.Controllers
                             {
                                 groupTime = new GroupTime
                                 {
-                                    DayOfWeekId = (i + 1),
+                                    DayOfWeekId = 5000 + (i + 1),
                                     StartTime = j + 8,
                                     EndTime = j + 8,
                                 };
@@ -295,6 +314,11 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Edit(GroupInputVM groupVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(groupVM);
+            }
+
             try
             {
                 var group = UnitOfWork.GroupRepository.GetById(groupVM.GroupId);

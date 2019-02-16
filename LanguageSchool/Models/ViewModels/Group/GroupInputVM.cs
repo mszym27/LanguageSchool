@@ -11,16 +11,22 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         public int GroupId { get; set; }
         [Required(ErrorMessage = "Proszę podać nazwę grupy")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Proszę podać datę rozpoczęcia")]
+        [Required(ErrorMessage = "Proszę podać datę rozpoczęcia zajęć")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
-        [Required(ErrorMessage = "Proszę podać datę zakończenia")]
+        [Required(ErrorMessage = "Proszę podać datę zakończenia zajęć")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DateLessThan("StartDate", ErrorMessage = "Data nie może być wcześniejsza od daty rozpoczęcia")]
         public DateTime EndDate { get; set; }
 
-        public SelectList Teachers { get; }
+        public SelectList Teachers
+        {
+            get { return PopulateList.AllUsersInRole((int)Consts.Roles.Teacher); }
+        }
+
+        [Required(ErrorMessage = "Proszę wybrać prowadzącego")]
         public int TeacherId { get; set; }
 
         // Create
@@ -36,8 +42,6 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
             Name = group.Name;
             StartDate = group.StartDate;
             EndDate = group.EndDate;
-
-            Teachers = PopulateList.AllUsersInRole((int)Consts.Roles.Teacher);
         }
     }
 }

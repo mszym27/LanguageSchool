@@ -1,4 +1,4 @@
-﻿@model LanguageSchool.Models.ViewModels.CourseViewModel
+﻿@model LanguageSchool.Models.ViewModels.CourseViewModels.CourseInputVM
 
 @{
     ViewBag.Title = "Edit";
@@ -8,7 +8,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.CourseId)
     <div class="container">
         @Html.Partial("_PartHeader", "Edytuj dane kursu")
         <div class="row form-horizontal">

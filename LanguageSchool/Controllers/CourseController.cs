@@ -148,6 +148,11 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(CourseInputVM courseVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(courseVM);
+            }
+
             try
             {
                 Course course = new Course();
@@ -202,6 +207,11 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         public ActionResult Edit(CourseInputVM courseVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(courseVM);
+            }
+
             try
             {
                 var course = UnitOfWork.CourseRepository.GetById(courseVM.CourseId);
