@@ -1,0 +1,1 @@
+sqlcmd -S (local) -d LanguageSchool -i "C:\Users\Admin1\Documents\SQL Server Management Studio\aktualizacja.sql" -I
