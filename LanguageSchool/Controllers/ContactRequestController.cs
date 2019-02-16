@@ -122,6 +122,11 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Edit(ContactRequestInputVM contactRequestVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(contactRequestVM);
+            }
+
             try
             {
                 var contactRequest = UnitOfWork.ContactRequestRepository.GetById(contactRequestVM.ContactRequestId);
