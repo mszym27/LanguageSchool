@@ -321,6 +321,7 @@
     <Compile Include="Models\ViewModels\Course\GroupShortDetailsVM.cs" />
     <Compile Include="Models\ViewModels\Course\CourseInputVM.cs" />
     <Compile Include="Models\ViewModels\Course\CourseDetailsVM.cs" />
+    <Compile Include="Models\ViewModels\IntGreaterThanAttribute.cs" />
     <Compile Include="Models\ViewModels\DateLessThanAttribute.cs" />
     <Compile Include="Models\ViewModels\Group\GroupDetailsVM.cs" />
     <Compile Include="Models\ViewModels\Group\UsersGroupInputVM.cs" />

@@ -20,7 +20,6 @@ namespace LanguageSchool.Controllers
 {
     public class AccountController : LanguageSchoolController
     {
-
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {

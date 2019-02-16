@@ -7,7 +7,7 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; set; }
         public int GroupId { get; set; }
-        [Required(ErrorMessage = "Proszę podać temat")]
+        [Required(ErrorMessage = "Podaj temat")]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
@@ -15,9 +15,9 @@ namespace LanguageSchool.Models.ViewModels
 
         public int MaxNumberOfClosedQuestions { get; set; }
         public int MaxNumberOfOpenQuestions { get; set; }
-        [RangeAttribute(0, int.MaxValue, ErrorMessage = "Ilość otwartych pytań nie może być ujemna")]
+        [IntGreaterThan("MaxNumberOfClosedQuestions", ErrorMessage = "Ilość pytań nie może być większa od maksymalnej")]
         public int NumberOfOpenQuestions { get; set; }
-        [RangeAttribute(0, int.MaxValue, ErrorMessage = "Ilość zamkniętych pytań nie może być ujemna")]
+        [IntGreaterThan("MaxNumberOfOpenQuestions", ErrorMessage = "Ilość pytań nie może być większa od maksymalnej")]
         public int NumberOfClosedQuestions { get; set; }
 
         public bool IsMarked { get; set; }

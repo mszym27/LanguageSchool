@@ -16,9 +16,19 @@ namespace LanguageSchool.Controllers
     {
         [Route("LessonSubjects/{id}")]
         [Authorize(Roles = "Student")]
-        public ActionResult LessonSubjects(int id)
+        public ActionResult LessonSubjects(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var group = UnitOfWork.GroupRepository.GetById(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
 
             var student = GetLoggedUser();
 
@@ -29,9 +39,14 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create(int id)
+        public ActionResult Create(int? id)
         {
-            var lessonSubjectViewModel = new LessonSubjectViewModel() { GroupId = id };
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var lessonSubjectViewModel = new LessonSubjectViewModel() { GroupId = (int)id };
 
             return View(lessonSubjectViewModel);
         }
@@ -51,7 +66,6 @@ namespace LanguageSchool.Controllers
                 };
 
                 UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
-
                 UnitOfWork.Save();
 
                 return RedirectToAction("Details", "Group", new { id = lessonSubjectViewModel.GroupId });
@@ -64,11 +78,21 @@ namespace LanguageSchool.Controllers
 
         [Route("LessonSubject/CreateFromExisting/{groupId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult CreateFromExisting(int groupId)
+        public ActionResult CreateFromExisting(int? groupId)
         {
+            if (groupId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var group = UnitOfWork.GroupRepository.GetById(groupId);
 
-            var lessonSubjects = new ExistingLessonSubjectsVM(group.Course, groupId);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var lessonSubjects = new ExistingLessonSubjectsVM(group.Course, (int)groupId);
 
             return View(lessonSubjects);
         }
@@ -143,7 +167,6 @@ namespace LanguageSchool.Controllers
                 }
 
                 UnitOfWork.LessonSubjectRepository.Insert(lessonSubject);
-
                 UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Utworzono nowy temat", "możesz przystąpić do dostosowywania go do potrzeb prowadzonej przez Ciebie grupy");
@@ -180,8 +203,13 @@ namespace LanguageSchool.Controllers
 
         [Route("LessonSubject/DeActivate/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeActivate(int id)
+        public ActionResult DeActivate(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
@@ -194,23 +222,29 @@ namespace LanguageSchool.Controllers
                 lessonSubject.IsActive = !lessonSubject.IsActive;
 
                 UnitOfWork.LessonSubjectRepository.Update(lessonSubject);
-
                 UnitOfWork.Save();
 
                 return RedirectToAction("Details", new { id = id });
             }
-            catch
+            catch (Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany problem", "operacja nie powiodła się.");
+                var errorLogGuid = LogException(ex);
 
-                return RedirectToAction("Details", new { id = id });
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
             }
         }
 
         [Route("LessonSubject/Delete/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;

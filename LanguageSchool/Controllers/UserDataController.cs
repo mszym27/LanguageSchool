@@ -113,8 +113,13 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("UserData/AddGroups/{userId}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult AddGroups(int userId)
+        public ActionResult AddGroups(int? userId)
         {
+            if (userId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var student = UnitOfWork.UserRepository.GetById(userId);
 
             if (student == null)
@@ -214,16 +219,16 @@ namespace LanguageSchool.Controllers
         }
 
         // GET: UserData/Details/5
-        [Route("UserData/Details/{Id}")]
+        [Route("UserData/Details/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Details(int? Id)
+        public ActionResult Details(int? id)
         {
-            if (Id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            UserData userData = UnitOfWork.UserDataRepository.GetById(Id);
+            UserData userData = UnitOfWork.UserDataRepository.GetById(id);
 
             if (userData == null)
             {
@@ -238,9 +243,19 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("UserData/Create/{contactRequestId}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Create(int contactRequestId)
+        public ActionResult Create(int? contactRequestId)
         {
+            if (contactRequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var contactRequest = UnitOfWork.ContactRequestRepository.GetById(contactRequestId);
+
+            if (contactRequest == null)
+            {
+                return HttpNotFound();
+            }
 
             UserDataViewModel userDataViewModel = new UserDataViewModel(contactRequest);
 
@@ -272,7 +287,6 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(UserDataViewModel udvm)
         {
-            //if (ModelState.IsValid)
             try
             {
                 UserData userData = new UserData();

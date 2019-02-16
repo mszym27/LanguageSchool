@@ -52,16 +52,16 @@
                     <div class="control-label col-md-2">
                         <strong>Godziny kontaktu od</strong>
                     </div>
-                    <div class="col-md-1">
-                        @Html.EditorFor(model => model.PreferredHoursFrom, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.PreferredHoursFrom, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
                         @Html.ValidationMessageFor(model => model.PreferredHoursFrom, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="control-label col-md-2 col-md-offset-3">
+                    <div class="control-label col-md-2">
                         <strong>Godziny kontaktu do</strong>
                     </div>
-                    <div class="col-md-1">
-                        @Html.EditorFor(model => model.PreferredHoursTo, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.PreferredHoursTo, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
                         @Html.ValidationMessageFor(model => model.PreferredHoursTo, "", new { @class = "text-danger" })
                     </div>
                 </div>

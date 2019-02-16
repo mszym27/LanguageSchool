@@ -21,7 +21,9 @@ namespace LanguageSchool.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = UnitOfWork.UserRepository.GetById(userId);
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -32,8 +34,13 @@ namespace LanguageSchool.Controllers
 
         [HttpGet]
         [Route("Mark/{id}")]
-        public ActionResult Mark(int id)
+        public ActionResult Mark(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var answer = UnitOfWork.UserOpenAnswerRepository.GetById(id);
 
             if (answer == null)

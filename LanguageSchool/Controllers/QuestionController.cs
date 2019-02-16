@@ -15,9 +15,19 @@ namespace LanguageSchool.Controllers
     {
         [Route("Questions/{lessonSubjectId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Index(int lessonSubjectId)
+        public ActionResult Index(int? lessonSubjectId)
         {
+            if (lessonSubjectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
 
             var subjectsQuestionsViewModel = new SubjectsQuestionsViewModel(lessonSubject);
 
@@ -27,9 +37,19 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Questions/CreateOpen/{lessonSubjectId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult CreateOpen(int lessonSubjectId)
+        public ActionResult CreateOpen(int? lessonSubjectId)
         {
+            if (lessonSubjectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
 
             var openQuestion = new OpenQuestionViewModel(lessonSubject);
 
@@ -54,8 +74,12 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", openQuestionViewModel.LessonSubjectId);
             }
-            catch
+            catch (Exception ex)
             {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
                 return View(openQuestionViewModel);
             }
         }
@@ -63,9 +87,19 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult CreateClosed(int lessonSubjectId)
+        public ActionResult CreateClosed(int? lessonSubjectId)
         {
+            if (lessonSubjectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
 
             var closedQuestion = new ClosedQuestionViewModel(lessonSubject);
 
@@ -74,8 +108,13 @@ namespace LanguageSchool.Controllers
 
         [Route("Questions/DeleteClosed/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteClosed(int id)
+        public ActionResult DeleteClosed(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;
@@ -145,6 +184,9 @@ namespace LanguageSchool.Controllers
                     }
                 }
 
+                UnitOfWork.ClosedQuestionRepository.Update(closedQuestion);
+                UnitOfWork.Save();
+
                 return RedirectToAction("Index", new { id = closedQuestion.LessonSubjectId });
             }
             catch (Exception ex)
@@ -159,8 +201,13 @@ namespace LanguageSchool.Controllers
 
         [Route("Questions/DeleteOpen/{id}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteOpen(int id)
+        public ActionResult DeleteOpen(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;
@@ -228,6 +275,9 @@ namespace LanguageSchool.Controllers
                         }
                     }
                 }
+
+                UnitOfWork.OpenQuestionRepository.Update(openQuestion);
+                UnitOfWork.Save();
 
                 return RedirectToAction("Index", new { id = openQuestion.LessonSubjectId });
             }

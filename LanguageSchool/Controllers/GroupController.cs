@@ -79,9 +79,19 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Group/AddUsers/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult AddUsers(int id)
+        public ActionResult AddUsers(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var group = UnitOfWork.GroupRepository.GetById(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
 
             var usersGroupViewModel = new UsersGroupViewModel(group);
 
@@ -133,24 +143,36 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult AddUsers(UsersGroupViewModel usersGroupViewModel)
         {
-            var group = UnitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
-
-            foreach (var userViewModel in usersGroupViewModel.usersAvaible)
+            try
             {
-                if (userViewModel.IsMarked)
+                var group = UnitOfWork.GroupRepository.GetById(usersGroupViewModel.GroupId);
+
+                foreach (var userViewModel in usersGroupViewModel.usersAvaible)
                 {
-                    var user = UnitOfWork.UserRepository.GetById(userViewModel.Id);
-
-                    group.UsersGroups.Add(new UserGroup()
+                    if (userViewModel.IsMarked)
                     {
-                        User = user
-                    });
+                        var user = UnitOfWork.UserRepository.GetById(userViewModel.Id);
+
+                        group.UsersGroups.Add(new UserGroup()
+                        {
+                            User = user
+                        });
+                    }
                 }
+
+                UnitOfWork.GroupRepository.Update(group);
+                UnitOfWork.Save();
+
+                return RedirectToAction("FullDetails", "Group", new { id = usersGroupViewModel.GroupId });
             }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            UnitOfWork.Save();
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            return RedirectToAction("FullDetails", "Group", new { id = usersGroupViewModel.GroupId });
+                return RedirectToAction("FullDetails", "Group", new { id = usersGroupViewModel.GroupId });
+            }
         }
 
         [HttpGet]
@@ -208,82 +230,94 @@ namespace LanguageSchool.Controllers
             }
             else
             {
-                var group = new Group {
-                    CourseId = groupViewModel.CourseId,
-                    Name = groupViewModel.Name,
-                    StartDate = groupViewModel.StartDate,
-                    EndDate = groupViewModel.EndDate,
-                    IsActive = true
-                };
-
-                group.UsersGroups.Add(new UserGroup
+                try
                 {
-                    UserId = groupViewModel.Teacher.Id
-                });
+                    var group = new Group
+                    {
+                        CourseId = groupViewModel.CourseId,
+                        Name = groupViewModel.Name,
+                        StartDate = groupViewModel.StartDate,
+                        EndDate = groupViewModel.EndDate,
+                        IsActive = true
+                    };
 
-                var groupTimes = new List<GroupTime>();
+                    group.UsersGroups.Add(new UserGroup
+                    {
+                        UserId = groupViewModel.Teacher.Id
+                    });
 
-                GroupTime groupTime = null;
+                    var groupTimes = new List<GroupTime>();
 
-                for (int i = 0; i < 7; i++) // days
-                {
+                    GroupTime groupTime = null;
+
+                    for (int i = 0; i < 7; i++) // days
+                    {
+                        if (groupTime != null)
+                        {
+                            groupTimes.Add(groupTime);
+                        }
+
+                        groupTime = null;
+
+                        for (int j = 0; j < 12; j++) // hours
+                        {
+                            var isHourChecked = groupViewModel.TeacherTimetable.ElementAt(j).ElementAt(i);
+
+                            if (isHourChecked == true)
+                            {
+                                if (groupTime == null)
+                                {
+                                    groupTime = new GroupTime
+                                    {
+                                        DayOfWeekId = 5000 + (i + 1),
+                                        StartTime = j + 8,
+                                        EndTime = j + 8,
+                                    };
+                                }
+                                else
+                                {
+                                    if (groupTime.EndTime == (j + 8) - 1)
+                                        groupTime.EndTime++;
+                                    else
+                                    {
+                                        groupTimes.Add(groupTime);
+
+                                        groupTime = null;
+                                    }
+                                }
+                            }
+                            else if (groupTime != null)
+                            {
+                                groupTimes.Add(groupTime);
+
+                                groupTime = null;
+                            }
+                        }
+                    }
+
                     if (groupTime != null)
                     {
                         groupTimes.Add(groupTime);
                     }
 
-                    groupTime = null;
+                    group.GroupTimes = groupTimes;
 
-                    for (int j = 0; j < 12; j++) // hours
-                    {
-                        var isHourChecked = groupViewModel.TeacherTimetable.ElementAt(j).ElementAt(i);
+                    UnitOfWork.GroupRepository.Insert(group);
 
-                        if(isHourChecked == true)
-                        {
-                            if(groupTime == null)
-                            {
-                                groupTime = new GroupTime
-                                {
-                                    DayOfWeekId = 5000 + (i + 1),
-                                    StartTime = j + 8,
-                                    EndTime = j + 8,
-                                };
-                            }
-                            else
-                            {
-                                if (groupTime.EndTime == (j + 8) - 1)
-                                    groupTime.EndTime++;
-                                else
-                                {
-                                    groupTimes.Add(groupTime);
+                    UnitOfWork.Save();
 
-                                    groupTime = null;
-                                }
-                            }
-                        }
-                        else if (groupTime != null)
-                        {
-                            groupTimes.Add(groupTime);
+                    TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
 
-                            groupTime = null;
-                        }
-                    }
+                    return RedirectToAction("FullDetails", "Group", new { id = group.Id });
                 }
-
-                if (groupTime != null)
+                catch (Exception ex)
                 {
-                    groupTimes.Add(groupTime);
+                    var errorLogGuid = LogException(ex);
+
+                    TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                    return View("PickHours", groupViewModel);
                 }
-
-                group.GroupTimes = groupTimes;
-
-                UnitOfWork.GroupRepository.Insert(group);
-
-                UnitOfWork.Save();
-
-                TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
-
-                return RedirectToAction("FullDetails", "Group", new { id = group.Id });
             }
         }
 
@@ -412,6 +446,7 @@ namespace LanguageSchool.Controllers
                     }
                 }
 
+                UnitOfWork.GroupRepository.Update(group);
                 UnitOfWork.Save();
 
                 return RedirectToAction("FullDetails", "Course", new { id = group.CourseId });

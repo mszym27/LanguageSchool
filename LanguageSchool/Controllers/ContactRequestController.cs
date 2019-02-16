@@ -13,11 +13,22 @@ namespace LanguageSchool.Controllers
     public class ContactRequestController : LanguageSchoolController
     {
         // GET: ContactRequest/Create
-        public ActionResult Create(int id)
+        public ActionResult Create(int? id)
         {
-            var contactRequestVM = new ContactRequestInputVM();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            contactRequestVM.CourseId = id;
+            var course = UnitOfWork.CourseRepository.GetById(id);
+
+            if (course == null || course.IsDeleted || !course.IsActive)
+            {
+                return HttpNotFound();
+            }
+
+            var contactRequestVM = new ContactRequestInputVM();
+            contactRequestVM.CourseId = (int)id;
 
             return View(contactRequestVM);
         }
@@ -26,6 +37,11 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         public ActionResult Create(ContactRequestInputVM contactRequestVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(contactRequestVM);
+            }
+
             try
             {
                 ContactRequest contactRequest = new ContactRequest();

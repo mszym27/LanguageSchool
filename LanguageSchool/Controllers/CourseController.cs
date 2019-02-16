@@ -51,7 +51,7 @@ namespace LanguageSchool.Controllers
 
             Course course = UnitOfWork.CourseRepository.GetById(id);
 
-            if (course == null)
+            if (course == null || course.IsDeleted || !course.IsActive)
             {
                 return HttpNotFound();
             }

@@ -31,7 +31,9 @@ namespace LanguageSchool.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = UnitOfWork.UserRepository.GetById(id);
+
             if (user == null)
             {
                 return HttpNotFound();

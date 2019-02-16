@@ -72,6 +72,7 @@ namespace LanguageSchool.Controllers
                 {
                     userMessage.HasBeenReceived = true;
                     userMessage.ReceivedDate = DateTime.Today;
+
                     UnitOfWork.UserMessageRepository.Update(userMessage);
                     UnitOfWork.Save();
                 }
@@ -244,13 +245,18 @@ namespace LanguageSchool.Controllers
         }
         
         [Route("Message/Delete/{Id}")]
-        public ActionResult Delete(int Id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 var now = DateTime.Now;
 
-                var userMessage = UnitOfWork.UserMessageRepository.GetById(Id);
+                var userMessage = UnitOfWork.UserMessageRepository.GetById(id);
 
                 userMessage.IsDeleted = true;
                 userMessage.DeletionDate = now;
@@ -267,7 +273,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
         }
 

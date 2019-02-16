@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.Mvc;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
@@ -16,9 +16,18 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Test/Create/{GroupId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create(int GroupId)
+        public ActionResult Create(int? GroupId)
         {
+            if (GroupId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var group = UnitOfWork.GroupRepository.GetById(GroupId);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
 
             var testViewModel = new TestViewModel(group);
 
@@ -29,111 +38,132 @@ namespace LanguageSchool.Controllers
         [Route("Test/Create/{GroupId}")]
         public ActionResult Create(TestViewModel testViewModel)
         {
-            var test = new Test();
-
-            test.Name = testViewModel.Name;
-            test.Comment = testViewModel.Comment;
-            test.IsActive = testViewModel.IsActive;
-            test.GroupId = testViewModel.GroupId;
-
-            test.TestsLessonSubjects = new List<TestsLessonSubject>();
-            test.TestClosedQuestions = new List<TestClosedQuestion>();
-            test.TestOpenQuestions = new List<TestOpenQuestion>();
-
-            foreach (var chosenSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
+            try
             {
-                var closedQuestionsNumber = chosenSubject.NumberOfClosedQuestions;
-                var openQuestionsNumber = chosenSubject.NumberOfOpenQuestions;
+                var test = new Test();
 
-                var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(chosenSubject.Id);
+                test.Name = testViewModel.Name;
+                test.Comment = testViewModel.Comment;
+                test.IsActive = testViewModel.IsActive;
+                test.GroupId = testViewModel.GroupId;
 
-                var testLessonSubject = new TestsLessonSubject() {
-                    LessonSubjectId = lessonSubject.Id
-                };
+                test.TestsLessonSubjects = new List<TestsLessonSubject>();
+                test.TestClosedQuestions = new List<TestClosedQuestion>();
+                test.TestOpenQuestions = new List<TestOpenQuestion>();
 
-                test.TestsLessonSubjects.Add(testLessonSubject);
-
-                var closedQuestions = lessonSubject.ClosedQuestions
-                    .Where(q => !q.IsDeleted)
-                    .OrderBy(x => Rand.Next())
-                    .Take(closedQuestionsNumber);
-
-                foreach (var question in closedQuestions)
+                foreach (var chosenSubject in testViewModel.LessonSubjects.Where(ls => ls.IsMarked == true))
                 {
-                    var possibleAnswers = question.NumberOfPossibleAnswers;
+                    var closedQuestionsNumber = chosenSubject.NumberOfClosedQuestions;
+                    var openQuestionsNumber = chosenSubject.NumberOfOpenQuestions;
 
-                    var properAnswers = question.IsMultichoice? Rand.Next(1, possibleAnswers) : 1;
+                    var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(chosenSubject.Id);
 
-                    var answers = question.Answers
-                        .Where(a => !a.IsDeleted && !a.IsCorrect)
-                        .OrderBy(x => Rand.Next())
-                        .Take(possibleAnswers - properAnswers)
-                        .ToList();
-
-                    var proper = question.Answers
-                        .Where(a => !a.IsDeleted && a.IsCorrect)
-                        .OrderByDescending(a => a.IsCorrect)
-                        .ThenBy(x => Rand.Next())
-                        .Take(properAnswers)
-                        .ToList();
-
-                    answers.AddRange(proper);
-
-                    TestClosedQuestion testQuestion = new TestClosedQuestion
-                    {
-                        QuestionId = question.Id
+                    var testLessonSubject = new TestsLessonSubject() {
+                        LessonSubjectId = lessonSubject.Id
                     };
 
-                    testQuestion.TestAnswers = new List<TestAnswer>();
+                    test.TestsLessonSubjects.Add(testLessonSubject);
 
-                    foreach (var answer in answers)
+                    var closedQuestions = lessonSubject.ClosedQuestions
+                        .Where(q => !q.IsDeleted)
+                        .OrderBy(x => Rand.Next())
+                        .Take(closedQuestionsNumber);
+
+                    foreach (var question in closedQuestions)
                     {
-                        testQuestion.TestAnswers.Add(
-                            new TestAnswer
-                            {
-                                AnswerId = answer.Id
-                            }
-                        );
-                    }
+                        var possibleAnswers = question.NumberOfPossibleAnswers;
 
-                    test.TestClosedQuestions.Add(testQuestion);
+                        var properAnswers = question.IsMultichoice? Rand.Next(1, possibleAnswers) : 1;
 
-                    test.Points += question.Points;
-                }
+                        var answers = question.Answers
+                            .Where(a => !a.IsDeleted && !a.IsCorrect)
+                            .OrderBy(x => Rand.Next())
+                            .Take(possibleAnswers - properAnswers)
+                            .ToList();
 
-                var openQuestions = lessonSubject.OpenQuestions
-                    .Where(q => !q.IsDeleted)
-                    .OrderBy(x => Rand.Next())
-                    .Take(openQuestionsNumber);
+                        var proper = question.Answers
+                            .Where(a => !a.IsDeleted && a.IsCorrect)
+                            .OrderByDescending(a => a.IsCorrect)
+                            .ThenBy(x => Rand.Next())
+                            .Take(properAnswers)
+                            .ToList();
 
-                foreach (var question in openQuestions)
-                {
-                    test.TestOpenQuestions.Add(
-                        new TestOpenQuestion
+                        answers.AddRange(proper);
+
+                        TestClosedQuestion testQuestion = new TestClosedQuestion
                         {
                             QuestionId = question.Id
-                        }
-                    );
+                        };
 
-                    test.Points += question.Points;
+                        testQuestion.TestAnswers = new List<TestAnswer>();
+
+                        foreach (var answer in answers)
+                        {
+                            testQuestion.TestAnswers.Add(
+                                new TestAnswer
+                                {
+                                    AnswerId = answer.Id
+                                }
+                            );
+                        }
+
+                        test.TestClosedQuestions.Add(testQuestion);
+
+                        test.Points += question.Points;
+                    }
+
+                    var openQuestions = lessonSubject.OpenQuestions
+                        .Where(q => !q.IsDeleted)
+                        .OrderBy(x => Rand.Next())
+                        .Take(openQuestionsNumber);
+
+                    foreach (var question in openQuestions)
+                    {
+                        test.TestOpenQuestions.Add(
+                            new TestOpenQuestion
+                            {
+                                QuestionId = question.Id
+                            }
+                        );
+
+                        test.Points += question.Points;
+                    }
+
+                    test.NumberOfClosedQuestions += closedQuestionsNumber;
+
+                    test.NumberOfOpenQuestions += openQuestionsNumber;
                 }
 
-                test.NumberOfClosedQuestions += closedQuestionsNumber;
+                UnitOfWork.TestRepository.Insert(test);
+                UnitOfWork.Save();
 
-                test.NumberOfOpenQuestions += openQuestionsNumber;
+                return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
             }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            UnitOfWork.TestRepository.Insert(test);
-            UnitOfWork.Save();
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            return RedirectToAction("Details", "Group", new { id = testViewModel.GroupId });
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [Route("Test/Taken/{userTestId}")]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Taken(int userTestId)
+        public ActionResult Taken(int? userTestId)
         {
+            if (userTestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var userTest = UnitOfWork.UserTestRepository.GetById(userTestId);
+
+            if (userTestId == null)
+            {
+                return HttpNotFound();
+            }
 
             var testViewModel = new TakenTestVM(userTest);
 
@@ -143,9 +173,19 @@ namespace LanguageSchool.Controllers
         [HttpGet]
         [Route("Test/Take/{testId}")]
         [Authorize(Roles = "Student")]
-        public ActionResult Take(int testId)
+        public ActionResult Take(int? testId)
         {
+            if (testId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var test = UnitOfWork.TestRepository.GetById(testId);
+
+            if (test == null)
+            {
+                return HttpNotFound();
+            }
 
             var testViewModel = new TestViewModel(test);
 
@@ -162,8 +202,8 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult Take(TestViewModel testViewModel)
         {
-            //try
-            //{
+            try
+            {
                 var student = GetLoggedUser();
                 var takenTest = UnitOfWork.TestRepository.GetById(testViewModel.Id);
 
@@ -275,15 +315,15 @@ namespace LanguageSchool.Controllers
                 TempData["Alert"] = new AlertViewModel(userAlertType, "Test został zakończony", userAlertContents);
 
                 return RedirectToAction("LessonSubjects", "LessonSubject", new { id = testViewModel.GroupId });
-            //}
-            //catch (Exception ex)
-            //{
-            //    var errorLogGuid = LogException(ex);
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            //    TempData["Alert"] = new AlertViewModel(errorLogGuid);
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            //    return View(testViewModel);
-            //}
+                return View(testViewModel);
+            }
         }
 
         private void Shuffle(List<AnswerViewModel> answers)

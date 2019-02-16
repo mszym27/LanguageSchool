@@ -33,7 +33,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         public GroupInputVM() { }
 
         //// Create - based on course
-        //public GroupInputVM() { }
+        //public GroupInputVM(Course course) { }
 
         // Edit
         public GroupInputVM(Group group)
