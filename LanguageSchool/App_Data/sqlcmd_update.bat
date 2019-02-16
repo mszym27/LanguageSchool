@@ -1,1 +1,1 @@
-sqlcmd -S (local) -d LanguageSchool -i "C:\Users\Admin1\Documents\SQL Server Management Studio\aktualizacja.sql" -I
+sqlcmd -S (local) -d LanguageSchool -i "C:\Users\Admin1\Source\Repos\LanguageSchool\LanguageSchool\App_Data\script_update.sql" -I
