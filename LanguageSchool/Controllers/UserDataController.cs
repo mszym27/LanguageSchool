@@ -273,7 +273,7 @@ namespace LanguageSchool.Controllers
         {
             UserDataViewModel userDataViewModel = new UserDataViewModel();
 
-            userDataViewModel.Roles = new SelectList(Consts.RoleList,
+            userDataViewModel.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
                                          "Key",
                                          "Value");
 
@@ -347,13 +347,25 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(Consts.Success, "Konto zostało utworzone", "proszę przekazać użytkownikowi jego login i hasło");
 
-                return RedirectToAction("Details", new { userId = userData.UserId });
+                return RedirectToAction("Details", new { id = userData.UserId });
             }
             catch(Exception ex)
             {
                 TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
 
-                ViewBag.UserId = new SelectList(UnitOfWork.UserRepository.Get(u => !u.IsDeleted), "Id", "Login");
+
+                if (udvm.OriginContactRequestId != null)
+                {
+                    udvm.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => g.CourseId == udvm.CourseId),
+                                             "Id",
+                                             "Name");
+                }
+                else
+                {
+                    udvm.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
+                                            "Key",
+                                            "Value");
+                }
 
                 return View(udvm);
             }

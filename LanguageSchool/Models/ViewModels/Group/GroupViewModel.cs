@@ -24,6 +24,7 @@ namespace LanguageSchool.Models.ViewModels
             get { return PopulateList.AllUsersInRole((int)Consts.Roles.Teacher); }
             set { }
         }
+
         [Required(ErrorMessage = "Wybierz prowadzącego")]
         public int UserId { get; set; }
 

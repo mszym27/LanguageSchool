@@ -15,7 +15,7 @@
             <div class="bordered col-md-12">
                 <div class="form-horizontal">
                     @if (@Model.OriginContactRequestId != null)
-                {
+                    {
                         <div class="row form-group">
                             <div class="control-label col-md-2">
                                 <strong>Grupa</strong>
@@ -32,10 +32,7 @@
                                 <strong>Rola</strong>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.RoleId, Model.Roles, new
-                           {
-                               @class = "form-control",
-                               @id = "rolePicker" @*, @onchange = "RoleChanged()"*@ })
+                                @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control" })
                             </div>
                         </div>
                     }
@@ -138,4 +135,8 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

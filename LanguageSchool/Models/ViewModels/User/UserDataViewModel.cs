@@ -7,9 +7,12 @@ namespace LanguageSchool.Models.ViewModels
     public class UserDataViewModel
     {
         public int Id { get; set; }
+        public int CourseId { get; set; }
         public System.DateTime CreationDate { get; set; }
         public int UserId { get; set; }
+        [Required(ErrorMessage = "Wymagane jest wprowadzenie imienia")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Wymagane jest wprowadzenie nazwiska")]
         public string Surname { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
@@ -23,7 +26,7 @@ namespace LanguageSchool.Models.ViewModels
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
                    ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string PrivatePhoneNumber { get; set; }
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Adres ma nieprawidłowy format")]
         public string EmailAdress { get; set; }
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
@@ -45,7 +48,7 @@ namespace LanguageSchool.Models.ViewModels
         public UserDataViewModel(ContactRequest contactRequest)
         {
             OriginContactRequestId = contactRequest.Id;
-
+            CourseId = contactRequest.CourseId;
             Name = contactRequest.Name;
             Surname = contactRequest.Surname;
             PrivatePhoneNumber = contactRequest.PhoneNumber;
