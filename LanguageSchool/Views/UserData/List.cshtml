@@ -12,6 +12,24 @@
 <div class="container-fluid">
     @using (Html.BeginForm())
     {
+        var toFirst = Url.Action("List", new
+        {
+            creationDateFrom = ViewBag.creationDateFrom,
+            creationDateTo = ViewBag.creationDateTo,
+            PreferredHoursFrom = ViewBag.PreferredHoursFrom,
+            PreferredHoursTo = ViewBag.PreferredHoursTo,
+            fullName = ViewBag.fullName,
+            city = ViewBag.city,
+            street = ViewBag.street,
+            phoneNumber = ViewBag.phoneNumber,
+            emailAdress = ViewBag.emailAdress,
+            showUserData = ViewBag.showUserData,
+            showContactRequests = ViewBag.showContactRequests,
+            sortColumn = ViewBag.sortColumn,
+            sortDirection = ViewBag.sortDirection,
+            page = 1
+        });
+
         DateTime now = DateTime.Now;
 
         <div class="row">
@@ -150,15 +168,12 @@
                  page
              }
          ))
-            @*<div class="col-md-2">
-                @Html.DropDownList("pageSize", (SelectList)PopulateList.GetPageSizes(), "Liczba wyników", new { @class = "form-control" })
-            </div>*@
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
+            <button class="btn btn-default" formaction=@toFirst formmethod="post" class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default" id="submit" type="submit">Szukaj</button>
+            <button class="btn btn-default" id="submit" formaction=@toFirst formmethod="post">Szukaj</button>
         </div>
     </div>
 }

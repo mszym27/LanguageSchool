@@ -90,24 +90,12 @@ namespace LanguageSchool.Controllers
 
             var pageSize = 20;
 
-            page = (courses.Count() + pageSize) < (page * pageSize) ? 1 : page;
-
             ViewBag.sortColumn = sortColumn;
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
             ViewBag.searchString = searchString;
             ViewBag.showActivated = showActivated;
             ViewBag.showDeactivated = showDeactivated;
-
-            // toDO
-            //List<Course> Courses = courses.ToList();
-
-            //var CoursesViewModels = new List<CourseViewModel>();
-
-            //foreach (Course c in Courses)
-            //{
-            //    CoursesViewModels.Add(new CourseViewModel(c));
-            //}
 
             return View(courses.ToPagedList(page, pageSize));
         }

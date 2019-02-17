@@ -75,8 +75,6 @@ namespace LanguageSchool.Controllers
 
             var totalRowCount = (contactInfo.Count == 0) ? 0 : (int)contactInfo.FirstOrDefault().TotalRowCount;
 
-            page = (contactInfo.Count + pageSize) < (page * pageSize) ? 1 : page;
-
             ViewBag.Courses = new SelectList(UnitOfWork.CourseRepository.Get(c => !c.IsDeleted),
                                          "Id",
                                          "Name");
