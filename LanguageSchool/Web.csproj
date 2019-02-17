@@ -225,6 +225,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\Administration\TableHeaderViewModel.cs" />
     <Compile Include="Models\ViewModels\Administration\LoginViewModel.cs" />
     <Compile Include="Models\Answer.cs">
       <DependentUpon>LanguageSchool.tt</DependentUpon>
@@ -491,6 +492,7 @@
     <Content Include="Views\Group\StudentDetails.cshtml" />
     <Content Include="Views\Message\SendToUser.cshtml" />
     <Content Include="Views\ContactRequest\Edit.cshtml" />
+    <Content Include="Views\Shared\_TabSortHeader.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

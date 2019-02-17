@@ -20,12 +20,6 @@ namespace LanguageSchool
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
-            //routes.MapRoute(
-            //    "ArtistImages",                                              // Route name
-            //    "{controller}/{action}/{artistName}/{apikey}",                           // URL with parameters
-            //    new { controller = "Home", action = "Index", artistName = "", apikey = "" }  // Parameter defaults
-            //);
         }
     }
 }

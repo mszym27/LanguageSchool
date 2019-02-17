@@ -1,0 +1,22 @@
+﻿@model LanguageSchool.Models.ViewModels.TableHeaderViewModel 
+
+@Html.ActionLink(Model.ShownName, "List",
+    new
+    {
+        creationDateFrom = ViewBag.creationDateFrom,
+        creationDateTo = ViewBag.creationDateTo,
+        PreferredHoursFrom = ViewBag.PreferredHoursFrom,
+        PreferredHoursTo = ViewBag.PreferredHoursTo,
+        fullName = ViewBag.fullName,
+        city = ViewBag.city,
+        street = ViewBag.street,
+        phoneNumber = ViewBag.phoneNumber,
+        emailAdress = ViewBag.emailAdress,
+        showUserData = ViewBag.showUserData,
+        showContactRequests = ViewBag.showContactRequests,
+        sortColumn = Model.ColumnName,
+        sortDirection = ViewBag.sortDirection,
+        page = 1
+    },
+    new { style = "text-decoration:none; color:black" }
+)

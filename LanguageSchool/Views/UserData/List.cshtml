@@ -1,8 +1,6 @@
 ﻿@using PagedList.Mvc;
-@using LanguageSchool.DAL;
-@model PagedList.IPagedList<LanguageSchool.Models.GetContactInfoListItem>
-
 @using LanguageSchool.Models.ViewModels;
+@model PagedList.IPagedList<LanguageSchool.Models.GetContactInfoListItem>
 
 @{
     ViewBag.Title = "List";
@@ -185,44 +183,25 @@
             <table class="table table-bordered">
                 <tr>
                     <th>
-                        Utworzono
+                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Utworzono", "CreationDate"))
                     </th>
                     <th>
-                        @Html.ActionLink("Imię i nazwisko", "List",
-                            new
-                            {
-                                creationDateFrom = ViewBag.creationDateFrom,
-                                creationDateTo = ViewBag.creationDateTo,
-                                PreferredHoursFrom = ViewBag.PreferredHoursFrom,
-                                PreferredHoursTo = ViewBag.PreferredHoursTo,
-                                fullName = ViewBag.fullName,
-                                city = ViewBag.city,
-                                street = ViewBag.street,
-                                phoneNumber = ViewBag.phoneNumber,
-                                emailAdress = ViewBag.emailAdress,
-                                showUserData = ViewBag.showUserData,
-                                showContactRequests = ViewBag.showContactRequests,
-                                sortColumn = "FullName",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Imię i nazwisko", "FullName"))
                     </th>
                     @if (hasUserData)
                     {
                         <th>
-                            Miasto
+                            @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Miasto", "City"))
                         </th>
                         <th>
-                            Ulica
+                            @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Ulica", "Street"))
                         </th>
                     }
                     <th>
-                        Numer telefonu
+                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Numer telefonu", "PhoneNumber"))
                     </th>
                     <th>
-                        Adres email
+                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Adres email", "EmailAdress"))
                     </th>
                     <th style="width:30px">
                     </th>
