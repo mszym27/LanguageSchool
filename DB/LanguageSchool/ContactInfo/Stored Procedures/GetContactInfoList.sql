@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [ContactInfo].[GetContactInfoList]
+﻿
+CREATE PROCEDURE [ContactInfo].[GetContactInfoList]
 	 @CreationDateFrom DATETIME
 	,@CreationDateTo DATETIME
 	,@PreferredHoursFrom INT
@@ -15,11 +16,11 @@
 	,@SortColumn VARCHAR(50)
 	,@SortDirection VARCHAR(4)
 	,@PageIndex INT
-	,@PageSize INT
 AS
 BEGIN
 DECLARE @Query NVARCHAR(MAX)
 	,@QueryParameters NVARCHAR(MAX)
+	,@PageSize INT = 20
 
 SET @CreationDateTo += '23:59:59'
 

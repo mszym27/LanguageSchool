@@ -84,13 +84,6 @@ namespace LanguageSchool
             return Grades.FirstOrDefault(g => g.Key >= percentage).Value;
         }
 
-        public static List<int> pages = new List<int>()
-        {
-            20,
-            50,
-            100
-        };
-
         public static List<MenuViewModel> menus = (
             new List<MenuViewModel>()
             {

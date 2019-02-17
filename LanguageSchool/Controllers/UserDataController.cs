@@ -43,8 +43,7 @@ namespace LanguageSchool.Controllers
                 bool showContactRequests = true,
                 string sortColumn = "CreationDate",
                 string sortDirection = "desc", 
-                int page = 1,
-                int pageSize = 20)
+                int page = 1)
         {
             var now = DateTime.Now;
 
@@ -70,8 +69,7 @@ namespace LanguageSchool.Controllers
                 showContactRequests,
                 sortColumn,
                 sortDirection,
-                page,
-                pageSize);
+                page);
 
             var totalRowCount = (contactInfo.Count == 0) ? 0 : (int)contactInfo.FirstOrDefault().TotalRowCount;
 
@@ -100,7 +98,7 @@ namespace LanguageSchool.Controllers
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
 
-            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, pageSize, totalRowCount);
+            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, 20, totalRowCount);
 
             return View(contactInfoPaged);
         }

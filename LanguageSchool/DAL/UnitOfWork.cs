@@ -186,8 +186,7 @@ namespace LanguageSchool.DAL
                 bool showContactRequests,
                 string sortColumn,
                 string sortDirection,
-                int pageIndex,
-                int pageSize)
+                int pageIndex)
         {
             return entities.GetContactInfoList(
                 creationDateFrom,
@@ -205,8 +204,7 @@ namespace LanguageSchool.DAL
                 showContactRequests,
                 sortColumn,
                 sortDirection,
-                pageIndex,
-                pageSize
+                pageIndex
             ).ToList();
         }
 

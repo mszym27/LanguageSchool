@@ -52,7 +52,7 @@ namespace LanguageSchool.Models
         public virtual DbSet<UserMessage> UserMessages { get; set; }
         public virtual DbSet<UserTest> UserTests { get; set; }
     
-        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex, Nullable<int> pageSize)
+        public virtual ObjectResult<GetContactInfoListItem> GetContactInfoList(Nullable<System.DateTime> creationDateFrom, Nullable<System.DateTime> creationDateTo, Nullable<int> preferredHoursFrom, Nullable<int> preferredHoursTo, string fullName, string city, string street, string phoneNumber, string emailAdress, Nullable<int> courseId, Nullable<int> roleId, Nullable<bool> showUserData, Nullable<bool> showContactRequests, string sortColumn, string sortDirection, Nullable<int> pageIndex)
         {
             var creationDateFromParameter = creationDateFrom.HasValue ?
                 new ObjectParameter("CreationDateFrom", creationDateFrom) :
@@ -118,11 +118,7 @@ namespace LanguageSchool.Models
                 new ObjectParameter("PageIndex", pageIndex) :
                 new ObjectParameter("PageIndex", typeof(int));
     
-            var pageSizeParameter = pageSize.HasValue ?
-                new ObjectParameter("PageSize", pageSize) :
-                new ObjectParameter("PageSize", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, preferredHoursFromParameter, preferredHoursToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, courseIdParameter, roleIdParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter, pageSizeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetContactInfoListItem>("GetContactInfoList", creationDateFromParameter, creationDateToParameter, preferredHoursFromParameter, preferredHoursToParameter, fullNameParameter, cityParameter, streetParameter, phoneNumberParameter, emailAdressParameter, courseIdParameter, roleIdParameter, showUserDataParameter, showContactRequestsParameter, sortColumnParameter, sortDirectionParameter, pageIndexParameter);
         }
     }
 }

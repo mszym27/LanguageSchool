@@ -47,7 +47,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ModificationDate" Type="datetime" />
-          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAdress" Type="varchar" MaxLength="255" />
@@ -436,19 +436,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messages_DictionaryItems_Role">
-          <End Role="DictionaryItems" Type="Self.DictionaryItems" Multiplicity="0..1" />
+        <Association Name="FK_Messages_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DictionaryItems">
+            <Principal Role="Groups">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messages">
-              <PropertyRef Name="RoleId" />
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messages_DictionaryItems_Type">
+        <Association Name="FK_Messages_MessageTypes">
           <End Role="DictionaryItems" Type="Self.DictionaryItems" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -460,15 +460,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messages_Groups">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+        <Association Name="FK_Messages_Roles">
+          <End Role="DictionaryItems" Type="Self.DictionaryItems" Multiplicity="0..1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Groups">
+            <Principal Role="DictionaryItems">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messages">
-              <PropertyRef Name="GroupId" />
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -837,7 +837,6 @@
           <Parameter Name="SortColumn" Type="varchar" Mode="In" />
           <Parameter Name="SortDirection" Type="varchar" Mode="In" />
           <Parameter Name="PageIndex" Type="int" Mode="In" />
-          <Parameter Name="PageSize" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="LanguageSchoolModelStoreContainer">
           <EntitySet Name="Classrooms" EntityType="Self.Classrooms" Schema="Administration" store:Type="Tables" />
@@ -904,16 +903,16 @@
             <End Role="Courses" EntitySet="Courses" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messages_DictionaryItems_Role" Association="Self.FK_Messages_DictionaryItems_Role">
-            <End Role="DictionaryItems" EntitySet="DictionaryItems" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messages_DictionaryItems_Type" Association="Self.FK_Messages_DictionaryItems_Type">
-            <End Role="DictionaryItems" EntitySet="DictionaryItems" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
           <AssociationSet Name="FK_Messages_Groups" Association="Self.FK_Messages_Groups">
             <End Role="Groups" EntitySet="Groups" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_MessageTypes" Association="Self.FK_Messages_MessageTypes">
+            <End Role="DictionaryItems" EntitySet="DictionaryItems" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Roles" Association="Self.FK_Messages_Roles">
+            <End Role="DictionaryItems" EntitySet="DictionaryItems" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
@@ -1055,7 +1054,6 @@
             <Parameter Name="SortColumn" Mode="In" Type="String" />
             <Parameter Name="SortDirection" Mode="In" Type="String" />
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
-            <Parameter Name="PageSize" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Classrooms" EntityType="LanguageSchoolModel.Classroom" />
           <EntitySet Name="DictionaryItems" EntityType="LanguageSchoolModel.DictionaryItem" />
@@ -1310,7 +1308,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModificationDate" Type="DateTime" Precision="3" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="EmailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
