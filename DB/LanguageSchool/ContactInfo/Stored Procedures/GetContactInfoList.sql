@@ -30,13 +30,9 @@ SET @EmailAdress = LTRIM(RTRIM(@EmailAdress))
 SET @Street = LTRIM(RTRIM(@Street))
 
 SELECT @ShowContactRequests = 0
-WHERE @ShowUserData = 1
-	AND (
-		(@FullName IS NOT NULL AND @FullName != '')
-		OR (@Street IS NOT NULL AND @Street != '')
-		OR (@City IS NOT NULL AND @City != '')
-		OR (@RoleId IS NOT NULL AND @RoleId != '')
-	)
+WHERE (@Street IS NOT NULL AND @Street != '')
+	OR (@City IS NOT NULL AND @City != '')
+	OR (@RoleId IS NOT NULL AND @RoleId != '')
 
 SET @Query = N''
 
@@ -146,6 +142,21 @@ BEGIN
 		SET @Query += N'
 		AND [ContactRequests].[CourseId] = @CourseId '
 END
+
+-- zabezpieczenie przed pustymi wartosciami - zwrocone tylko nazwy kolumn
+IF(@ShowUserData = 0 AND @ShowContactRequests = 0)
+	SET @Query += N'
+	SELECT [ContactRequests].[Id]
+		,[ContactRequests].[CreationDate]
+		,[ContactRequests].[Name] + '' '' + ISNULL([ContactRequests].[Surname], '''') AS FullName
+		,'''' AS City
+		,'''' AS Street
+		,[ContactRequests].[PhoneNumber]
+		,[ContactRequests].[EmailAdress]
+		,[ContactRequests].[Comment]
+		,1 AS IsContactRequest
+	FROM [ContactInfo].[ContactRequests]
+	WHERE 1 = 0 '
 
 SET @Query += N'
 ) temp
