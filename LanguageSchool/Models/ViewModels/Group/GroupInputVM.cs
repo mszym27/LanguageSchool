@@ -23,7 +23,6 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         public DateTime EndDate { get; set; }
 
         public SelectList Teachers { get; set; }
-
         [Required(ErrorMessage = "Proszę wybrać prowadzącego")]
         public int TeacherId { get; set; }
 

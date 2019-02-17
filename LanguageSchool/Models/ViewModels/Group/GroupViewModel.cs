@@ -21,7 +21,6 @@ namespace LanguageSchool.Models.ViewModels
         public bool IsActive { get; set; }
 
         public SelectList Teachers { get; set; }
-
         [Required(ErrorMessage = "Wybierz prowadzącego")]
         public int UserId { get; set; }
 
