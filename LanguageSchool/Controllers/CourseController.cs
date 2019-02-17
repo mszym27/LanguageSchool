@@ -140,6 +140,8 @@ namespace LanguageSchool.Controllers
         {
             var courseVM = new CourseInputVM();
 
+            PopulateInputLists(ref courseVM);
+
             return View(courseVM);
         }
 
@@ -177,6 +179,8 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
+                PopulateInputLists(ref courseVM);
+
                 return View(courseVM);
             }
         }
@@ -198,6 +202,8 @@ namespace LanguageSchool.Controllers
             }
 
             var courseVM = new CourseInputVM(course);
+
+            PopulateInputLists(ref courseVM);
 
             return View(courseVM);
         }
@@ -235,6 +241,8 @@ namespace LanguageSchool.Controllers
                 var errorLogGuid = LogException(ex);
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                PopulateInputLists(ref courseVM);
 
                 return View(courseVM);
             }
@@ -336,6 +344,11 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private void PopulateInputLists(ref CourseInputVM courseInputVM)
+        {
+            courseInputVM.LanguageProficenciens = new SelectList(Consts.LanguageProficencyList, "Key", "Value");
         }
 
         private IEnumerable<Course> Sort(IEnumerable<Course> courses, string sortColumn, string sortDirection)

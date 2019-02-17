@@ -21,10 +21,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
         [DateLessThan("StartDate", ErrorMessage = "Data nie może być wcześniejsza od daty rozpoczęcia")]
         public DateTime EndDate { get; set; }
 
-        public SelectList Teachers
-        {
-            get { return PopulateList.AllUsersInRole((int)Consts.Roles.Teacher); }
-        }
+        public SelectList Teachers { get; set; }
 
         [Required(ErrorMessage = "Proszę wybrać prowadzącego")]
         public int TeacherId { get; set; }

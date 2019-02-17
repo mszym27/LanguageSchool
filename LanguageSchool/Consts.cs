@@ -24,9 +24,9 @@ namespace LanguageSchool
 
         public static Dictionary<int, string> RoleList = new Dictionary<int, string>
         {
-            {1001, "Sekretariat"},
-            {1002, "Nauczyciel"},
             {1003, "Student"},
+            {1002, "Nauczyciel"},
+            {1001, "Sekretariat"},
         };
 
         public enum MessageTypes

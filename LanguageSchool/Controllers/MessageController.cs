@@ -160,6 +160,8 @@ namespace LanguageSchool.Controllers
         {
             var messageInputVM = new MessageInputVM();
 
+            PopulateInputLists(ref messageInputVM);
+
             return View(messageInputVM);
         }
 
@@ -240,6 +242,8 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
+                PopulateInputLists(ref messageInputVM);
+
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -275,6 +279,25 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index");
             }
+        }
+
+        private void PopulateInputLists(ref MessageInputVM messageInputVM)
+        {
+            messageInputVM.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => !g.IsDeleted),
+                "Id",
+                "Name");
+
+            messageInputVM.Courses = new SelectList(UnitOfWork.CourseRepository.Get(c => !c.IsDeleted),
+                "Id",
+                "Name");
+
+            messageInputVM.Roles = new SelectList(Consts.RoleList,
+                "Key",
+                "Value");
+
+            messageInputVM.MessageTypes = new SelectList(Consts.MessageTypeList,
+                "Key",
+                "Value");
         }
 
         private IEnumerable<UserMessage> Sort(IEnumerable<UserMessage> userMessages, string sortColumn, string sortDirection)

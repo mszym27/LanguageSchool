@@ -34,8 +34,6 @@ namespace LanguageSchool.Models.ViewModels.CourseViewModels
             StartDate = DateTime.Now;
             EndDate = StartDate.AddMonths(1);
             IsActive = true;
-
-            LanguageProficenciens = new SelectList(Consts.LanguageProficencyList, "Key", "Value");
         }
 
         // Edit
@@ -50,8 +48,6 @@ namespace LanguageSchool.Models.ViewModels.CourseViewModels
             NumberOfHours = course.NumberOfHours;
             IsActive = course.IsActive;
             LanguageProficencyId = course.LanguageProficencyId;
-
-            LanguageProficenciens = new SelectList(Consts.LanguageProficencyList, "Key", "Value");
         }
     }
 }

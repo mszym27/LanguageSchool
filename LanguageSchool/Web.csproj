@@ -209,7 +209,6 @@
     <Compile Include="Controllers\LessonSubjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\UserOpenAnswerController.cs" />
-    <Compile Include="DAL\PopulateList.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Controllers\AccountController.cs" />

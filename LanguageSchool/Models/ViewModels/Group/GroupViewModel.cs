@@ -19,11 +19,7 @@ namespace LanguageSchool.Models.ViewModels
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
-        public SelectList Users
-        {
-            get { return PopulateList.AllUsersInRole((int)Consts.Roles.Teacher); }
-            set { }
-        }
+        public SelectList Teachers { get; set; }
 
         [Required(ErrorMessage = "Wybierz prowadzącego")]
         public int UserId { get; set; }
@@ -93,8 +89,6 @@ namespace LanguageSchool.Models.ViewModels
             CourseNumberOfHours = course.NumberOfHours;
             StartDate = course.StartDate;
             EndDate = course.EndDate;
-
-            Users = PopulateList.AllUsersInRole((int)Consts.Roles.Teacher);
         }
 
         public void FillTimetable(User user)

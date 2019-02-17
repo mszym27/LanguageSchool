@@ -13,9 +13,6 @@ namespace LanguageSchool.Models.ViewModels
         public string CourseName { get; set; }
         public string Name { get; set; }
 
-        public SelectList Users { get; set; }
-        public int UserId { get; set; }
-
         public UserViewModel Teacher { get; set; }
 
         public List<LessonSubject> LessonSubjects { get; set; }

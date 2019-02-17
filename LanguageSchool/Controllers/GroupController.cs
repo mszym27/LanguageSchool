@@ -194,6 +194,8 @@ namespace LanguageSchool.Controllers
 
             var groupVM = new GroupViewModel(course);
 
+            PopulateInputLists(ref groupVM);
+
             TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź dane nowej grupy", "wybierz prowadzącego oraz daty w których odbywać się będą zajęcia");
 
             return View(groupVM);
@@ -303,7 +305,6 @@ namespace LanguageSchool.Controllers
                     group.GroupTimes = groupTimes;
 
                     UnitOfWork.GroupRepository.Insert(group);
-
                     UnitOfWork.Save();
 
                     TempData["Alert"] = new AlertViewModel(Consts.Success, "Grupa została utworzona pomyślnie", "proszę zapisać do niej studentów");
@@ -315,6 +316,8 @@ namespace LanguageSchool.Controllers
                     var errorLogGuid = LogException(ex);
 
                     TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                    PopulateInputLists(ref groupViewModel);
 
                     return View("PickHours", groupViewModel);
                 }
@@ -338,7 +341,9 @@ namespace LanguageSchool.Controllers
                 return HttpNotFound();
             }
 
-            var groupVM = new GroupInputVM(group);
+            var groupVM = new GroupViewModel(group);
+
+            PopulateInputLists(ref groupVM);
 
             return View(groupVM);
         }
@@ -346,7 +351,7 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         [Route("Group/Edit/{id}")]
         [Authorize(Roles = "Secretary")]
-        public ActionResult Edit(GroupInputVM groupVM)
+        public ActionResult Edit(GroupViewModel groupVM)
         {
             if (!ModelState.IsValid)
             {
@@ -372,6 +377,8 @@ namespace LanguageSchool.Controllers
                 var errorLogGuid = LogException(ex);
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                PopulateInputLists(ref groupVM);
 
                 return View(groupVM);
             }
@@ -459,6 +466,16 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private void PopulateInputLists(ref GroupViewModel groupVM)
+        {
+            var teachers = UnitOfWork.UserRepository
+                .Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Teacher)
+                .Select(u => new UserDataVM(u))
+                .ToList();
+
+            groupVM.Teachers = new SelectList(teachers, "Id", "Fullname");
         }
 
         [Route("Group/DeleteStudent/{id}")]

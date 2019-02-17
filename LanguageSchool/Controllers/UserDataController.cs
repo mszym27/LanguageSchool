@@ -77,14 +77,11 @@ namespace LanguageSchool.Controllers
 
             page = (contactInfo.Count + pageSize) < (page * pageSize) ? 1 : page;
 
-            //SelectList Courses
-            //SelectList Roles
-
-            ViewBag.Courses = new SelectList(UnitOfWork.CourseRepository.Get(),
+            ViewBag.Courses = new SelectList(UnitOfWork.CourseRepository.Get(c => !c.IsDeleted),
                                          "Id",
                                          "Name");
 
-            ViewBag.Roles = new SelectList(Consts.RoleList,
+            ViewBag.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != (int)Consts.Roles.Secretary),
                                          "Key",
                                          "Value");
 
@@ -259,9 +256,7 @@ namespace LanguageSchool.Controllers
 
             UserDataViewModel userDataViewModel = new UserDataViewModel(contactRequest);
 
-            userDataViewModel.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => g.CourseId == contactRequest.CourseId),
-                                         "Id",
-                                         "Name");
+            PopulateInputLists(ref userDataViewModel);
 
             return View(userDataViewModel);
         }
@@ -273,9 +268,7 @@ namespace LanguageSchool.Controllers
         {
             UserDataViewModel userDataViewModel = new UserDataViewModel();
 
-            userDataViewModel.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
-                                         "Key",
-                                         "Value");
+            PopulateInputLists(ref userDataViewModel);
 
             return View(userDataViewModel);
         }
@@ -351,21 +344,11 @@ namespace LanguageSchool.Controllers
             }
             catch(Exception ex)
             {
-                TempData["Alert"] = new AlertViewModel(Consts.Error, "Nastąpił nieoczekiwany wyjątek", "informując o błędzie przekaż obsłudze aplikacji następujący kod: " + LogException(ex).ToString());
+                var errorLogGuid = LogException(ex);
 
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                if (udvm.OriginContactRequestId != null)
-                {
-                    udvm.Groups = new SelectList(UnitOfWork.GroupRepository.Get(g => g.CourseId == udvm.CourseId),
-                                             "Id",
-                                             "Name");
-                }
-                else
-                {
-                    udvm.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
-                                            "Key",
-                                            "Value");
-                }
+                PopulateInputLists(ref udvm);
 
                 return View(udvm);
             }
@@ -424,8 +407,30 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
+                PopulateInputLists(ref userDataViewModel);
+
                 return View(userDataViewModel);
             }
+        }
+
+        private void PopulateInputLists(ref UserDataViewModel udvm)
+        {
+                if (udvm.OriginContactRequestId != null)
+                {
+                    var courseId = udvm.CourseId;
+
+                    var groups = UnitOfWork.GroupRepository.Get(g => g.CourseId == courseId && !g.IsDeleted);
+
+                    udvm.Groups = new SelectList(groups,
+                                            "Id",
+                                            "Name");
+                }
+                else
+                {
+                    udvm.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
+                                            "Key",
+                                            "Value");
+                }
         }
     }
 }
