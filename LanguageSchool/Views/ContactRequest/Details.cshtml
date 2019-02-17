@@ -51,11 +51,18 @@
                     <strong>Adres email</strong>
                 </div>
                 <div class="col-md-4">
-                    @{ string subject = "Prośba o kontakt - " + Model.CourseName;
-                        string body = "Dzień dobry,%0D%0A%0D%0A" +
-                            "Piszę w odpowiedzi na prośbę o kontakt złożoną w kwestii prowadzonego przez naszą szkołę szkolenia. "; }
+                @if(Model.EmailAdress.Length > 1)
+                {
+                    string subject = "Prośba o kontakt - " + Model.CourseName;
+                    string body = "Dzień dobry,%0D%0A%0D%0A" +
+                        "Piszę w odpowiedzi na prośbę o kontakt złożoną w kwestii prowadzonego przez naszą szkołę szkolenia. ";
 
                     <a href="mailto:@Model.EmailAdress&subject=@subject&body=@body">@Model.EmailAdress</a>
+                }
+                else
+                {
+                    @Model.EmailAdress
+                }
                 </div>
             </div>
             <div class="row form-group">

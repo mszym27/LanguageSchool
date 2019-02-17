@@ -15,11 +15,13 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
         [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Numer telefonu wymagany")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$",
-                   ErrorMessage = "Nieprawidłowy format numeru telefonu")]
+                ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string PhoneNumber { get; set; }
         [EmailAddress(ErrorMessage = "Adres ma nieprawidłowy format")]
         public string EmailAdress { get; set; }
         [DataType(DataType.MultilineText)]
+        [StringLength(1000,
+                ErrorMessage = "Długość pola ograniczona do 1000 znaków")]
         public string Comment { get; set; }
         [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
         [IntGreaterThan("PreferredHoursTo", ErrorMessage = "Wartość nie może być większa od godziny końcowej")]

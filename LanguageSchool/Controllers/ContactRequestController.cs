@@ -143,7 +143,6 @@ namespace LanguageSchool.Controllers
                 contactRequest.ModificationDate = DateTime.Now;
 
                 UnitOfWork.ContactRequestRepository.Update(contactRequest);
-
                 UnitOfWork.Save();
 
                 return RedirectToAction("Details", new { id = contactRequestVM.ContactRequestId });
