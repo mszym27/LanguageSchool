@@ -38,11 +38,11 @@
                     <div class="col-md-2">
                         @Html.Label("Utworzono od:", new { @style = "float:right" })
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
                     </div>
-                    <div class="col-md-1">
-                        @Html.Label("Nazwa:", new { style = "float:right" })
+                    <div class="col-md-2">
+                        @Html.Label("Imię i nazwisko:", new { style = "float:right" })
                     </div>
                     <div class="col-md-3">
                         @Html.TextBox("fullName", (string)ViewBag.fullName, new
