@@ -348,13 +348,11 @@
     <Compile Include="Models\ViewModels\LessonSubject\OpenQuestionViewModel.cs" />
     <Compile Include="Models\ViewModels\User\TimeTableViewModel.cs" />
     <Compile Include="Models\ViewModels\LessonSubject\SubjectsQuestionsViewModel.cs" />
-    <Compile Include="Models\ViewModels\Administration\ContactInfoListParameters.cs" />
     <Compile Include="Models\ViewModels\LessonSubject\LessonSubjectViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\GroupTimeViewModel.cs" />
     <Compile Include="Models\ViewModels\User\UsersGroupViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\GroupViewModel.cs" />
     <Compile Include="Models\ViewModels\LessonSubject\MaterialViewModel.cs" />
-    <Compile Include="Models\ViewModels\Administration\ListParameters.cs" />
     <Compile Include="Models\ViewModels\Administration\AlertViewModel.cs" />
     <Compile Include="Models\ViewModels\LessonSubject\AnswerViewModel.cs" />
     <Compile Include="Models\ViewModels\Test\ClosedQuestionViewModel.cs" />

@@ -15,17 +15,14 @@ namespace LanguageSchool.Models.ViewModels
         public int GroupId { get; set; }
         public string CreationDate { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwę testu")]
-        [StringLength(250, ErrorMessage = "Maksymalna długość nazwy to 50 znaków")]
+        [StringLength(50, ErrorMessage = "Maksymalna długość pola to 50 znaków")]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
+        [StringLength(1000, ErrorMessage = "Maksymalna długość pola to 1000 znaków")]
         public string Comment { get; set; }
-        [Required(ErrorMessage = "Proszę wprowadzić liczbę pytań")]
         public int NumberOfQuestions { get; set; }
-        [Required(ErrorMessage = "Proszę wprowadzić liczbę pytań zamkniętych")]
         public int NumberOfOpenQuestions { get; set; }
-        [Required(ErrorMessage = "Proszę wprowadzić liczbę pytań otwartych")]
         public int NumberOfClosedQuestions { get; set; }
-        [Required(ErrorMessage = "Proszę wprowadzić ilość punktów do uzyskania")]
         public int Points { get; set; }
 
         public List<ClosedQuestionViewModel> ClosedQuestions { get; set; }

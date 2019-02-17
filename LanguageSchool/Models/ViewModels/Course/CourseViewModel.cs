@@ -17,11 +17,14 @@ namespace LanguageSchool.Models.ViewModels
         public DateTime EndDate { get; set; }
         public string StartDateShown { get; set ; }
         [Required(ErrorMessage = "Proszę podać nazwę kursu")]
+        [StringLength(150, ErrorMessage = "Długość pola jest ograniczona do 150 znaków")]
         public string Name { get; set ; }
         [DataType(DataType.MultilineText)]
+        [StringLength(4000, ErrorMessage = "Długość pola jest ograniczona do 4000 znaków")]
         public string Description { get; set; }
         public string ShortDescription { get; set ; }
         [Required(ErrorMessage = "Proszę wprowadzić orientacyjną liczbę godzin dla kursu")]
+        [StringLength(200, ErrorMessage = "Długość pola jest ograniczona do 200 znaków")]
         public string NumberOfHours { get; set ; }
         public string LanguageProficency { get; set ; }
 

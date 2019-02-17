@@ -10,6 +10,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
     {
         public int GroupId { get; set; }
         [Required(ErrorMessage = "Proszę podać nazwę grupy")]
+        [StringLength(150, ErrorMessage = "Długość pola jest ograniczona do 150 znaków")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Proszę podać datę rozpoczęcia zajęć")]
         [DataType(DataType.Date)]

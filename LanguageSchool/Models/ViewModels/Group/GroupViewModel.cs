@@ -16,6 +16,7 @@ namespace LanguageSchool.Models.ViewModels
         public string CourseNumberOfHours { get; set; }
         public string CourseName { get; set; }
         [Required(ErrorMessage = "Podaj nazwę grupy")]
+        [StringLength(150, ErrorMessage = "Długość pola jest ograniczona do 150 znaków")]
         public string Name { get; set; }
         public bool IsActive { get; set; }
 

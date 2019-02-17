@@ -7,9 +7,11 @@ namespace LanguageSchool.Models.ViewModels
     {
         public int Id { get; set; }
         public int GroupId { get; set; }
-        [Required(ErrorMessage = "Podaj temat")]
+        [Required(ErrorMessage = "Wprowadź nazwę tematu")]
+        [StringLength(150, ErrorMessage = "Długość pola jest ograniczona do 150 znaków")]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
+        [StringLength(4000, ErrorMessage = "Długość pola jest ograniczona do 4000 znaków")]
         public string Description { get; set; }
         public bool IsActive { get; set; }
 

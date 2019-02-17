@@ -9,8 +9,12 @@ namespace LanguageSchool.Models.ViewModels.MessageViewModels
 {
     public class MessageInputVM
     {
+        [Required(ErrorMessage = "Uzupełnij temat wiadomości")]
+        [StringLength(50, ErrorMessage = "Długość pola jest ograniczona do 50 znaków")]
         public string Topic { get; set; }
         [DataType(DataType.MultilineText)]
+        [Required(ErrorMessage = "Wprowadź treść wiadomości")]
+        [StringLength(4000, ErrorMessage = "Długość pola jest ograniczona do 4000 znaków")]
         public string Contents { get; set; }
         public bool IsSystem { get; set; }
 
