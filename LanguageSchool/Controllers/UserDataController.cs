@@ -45,6 +45,11 @@ namespace LanguageSchool.Controllers
                 string sortDirection = "desc", 
                 int page = 1)
         {
+            if (page == 1)
+            {
+                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+            }
+
             var now = DateTime.Now;
 
             creationDateFrom = (creationDateFrom == null) ? (new DateTime(now.Year, now.Month, 1)) : creationDateFrom;
