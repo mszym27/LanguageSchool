@@ -22,6 +22,7 @@
                             </div>
                             <div class="col-md-10">
                                 @Html.DropDownListFor(model => model.GroupId, Model.Groups, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     }
@@ -33,6 +34,7 @@
                             </div>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     }

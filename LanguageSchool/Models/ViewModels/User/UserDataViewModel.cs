@@ -37,9 +37,11 @@ namespace LanguageSchool.Models.ViewModels
         public Course Course { get; set; }
 
         public SelectList Roles { get; set; }
+        [Required(ErrorMessage = "Wymagane jest wybranie roli")]
         public int RoleId { get; set; }
 
         public SelectList Groups { get; set; }
+        [Required(ErrorMessage = "Wymagane jest wskazanie grupy")]
         public int GroupId { get; set; }
 
         public UserDataViewModel() { }
