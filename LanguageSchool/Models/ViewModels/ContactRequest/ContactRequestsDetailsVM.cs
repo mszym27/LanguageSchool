@@ -16,6 +16,8 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
         public string PhoneNumber { get; }
         public string PhoneNumberContact { get; }
         public string EmailAdress { get; }
+        public int PreferredHoursFrom { get; }
+        public int PreferredHoursTo { get; }
         public string Comment { get; }
         public string CourseName { get; }
 
@@ -30,6 +32,8 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
             Surname = contactRequest.Surname ?? "-";
             PhoneNumber = contactRequest.PhoneNumber;
             PhoneNumberContact = contactRequest.PhoneNumber.Replace("-", "");
+            PreferredHoursFrom = contactRequest.PreferredHoursFrom;
+            PreferredHoursTo = contactRequest.PreferredHoursTo;
             EmailAdress = contactRequest.EmailAdress ?? "-";
             Comment = contactRequest.Comment ?? "-";
             CourseName = contactRequest.Course.Name;
