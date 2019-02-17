@@ -126,8 +126,8 @@ BEGIN
 	WHERE [ContactRequests].[IsAwaiting] = 1
 		AND [ContactRequests].[CreationDate] >= @CreationDateFrom
 		AND [ContactRequests].[CreationDate] <= @CreationDateTo
-		AND [ContactRequests].[PreferredHoursFrom] <= @PreferredHoursFrom
-		AND [ContactRequests].[PreferredHoursTo] >= @PreferredHoursTo '
+		AND [ContactRequests].[PreferredHoursFrom] < @PreferredHoursTo
+		AND @PreferredHoursFrom <= [ContactRequests].[PreferredHoursTo] '
 	
 	IF(@PhoneNumber IS NOT NULL AND @PhoneNumber != '')
 		SET @Query += N'
