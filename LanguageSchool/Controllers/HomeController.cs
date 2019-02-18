@@ -16,7 +16,7 @@ namespace LanguageSchool.Controllers
 
             if (loggedUser == null)
             {
-                return View();
+                return RedirectToAction("Default");
             }
             else
             {
@@ -25,12 +25,17 @@ namespace LanguageSchool.Controllers
 
                 switch (loggedUser.Role.Id)
                 {
-                    case ((int) Consts.Roles.Secretary): return RedirectToAction("List", "Course");
+                    case ((int)Consts.Roles.Secretary): return RedirectToAction("List", "Course");
                     case ((int)Consts.Roles.Teacher): return RedirectToAction("Timetable", "User");
                     case ((int)Consts.Roles.Student): return RedirectToAction("Timetable", "User");
-                    default: return View();
+                    default: return RedirectToAction("Default");
                 }
             }
+        }
+
+        public ActionResult Default()
+        {
+            return View();
         }
     }
 }

@@ -23,24 +23,33 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var loggedUser = GetLoggedUser();
-
-            var group = loggedUser.UsersGroups
-                .Where(ug => !ug.IsDeleted)
-                .Where(ug => ug.GroupId == id)
-                .Select(ug => ug.Group)
-                .FirstOrDefault();
-
-            if (group == null)
+            try
             {
-                return HttpNotFound();
+                var student = GetLoggedUser();
+
+                var group = student.UsersGroups
+                    .Where(ug => !ug.IsDeleted)
+                    .Where(ug => ug.GroupId == id)
+                    .Select(ug => ug.Group)
+                    .FirstOrDefault();
+
+                if (group == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var groupViewModel = new GroupStudentVM(group, student);
+
+                return View(groupViewModel);
             }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            var student = GetLoggedUser();
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            var groupViewModel = new GroupStudentVM(group, student);
-
-            return View(groupViewModel);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]

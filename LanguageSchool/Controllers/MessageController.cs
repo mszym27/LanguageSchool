@@ -21,32 +21,43 @@ namespace LanguageSchool.Controllers
     {
         public ActionResult Index(string sortColumn = "sentDate", string sortDirection = "desc", int page = 1)
         {
-            var loggedUser = GetLoggedUser();
-
-            var userMessages = UnitOfWork.UserMessageRepository.Get(
-                um => (
-                    !um.IsDeleted 
-                    && um.UserId == loggedUser.Id
-                )
-                , orderBy: q => q.OrderByDescending(d => d.Message.CreationDate)
-            );
-
-            if (page == 1)
+            try
             {
-                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+                var loggedUser = GetLoggedUser();
+
+                var userMessages = UnitOfWork.UserMessageRepository.Get(
+                    um => (
+                        !um.IsDeleted
+                        && um.UserId == loggedUser.Id
+                    )
+                    , orderBy: q => q.OrderByDescending(d => d.Message.CreationDate)
+                );
+
+                if (page == 1)
+                {
+                    sortDirection = (sortDirection == "desc") ? "asc" : "desc";
+                }
+
+                userMessages = this.Sort(userMessages, sortColumn, sortDirection);
+
+                ViewBag.sortColumn = sortColumn;
+                ViewBag.sortDirection = sortDirection;
+                ViewBag.page = page;
+
+                var userMessageShortDetailsVMs = userMessages
+                    .Select(um => new UserMessageShortDetailsVM(um))
+                    .ToPagedList(page, 20);
+
+                return View(userMessageShortDetailsVMs);
             }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            userMessages = this.Sort(userMessages, sortColumn, sortDirection);
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            ViewBag.sortColumn = sortColumn;
-            ViewBag.sortDirection = sortDirection;
-            ViewBag.page = page;
-
-            var userMessageShortDetailsVMs = userMessages
-                .Select(um => new UserMessageShortDetailsVM(um))
-                .ToPagedList(page, 20);
-
-            return View(userMessageShortDetailsVMs);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [Route("Message/{userMessageId}")]
@@ -57,18 +68,18 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var userMessage = GetLoggedUser().UsersMessages
-                .Where(um => um.Id == userMessageId)
-                .FirstOrDefault();
-
-            if (userMessage == null)
+            try
             {
-                return HttpNotFound();
-            }
+                var userMessage = GetLoggedUser().UsersMessages
+                    .Where(um => um.Id == userMessageId)
+                    .FirstOrDefault();
 
-            if (!userMessage.HasBeenReceived)
-            {
-                try
+                if (userMessage == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (!userMessage.HasBeenReceived)
                 {
                     userMessage.HasBeenReceived = true;
                     userMessage.ReceivedDate = DateTime.Today;
@@ -76,19 +87,19 @@ namespace LanguageSchool.Controllers
                     UnitOfWork.UserMessageRepository.Update(userMessage);
                     UnitOfWork.Save();
                 }
-                catch (Exception ex)
-                {
-                    var errorLogGuid = LogException(ex);
 
-                    TempData["Alert"] = new AlertViewModel(errorLogGuid);
+                var userMessageViewModel = new UserMessageDetailsVM(userMessage);
 
-                    return RedirectToAction("Index", "Home");
-                }
+                return View(userMessageViewModel);
             }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
 
-            var userMessageViewModel = new UserMessageDetailsVM(userMessage);
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-            return View(userMessageViewModel);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]

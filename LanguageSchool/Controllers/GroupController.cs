@@ -26,11 +26,11 @@ namespace LanguageSchool.Controllers
 
             var loggedUser = GetLoggedUser();
 
-            switch (loggedUser.Role.Id)
+            switch (loggedUser.RoleId)
             {
                 case ((int)Consts.Roles.Teacher): return RedirectToAction("Details", "Group", id);
                 case ((int)Consts.Roles.Student): return RedirectToAction("LessonSubjects", "LessonSubject", id);
-                default: return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                default: return RedirectToAction("Index", "Home");
             }
         }
 

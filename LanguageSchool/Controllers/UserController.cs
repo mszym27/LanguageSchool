@@ -17,11 +17,22 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Teacher,Student")]
         public ActionResult TimeTable()
         {
-            var loggedUser = GetLoggedUser();
+            try
+            {
+                var loggedUser = GetLoggedUser();
 
-            var model = new TimeTableViewModel(loggedUser);
+                var model = new TimeTableViewModel(loggedUser);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [Authorize(Roles = "Secretary")]
