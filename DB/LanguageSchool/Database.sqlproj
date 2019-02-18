@@ -109,6 +109,7 @@
     <Build Include="Tests\Tables\TestAnswers.sql" />
     <Build Include="Users\Tables\UserClosedAnswers.sql" />
     <Build Include="Administration\Tables\DictionaryItems.sql" />
+    <Build Include="Scripts\insert_pliku.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.scmp" />
