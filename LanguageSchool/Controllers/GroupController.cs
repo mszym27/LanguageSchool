@@ -215,12 +215,14 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(GroupViewModel groupViewModel)
         {
+            PopulateInputLists(ref groupViewModel);
+
             if (!ModelState.IsValid)
             {
                 return View(groupViewModel);
             }
 
-            var selectedTeacher = UnitOfWork.UserRepository.GetById(groupViewModel.UserId);
+            var selectedTeacher = UnitOfWork.UserRepository.GetById(groupViewModel.TeacherId);
 
             if (groupViewModel.TeacherTimetable == null)
             {
@@ -317,8 +319,6 @@ namespace LanguageSchool.Controllers
 
                     TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                    PopulateInputLists(ref groupViewModel);
-
                     return View("PickHours", groupViewModel);
                 }
             }
@@ -353,6 +353,8 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Edit(GroupViewModel groupVM)
         {
+            PopulateInputLists(ref groupVM);
+
             if (!ModelState.IsValid)
             {
                 return View(groupVM);
@@ -377,8 +379,6 @@ namespace LanguageSchool.Controllers
                 var errorLogGuid = LogException(ex);
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
-
-                PopulateInputLists(ref groupVM);
 
                 return View(groupVM);
             }
@@ -475,7 +475,7 @@ namespace LanguageSchool.Controllers
                 .Select(u => new UserDataVM(u))
                 .ToList();
 
-            groupVM.Teachers = new SelectList(teachers, "Id", "Fullname");
+            groupVM.Teachers = new SelectList(teachers, "UserId", "Fullname");
         }
 
         [Route("Group/DeleteStudent/{id}")]

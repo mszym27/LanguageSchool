@@ -22,7 +22,7 @@ namespace LanguageSchool.Models.ViewModels
 
         public SelectList Teachers { get; set; }
         [Required(ErrorMessage = "Wybierz prowadzącego")]
-        public int UserId { get; set; }
+        public int TeacherId { get; set; }
 
         [Required(ErrorMessage = "Podaj datę rozpoczęcia zajęć")]
         [DataType(DataType.Date)]

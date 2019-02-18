@@ -138,6 +138,8 @@ namespace LanguageSchool.Controllers
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(CourseInputVM courseVM)
         {
+            PopulateInputLists(ref courseVM);
+
             if (!ModelState.IsValid)
             {
                 return View(courseVM);
@@ -166,8 +168,6 @@ namespace LanguageSchool.Controllers
                 var errorLogGuid = LogException(ex);
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
-
-                PopulateInputLists(ref courseVM);
 
                 return View(courseVM);
             }
@@ -201,6 +201,8 @@ namespace LanguageSchool.Controllers
         [HttpPost]
         public ActionResult Edit(CourseInputVM courseVM)
         {
+            PopulateInputLists(ref courseVM);
+
             if (!ModelState.IsValid)
             {
                 return View(courseVM);
@@ -229,9 +231,7 @@ namespace LanguageSchool.Controllers
                 var errorLogGuid = LogException(ex);
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
-
-                PopulateInputLists(ref courseVM);
-
+                
                 return View(courseVM);
             }
         }
