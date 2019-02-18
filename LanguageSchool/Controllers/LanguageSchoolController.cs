@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Security.Cryptography;
 using System.IO;
+using System.Web;
 
 using LanguageSchool.DAL;
 using LanguageSchool.Models;
@@ -23,7 +24,18 @@ namespace LanguageSchool.Controllers
 
             Int32.TryParse(User.Identity.GetUserId(), out userId);
 
-            return UnitOfWork.UserRepository.GetById(userId);
+            var user = UnitOfWork.UserRepository
+                .Get(u => u.Id == userId && !u.IsDeleted)
+                .FirstOrDefault();
+
+            if(user == null)
+            {
+                var ctx = Request.GetOwinContext();
+                var authenticationManager = ctx.Authentication;
+                authenticationManager.SignOut();
+            }
+
+            return user;
         }
 
         protected Guid LogException (Exception ex)

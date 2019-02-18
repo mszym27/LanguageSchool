@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -27,7 +26,7 @@ namespace LanguageSchool.Controllers
             {
                 if (this.Request.IsAuthenticated)
                 {
-                    return this.RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception ex)
