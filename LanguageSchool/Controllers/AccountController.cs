@@ -61,7 +61,7 @@ namespace LanguageSchool.Controllers
                     }
                     else
                     {
-                        return this.RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -71,68 +71,56 @@ namespace LanguageSchool.Controllers
             }
             catch (Exception ex)
             {
-                // Info    
-                Console.Write(ex);
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(loginInfo);
             }
-            // If we got this far, something failed, redisplay form    
-            return this.View(loginInfo);
+
+            return RedirectToAction("Index", "Home");
         }
 
-        #region Log Out method.    
-        /// <summary>  
-        /// POST: /Account/LogOff    
-        /// </summary>  
-        /// <returns>Return log off action</returns>  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             try
             {
-                // Setting.    
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
-                // Sign Out.    
                 authenticationManager.SignOut();
-                //Session.Remove("Menus");
+
+                return RedirectToAction("Login", "Account");
             }
             catch (Exception ex)
             {
-                // Info    
-                throw ex;
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Index", "Home");
             }
-            // Info.    
-            return this.RedirectToAction("Login", "Account");
         }
-        #endregion
-        #region Sign In method.    
-        /// <summary>  
-        /// Sign In User method.    
-        /// </summary>  
-        /// <param name="username">Username parameter.</param>  
+
         private void LogUserIn(User user, bool rememberMe)
         {
-            // Initialization.    
             var claims = new List<Claim>();
             try
             {
-                // Setting    
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                 claims.Add(new Claim(ClaimTypes.Name, user.Login));
                 claims.Add(new Claim(ClaimTypes.Role, user.Role.ENName));
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
-                // Sign In.    
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe, ExpiresUtc = DateTime.Now.AddDays(7)
                 }, claimIdenties);
             }
             catch (Exception ex)
             {
-                // Info    
                 throw ex;
             }
         }
-        #endregion
     }
 }
