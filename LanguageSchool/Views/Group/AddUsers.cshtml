@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Zapisz nowych studentów - " + @Model.Groupname); }
+        @Html.Partial("_PartHeader", "Zapisz nowych studentów - " + @Model.Groupname)
         <div class="row">
             <div class="bordered col-md-12">
                 <table class="table table-bordered">

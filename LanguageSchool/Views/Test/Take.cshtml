@@ -16,7 +16,7 @@
 
         @if (Model.ClosedQuestions.Any())
         {
-            Html.RenderPartial("_PartHeader", "Pytania zamknięte");
+            @Html.Partial("_PartHeader", "Pytania zamknięte")
             <div class="modal fade" id="confirmation" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -78,7 +78,7 @@
 
         @if (Model.OpenQuestions.Any())
         {
-            Html.RenderPartial("_PartHeader", "Pytania otwarte");
+            @Html.Partial("_PartHeader", "Pytania otwarte")
             <div class="row">
                 <div class="bordered col-md-12">
                     @for (int i = 0; i < Model.OpenQuestions.Count; i++)

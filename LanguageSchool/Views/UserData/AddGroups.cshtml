@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Grupy dostępne"); }
+        @Html.Partial("_PartHeader", "Grupy dostępne")
         <div class="row">
             <div class="bordered col-md-12">
                 <table class="table table-bordered">
@@ -50,7 +50,7 @@
                 </table>
             </div>
         </div>
-        @{ Html.RenderPartial("_PartHeader", "Grupy niedostępne"); }
+        @Html.Partial("_PartHeader", "Grupy niedostępne")
         <div class="row">
             <div class="bordered col-md-12">
                 <table class="table table-bordered">

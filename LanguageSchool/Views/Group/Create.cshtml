@@ -14,7 +14,7 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Dodaj grupę - " + Model.CourseName); }
+        @Html.Partial("_PartHeader", "Dodaj grupę - " + Model.CourseName)
         <div class="row form-horizontal">
             <div class="bordered col-md-12">
                 <div class="col-md-6">

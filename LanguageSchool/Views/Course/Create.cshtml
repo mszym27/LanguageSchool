@@ -9,7 +9,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Utwórz kurs"); }
+        @Html.Partial("_PartHeader", "Utwórz kurs")
         <div class="row form-horizontal">
             <div class="bordered col-md-12">
                 <div class="row form-group">

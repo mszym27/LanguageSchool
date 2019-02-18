@@ -8,7 +8,7 @@
 }
 
 <div class="container">
-    @{ Html.RenderPartial("_PartHeader", "Dane konta"); }
+    @Html.Partial("_PartHeader", "Dane konta")
     <div class="row">
         <div class="bordered col-md-12">
             <div class="col-md-3">
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    @{ Html.RenderPartial("_PartHeader", "Dane użytkownika"); }
+    @Html.Partial("_PartHeader", "Dane użytkownika")
     <div class="row">
         <div class="bordered col-md-12">
             <div class="row form-group">

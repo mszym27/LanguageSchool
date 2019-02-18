@@ -333,9 +333,9 @@ namespace LanguageSchool.Controllers
 
                 UnitOfWork.Save();
 
-                var randomInt = new Random(user.Id).Next(0, 10000);
+                var userIdMasked = MaskUserId(user.Id);
 
-                user.Login = user.Login + "_" + randomInt.ToString("00000");
+                user.Login = user.Login + "_" + userIdMasked.ToString("00000");
 
                 UnitOfWork.Save();
 
@@ -416,22 +416,27 @@ namespace LanguageSchool.Controllers
 
         private void PopulateInputLists(ref UserDataViewModel udvm)
         {
-                if (udvm.OriginContactRequestId != null)
-                {
-                    var courseId = udvm.CourseId;
+            if (udvm.OriginContactRequestId != null)
+            {
+                var courseId = udvm.CourseId;
 
-                    var groups = UnitOfWork.GroupRepository.Get(g => g.CourseId == courseId && !g.IsDeleted);
+                var groups = UnitOfWork.GroupRepository.Get(g => g.CourseId == courseId && !g.IsDeleted);
 
-                    udvm.Groups = new SelectList(groups,
-                                            "Id",
-                                            "Name");
-                }
-                else
-                {
-                    udvm.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
-                                            "Key",
-                                            "Value");
-                }
+                udvm.Groups = new SelectList(groups,
+                                        "Id",
+                                        "Name");
+            }
+            else
+            {
+                udvm.Roles = new SelectList(Consts.RoleList.Where(r => r.Key != 1001),
+                                        "Key",
+                                        "Value");
+            }
+        }
+
+        private int MaskUserId(int id)
+        {
+            return (int)Math.Sqrt(id) * 10000;
         }
     }
 }

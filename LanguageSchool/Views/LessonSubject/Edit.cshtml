@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        @{ Html.RenderPartial("_PartHeader", "Utwórz nowy temat"); }
+        @Html.Partial("_PartHeader", "Utwórz nowy temat")
         <div class="row form-horizontal">
             <div class="bordered col-md-12">
                 <div class="col-md-6">

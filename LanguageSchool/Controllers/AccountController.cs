@@ -24,19 +24,21 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                if (this.Request.IsAuthenticated)
+                if (Request.IsAuthenticated)
                 {
                     return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception ex)
             {
-                Console.Write(ex);
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
             }
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return this.View();
+            return View();
         }
 
         [HttpPost]
@@ -106,6 +108,7 @@ namespace LanguageSchool.Controllers
         private void LogUserIn(User user, bool rememberMe)
         {
             var claims = new List<Claim>();
+
             try
             {
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));

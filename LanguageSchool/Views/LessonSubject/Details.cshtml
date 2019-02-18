@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    @{ Html.RenderPartial("_PartHeader", "Dane tematu"); }
+    @Html.Partial("_PartHeader", "Dane tematu")
     <div class="row">
         <div class="bordered col-md-12">
             <div class="row">
@@ -73,7 +73,7 @@
     </div>
     @if (Model.Materials.Where(m => !m.IsDeleted).Any())
     {
-        Html.RenderPartial("_PartHeader", "Materiały udostępnione dla tematu");
+        @Html.Partial("_PartHeader", "Materiały udostępnione dla tematu")
         <div class="row">
             <div class="bordered col-md-12">
                 <table class="table table-striped table-bordered">
