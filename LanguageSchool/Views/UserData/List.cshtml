@@ -1,5 +1,6 @@
 ﻿@using PagedList.Mvc;
 @using LanguageSchool.Models.ViewModels;
+
 @model PagedList.IPagedList<LanguageSchool.Models.GetContactInfoListItem>
 
 @{
@@ -183,25 +184,26 @@
             <table class="table table-bordered">
                 <tr>
                     <th>
-                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Utworzono", "CreationDate"))
+                        @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Utworzono", "CreationDate"))
                     </th>
                     <th>
-                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Imię i nazwisko", "FullName"))
+                        @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Imię i nazwisko", "FullName"))
                     </th>
-                    @if (hasUserData)
+                    @if (hasUserData
+                                || (Model.Count == 0 && (bool)ViewBag.ShowUserData == true))
                     {
                         <th>
-                            @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Miasto", "City"))
+                            @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Miasto", "City"))
                         </th>
                         <th>
-                            @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Ulica", "Street"))
+                            @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Ulica", "Street"))
                         </th>
                     }
                     <th>
-                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Numer telefonu", "PhoneNumber"))
+                        @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Numer telefonu", "PhoneNumber"))
                     </th>
                     <th>
-                        @Html.Partial("_TabSortHeader", new TableHeaderViewModel("Adres email", "EmailAdress"))
+                        @Html.Partial("_UserDataTabSortHeader", new TableHeaderViewModel("Adres email", "EmailAdress"))
                     </th>
                     <th style="width:30px">
                     </th>

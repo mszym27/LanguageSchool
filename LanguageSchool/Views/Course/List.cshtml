@@ -1,4 +1,6 @@
 ﻿@using PagedList.Mvc;
+@using LanguageSchool.Models.ViewModels;
+
 @model PagedList.IPagedList<LanguageSchool.Models.Course>
 
 @{
@@ -10,8 +12,8 @@
     {
         var toFirst = Url.Action("List", new
                 {
-                    sortColumn = ViewBag.sortColumn,
-                    sortDirection = ViewBag.sortDirection,
+                    sortColumn = "startDate",
+                    sortDirection = "asc",
                     searchString = ViewBag.searchString,
                     showActivated = ViewBag.showActivated,
                     showDeactivated = ViewBag.showDeactivated,
@@ -29,14 +31,15 @@
                 </div>
                 <div class="col-md-9">
                     @Html.Label("Szukana w tabeli fraza:")
-                    @Html.TextBox("searchString", (string)ViewBag.searchString, new
-               {
-                   @id = "searchString",
-                   @class = "widetextarea",
-                   @style = "width:620px",
-                   placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"
-               }
-    )
+                    @Html.TextBox("searchString", (string)ViewBag.searchString,
+                       new
+                       {
+                           @id = "searchString",
+                           @class = "widetextarea",
+                           @style = "width:620px",
+                           placeholder = "Szukaj w polach Nazwa kursu, Opis, Poziom i Liczba godzin"
+                       }
+                    )
                 </div>
             </div>
 
@@ -45,16 +48,16 @@
             <div class="row col-md-12">
                 <div class="col-md-10">
                     @Html.PagedListPager(Model, page => Url.Action("List",
-         new
-         {
-             sortColumn = ViewBag.sortColumn,
-             sortDirection = ViewBag.sortDirection,
-             searchString = ViewBag.searchString,
-             showActivated = ViewBag.showActivated,
-             showDeactivated = ViewBag.showDeactivated,
-             page
-         }
-))
+                        new
+                        {
+                            sortColumn = ViewBag.sortColumn,
+                            sortDirection = ViewBag.sortDirection,
+                            searchString = ViewBag.searchString,
+                            showActivated = ViewBag.showActivated,
+                            showDeactivated = ViewBag.showDeactivated,
+                            page
+                        }
+                    ))
                 </div>
                 <div class="col-md-1">
                     <button formaction= @toFirst formmethod = "post" class="btn btn-default" onclick="ResetForms()">Wyczyść</button>
@@ -73,77 +76,22 @@
             <table class="table table-striped table-bordered">
                 <tr>
                     <th>
-                        @Html.ActionLink("Utworzono", "List",
-                            new
-                            {
-                                showActivated = ViewBag.showActivated,
-                                showDeactivated = ViewBag.showDeactivated,
-                                searchString = ViewBag.searchString,
-                                sortColumn = "creationDate",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_CourseTabSortHeader", new TableHeaderViewModel("Utworzono", "creationDate"))
                     </th>
                     <th>
-                        @Html.ActionLink("Nazwa kursu", "List",
-                            new
-                            {
-                                showActivated = ViewBag.showActivated,
-                                showDeactivated = ViewBag.showDeactivated,
-                                searchString = ViewBag.searchString,
-                                sortColumn = "name",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_CourseTabSortHeader", new TableHeaderViewModel("Nazwa kursu", "name"))
                     </th>
                     <th>
                         Opis
                     </th>
                     <th>
-                        @Html.ActionLink("Poziom", "List",
-                            new
-                            {
-                                showActivated = ViewBag.showActivated,
-                                showDeactivated = ViewBag.showDeactivated,
-                                searchString = ViewBag.searchString,
-                                sortColumn = "proficencyLevel",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_CourseTabSortHeader", new TableHeaderViewModel("Poziom", "proficencyLevel"))
                     </th>
                     <th>
-                        @Html.ActionLink("Rozpoczęcie", "List",
-                            new
-                            {
-                                showActivated = ViewBag.showActivated,
-                                showDeactivated = ViewBag.showDeactivated,
-                                searchString = ViewBag.searchString,
-                                sortColumn = "startDate",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_CourseTabSortHeader", new TableHeaderViewModel("Rozpoczęcie", "startDate"))
                     </th>
                     <th>
-                        @Html.ActionLink("Zakończenie", "List",
-                            new
-                            {
-                                showActivated = ViewBag.showActivated,
-                                showDeactivated = ViewBag.showDeactivated,
-                                searchString = ViewBag.searchString,
-                                sortColumn = "endDate",
-                                sortDirection = ViewBag.sortDirection,
-                                page = 1
-                            },
-                            new { style = "text-decoration:none; color:black" }
-                        )
+                        @Html.Partial("_CourseTabSortHeader", new TableHeaderViewModel("Zakończenie", "endDate"))
                     </th>
                     <th>
                         Liczba godzin
