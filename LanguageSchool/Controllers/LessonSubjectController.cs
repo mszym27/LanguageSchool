@@ -23,7 +23,13 @@ namespace LanguageSchool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var group = UnitOfWork.GroupRepository.GetById(id);
+            var loggedUser = GetLoggedUser();
+
+            var group = loggedUser.UsersGroups
+                .Where(ug => !ug.IsDeleted)
+                .Where(ug => ug.GroupId == id)
+                .Select(ug => ug.Group)
+                .FirstOrDefault();
 
             if (group == null)
             {
@@ -70,8 +76,62 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Details", "Group", new { id = lessonSubjectViewModel.GroupId });
             }
-            catch
+            catch (Exception ex)
             {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return View(lessonSubjectViewModel);
+            }
+        }
+
+        [HttpGet]
+        [Route("LessonSubject/Edit/{id}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(id);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
+
+            var lessonSubjectViewModel = new LessonSubjectViewModel(lessonSubject);
+
+            return View(lessonSubjectViewModel);
+        }
+
+        [HttpPost]
+        [Route("LessonSubject/Edit/{id}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit(LessonSubjectViewModel lessonSubjectViewModel)
+        {
+            try
+            {
+                var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectViewModel.Id);
+
+                lessonSubject.Name = lessonSubjectViewModel.Name;
+                lessonSubject.Description = lessonSubjectViewModel.Description;
+                lessonSubject.IsActive = lessonSubjectViewModel.IsActive;
+
+                UnitOfWork.LessonSubjectRepository.Update(lessonSubject);
+                UnitOfWork.Save();
+
+                return RedirectToAction("Details", new { id = lessonSubjectViewModel.Id });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
                 return View(lessonSubjectViewModel);
             }
         }

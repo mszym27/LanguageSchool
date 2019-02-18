@@ -492,6 +492,7 @@
     <Content Include="Views\ContactRequest\Edit.cshtml" />
     <Content Include="Views\Shared\_UserDataTabSortHeader.cshtml" />
     <Content Include="Views\Shared\_CourseTabSortHeader.cshtml" />
+    <Content Include="Views\LessonSubject\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -121,7 +121,7 @@ namespace LanguageSchool.Controllers
 
                 UnitOfWork.Save();
 
-                return RedirectToAction("Details", "Group", new { id = material.LessonSubjectId });
+                return RedirectToAction("Details", "LessonSubject", new { id = material.LessonSubjectId });
             }
             catch (Exception ex)
             {

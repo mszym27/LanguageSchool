@@ -31,6 +31,7 @@ namespace LanguageSchool.Models.ViewModels
             Id = lessonSubject.Id;
             Name = lessonSubject.Name;
             Description = lessonSubject.Description;
+            IsActive = lessonSubject.IsActive;
 
             MaxNumberOfClosedQuestions = lessonSubject.ClosedQuestions.Count;
             MaxNumberOfOpenQuestions = lessonSubject.OpenQuestions.Count;

@@ -14,6 +14,8 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
 
         public TeacherGroupDetailsVM(Group group)
         {
+            GroupId = group.Id;
+
             Students = group.UsersGroups
                 .Where(ug => !ug.IsDeleted)
                 .Select(ug => new StudentVM(ug))
