@@ -210,7 +210,6 @@ namespace LanguageSchool.Controllers
         }
 
         [HttpPost]
-        [Route("Group/PickHours/{id}")]
         [Route("Group/Create/{id}")]
         [Authorize(Roles = "Secretary")]
         public ActionResult Create(GroupViewModel groupViewModel)
@@ -250,61 +249,7 @@ namespace LanguageSchool.Controllers
                         UserId = groupViewModel.Teacher.Id
                     });
 
-                    var groupTimes = new List<GroupTime>();
-
-                    GroupTime groupTime = null;
-
-                    for (int i = 0; i < 7; i++) // days
-                    {
-                        if (groupTime != null)
-                        {
-                            groupTimes.Add(groupTime);
-                        }
-
-                        groupTime = null;
-
-                        for (int j = 0; j < 12; j++) // hours
-                        {
-                            var isHourChecked = groupViewModel.TeacherTimetable.ElementAt(j).ElementAt(i);
-
-                            if (isHourChecked == true)
-                            {
-                                if (groupTime == null)
-                                {
-                                    groupTime = new GroupTime
-                                    {
-                                        DayOfWeekId = 5000 + (i + 1),
-                                        StartTime = j + 8,
-                                        EndTime = j + 8,
-                                    };
-                                }
-                                else
-                                {
-                                    if (groupTime.EndTime == (j + 8) - 1)
-                                        groupTime.EndTime++;
-                                    else
-                                    {
-                                        groupTimes.Add(groupTime);
-
-                                        groupTime = null;
-                                    }
-                                }
-                            }
-                            else if (groupTime != null)
-                            {
-                                groupTimes.Add(groupTime);
-
-                                groupTime = null;
-                            }
-                        }
-                    }
-
-                    if (groupTime != null)
-                    {
-                        groupTimes.Add(groupTime);
-                    }
-
-                    group.GroupTimes = groupTimes;
+                    group.GroupTimes = GetHoursFromTimeTable(groupViewModel.TeacherTimetable);
 
                     UnitOfWork.GroupRepository.Insert(group);
                     UnitOfWork.Save();
@@ -319,7 +264,7 @@ namespace LanguageSchool.Controllers
 
                     TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                    return View("PickHours", groupViewModel);
+                    return View(groupViewModel);
                 }
             }
         }
@@ -345,6 +290,8 @@ namespace LanguageSchool.Controllers
 
             PopulateInputLists(ref groupVM);
 
+            TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź nowe dane grupy", "pamiętaj że przejście od kolejnego kroku spowoduje usunięcie dotychczasowych godzin zajęć.");
+
             return View(groupVM);
         }
 
@@ -360,6 +307,37 @@ namespace LanguageSchool.Controllers
                 return View(groupVM);
             }
 
+            var selectedTeacher = UnitOfWork.UserRepository.GetById(groupVM.TeacherId);
+
+            if (groupVM.TeacherTimetable == null)
+            {
+                try
+                {
+                    var group = UnitOfWork.GroupRepository.GetById(groupVM.GroupId);
+
+                    group.GroupTimes
+                        .ToList()
+                        .ForEach(gt => gt.IsDeleted = true);
+
+                    UnitOfWork.GroupRepository.Update(group);
+                    UnitOfWork.Save();
+
+                    groupVM.FillTimetable(selectedTeacher);
+
+                    TempData["Alert"] = new AlertViewModel(Consts.Info, "Wybierz nowe godziny zajęć", "pamiętaj że ich modyfikacja spowoduje konieczność ponownego przypisania studentów do grupy.");
+
+                    return View("PickHours", groupVM);
+                }
+                catch(Exception ex)
+                {
+                    var errorLogGuid = LogException(ex);
+
+                    TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                    return View(groupVM);
+                }
+            }
+
             try
             {
                 var group = UnitOfWork.GroupRepository.GetById(groupVM.GroupId);
@@ -368,13 +346,23 @@ namespace LanguageSchool.Controllers
                 group.StartDate = groupVM.StartDate;
                 group.EndDate = groupVM.EndDate;
 
-                UnitOfWork.GroupRepository.Update(group);
+                group.UsersGroups
+                    .ToList()
+                    .ForEach(ug => ug.IsDeleted = true);
 
+                group.UsersGroups.Add(new UserGroup
+                {
+                    UserId = groupVM.Teacher.Id
+                });
+
+                group.GroupTimes = GetHoursFromTimeTable(groupVM.TeacherTimetable);
+
+                UnitOfWork.GroupRepository.Update(group);
                 UnitOfWork.Save();
 
                 return RedirectToAction("FullDetails", new { id = group.Id });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var errorLogGuid = LogException(ex);
 
@@ -423,10 +411,16 @@ namespace LanguageSchool.Controllers
                 group.IsDeleted = true;
                 group.DeletionDate = now;
 
-                foreach (var student in group.UsersGroups)
+                foreach (var user in group.UsersGroups)
                 {
-                    student.IsDeleted = true;
-                    student.DeletionDate = now;
+                    user.IsDeleted = true;
+                    user.DeletionDate = now;
+                }
+
+                foreach (var time in group.GroupTimes)
+                {
+                    time.IsDeleted = true;
+                    time.DeletionDate = now;
                 }
 
                 foreach (var subject in group.LessonSubjects)
@@ -468,16 +462,6 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        private void PopulateInputLists(ref GroupViewModel groupVM)
-        {
-            var teachers = UnitOfWork.UserRepository
-                .Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Teacher)
-                .Select(u => new UserDataVM(u))
-                .ToList();
-
-            groupVM.Teachers = new SelectList(teachers, "UserId", "Fullname");
-        }
-
         [Route("Group/DeleteStudent/{id}")]
         [Authorize(Roles = "Secretary")]
         public ActionResult DeleteStudent(int? id)
@@ -508,6 +492,75 @@ namespace LanguageSchool.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private void PopulateInputLists(ref GroupViewModel groupVM)
+        {
+            var teachers = UnitOfWork.UserRepository
+                .Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Teacher)
+                .Select(u => new UserDataVM(u))
+                .ToList();
+
+            groupVM.Teachers = new SelectList(teachers, "UserId", "Fullname");
+        }
+
+        private List<GroupTime> GetHoursFromTimeTable(List<List<bool?>> timetable)
+        {
+            var groupTimes = new List<GroupTime>();
+
+            GroupTime groupTime = null;
+
+            for (int i = 0; i < 7; i++) // days
+            {
+                if (groupTime != null)
+                {
+                    groupTimes.Add(groupTime);
+                }
+
+                groupTime = null;
+
+                for (int j = 0; j < 12; j++) // hours
+                {
+                    var isHourChecked = timetable.ElementAt(j).ElementAt(i);
+
+                    if (isHourChecked == true)
+                    {
+                        if (groupTime == null)
+                        {
+                            groupTime = new GroupTime
+                            {
+                                DayOfWeekId = 5000 + (i + 1),
+                                StartTime = j + 8,
+                                EndTime = j + 8,
+                            };
+                        }
+                        else
+                        {
+                            if (groupTime.EndTime == (j + 8) - 1)
+                                groupTime.EndTime++;
+                            else
+                            {
+                                groupTimes.Add(groupTime);
+
+                                groupTime = null;
+                            }
+                        }
+                    }
+                    else if (groupTime != null)
+                    {
+                        groupTimes.Add(groupTime);
+
+                        groupTime = null;
+                    }
+                }
+            }
+
+            if (groupTime != null)
+            {
+                groupTimes.Add(groupTime);
+            }
+
+            return groupTimes;
         }
     }
 }

@@ -61,6 +61,7 @@ namespace LanguageSchool.Models.ViewModels
             var assignedUsers = group.UsersGroups.Where(ug => !ug.IsDeleted);
 
             Teacher = new UserViewModel(assignedUsers.Where(u => u.User.RoleId == (int)Consts.Roles.Teacher).FirstOrDefault().User);
+            TeacherId = Teacher.Id;
 
             Students = new List<StudentVM>();
 

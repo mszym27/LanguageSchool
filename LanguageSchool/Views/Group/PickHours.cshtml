@@ -7,6 +7,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.GroupId)
     @Html.HiddenFor(model => model.CourseId)
     @Html.HiddenFor(model => model.Name)
     @Html.HiddenFor(model => model.Teacher.Id)
@@ -71,7 +72,7 @@
         </div>
         <div class="row col-md-12">
             <div class="col-md-2 col-md-offset-10">
-                <input type="submit" value="Utwórz grupę" class="btn btn-block btn-primary" />
+                <input type="submit" value="Zapisz" class="btn btn-block btn-primary" />
             </div>
         </div>
         <p />
