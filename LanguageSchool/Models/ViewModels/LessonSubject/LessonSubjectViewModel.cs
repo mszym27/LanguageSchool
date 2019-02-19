@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace LanguageSchool.Models.ViewModels
 {
@@ -17,9 +18,9 @@ namespace LanguageSchool.Models.ViewModels
 
         public int MaxNumberOfClosedQuestions { get; set; }
         public int MaxNumberOfOpenQuestions { get; set; }
-        [IntGreaterThan("MaxNumberOfClosedQuestions", ErrorMessage = "Ilość pytań nie może być większa od maksymalnej")]
+        [IntGreaterThan("MaxNumberOfOpenQuestions", ErrorMessage = "Liczba większa od maksymalnej")]
         public int NumberOfOpenQuestions { get; set; }
-        [IntGreaterThan("MaxNumberOfOpenQuestions", ErrorMessage = "Ilość pytań nie może być większa od maksymalnej")]
+        [IntGreaterThan("MaxNumberOfClosedQuestions", ErrorMessage = "Liczba większa od maksymalnej")]
         public int NumberOfClosedQuestions { get; set; }
 
         public bool IsMarked { get; set; }
@@ -33,11 +34,15 @@ namespace LanguageSchool.Models.ViewModels
             Description = lessonSubject.Description;
             IsActive = lessonSubject.IsActive;
 
-            MaxNumberOfClosedQuestions = lessonSubject.ClosedQuestions.Count;
-            MaxNumberOfOpenQuestions = lessonSubject.OpenQuestions.Count;
+            MaxNumberOfClosedQuestions = lessonSubject.ClosedQuestions
+                .Where(q => !q.IsDeleted)
+                .ToList()
+                .Count;
 
-            NumberOfClosedQuestions = MaxNumberOfClosedQuestions;
-            NumberOfOpenQuestions = MaxNumberOfOpenQuestions;
+            MaxNumberOfOpenQuestions = lessonSubject.OpenQuestions
+                .Where(q => !q.IsDeleted)
+                .ToList()
+                .Count;
         }
     }
 }

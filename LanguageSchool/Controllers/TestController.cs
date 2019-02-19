@@ -38,6 +38,11 @@ namespace LanguageSchool.Controllers
         [Route("Test/Create/{GroupId}")]
         public ActionResult Create(TestViewModel testViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(testViewModel);
+            }
+
             try
             {
                 var test = new Test();
@@ -137,7 +142,7 @@ namespace LanguageSchool.Controllers
                 if(test.NumberOfClosedQuestions == 0
                     && test.NumberOfOpenQuestions == 0)
                 {
-                    TempData["Alert"] = new AlertViewModel(Consts.Failure, "Nie wybrano żadnego tematu", "by utworzyć test musi być zaznaczony przynajmniej jeden.");
+                    TempData["Alert"] = new AlertViewModel(Consts.Failure, "Brak pytań", "by utworzyć test konieczne jest wybranie co najmniej jednego.");
 
                     return View(testViewModel);
                 }

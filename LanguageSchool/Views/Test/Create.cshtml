@@ -74,28 +74,35 @@
                         @for (var i = 0; i < Model.LessonSubjects.Count; i++)
                         {
                             @Html.HiddenFor(model => model.LessonSubjects[i].Id)
+                            @Html.HiddenFor(model => model.LessonSubjects[i].GroupId)
                             @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfClosedQuestions, new { id = "numberClosed" + i })
                             @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfOpenQuestions, new { id = "numberOpen" + i })
 
-                            if (Model.LessonSubjects[i].NumberOfClosedQuestions != 0
-                                || Model.LessonSubjects[i].NumberOfOpenQuestions != 0)
+                            if (Model.LessonSubjects[i].MaxNumberOfClosedQuestions != 0
+                                || Model.LessonSubjects[i].MaxNumberOfOpenQuestions != 0)
                             {
                                 <tr style="background:whitesmoke;color:silver" id="@i">
                                     <td>
                                         @Model.LessonSubjects[i].Name
+                                        @Html.HiddenFor(model => model.LessonSubjects[i].Name)
                                     </td>
                                     <td>
                                         @Model.LessonSubjects[i].Description
+                                        @Html.HiddenFor(model => model.LessonSubjects[i].Description)
                                     </td>
                                     <td>
                                         @Html.EditorFor(model => model.LessonSubjects[i].NumberOfClosedQuestions
                                             , new { htmlAttributes = new { @disabled = "disabled" } }) \ 
                                         @Model.LessonSubjects[i].MaxNumberOfClosedQuestions
+                                        <p/>
+                                        @Html.ValidationMessageFor(model => model.LessonSubjects[i].NumberOfClosedQuestions, "", new { @class = "text-danger" })
                                     </td>
                                     <td>
                                         @Html.EditorFor(model => model.LessonSubjects[i].NumberOfOpenQuestions
                                             , new { htmlAttributes = new { @disabled = "disabled" } }) \ 
                                         @Model.LessonSubjects[i].MaxNumberOfOpenQuestions
+                                        <p/>
+                                        @Html.ValidationMessageFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, "", new { @class = "text-danger" })
                                     </td>
                                     <td>
                                         <label class="btn btn-default btn-block" onclick="enableRow(@i)">
@@ -127,8 +134,6 @@
             numberOpen = document.getElementById("numberOpen" + rowId),
             answerClosed = document.getElementById("LessonSubjects_" + rowId + "__NumberOfClosedQuestions"),
             answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions");
-        
-        debugger;
 
         if (row.style.color == "black") {
             row.style.background = "whitesmoke";
