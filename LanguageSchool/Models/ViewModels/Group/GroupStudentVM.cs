@@ -45,7 +45,9 @@ namespace LanguageSchool.Models.ViewModels
             }
 
             Tests = group.Tests
-                .Where(t => !t.IsDeleted && !student.UsersTests.Where(ut => ut.TestId == t.Id).Any())
+                .Where(t => !t.IsDeleted)
+                .Where(t => t.IsActive)
+                .Where(t => !student.UsersTests.Where(ut => ut.TestId == t.Id).Any())
                 .OrderByDescending(t => t.CreationDate)
                 .ToList();
         }

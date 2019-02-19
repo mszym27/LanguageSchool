@@ -26,7 +26,7 @@ namespace LanguageSchool.Models.ViewModels.MessageViewModels
             HasBeenReceived = userMessage.HasBeenReceived;
             IsSystem = userMessage.Message.IsSystem;
 
-            var contents = userMessage.Message.Contents;
+            var contents = userMessage.Message.Contents.Replace("<br>", " ");
             ShortenedContents = (contents.Length > 80) ? contents.Substring(0, 80) + "..." : contents;
         }
     }

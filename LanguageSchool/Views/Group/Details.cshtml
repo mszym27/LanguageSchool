@@ -133,12 +133,14 @@
                     @foreach (var test in Model.Tests)
                     {
                         var fontColor = "black";
+                        var activateButtonValue = "Dezaktywuj";
 
                         if (!test.IsActive)
                         {
+                            activateButtonValue = "Aktywuj";
                             fontColor = "silver";
                         }
-
+                            
                         <tr style="color: @fontColor">
                             <td>
                                 @test.CreationDate.ToString("yyyy/MM/dd")
@@ -154,6 +156,9 @@
                             </td>
                             <td>
                                 @test.Points
+                            </td>
+                            <td>
+                                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("DeActivate", "Test", new { id = test.Id })'">@activateButtonValue</button>
                             </td>
                         </tr>
                     }

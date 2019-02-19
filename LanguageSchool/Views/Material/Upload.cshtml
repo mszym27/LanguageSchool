@@ -31,6 +31,7 @@
                         </div>
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.File, null, new { type = "file", @class = "input-file", accept = ".pdf", id = "upload", onchange = "checkFile()" })
+                            @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
                         </div>
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">

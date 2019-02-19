@@ -13,13 +13,12 @@
                     Data utworzenia
                 </th>
                 <th>
-                    Temat
-                </th>
-                <th>
                     Nazwa
                 </th>
                 <th>
                     Komentarz
+                </th>
+                <th style="width:30px">
                 </th>
             </tr>
 
@@ -28,9 +27,6 @@
                 <tr>
                     <td>
                         @item.CreationDate.ToString("yyyy/MM/dd")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LessonSubject.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)

@@ -340,7 +340,7 @@ namespace LanguageSchool.Controllers
 
         private string EncodeAsHtml(string contents)
         {
-            return contents.Replace("\r\n", "<br/>");
+            return contents.Replace("\r\n", "<br>");
         }
     }
 }

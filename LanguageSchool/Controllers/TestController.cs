@@ -326,6 +326,42 @@ namespace LanguageSchool.Controllers
             }
         }
 
+        [Route("Test/DeActivate/{id}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DeActivate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var test = UnitOfWork.TestRepository.GetById(id);
+
+            if (test == null)
+            {
+                return HttpNotFound();
+            }
+
+            try
+            {
+                test.IsActive = !test.IsActive;
+
+                UnitOfWork.TestRepository.Update(test);
+
+                UnitOfWork.Save();
+
+                return RedirectToAction("Details", "Group", new { id = test.GroupId });
+            }
+            catch (Exception ex)
+            {
+                var errorLogGuid = LogException(ex);
+
+                TempData["Alert"] = new AlertViewModel(errorLogGuid);
+
+                return RedirectToAction("Details", "Group", new { id = test.GroupId });
+            }
+        }
+
         private void Shuffle(List<AnswerViewModel> answers)
         {
             int n = answers.Count;

@@ -51,6 +51,7 @@
                         </div>
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.MessageTypeId, Model.MessageTypes, new { @id = "MessageType", @class = "form-control", @onchange = "MessageTypeChanged(this.value)" })
+                            @Html.ValidationMessageFor(model => model.MessageTypeId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div id="@toGroup" class="form-group" style="display: none">
