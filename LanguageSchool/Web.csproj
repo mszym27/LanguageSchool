@@ -366,6 +366,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aktualizacja bazy.xml" />
     <Content Include="App_Data\LanguageSchool_Primary.mdf" />
     <Content Include="App_Data\LanguageSchool_Primary_log.ldf">
       <DependentUpon>LanguageSchool_Primary.mdf</DependentUpon>
