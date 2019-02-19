@@ -111,7 +111,7 @@
                     </tr>
                     @foreach (var student in Model.Students)
                     {
-                        var modalId = "deleteStudentDialog";
+                        var modalId = "deleteStudentDialog" + student.UserGroupId;
 
                         <tr style="height:15px">
                             <td style="vertical-align:middle">
