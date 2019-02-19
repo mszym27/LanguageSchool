@@ -436,7 +436,7 @@ namespace LanguageSchool.Controllers
 
         private int MaskUserId(int id)
         {
-            return (int)Math.Sqrt(id) * 10000;
+            return (int)(Math.Sqrt(id) * 1000);
         }
     }
 }

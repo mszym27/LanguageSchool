@@ -18,6 +18,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
 
             Students = group.UsersGroups
                 .Where(ug => !ug.IsDeleted)
+                .Where(ug => ug.User.RoleId == (int)Consts.Roles.Student)
                 .Select(ug => new StudentVM(ug))
                 .ToList();
 
