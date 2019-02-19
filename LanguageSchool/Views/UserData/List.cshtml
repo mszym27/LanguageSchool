@@ -38,7 +38,7 @@
                         @Html.Label("Utworzono od:", new { @style = "float:right" })
                     </div>
                     <div class="col-md-1">
-                        @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
+                        @Html.TextBox("creationDateFrom", (new DateTime(now.Year, now.Month, 1)).ToString("yyyy/MM/dd"), new { @id = "creationDateFrom", @class = "textarea", @style = "width:80px" })
                     </div>
                     <div class="col-md-2">
                         @Html.Label("Imię i nazwisko:", new { style = "float:right" })
@@ -57,10 +57,10 @@
                     </div>
                     <div class="col-md-2">
                         <font color="gray">
-                            dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData", @onchange = "DisableButton()" })
+                            dane @Html.CheckBox("showUserData", (bool)ViewBag.showUserData, new { @id = "showUserData" })
                         </font>
                         <font color="red">
-                            prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests", @onchange = "DisableButton()" })
+                            prośby @Html.CheckBox("showContactRequests", (bool)ViewBag.showContactRequests, new { @id = "showContactRequests" })
                         </font>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         @Html.Label("Utworzono do:", new { @style = "float:right" })
                     </div>
                     <div class="col-md-2">
-                        @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:80px" })
+                        @Html.TextBox("creationDateTo", now.ToString("yyyy/MM/dd"), new { @id = "creationDateTo", @class = "textarea", @style = "width:80px" })
                     </div>
                     <div class="col-md-1">
                         @Html.Label("Email:", new { @style = "float:right" })
@@ -101,9 +101,9 @@
                         @Html.Label("Godziny:", new { @style = "float:right" })
                     </div>
                     <div class="col-md-2">
-                        @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
+                        @Html.TextBox("PreferredHoursFrom", (int)ViewBag.PreferredHoursFrom, new { @id = "preferredHoursFrom", @class = "textarea", @style = "width:30px" })
                         -
-                        @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @onchange = "DisableButton()", @class = "textarea", @style = "width:30px" })
+                        @Html.TextBox("PreferredHoursTo", (int)ViewBag.PreferredHoursTo, new { @id = "preferredHoursTo", @class = "textarea", @style = "width:30px" })
                     </div>
                     <div class="col-md-1">
                         @Html.Label("Ulica:", new { @style = "float:right" })
@@ -275,8 +275,6 @@
 </div>
 
 <script>
-    window.onload = DisableButton();
-
     function ResetForms() {
         var current = new Date();
         var currentYear = current.getFullYear();
@@ -331,23 +329,5 @@
 
         showUserData.value = false;
         showContactRequests.value = true;
-    }
-
-    function DisableButton() {
-        var showUserData = document.getElementById("showUserData");
-        var showContactRequests = document.getElementById("showContactRequests");
-        var preferredHoursFrom = document.getElementById("preferredHoursFrom");
-        var preferredHoursTo = document.getElementById("preferredHoursTo");
-        var creationDateFrom = document.getElementById("creationDateFrom");
-        var creationDateTo = document.getElementById("creationDateTo");
-
-        var submit = document.getElementById("submit");
-
-        if ((!showUserData.checked & !showContactRequests.checked)
-            || !preferredHoursFrom.value || !preferredHoursTo.value
-            || !creationDateFrom.value || !creationDateTo.value)
-            submit.disabled = true;
-        else
-            submit.disabled = false;
     }
 </script>
