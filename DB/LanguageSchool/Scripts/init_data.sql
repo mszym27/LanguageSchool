@@ -46,10 +46,7 @@ GO
 -- wiadomość powitalna
 
 INSERT [Administration].[Messages] ([CreationDate], [Header], [Contents], [MessageTypeId], [UserId], [GroupId], [CourseId], [RoleId], [IsSystem]) 
-VALUES (GETDATE(), N'Witaj w szkole!', N'Miło nam Cię powitać w naszej szkole.
-W lewym górnym rogu tej strony zobaczysz logo. Od momentu w którym odczytałeś ten komunikat po kliknięciu na nie zostaniesz przeniesiony na podgląd swojego planu zajęć.
-Jeśli w przyszłości otrzymasz nowe komunikaty to po zalogowaniu automatycznie zobaczysz listę swoich wiadomości. Rozkład zajęć stanie się dla Ciebie z powrotem dostępny po tym jak zapoznasz się z treścią tych które otrzymałeś.
-Cały masz też możliwość zobaczenia historii komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 2006, NULL, NULL, NULL, 1003, 1)
+VALUES (GETDATE(), N'Witaj w szkole!', N'Miło nam Cię powitać w naszej szkole.<br><br>W lewym górnym rogu tej strony zobaczysz logo. Od momentu w którym odczytałeś ten komunikat po kliknięciu na nie zostaniesz przeniesiony na podgląd swojego planu zajęć.<br>Jeśli w przyszłości otrzymasz nowe komunikaty to po zalogowaniu automatycznie zobaczysz listę swoich wiadomości. Rozkład zajęć stanie się dla Ciebie z powrotem dostępny po tym jak zapoznasz się z treścią tych które otrzymałeś.<br><br>Cały masz też możliwość zobaczenia historii komunikatów - jest ona dostępna po kliknięciu na przypisany do Ciebie login.', 2006, NULL, NULL, NULL, 1003, 1)
 
 GO
 

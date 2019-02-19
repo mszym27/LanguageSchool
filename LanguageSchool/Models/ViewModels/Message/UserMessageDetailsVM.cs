@@ -24,7 +24,7 @@ namespace LanguageSchool.Models.ViewModels.MessageViewModels
             ReceivedDate = userMessage.ReceivedDate.HasValue ? userMessage.ReceivedDate.Value.ToString("yyyy-MM-dd") : "-";
             Topic = userMessage.Message.Header;
             IsSystem = userMessage.Message.IsSystem;
-            Contents = userMessage.Message.Contents.Replace("\r\n", "<br/>");
+            Contents = userMessage.Message.Contents;
         }
     }
 }

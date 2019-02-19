@@ -136,7 +136,7 @@ namespace LanguageSchool.Controllers
                 message.MessageTypeId = (int)Consts.MessageTypes.ToUser;
 
                 message.Header = messageToSendVM.Topic;
-                message.Contents = messageToSendVM.Contents;
+                message.Contents = EncodeAsHtml(messageToSendVM.Contents);
                 message.IsSystem = messageToSendVM.IsSystem;
 
                 UserMessage userMessage;
@@ -186,7 +186,7 @@ namespace LanguageSchool.Controllers
                 var message = new Message();
 
                 message.Header = messageInputVM.Topic;
-                message.Contents = messageInputVM.Contents;
+                message.Contents = EncodeAsHtml(messageInputVM.Contents);
                 message.MessageTypeId = messageInputVM.MessageTypeId;
                 message.IsSystem = messageInputVM.IsSystem;
                 message.UsersMessages = new List<UserMessage>();
@@ -336,6 +336,11 @@ namespace LanguageSchool.Controllers
             }
 
             return userMessages;
+        }
+
+        private string EncodeAsHtml(string contents)
+        {
+            return contents.Replace("\r\n", "<br/>");
         }
     }
 }
