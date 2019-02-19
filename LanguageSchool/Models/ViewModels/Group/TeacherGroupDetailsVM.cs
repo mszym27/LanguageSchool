@@ -6,6 +6,7 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
     public class TeacherGroupDetailsVM
     {
         public int GroupId { get; }
+        public bool AreAnyQuestions { get; }
 
         public List<StudentVM> Students { get; }
         public List<LessonSubject> LessonSubjects { get; }
@@ -23,10 +24,22 @@ namespace LanguageSchool.Models.ViewModels.GroupViewModels
                 .ToList();
 
             if (group.LessonSubjects != null)
+            {
                 LessonSubjects = group.LessonSubjects
                     .Where(ls => !ls.IsDeleted)
                     .OrderByDescending(ls => ls.CreationDate)
                     .ToList();
+
+                if (
+                    LessonSubjects
+                        .Where(ls => ls.ClosedQuestions.Where(q => !q.IsDeleted).Any())
+                        .Any()
+                    || LessonSubjects
+                        .Where(ls => ls.OpenQuestions.Where(q => !q.IsDeleted).Any())
+                        .Any()
+                )
+                    AreAnyQuestions = true;
+            }
 
             Tests = group.Tests
                 .Where(t => !t.IsDeleted)
