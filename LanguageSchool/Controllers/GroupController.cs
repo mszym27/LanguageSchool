@@ -249,7 +249,17 @@ namespace LanguageSchool.Controllers
                         UserId = groupViewModel.Teacher.Id
                     });
 
-                    group.GroupTimes = GetHoursFromTimeTable(groupViewModel.TeacherTimetable);
+                    var chosenHours = GetHoursFromTimeTable(groupViewModel.TeacherTimetable);
+
+                    if (chosenHours.Count == 0)
+                    {
+                        TempData["Alert"] = new AlertViewModel(Consts.Failure, "Nie wybrano godzin zajęć",
+                            "jeśli odpowiednie nie były dostępne w wybranym dla grupy zakresie dat dokonaj ich zmiany lub wybierz innego prowadzącego.");
+
+                        return View(groupViewModel);
+                    }
+
+                    group.GroupTimes = chosenHours;
 
                     UnitOfWork.GroupRepository.Insert(group);
                     UnitOfWork.Save();
@@ -324,7 +334,7 @@ namespace LanguageSchool.Controllers
 
                     groupVM.FillTimetable(selectedTeacher);
 
-                    TempData["Alert"] = new AlertViewModel(Consts.Info, "Wybierz nowe godziny zajęć", "pamiętaj że ich modyfikacja spowoduje konieczność ponownego przypisania studentów do grupy.");
+                    TempData["Alert"] = new AlertViewModel(Consts.Info, "Wybierz nowe godziny zajęć", "pamiętaj że przejście do kolejnego kroku spowoduje konieczność ponownego przypisania studentów do grupy.");
 
                     return View("PickHours", groupVM);
                 }
@@ -355,7 +365,17 @@ namespace LanguageSchool.Controllers
                     UserId = groupVM.Teacher.Id
                 });
 
-                group.GroupTimes = GetHoursFromTimeTable(groupVM.TeacherTimetable);
+                var chosenHours = GetHoursFromTimeTable(groupVM.TeacherTimetable);
+
+                if (chosenHours.Count == 0)
+                {
+                    TempData["Alert"] = new AlertViewModel(Consts.Failure, "Nie wybrano nowych godzin zajęć",
+                            "jeśli odpowiednie nie były dostępne w wybranym dla grupy zakresie dat dokonaj ich zmiany lub wybierz innego prowadzącego.");
+
+                    return View(groupVM);
+                }
+
+                group.GroupTimes = chosenHours;
 
                 UnitOfWork.GroupRepository.Update(group);
                 UnitOfWork.Save();

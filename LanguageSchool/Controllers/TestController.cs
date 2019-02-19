@@ -134,6 +134,14 @@ namespace LanguageSchool.Controllers
                     test.NumberOfOpenQuestions += openQuestionsNumber;
                 }
 
+                if(test.NumberOfClosedQuestions == 0
+                    && test.NumberOfOpenQuestions == 0)
+                {
+                    TempData["Alert"] = new AlertViewModel(Consts.Failure, "Nie wybrano żadnego tematu", "by utworzyć test musi być zaznaczony przynajmniej jeden.");
+
+                    return View(testViewModel);
+                }
+
                 UnitOfWork.TestRepository.Insert(test);
                 UnitOfWork.Save();
 
@@ -145,7 +153,7 @@ namespace LanguageSchool.Controllers
 
                 TempData["Alert"] = new AlertViewModel(errorLogGuid);
 
-                return RedirectToAction("Index", "Home");
+                return View(testViewModel);
             }
         }
 
