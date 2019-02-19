@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using LanguageSchool.Models;
 using LanguageSchool.Models.ViewModels;
 using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
 
 namespace LanguageSchool.DAL
 {
@@ -213,15 +214,36 @@ namespace LanguageSchool.DAL
             try {
                 entities.SaveChanges();
             }
-            catch (DbEntityValidationException ee)
+            catch (DbEntityValidationException dbEx)
             {
-                foreach (var error in ee.EntityValidationErrors)
+                Exception ex = dbEx;
+
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
                 {
-                    foreach (var thisError in error.ValidationErrors)
+                    foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        var errorMessage = thisError.ErrorMessage;
+                        string message = string.Format("{0}:{1}", validationErrors.Entry.Entity.ToString(), validationError.ErrorMessage);
+
+                        ex = new InvalidOperationException(message, ex);
                     }
                 }
+
+                throw ex;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Exception ex = dbEx;
+
+                var message = "";
+
+                foreach (var result in dbEx.Entries)
+                {
+                    message += string.Format("Type: {0} was part of the problem. ", result.Entity.GetType().Name);
+                }
+
+                ex = new InvalidOperationException(message, ex);
+
+                throw ex;
             }
         }
 
