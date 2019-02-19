@@ -26,7 +26,7 @@
 
                 @foreach (var openQuestion in Model.OpenQuestions)
                 {
-                    var modalId = "deleteOpenQuestion";
+                    var modalId = "deleteOpenQuestion" + openQuestion.Id;
 
                     <tr>
                         <td style="vertical-align: middle">
@@ -86,7 +86,7 @@
                 {
                     var questionAnswers = closedQuestion.Answers.Where(a => !a.IsDeleted).ToList();
 
-                    var modalId = "deleteClosedQuestion";
+                    var modalId = "deleteClosedQuestion" + closedQuestion.Id;
 
                     var multichoice = "nie";
 

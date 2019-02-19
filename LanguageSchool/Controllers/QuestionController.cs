@@ -279,7 +279,7 @@ namespace LanguageSchool.Controllers
                 UnitOfWork.OpenQuestionRepository.Update(openQuestion);
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", new { id = openQuestion.LessonSubjectId });
+                return RedirectToAction("Index", new { lessonSubjectId = openQuestion.LessonSubjectId });
             }
             catch (Exception ex)
             {
