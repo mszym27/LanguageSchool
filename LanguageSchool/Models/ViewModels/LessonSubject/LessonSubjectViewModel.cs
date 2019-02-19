@@ -18,9 +18,9 @@ namespace LanguageSchool.Models.ViewModels
 
         public int MaxNumberOfClosedQuestions { get; set; }
         public int MaxNumberOfOpenQuestions { get; set; }
-        [IntGreaterThan("MaxNumberOfOpenQuestions", ErrorMessage = "Liczba większa od maksymalnej")]
+        [IntGreaterThan("MaxNumberOfOpenQuestions", ErrorMessage = "Większa od maksymalnej")]
         public int NumberOfOpenQuestions { get; set; }
-        [IntGreaterThan("MaxNumberOfClosedQuestions", ErrorMessage = "Liczba większa od maksymalnej")]
+        [IntGreaterThan("MaxNumberOfClosedQuestions", ErrorMessage = "Większa od maksymalnej")]
         public int NumberOfClosedQuestions { get; set; }
 
         public bool IsMarked { get; set; }

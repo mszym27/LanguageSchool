@@ -128,6 +128,23 @@
 }
 
 <script>
+    window.onload = enableForm();
+
+    function enableForm() {
+        var total = @Model.LessonSubjects.Count;
+
+        debugger;
+
+        for (i = 0; i < total; i++) {
+            var answerClosed = document.getElementById("LessonSubjects_" + i + "__NumberOfClosedQuestions"),
+                answerOpen = document.getElementById("LessonSubjects_" + i + "__NumberOfOpenQuestions");
+
+            if(answerClosed.value > 0 || answerOpen.value > 0 ) {
+                enableRow(i);
+            }
+        } 
+    }
+
     function enableRow(rowId) {
         var row = document.getElementById(rowId),
             numberClosed = document.getElementById("numberClosed" + rowId),
