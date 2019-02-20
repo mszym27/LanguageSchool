@@ -142,8 +142,9 @@ namespace LanguageSchool.Controllers
                     test.NumberOfOpenQuestions += openQuestionsNumber;
                 }
 
-                if(test.NumberOfClosedQuestions == 0
-                    && test.NumberOfOpenQuestions == 0)
+                test.NumberOfQuestions = test.NumberOfClosedQuestions + test.NumberOfOpenQuestions;
+
+                if (test.NumberOfQuestions == 0)
                 {
                     TempData["Alert"] = new AlertViewModel(Consts.Failure, "Brak pytań", "by utworzyć test konieczne jest wybranie co najmniej jednego.");
 
