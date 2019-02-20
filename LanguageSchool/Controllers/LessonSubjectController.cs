@@ -210,7 +210,7 @@ namespace LanguageSchool.Controllers
 
                 lessonSubject.OpenQuestions = new List<OpenQuestion>();
 
-                foreach (var existingQuestion in existingSubject.OpenQuestions)
+                foreach (var existingQuestion in existingSubject.OpenQuestions.Where(q => !q.IsDeleted))
                 {
                     var copiedQuestion = new OpenQuestion()
                     {
