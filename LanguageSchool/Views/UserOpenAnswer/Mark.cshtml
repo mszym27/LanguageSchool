@@ -11,6 +11,7 @@
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.UserTestId)
     @Html.HiddenFor(model => model.QuestionId)
+    @Html.HiddenFor(model => model.Points)
 
     <div class="container">
         @Html.Partial("_PartHeader", "Oceń odpowiedź")
@@ -41,6 +42,8 @@
                     </div>
                     <div class="col-md-2">
                         @Html.EditorFor(model => model.PointsAwarded, new { htmlAttributes = new { @style = "width:50px" } }) / @Html.DisplayFor(model => model.Points)
+                        <p/>
+                        @Html.ValidationMessageFor(model => model.PointsAwarded, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

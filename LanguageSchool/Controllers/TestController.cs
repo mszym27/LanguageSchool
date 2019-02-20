@@ -230,58 +230,65 @@ namespace LanguageSchool.Controllers
                 userTest.UserId = student.Id;
                 userTest.Points = 0;
 
-                foreach (var question in testViewModel.ClosedQuestions)
+                string userAlertContents = "";
+
+                string userAlertType = Consts.Info;
+
+                if (testViewModel.ClosedQuestions != null)
                 {
-                    if(question.ChosenAnswerId != null || question.Answers.Where(a => a.IsMarked).Any())
+                    foreach (var question in testViewModel.ClosedQuestions)
                     {
-                        var testQuestion = takenTest.TestClosedQuestions.Where(q => q.QuestionId == question.Id).First();
-
-                        var correctAnswerIds = takenTest.TestClosedQuestions
-                            .Where(q => q.QuestionId == question.Id)
-                            .First()
-                            .TestAnswers.Where(a => a.Answer.IsCorrect)
-                            .OrderBy(a => a.AnswerId)
-                            .Select(a => a.AnswerId);
-
-                        if (question.IsMultichoice)
+                        if (question.ChosenAnswerId != null || question.Answers.Where(a => a.IsMarked).Any())
                         {
-                            var chosenAnswerIds = question.Answers
-                                .Where(a => a.IsMarked)
+                            var testQuestion = takenTest.TestClosedQuestions.Where(q => q.QuestionId == question.Id).First();
+
+                            var correctAnswerIds = takenTest.TestClosedQuestions
+                                .Where(q => q.QuestionId == question.Id)
+                                .First()
+                                .TestAnswers.Where(a => a.Answer.IsCorrect)
                                 .OrderBy(a => a.AnswerId)
                                 .Select(a => a.AnswerId);
 
-                            if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
-                            { 
-                                userTest.Points += question.Points;
-                            }
-
-                            foreach(var id in chosenAnswerIds)
+                            if (question.IsMultichoice)
                             {
+                                var chosenAnswerIds = question.Answers
+                                    .Where(a => a.IsMarked)
+                                    .OrderBy(a => a.AnswerId)
+                                    .Select(a => a.AnswerId);
+
+                                if (correctAnswerIds.SequenceEqual(chosenAnswerIds))
+                                {
+                                    userTest.Points += question.Points;
+                                }
+
+                                foreach (var id in chosenAnswerIds)
+                                {
+                                    student.UserClosedAnswers.Add(
+                                        new UserClosedAnswer()
+                                        {
+                                            TestId = testViewModel.Id,
+                                            TestClosedQuestionId = testQuestion.Id,
+                                            AnswerId = id,
+                                        }
+                                    );
+                                }
+                            }
+                            else
+                            {
+                                if (correctAnswerIds.Contains((int)question.ChosenAnswerId))
+                                {
+                                    userTest.Points += question.Points;
+                                }
+
                                 student.UserClosedAnswers.Add(
                                     new UserClosedAnswer()
                                     {
                                         TestId = testViewModel.Id,
                                         TestClosedQuestionId = testQuestion.Id,
-                                        AnswerId = id,
+                                        AnswerId = (int)question.ChosenAnswerId,
                                     }
                                 );
                             }
-                        }
-                        else
-                        {
-                            if (correctAnswerIds.Contains((int)question.ChosenAnswerId))
-                            {
-                                userTest.Points += question.Points;
-                            }
-
-                            student.UserClosedAnswers.Add(
-                                new UserClosedAnswer()
-                                {
-                                    TestId = testViewModel.Id,
-                                    TestClosedQuestionId = testQuestion.Id,
-                                    AnswerId = (int)question.ChosenAnswerId,
-                                }
-                            );
                         }
                     }
                 }
@@ -292,9 +299,7 @@ namespace LanguageSchool.Controllers
 
                 userTest.Mark = mark;
 
-                string userAlertContents = "uzyskana przez Ciebie ocena to " + mark.PLName + ". ";
-
-                string userAlertType = Consts.Info;
+                userAlertContents += "uzyskana przez Ciebie ocena to " + mark.PLName + ". ";
 
                 userTest.UserOpenAnswers = new List<UserOpenAnswer>();
 
@@ -312,7 +317,10 @@ namespace LanguageSchool.Controllers
                         userTest.UserOpenAnswers.Add(answer);
                     }
 
-                    userAlertContents += "Czekaj aż prowadzący sprawdzi część otwartą testu - ocena może wtedy ulec zmianie.";
+                    userAlertContents += "Czekaj aż prowadzący sprawdzi część otwartą testu";
+
+                    if(mark != null)
+                        userAlertContents += " - ocena może wtedy ulec zmianie";
                 }
                 else
                 {
@@ -326,6 +334,7 @@ namespace LanguageSchool.Controllers
 
                 student.UsersTests.Add(userTest);
 
+                UnitOfWork.UserTestRepository.Insert(userTest);
                 UnitOfWork.Save();
 
                 TempData["Alert"] = new AlertViewModel(userAlertType, "Test został zakończony", userAlertContents);

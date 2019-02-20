@@ -14,6 +14,8 @@ namespace LanguageSchool.Models.ViewModels
         public int UserTestId { get; set; }
         public int QuestionId { get; set; }
         public int Points { get; set; }
+        [IntGreaterThan("Points", ErrorMessage = "Liczba większa od maksymalnej")]
+        [RangeAttribute(1, int.MaxValue, ErrorMessage = "Wartość musi być większa od zera")]
         public int PointsAwarded { get; set; }
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }

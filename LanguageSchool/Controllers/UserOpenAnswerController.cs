@@ -55,6 +55,11 @@ namespace LanguageSchool.Controllers
         [Route("Mark/{id}")]
         public ActionResult Mark(UserOpenAnswerViewModel answerVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(answerVM);
+            }
+
             try
             {
                 var user = UnitOfWork.UserRepository.GetById(answerVM.UserId);
