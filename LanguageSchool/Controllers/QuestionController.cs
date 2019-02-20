@@ -151,8 +151,9 @@ namespace LanguageSchool.Controllers
 
 
                     test.NumberOfClosedQuestions--;
+                    test.NumberOfQuestions--;
 
-                    if (test.NumberOfClosedQuestions == 0)
+                    if (test.NumberOfQuestions == 0)
                     {
                         test.IsDeleted = true;
                         test.DeletionDate = now;
@@ -235,9 +236,10 @@ namespace LanguageSchool.Controllers
 
                     test.Points = test.Points - openQuestion.Points;
 
-                    test.NumberOfClosedQuestions--;
+                    test.NumberOfOpenQuestions--;
+                    test.NumberOfQuestions--;
 
-                    if (test.NumberOfClosedQuestions == 0)
+                    if (test.NumberOfQuestions == 0)
                     {
                         test.IsDeleted = true;
                         test.DeletionDate = now;
