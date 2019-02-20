@@ -298,6 +298,8 @@ namespace LanguageSchool.Controllers
 
                 var userRole = UnitOfWork.DictionaryItemRepository.GetById(udvm.RoleId);
 
+                User user = new User();
+
                 if (udvm.OriginContactRequestId != null)
                 {
                     var contactRequest = UnitOfWork.ContactRequestRepository.GetById(udvm.OriginContactRequestId);
@@ -305,9 +307,11 @@ namespace LanguageSchool.Controllers
                     contactRequest.IsAwaiting = false;
 
                     userRole = UnitOfWork.DictionaryItemRepository.GetById((int)Consts.Roles.Student);
-                }
 
-                User user = new User();
+                    user.UsersGroups = new List<UserGroup>();
+
+                    user.UsersGroups.Add(new UserGroup { GroupId = udvm.GroupId });
+                }
 
                 user.Role = userRole;
 
