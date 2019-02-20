@@ -384,9 +384,6 @@
     <Content Include="images\Background_courses.jpg" />
     <Content Include="images\Background_home.jpg" />
     <Content Include="images\Background_course_details.jpg" />
-    <Content Include="images\Background_test.jpg" />
-    <Content Include="images\Background_contact.jpg" />
-    <Content Include="images\Background_test_faded.jpg" />
     <Content Include="images\Logo.png" />
     <Content Include="images\Logo_logged.png" />
     <Content Include="images\Logo_notlogged.png" />

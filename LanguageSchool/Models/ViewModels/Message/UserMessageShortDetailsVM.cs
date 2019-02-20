@@ -19,12 +19,24 @@ namespace LanguageSchool.Models.ViewModels.MessageViewModels
 
         public UserMessageShortDetailsVM(UserMessage userMessage)
         {
+            var message = userMessage.Message;
+
+            if(message.MessageTypeId == (int)Consts.MessageTypes.StudentWelcome)
+            {
+                var student = userMessage.User;
+
+                SentDate = student.CreationDate.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                SentDate = message.CreationDate.ToString("yyyy-MM-dd");
+            }
+
             UserMessageId = userMessage.Id;
-            SentDate = userMessage.Message.CreationDate.ToString("yyyy-MM-dd");
             ReceivedDate = userMessage.ReceivedDate.HasValue ? userMessage.ReceivedDate.Value.ToString("yyyy-MM-dd") : "-";
-            Topic = userMessage.Message.Header;
+            Topic = message.Header;
             HasBeenReceived = userMessage.HasBeenReceived;
-            IsSystem = userMessage.Message.IsSystem;
+            IsSystem = message.IsSystem;
 
             var contents = userMessage.Message.Contents.Replace("<br>", " ");
             ShortenedContents = (contents.Length > 80) ? contents.Substring(0, 80) + "..." : contents;
