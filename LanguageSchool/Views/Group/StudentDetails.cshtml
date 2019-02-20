@@ -72,41 +72,28 @@
                             <th>
                                 Punkty do uzyskania
                             </th>
-                            <th>
-                                Komentarz
-                            </th>
                         </tr>
 
                         @foreach (var item in test.AnswersAwaitingMark)
-                    {
-                        var shownContent = item.Content;
-
-                        if (item.Content.Length > 30)
                         {
-                            shownContent = item.Content.Substring(0, 30) + "...";
-                        }
+                            var shownContent = item.Content;
 
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OpenQuestion.Contents)
-                            </td>
-                            <td>
-                                @Html.ActionLink(shownContent, "Mark", "UserOpenAnswer", new { Id = item.Id }, null)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OpenQuestion.Points)
-                            </td>
-                            @if (item.Comment != null)
+                            if (item.Content.Length > 30)
                             {
+                                shownContent = item.Content.Substring(0, 30) + "...";
+                            }
+
+                            <tr>
                                 <td>
-                                    @item.Comment
+                                    @Html.DisplayFor(modelItem => item.OpenQuestion.Contents)
                                 </td>
-                            }
-                            else
-                            {
-                                <td align="center"> - </td>
-                            }
-                        </tr>
+                                <td>
+                                    @Html.ActionLink(shownContent, "Mark", "UserOpenAnswer", new { Id = item.Id }, null)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpenQuestion.Points)
+                                </td>
+                            </tr>
                         }
                     </table>
                 </div>

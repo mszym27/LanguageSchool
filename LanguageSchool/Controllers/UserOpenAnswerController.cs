@@ -64,7 +64,9 @@ namespace LanguageSchool.Controllers
             {
                 var user = UnitOfWork.UserRepository.GetById(answerVM.UserId);
 
-                var userAnswer = user.UserOpenAnswers.Where(t => t.OpenQuestionId == answerVM.QuestionId).First();
+                var userAnswer = user.UserOpenAnswers
+                    .Where(a => a.Id == answerVM.Id)
+                    .First();
 
                 userAnswer.Points = answerVM.PointsAwarded;
                 userAnswer.Comment = answerVM.Comment;
@@ -83,6 +85,7 @@ namespace LanguageSchool.Controllers
                     userTest.IsMarked = true;
                 }
 
+                UnitOfWork.UserRepository.Update(user);
                 UnitOfWork.Save();
 
                 return RedirectToAction("Taken", "Test", new { id = answerVM.UserTestId });
