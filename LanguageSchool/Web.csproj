@@ -445,9 +445,7 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\ContactRequest\Create.cshtml" />
-    <Content Include="Views\EntryTest\Index.cshtml" />
     <Content Include="Views\Shared\_BackToCourses.cshtml" />
-    <Content Include="Views\EntryTest\TakeTest.cshtml" />
     <Content Include="Views\Shared\_MenuItems.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />

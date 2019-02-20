@@ -112,6 +112,10 @@
     {
         var closedQuestions = document.getElementById("closedQuestions");
 
+        if (closedQuestions == null) {
+            document.getElementById("test").submit();
+        }
+
         var inputs = closedQuestions.getElementsByTagName("input");
 
         var i;
