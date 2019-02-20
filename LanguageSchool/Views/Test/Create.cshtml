@@ -84,8 +84,6 @@
                             if (Model.LessonSubjects[i].MaxNumberOfClosedQuestions != 0
                                 || Model.LessonSubjects[i].MaxNumberOfOpenQuestions != 0)
                             {
-                                var func = "enableRow(" + i + ")";
-
                                 <tr style="background:whitesmoke;color:silver" id="@i">
                                     <td>
                                         @Model.LessonSubjects[i].Name
@@ -109,11 +107,13 @@
                                         <p/>
                                         @Html.ValidationMessageFor(model => model.LessonSubjects[i].NumberOfOpenQuestions, "", new { @class = "text-danger" })
                                     </td>
-                                    <td onclick="@func">
-                                        @*@Html.EditorFor(model => model.LessonSubjects[i].IsMarked)*@
-                                        @Html.CheckBoxFor(model => model.LessonSubjects[i].IsMarked, new { @onclick = func })
-                                        @*@Html.CheckBox("LessonSubjects[" + i + "].IsMarked", (bool)@Model.LessonSubjects[i].IsMarked, new { @onclick = "enableRow(" + i + ")" })*@
-                                        @*<input type="checkbox" onclick="enableRow(" + i + ")">*@
+                                    <td>
+                                        <label class="btn btn-default btn-block" onclick="enableRow(@i)">
+                                            <label style="display: none">
+                                                @Html.EditorFor(model => model.LessonSubjects[i].IsMarked)
+                                            </label>
+                                            Wybierz
+                                        </label>
                                     </td>
                                 </tr>
                             }
@@ -130,34 +130,14 @@
     </div>
 }
 
+
 <script>
-    window.onload = enableForm();
-
-    function enableForm() {
-        var total = @Model.LessonSubjects.Count;
-        
-        for (i = 0; i < total; i++) {
-            var answerClosed = document.getElementById("LessonSubjects_" + i + "__NumberOfClosedQuestions"),
-                answerOpen = document.getElementById("LessonSubjects_" + i + "__NumberOfOpenQuestions"),
-                isMarked = document.getElementById("LessonSubjects_" + rowId + "__IsMarked");
-    
-            isMarked.checked = false;
-
-            if(answerClosed.value > 0 || answerOpen.value > 0 ) {
-                enableRow(i);
-            }
-        } 
-    }
-
     function enableRow(rowId) {
         var row = document.getElementById(rowId),
             numberClosed = document.getElementById("numberClosed" + rowId),
             numberOpen = document.getElementById("numberOpen" + rowId),
             answerClosed = document.getElementById("LessonSubjects_" + rowId + "__NumberOfClosedQuestions"),
-            answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions"),
-            isMarked = document.getElementById("LessonSubjects_" + rowId + "__IsMarked");
-
-        debugger;
+            answerOpen = document.getElementById("LessonSubjects_" + rowId + "__NumberOfOpenQuestions");
 
         if (row.style.color == "black") {
             row.style.background = "whitesmoke";
@@ -165,8 +145,6 @@
 
             answerClosed.disabled = true;
             answerOpen.disabled = true;
-            
-            isMarked.checked = false;
         }
         else {
             row.style.background = "white";
@@ -179,22 +157,7 @@
             if(numberOpen.value != 0) {
                 answerOpen.disabled = false;
             }
-            
-            isMarked.checked = true;
         }
-
-
-        @*var hasAnyCorrect = "@(Model.Answers.Where(a => a.IsCorrect).Any())";
-        var isEnough = "@(!(Model.Answers.Count < Model.NumberOfPossibleAnswers))";
-
-        var isCorrect = document.getElementById("isCorrect");
-
-        var submit = document.getElementById("submit");
-
-        if ((isCorrect.checked || hasAnyCorrect == "True") && isEnough == "True")
-            submit.disabled = false;
-        else
-            submit.disabled = true;*@
     }
 </script>
 

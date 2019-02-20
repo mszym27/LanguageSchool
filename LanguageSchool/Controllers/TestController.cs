@@ -40,6 +40,9 @@ namespace LanguageSchool.Controllers
         {
             if (!ModelState.IsValid)
             {
+                testViewModel.LessonSubjects
+                    .ForEach(ls => ls.IsMarked = false);
+
                 return View(testViewModel);
             }
 
