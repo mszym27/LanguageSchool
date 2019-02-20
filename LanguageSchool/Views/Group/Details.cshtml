@@ -159,8 +159,8 @@
                             <td>
                                 @test.Points
                             </td>
-                            <td align="center">
-                                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("DeActivate", "Test", new { id = test.Id })'">@activateButtonValue</button>
+                            <td style="width:100px">
+                                <button class="btn btn-block btn-default" type="button" onclick="location.href='@Url.Action("DeActivate", "Test", new { id = test.Id })'">@activateButtonValue</button>
                             </td>
                         </tr>
                     }
