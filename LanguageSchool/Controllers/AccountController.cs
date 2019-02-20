@@ -50,7 +50,12 @@ namespace LanguageSchool.Controllers
             {
                 var passwordEncrypted = Encryption.Encrypt(loginInfo.Password.Trim());
 
-                var loginUser = UnitOfWork.UserRepository.Get(u => !u.IsDeleted && (u.Login == loginInfo.Login.Trim() && u.Password == passwordEncrypted)).FirstOrDefault();
+                var loginUser = UnitOfWork.UserRepository
+                    .Get(u => !u.IsDeleted 
+                        && (u.Login == loginInfo.Login.Trim() 
+                        && u.Password == passwordEncrypted)
+                    )
+                    .FirstOrDefault();
 
                 if (loginUser != null)
                 {
@@ -69,6 +74,8 @@ namespace LanguageSchool.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Niewłaściwe dane logowania");
+
+                    return View(loginInfo);
                 }
             }
             catch (Exception ex)
@@ -79,8 +86,6 @@ namespace LanguageSchool.Controllers
 
                 return View(loginInfo);
             }
-
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
