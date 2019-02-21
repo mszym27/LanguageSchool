@@ -134,7 +134,7 @@ namespace LanguageSchool.Controllers
                     if(isAvaible)
                         usersGroupViewModel.usersAvaible.Add(new UserViewModel(student));
                     else
-                        usersGroupViewModel.usersNonavaible.Add(new UserViewModel(student)); // todo?
+                        usersGroupViewModel.usersNonavaible.Add(new UserViewModel(student));
                 }
             }
 

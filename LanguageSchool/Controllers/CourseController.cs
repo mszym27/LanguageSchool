@@ -18,11 +18,6 @@ namespace LanguageSchool.Controllers
         {
             var courses = UnitOfWork.CourseRepository.Get(c => (c.IsActive && !c.IsDeleted));
 
-            if(page == 1)
-            {
-                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
-            }
-
             courses = this.Sort(courses, sortColumn, sortDirection);
 
             ViewBag.sortColumn = sortColumn;
@@ -80,11 +75,6 @@ namespace LanguageSchool.Controllers
                     )
                 )
             );
-
-            if (page == 1)
-            {
-                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
-            }
 
             courses = this.Sort(courses, sortColumn, sortDirection);
 

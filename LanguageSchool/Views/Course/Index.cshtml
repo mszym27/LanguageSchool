@@ -1,4 +1,6 @@
 ﻿@using PagedList.Mvc;
+@using LanguageSchool.Models.ViewModels;
+
 @model PagedList.IPagedList<LanguageSchool.Models.ViewModels.CourseViewModel>
 
 @{
@@ -17,16 +19,13 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.ActionLink("Rozpoczęcie", "Index", new { sortColumn = "startDate", sortDirection = ViewBag.sortDirection, page = 1 },
-                         new { style = "text-decoration:none; color:black" } )
+                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Rozpoczęcie", "startDate"))
                 </th>
                 <th>
-                    @Html.ActionLink("Kurs", "Index", new { sortColumn = "name", sortDirection = ViewBag.sortDirection, page = 1 },
-                         new { style = "text-decoration:none; color:black" })
+                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Kurs", "name"))
                 </th>
                 <th>
-                    @Html.ActionLink("Poziom", "Index", new { sortColumn = "proficencyLevel", sortDirection = ViewBag.sortDirection, page = 1 },
-                         new { style = "text-decoration:none; color:black" })
+                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Poziom", "proficencyLevel"))
                 </th>
                 <th>
                     Opis

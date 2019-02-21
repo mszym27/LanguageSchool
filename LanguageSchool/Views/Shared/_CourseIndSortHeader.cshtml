@@ -6,12 +6,9 @@
     sortDirRev = (sortDirRev == "desc") ? "asc" : "desc";
 }
 
-@Html.ActionLink(Model.ShownName, "List",
+@Html.ActionLink(Model.ShownName, "Index",
     new
     {
-        showActivated = ViewBag.showActivated,
-        showDeactivated = ViewBag.showDeactivated,
-        searchString = ViewBag.searchString,
         sortColumn = Model.ColumnName,
         sortDirection = sortDirRev,
         page = 1
