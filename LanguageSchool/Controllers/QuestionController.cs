@@ -188,7 +188,7 @@ namespace LanguageSchool.Controllers
                 UnitOfWork.ClosedQuestionRepository.Update(closedQuestion);
                 UnitOfWork.Save();
 
-                return RedirectToAction("Index", new { id = closedQuestion.LessonSubjectId });
+                return RedirectToAction("Index", new { lessonSubjectId = closedQuestion.LessonSubjectId });
             }
             catch (Exception ex)
             {
