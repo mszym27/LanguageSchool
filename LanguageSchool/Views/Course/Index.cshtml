@@ -57,15 +57,10 @@
             }
 
         </table>        
-    </div>    
-
-    <div class="col-md-5">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-12" align="center">
         @Html.PagedListPager(Model, page => Url.Action("Index",
             new { sortColumn = ViewBag.sortColumn, sortDirection = ViewBag.sortDirection, page }))
-    </div>
-    <div class="col-md-4">
     </div>
 </body>
 </html>
