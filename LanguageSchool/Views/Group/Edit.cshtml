@@ -8,6 +8,8 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.GroupId)
+    @Html.HiddenFor(model => model.CourseName)
+    @Html.HiddenFor(model => model.CourseNumberOfHours)
 
     @Html.AntiForgeryToken()
 

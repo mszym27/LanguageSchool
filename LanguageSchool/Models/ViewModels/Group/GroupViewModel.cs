@@ -54,6 +54,8 @@ namespace LanguageSchool.Models.ViewModels
         {
             GroupId = group.Id;
             CourseId = group.CourseId;
+            CourseName = group.Course.Name;
+            CourseNumberOfHours = group.Course.NumberOfHours;
             Name = group.Name;
             StartDate = group.StartDate;
             EndDate = group.EndDate;

@@ -95,7 +95,10 @@ namespace LanguageSchool.Controllers
 
             var usersGroupViewModel = new UsersGroupViewModel(group);
 
-            var students = UnitOfWork.UserRepository.Get(u => !u.IsDeleted && u.RoleId == (int)Consts.Roles.Student);
+            var students = UnitOfWork.UserRepository
+                .Get(u => !u.IsDeleted 
+                    && u.RoleId == (int)Consts.Roles.Student
+                    && !u.UsersGroups.Where(ug => !ug.IsDeleted && ug.Group.CourseId == group.CourseId).Any());
 
             foreach(var student in students)
             {
