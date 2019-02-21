@@ -45,11 +45,6 @@ namespace LanguageSchool.Controllers
                 string sortDirection = "desc", 
                 int page = 1)
         {
-            if (page == 1)
-            {
-                sortDirection = (sortDirection == "desc") ? "asc" : "desc";
-            }
-
             var now = DateTime.Now;
 
             creationDateFrom = (creationDateFrom == null) ? (new DateTime(now.Year, now.Month, 1)) : creationDateFrom;
@@ -103,7 +98,7 @@ namespace LanguageSchool.Controllers
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
 
-            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, 20, totalRowCount);
+            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, 5, totalRowCount);
 
             return View(contactInfoPaged);
         }

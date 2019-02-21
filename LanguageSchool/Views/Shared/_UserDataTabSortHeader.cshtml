@@ -1,5 +1,11 @@
 ﻿@model LanguageSchool.Models.ViewModels.TableHeaderViewModel 
 
+@{
+    var sortDirRev = (string)ViewBag.sortDirection;
+
+    sortDirRev = (sortDirRev == "desc") ? "asc" : "desc";
+}
+
 @Html.ActionLink(Model.ShownName, "List",
     new
     {
@@ -17,7 +23,7 @@
         courseId = ViewBag.courseId,
         roleId = ViewBag.roleId,
         sortColumn = Model.ColumnName,
-        sortDirection = ViewBag.sortDirection,
+        sortDirection = sortDirRev,
         page = 1
     },
     new { style = "text-decoration:none; color:black" }
