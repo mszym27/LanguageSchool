@@ -98,7 +98,7 @@ namespace LanguageSchool.Controllers
             ViewBag.sortDirection = sortDirection;
             ViewBag.page = page;
 
-            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, 5, totalRowCount);
+            var contactInfoPaged = new StaticPagedList<GetContactInfoListItem>(contactInfo, page, 20, totalRowCount);
 
             return View(contactInfoPaged);
         }
