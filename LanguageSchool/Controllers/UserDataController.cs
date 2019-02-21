@@ -55,8 +55,8 @@ namespace LanguageSchool.Controllers
             creationDateFrom = (creationDateFrom == null) ? (new DateTime(now.Year, now.Month, 1)) : creationDateFrom;
             creationDateTo = (creationDateTo == null) ? now : creationDateTo;
 
-            PreferredHoursFrom = (PreferredHoursFrom == null) ? now.Hour : PreferredHoursFrom;
-            PreferredHoursTo = (PreferredHoursTo == null) ? 20 : PreferredHoursTo;
+            PreferredHoursFrom = (PreferredHoursFrom == null) ? 8 : PreferredHoursFrom;
+            PreferredHoursTo = (PreferredHoursTo == null) ? now.Hour + 1 : PreferredHoursTo;
 
             var contactInfo = UnitOfWork.GetContactInfoList(
                 creationDateFrom,
