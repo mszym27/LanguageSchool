@@ -37,7 +37,7 @@ namespace LanguageSchool.Models.ViewModels
             QuestionId = answer.OpenQuestionId;
             PointsAwarded = answer.Points;
             Points = answer.OpenQuestion.Points;
-            Content = answer.Content;
+            Content = answer.Content.Replace("\r\n", "<br>");
         }
     }
 }

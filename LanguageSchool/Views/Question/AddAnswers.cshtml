@@ -81,6 +81,7 @@
                 </div>
             </div>
         </div>
+        <p/>
         @if (curr >= 1)
         {
             <div class="row">
@@ -136,21 +137,56 @@
             </div>
         </div>
     </div>
+
+    /*
+     * 
+     * jeśli pytanie jest wielokrotnego wyboru to wystarczy że liczba odpowiedzi która została dla niego wprowadzona
+     * łącznie z tą która dodawana jest teraz 
+     * jest większa/równa ilości tych które mają zostać wyświetlone
+     * [z czego co najmniej jedna musi być poprawna]
+     * w przypadku w którym jest to zwykłe pytanie zamknięte
+     * to musi mieć co najmniej jedną odpowiedź poprawną
+     * oraz co najmniej tyle niepoprawnych żeby możliwe było zapełnienie nimi listy 
+     * czyli przy iscorrec
+     * */
+
     <script>
         window.onload = enableButton();
 
         function enableButton() {
-            var hasAnyCorrect = "@(Model.Answers.Where(a => a.IsCorrect).Any())";
-            var isEnough = "@(!(Model.Answers.Count < Model.NumberOfPossibleAnswers))";
+            var answersShownCount = @(Model.NumberOfPossibleAnswers);
+            var isMultichoice = "@(Model.IsMultichoice)";
+
+            var totalAnswersCount = @(Model.Answers.Count);
+            var invalidAnswersCount = @(Model.Answers.Where(a => !a.IsCorrect).Count());
+
+            var wasAnyCorrect = "@(Model.Answers.Where(a => a.IsCorrect).Any())";
 
             var isCorrect = document.getElementById("isCorrect");
 
+            if(isCorrect.checked)
+                invalidAnswersCount -= 1;
+
             var submit = document.getElementById("submit");
 
-            if ((isCorrect.checked || hasAnyCorrect == "True") && isEnough == "True")
+            submit.disabled = true;
+
+            debugger;
+
+            if (
+                (isMultichoice == "True") &&
+                (totalAnswersCount >= answersShownCount) &&
+                (isCorrect.checked || wasAnyCorrect == "True")
+            )
                 submit.disabled = false;
-            else
-                submit.disabled = true;
+
+            if (
+                (isMultichoice == "False") &&
+                (totalAnswersCount >= answersShownCount) &&
+                (isCorrect.checked || wasAnyCorrect == "True") &&
+                (invalidAnswersCount >= (answersShownCount - 1))
+            )
+                submit.disabled = false;
         }
     </script>
 }
