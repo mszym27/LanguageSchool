@@ -489,7 +489,7 @@
     <Content Include="Views\Shared\_UserDataTabSortHeader.cshtml" />
     <Content Include="Views\Shared\_CourseTabSortHeader.cshtml" />
     <Content Include="Views\LessonSubject\Edit.cshtml" />
-    <Content Include="Views\Shared\_CourseIndSortHeader.cshtml" />
+    <Content Include="Views\Shared\_BasicIndSortHeader.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

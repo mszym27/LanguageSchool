@@ -4,6 +4,7 @@
 @model PagedList.IPagedList<LanguageSchool.Models.ViewModels.CourseViewModel>
 
 @{
+    ViewBag.Title = "Lista kursów";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,13 +20,13 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Rozpoczęcie", "startDate"))
+                    @Html.Partial("_BasicIndSortHeader", new TableHeaderViewModel("Rozpoczęcie", "startDate"))
                 </th>
                 <th>
-                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Kurs", "name"))
+                    @Html.Partial("_BasicIndSortHeader", new TableHeaderViewModel("Kurs", "name"))
                 </th>
                 <th>
-                    @Html.Partial("_CourseIndSortHeader", new TableHeaderViewModel("Poziom", "proficencyLevel"))
+                    @Html.Partial("_BasicIndSortHeader", new TableHeaderViewModel("Poziom", "proficencyLevel"))
                 </th>
                 <th>
                     Opis
