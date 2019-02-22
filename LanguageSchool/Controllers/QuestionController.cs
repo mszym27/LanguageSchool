@@ -84,28 +84,6 @@ namespace LanguageSchool.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("Questions/CreateClosed/{lessonSubjectId}")]
-        [Authorize(Roles = "Teacher")]
-        public ActionResult CreateClosed(int? lessonSubjectId)
-        {
-            if (lessonSubjectId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
-
-            if (lessonSubject == null)
-            {
-                return HttpNotFound();
-            }
-
-            var closedQuestion = new ClosedQuestionViewModel(lessonSubject);
-
-            return View(closedQuestion);
-        }
-
         [Route("Questions/DeleteClosed/{id}")]
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteClosed(int? id)
@@ -301,6 +279,30 @@ namespace LanguageSchool.Controllers
             return View(closedQuestion);
         }
 
+        [HttpGet]
+        [Route("Questions/CreateClosed/{lessonSubjectId}")]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult CreateClosed(int? lessonSubjectId)
+        {
+            if (lessonSubjectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var lessonSubject = UnitOfWork.LessonSubjectRepository.GetById(lessonSubjectId);
+
+            if (lessonSubject == null)
+            {
+                return HttpNotFound();
+            }
+
+            TempData["Alert"] = new AlertViewModel(Consts.Info, "Wprowadź dane pytania", "wpisz jego treść oraz uzupełnij pozostałe informacje. Następnie dodaj odpowiedzi.");
+
+            var closedQuestion = new ClosedQuestionViewModel(lessonSubject);
+
+            return View(closedQuestion);
+        }
+
         [HttpPost]
         [Route("Questions/CreateClosed/{lessonSubjectId}")]
         [Authorize(Roles = "Teacher")]
@@ -338,7 +340,22 @@ namespace LanguageSchool.Controllers
                 else
                 {
                     if (closedQuestionViewModel.Answers == null)
+                    {
                         closedQuestionViewModel.Answers = new List<AnswerViewModel>();
+
+                        var alert = new AlertViewModel(Consts.Info, "Dodaj odpowiedzi", "do utworzenia konieczne jest wprowadzenie ich minimum tyle ile ma być wyświetlone w czasie testu. ");
+
+                        if (closedQuestionViewModel.IsMultichoice)
+                        {
+                            alert.Message += "Co najmniej jedna musi być oznaczona jako poprawna.";
+                        }
+                        else
+                        {
+                            alert.Message += "Pamiętaj że pokazana zostanie tylko jedna poprawna.";
+                        }
+
+                        TempData["Alert"] = alert;
+                    }
 
                     closedQuestionViewModel.Answers.Add(new AnswerViewModel());
 
