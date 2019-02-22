@@ -74,10 +74,7 @@ namespace LanguageSchool.Models.ViewModels
         {
             GroupId = group.Id;
 
-            NumberOfOpenQuestions = 1;
-            NumberOfClosedQuestions = 1;
-
-            var lessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted && ls.IsActive).ToList();
+            var lessonSubjects = group.LessonSubjects.Where(ls => !ls.IsDeleted).ToList();
 
             LessonSubjects = new List<LessonSubjectViewModel>();
 

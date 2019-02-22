@@ -333,12 +333,142 @@ namespace LanguageSchool.Controllers
                 {
                     question.IsDeleted = true;
                     question.DeletionDate = now;
+
+                    foreach (var testQuestion in question.TestClosedQuestions)
+                    {
+                        testQuestion.IsDeleted = true;
+                        testQuestion.DeletionDate = now;
+
+                        var test = testQuestion.Test;
+
+                        var questionSubject = question.LessonSubject;
+
+                        var testSubject = test.TestsLessonSubjects.Where(ls => ls.LessonSubjectId == questionSubject.Id).First();
+
+                        if (!test.TestClosedQuestions.Where(q => !q.IsDeleted && q.ClosedQuestion.LessonSubjectId == questionSubject.Id).Any())
+                        {
+                            testSubject.IsDeleted = true;
+                            testSubject.DeletionDate = now;
+                        }
+
+                        test.Points = test.Points - question.Points;
+
+                        var correctAnswerIds = test.TestClosedQuestions
+                            .Where(q => q.QuestionId == question.Id)
+                            .First()
+                            .TestAnswers.Where(a => a.Answer.IsCorrect)
+                            .OrderBy(a => a.AnswerId)
+                            .Select(a => a.AnswerId);
+
+                        test.NumberOfClosedQuestions--;
+                        test.NumberOfQuestions--;
+
+                        if (test.NumberOfQuestions == 0)
+                        {
+                            test.IsDeleted = true;
+                            test.DeletionDate = now;
+
+                            foreach (var userTest in test.UsersTests)
+                            {
+                                userTest.IsDeleted = true;
+                                userTest.DeletionDate = now;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var userTest in test.UsersTests)
+                            {
+                                var userAnswers = userTest.UserClosedAnswers
+                                    .Where(a => a.TestClosedQuestion.QuestionId == question.Id)
+                                    .OrderBy(a => a.AnswerId)
+                                    .Select(a => a.AnswerId);
+
+                                if (correctAnswerIds.SequenceEqual(userAnswers))
+                                {
+                                    userTest.Points = userTest.Points - question.Points;
+                                }
+
+                                double percentageGoten = GradeTest((int)userTest.Points, test.Points);
+
+                                userTest.MarkId = Consts.GetGrade(percentageGoten);
+                            }
+                        }
+                    }
                 }
 
                 foreach (var question in lessonSubject.OpenQuestions)
                 {
                     question.IsDeleted = true;
                     question.DeletionDate = now;
+
+                    foreach (var answer in question.UserOpenAnswers)
+                    {
+                        answer.IsDeleted = true;
+                        answer.DeletionDate = now;
+                    }
+
+                    foreach (var testQuestion in question.TestOpenQuestions)
+                    {
+                        testQuestion.IsDeleted = true;
+                        testQuestion.DeletionDate = now;
+
+                        var test = testQuestion.Test;
+
+                        var questionSubject = question.LessonSubject;
+
+                        var testSubject = test.TestsLessonSubjects
+                            .Where(ls => ls.LessonSubjectId == questionSubject.Id)
+                            .First();
+
+                        if (!test.TestOpenQuestions.Where(q => !q.IsDeleted && q.OpenQuestion.LessonSubjectId == questionSubject.Id).Any())
+                        {
+                            testSubject.IsDeleted = true;
+                            testSubject.DeletionDate = now;
+                        }
+
+                        test.Points = test.Points - question.Points;
+
+                        test.NumberOfOpenQuestions--;
+                        test.NumberOfQuestions--;
+
+                        if (test.NumberOfQuestions == 0)
+                        {
+                            test.IsDeleted = true;
+                            test.DeletionDate = now;
+
+                            foreach (var userTest in test.UsersTests)
+                            {
+                                userTest.IsDeleted = true;
+                                userTest.DeletionDate = now;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var userTest in test.UsersTests)
+                            {
+                                var userAnswer = userTest.UserOpenAnswers
+                                    .Where(a => a.OpenQuestionId == question.Id)
+                                    .FirstOrDefault();
+
+                                if (userAnswer != null)
+                                {
+                                    if (userAnswer.IsMarked)
+                                    {
+                                        userTest.Points = userTest.Points - question.Points;
+                                    }
+
+                                    if (!userTest.IsMarked && !userTest.UserOpenAnswers.Where(a => !a.IsMarked && a.OpenQuestionId != question.Id).Any())
+                                    {
+                                        userTest.Points = userTest.Points - question.Points;
+                                    }
+                                }
+
+                                double percentageGoten = GradeTest((int)userTest.Points, test.Points);
+
+                                userTest.MarkId = Consts.GetGrade(percentageGoten);
+                            }
+                        }
+                    }
                 }
 
                 UnitOfWork.Save();

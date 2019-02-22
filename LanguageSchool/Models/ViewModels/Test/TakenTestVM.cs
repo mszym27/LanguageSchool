@@ -38,6 +38,7 @@ namespace LanguageSchool.Models.ViewModels.TakenTestViewModels
             foreach (
                 var question in test.UserClosedAnswers
                     .Where(a => a.UserId == student.Id)
+                    .Where(a => !a.TestClosedQuestion.IsDeleted)
                     .Select(a => a.TestClosedQuestion)
             )
             {
@@ -46,7 +47,11 @@ namespace LanguageSchool.Models.ViewModels.TakenTestViewModels
 
             OpenQuestions = new List<TakenOpenQuestionVM>();
 
-            foreach (var question in userTest.UserOpenAnswers.Where(a => a.IsMarked))
+            foreach (
+                var question in userTest.UserOpenAnswers
+                    .Where(a => !a.IsDeleted)
+                    .Where(a => a.IsMarked)
+            )
             {
                 OpenQuestions.Add(new TakenOpenQuestionVM(question));
             }

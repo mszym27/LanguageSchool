@@ -17,8 +17,8 @@ namespace LanguageSchool.Models.ViewModels.TakenTestViewModels
 
         public TakenOpenQuestionVM(UserOpenAnswer userAnswer)
         {
-            Answer = userAnswer.Content;
-            Comment = userAnswer.Comment.Replace("\r\n", "<br>");
+            Answer = userAnswer.Content.Replace("\r\n", "<br>");
+            Comment = userAnswer.Comment;
             PointsAwarded = userAnswer.Points;
 
             var question = userAnswer.OpenQuestion;

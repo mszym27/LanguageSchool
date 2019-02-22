@@ -127,7 +127,6 @@ namespace LanguageSchool.Controllers
                         .OrderBy(a => a.AnswerId)
                         .Select(a => a.AnswerId);
 
-
                     test.NumberOfClosedQuestions--;
                     test.NumberOfQuestions--;
 
@@ -194,6 +193,12 @@ namespace LanguageSchool.Controllers
 
                 openQuestion.IsDeleted = true;
                 openQuestion.DeletionDate = now;
+                
+                foreach(var answer in openQuestion.UserOpenAnswers)
+                {
+                    answer.IsDeleted = true;
+                    answer.DeletionDate = now;
+                }
 
                 foreach (var testQuestion in openQuestion.TestOpenQuestions)
                 {
@@ -204,7 +209,9 @@ namespace LanguageSchool.Controllers
 
                     var questionSubject = openQuestion.LessonSubject;
 
-                    var testSubject = test.TestsLessonSubjects.Where(ls => ls.LessonSubjectId == questionSubject.Id).First();
+                    var testSubject = test.TestsLessonSubjects
+                        .Where(ls => ls.LessonSubjectId == questionSubject.Id)
+                        .First();
 
                     if (!test.TestOpenQuestions.Where(q => !q.IsDeleted && q.OpenQuestion.LessonSubjectId == questionSubject.Id).Any())
                     {
@@ -370,11 +377,6 @@ namespace LanguageSchool.Controllers
 
                 return View("AddAnswers", closedQuestionViewModel);
             }
-        }
-
-        private double GradeTest(int obtainedPoints, int maxPoints)
-        {
-            return 100 * ((double)obtainedPoints / maxPoints);
         }
     }
 }

@@ -78,6 +78,8 @@
                         {
                             @Html.HiddenFor(model => model.LessonSubjects[i].Id)
                             @Html.HiddenFor(model => model.LessonSubjects[i].GroupId)
+                            @Html.HiddenFor(model => model.LessonSubjects[i].Name)
+                            @Html.HiddenFor(model => model.LessonSubjects[i].Description)
                             @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfClosedQuestions, new { id = "numberClosed" + i })
                             @Html.HiddenFor(model => model.LessonSubjects[i].MaxNumberOfOpenQuestions, new { id = "numberOpen" + i })
 

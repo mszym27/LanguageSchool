@@ -400,10 +400,5 @@ namespace LanguageSchool.Controllers
                 answers[n] = value;
             }
         }
-
-        private double GradeTest(int obtainedPoints, int maxPoints)
-        {
-            return 100 * ((double) obtainedPoints / maxPoints);
-        }
     }
 }

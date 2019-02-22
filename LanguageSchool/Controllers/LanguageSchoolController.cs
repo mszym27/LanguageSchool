@@ -38,6 +38,11 @@ namespace LanguageSchool.Controllers
             return user;
         }
 
+        protected double GradeTest(int obtainedPoints, int maxPoints)
+        {
+            return 100 * ((double)obtainedPoints / maxPoints);
+        }
+
         protected Guid LogException (Exception ex)
         {
             var guid = Guid.NewGuid();
