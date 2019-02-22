@@ -37,12 +37,11 @@ namespace LanguageSchool.Models.ViewModels
                     .ToList();
             }
 
-            TakenTests = new List<UserTestViewModel>();
-
-            foreach (var userTest in student.UsersTests.OrderByDescending(ut => ut.CreationDate))
-            {
-                TakenTests.Add(new UserTestViewModel(userTest));
-            }
+            TakenTests = student.UsersTests
+                .Where(ut => !ut.IsDeleted)
+                .OrderByDescending(ut => ut.CreationDate)
+                .Select(ut => new UserTestViewModel(ut))
+                .ToList();
 
             Tests = group.Tests
                 .Where(t => !t.IsDeleted)

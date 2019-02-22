@@ -36,10 +36,9 @@ namespace LanguageSchool.Models.ViewModels.TakenTestViewModels
             ClosedQuestions = new List<TakenClosedQuestionVM>();
 
             foreach (
-                var question in test.UserClosedAnswers
-                    .Where(a => a.UserId == student.Id)
-                    .Where(a => !a.TestClosedQuestion.IsDeleted)
-                    .Select(a => a.TestClosedQuestion)
+                var question in test.TestClosedQuestions
+                    .Where(q => !q.IsDeleted)
+                    .Where(q => q.UserClosedAnswers.Where(a => a.UserId == student.Id).Any())
             )
             {
                 ClosedQuestions.Add(new TakenClosedQuestionVM(question, student));
