@@ -6,7 +6,7 @@
 }
 
 <div class="container">
-        @foreach (var group in Model.CourseGroups.Where(g => g.LessonSubjects.Any()))
+        @foreach (var group in Model.CourseGroups.Where(g => g.LessonSubjects.Where(ls => !ls.IsDeleted).Any()))
         {
             @Html.Partial("_PartHeader", group.Name)
             <div class="row">
