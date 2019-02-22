@@ -35,14 +35,14 @@ namespace LanguageSchool.Models.ViewModels.StudentGroupViewModels
 
             TakenTests = new List<UserTestViewModel>();
 
-            foreach (var test in studentTests.Where(t => t.IsMarked).OrderByDescending(t => t.CreationDate))
+            foreach (var test in studentTests.Where(t => !t.IsDeleted).OrderByDescending(t => t.CreationDate))
             {
                 TakenTests.Add(new UserTestViewModel(test));
             }
 
             AwaitingMark = new List<StudentAwaitingTestVM>();
 
-            foreach (var test in studentTests.Where(t => !t.IsMarked).OrderByDescending(t => t.CreationDate))
+            foreach (var test in studentTests.Where(t => !t.IsDeleted && !t.IsMarked).OrderByDescending(t => t.CreationDate))
             {
                 AwaitingMark.Add(new StudentAwaitingTestVM(test));
             }

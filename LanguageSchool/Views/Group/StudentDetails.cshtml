@@ -124,7 +124,14 @@
                 </tr>
                 @foreach (var test in Model.TakenTests)
                 {
-                    <tr>
+                    var fontColor = "black";
+
+                    if (!test.IsMarked)
+                    {
+                        fontColor = "silver";
+                    }
+
+                    <tr style="color: @fontColor">
                         <td>
                             @test.CreationDate
                         </td>

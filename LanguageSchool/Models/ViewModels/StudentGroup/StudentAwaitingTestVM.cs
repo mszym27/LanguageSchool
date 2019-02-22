@@ -18,7 +18,7 @@ namespace LanguageSchool.Models.ViewModels.StudentGroupViewModels
 
             TestName = test.Name;
 
-            AnswersAwaitingMark = awaiting.UserOpenAnswers.Where(a => !a.IsMarked).ToList();
+            AnswersAwaitingMark = awaiting.UserOpenAnswers.Where(a => !a.IsDeleted && !a.IsMarked).ToList();
         }
     }
 }
