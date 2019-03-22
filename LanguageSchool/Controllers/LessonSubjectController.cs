@@ -457,9 +457,12 @@ namespace LanguageSchool.Controllers
                                         userTest.Points = userTest.Points - question.Points;
                                     }
 
-                                    if (!userTest.IsMarked && !userTest.UserOpenAnswers.Where(a => !a.IsMarked && a.OpenQuestionId != question.Id).Any())
+                                    userAnswer.IsDeleted = true;
+                                    userAnswer.DeletionDate = now;
+
+                                    if (!userTest.IsMarked && !userTest.UserOpenAnswers.Where(a => !a.IsMarked && !a.IsDeleted).Any())
                                     {
-                                        userTest.Points = userTest.Points - question.Points;
+                                        userTest.IsMarked = true;
                                     }
                                 }
 

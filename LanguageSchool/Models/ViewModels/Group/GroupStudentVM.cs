@@ -39,6 +39,7 @@ namespace LanguageSchool.Models.ViewModels
 
             TakenTests = student.UsersTests
                 .Where(ut => !ut.IsDeleted)
+                .Where(ut => ut.Test.GroupId == group.Id)
                 .OrderByDescending(ut => ut.CreationDate)
                 .Select(ut => new UserTestViewModel(ut))
                 .ToList();

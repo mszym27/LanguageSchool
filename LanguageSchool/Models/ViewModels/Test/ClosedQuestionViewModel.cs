@@ -14,6 +14,7 @@ namespace LanguageSchool.Models.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić treść pytania")]
         [StringLength(250, ErrorMessage = "Maksymalna długość pytania to 250 znaków")]
         public string Contents { get; set; }
+        [RangeAttribute(1, int.MaxValue, ErrorMessage = "Wartość musi być większa od zera")]
         public int NumberOfPossibleAnswers { get; set; }
         public int? ChosenAnswerId { get; set; }
         public bool IsMultichoice { get; set; }

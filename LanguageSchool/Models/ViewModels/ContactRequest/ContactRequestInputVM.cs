@@ -27,6 +27,7 @@ namespace LanguageSchool.Models.ViewModels.ContactRequestViewModels
         public string Comment { get; set; }
         [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
         [IntGreaterThan("PreferredHoursTo", ErrorMessage = "Wartość nie może być większa od godziny końcowej")]
+        [IntSame("PreferredHoursTo", ErrorMessage = "Godziny nie mogą się pokrywać")]
         public int PreferredHoursFrom { get; set; }
         [RangeAttribute(8, 20, ErrorMessage = "Wartość musi się mieścić w godzinach pracy sekretariatu (8 - 20)")]
         public int PreferredHoursTo { get; set; }

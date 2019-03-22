@@ -294,7 +294,7 @@ namespace LanguageSchool.Controllers
                     }
                 }
 
-                double percentageGoten = GradeTest((int)userTest.Points, testViewModel.Points);
+                var percentageGoten = (int)GradeTest(userTest.Points, testViewModel.Points);
 
                 var mark = UnitOfWork.DictionaryItemRepository.GetById(Consts.GetGrade(percentageGoten));
 

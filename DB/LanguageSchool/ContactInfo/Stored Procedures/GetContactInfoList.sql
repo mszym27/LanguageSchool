@@ -124,7 +124,7 @@ BEGIN
 		AND [ContactRequests].[CreationDate] >= @CreationDateFrom
 		AND [ContactRequests].[CreationDate] <= @CreationDateTo
 		AND [ContactRequests].[PreferredHoursFrom] < @PreferredHoursTo
-		AND @PreferredHoursFrom <= [ContactRequests].[PreferredHoursTo] '
+		AND @PreferredHoursFrom < [ContactRequests].[PreferredHoursTo] '
 	
 	IF(@PhoneNumber IS NOT NULL AND @PhoneNumber != '')
 		SET @Query += N'

@@ -58,11 +58,11 @@ namespace LanguageSchool
         };
 
         public static Dictionary<double, int> Grades = new Dictionary<double, int>() {
-            { 40, 3001 }, // niedostateczny
-            { 55, 3002 }, // dopuszczający
-            { 70, 3003 }, // dostateczny
-            { 85, 3004 }, // dobry
-            { 95, 3005 }, // bardzo dobry
+            { 39, 3001 }, // niedostateczny
+            { 54, 3002 }, // dopuszczający
+            { 74, 3003 }, // dostateczny
+            { 89, 3004 }, // dobry
+            { 99, 3005 }, // bardzo dobry
             { 100, 3006 } //celujący
         };
 
@@ -77,7 +77,7 @@ namespace LanguageSchool
             Sunday = 5007
         }
 
-        public static readonly int FailingPercentage = 40;
+        public static readonly int FailingPercentage = 39;
 
         public static int GetGrade(double percentage)
         {
