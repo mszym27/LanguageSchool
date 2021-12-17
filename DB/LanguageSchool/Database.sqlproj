@@ -112,9 +112,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LanguageSchool.publish.xml" />
-    <None Include="Database.publish.xml" />
-    <None Include="Babel_database.publish.xml" />
-    <None Include="Babel_Compare.scmp" />
-    <None Include="Compare.scmp" />
   </ItemGroup>
 </Project>

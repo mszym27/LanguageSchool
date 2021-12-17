@@ -48,8 +48,7 @@ namespace LanguageSchool.Controllers
         {
             try
             {
-                //var passwordEncrypted = Encryption.Encrypt(loginInfo.Password.Trim());
-                var passwordEncrypted = loginInfo.Password.Trim();
+                var passwordEncrypted = Encryption.Encrypt(loginInfo.Password.Trim());
 
                 var loginUser = UnitOfWork.UserRepository
                     .Get(u => !u.IsDeleted 
